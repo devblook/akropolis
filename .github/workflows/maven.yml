@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - name: Checkout GitHub repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.3.4
     
     - name: Set up JDK ${{ matrix.java_version }}
       uses: actions/setup-java@v2.1.0
@@ -41,7 +41,7 @@ jobs:
       run: mvn -B package --file pom.xml
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2.2.3
       with:
         name: DeluxeHub Artifact
         path: target/*.jar
