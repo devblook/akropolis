@@ -1,6 +1,6 @@
 # This workflow will build a DeluxeHub with Maven.
 # It will be compiled against Java 8, 11 and 16.
-name: Java Maven Workflow
+name: Build DeluxeHub
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build on recommended Java versions
+    name: Build on recommended JDK versions
     runs-on: ubuntu-latest
     
     # For Minecraft 1.8 - 1.12, Java 8 is recommended.
