@@ -9,7 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -19,7 +19,7 @@ public class LobbySpawn extends Module {
     private boolean spawnJoin;
     private Location location = null;
 
-    public LobbySpawn(DeluxeHub plugin) {
+    public LobbySpawn(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.LOBBY);
     }
 

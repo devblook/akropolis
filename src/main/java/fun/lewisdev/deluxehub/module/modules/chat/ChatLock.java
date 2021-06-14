@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -15,7 +15,7 @@ public class ChatLock extends Module {
 
     private boolean isChatLocked;
 
-    public ChatLock(DeluxeHub plugin) {
+    public ChatLock(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.CHAT_LOCK);
     }
 

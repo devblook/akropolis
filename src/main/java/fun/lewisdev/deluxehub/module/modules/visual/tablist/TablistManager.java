@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -26,7 +26,7 @@ public class TablistManager extends Module {
 
     private String header, footer;
 
-    public TablistManager(DeluxeHub plugin) {
+    public TablistManager(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.TABLIST);
     }
 

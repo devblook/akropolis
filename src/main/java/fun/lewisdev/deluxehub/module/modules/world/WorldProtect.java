@@ -36,7 +36,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -91,7 +91,7 @@ public class WorldProtect extends Module {
             XMaterial.TRAPPED_CHEST.parseMaterial(), XMaterial.OAK_BUTTON.parseMaterial(),
             XMaterial.OAK_DOOR.parseMaterial());
 
-    public WorldProtect(DeluxeHub plugin) {
+    public WorldProtect(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.WORLD_PROTECT);
     }
 

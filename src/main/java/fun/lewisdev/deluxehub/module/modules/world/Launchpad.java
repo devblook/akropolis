@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import fun.lewisdev.deluxehub.module.Module;
@@ -24,7 +24,7 @@ public class Launchpad extends Module {
     private Material topBlock;
     private Material bottomBlock;
 
-    public Launchpad(DeluxeHub plugin) {
+    public Launchpad(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.LAUNCHPAD);
     }
 

@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
 
 public class ClearchatCommand {
 
-    public ClearchatCommand(DeluxeHub plugin) {
+    public ClearchatCommand(DeluxeHubPlugin plugin) {
     }
 
     @Command(aliases = { "clearchat" }, desc = "Clear global or a player's chat", usage = "[player]", max = 1)

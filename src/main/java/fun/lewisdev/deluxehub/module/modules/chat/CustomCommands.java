@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.command.CustomCommand;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.Module;
@@ -16,7 +16,7 @@ public class CustomCommands extends Module {
 
     private List<CustomCommand> commands;
 
-    public CustomCommands(DeluxeHub plugin) {
+    public CustomCommands(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.CUSTOM_COMMANDS);
     }
 

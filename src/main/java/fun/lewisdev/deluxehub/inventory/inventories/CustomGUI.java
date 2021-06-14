@@ -3,7 +3,7 @@ package fun.lewisdev.deluxehub.inventory.inventories;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.inventory.AbstractInventory;
 import fun.lewisdev.deluxehub.inventory.InventoryBuilder;
 import fun.lewisdev.deluxehub.inventory.InventoryItem;
@@ -15,7 +15,7 @@ public class CustomGUI extends AbstractInventory {
     private InventoryBuilder inventory;
     private FileConfiguration config;
 
-    public CustomGUI(DeluxeHub plugin, FileConfiguration config) {
+    public CustomGUI(DeluxeHubPlugin plugin, FileConfiguration config) {
         super(plugin);
         this.config = config;
     }

@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.actions.ActionbarAction;
 import fun.lewisdev.deluxehub.action.actions.BroadcastMessageAction;
 import fun.lewisdev.deluxehub.action.actions.BungeeAction;
@@ -25,10 +25,10 @@ import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 
 public class ActionManager {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
     private Map<String, Action> actions;
 
-    public ActionManager(DeluxeHub plugin) {
+    public ActionManager(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
         actions = new HashMap<>();
         load();

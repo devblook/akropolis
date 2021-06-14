@@ -12,7 +12,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.command.CommandManager;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -29,9 +29,9 @@ import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class DeluxeHubCommand {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
 
-    public DeluxeHubCommand(DeluxeHub plugin) {
+    public DeluxeHubCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 

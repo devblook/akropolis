@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -13,9 +13,9 @@ import fun.lewisdev.deluxehub.module.modules.chat.ChatLock;
 
 public class LockchatCommand {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
 
-    public LockchatCommand(DeluxeHub plugin) {
+    public LockchatCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 

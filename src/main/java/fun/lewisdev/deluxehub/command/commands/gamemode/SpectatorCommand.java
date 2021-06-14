@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
 
 public class SpectatorCommand {
 
-    public SpectatorCommand(DeluxeHub plugin) {
+    public SpectatorCommand(DeluxeHubPlugin plugin) {
     }
 
     @Command(aliases = { "gmsp" }, desc = "Change to spectator mode", usage = "[player]", max = 1)

@@ -7,13 +7,13 @@ import org.bukkit.entity.Player;
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
 
 public class FlyCommand {
 
-    public FlyCommand(DeluxeHub plugin) {
+    public FlyCommand(DeluxeHubPlugin plugin) {
     }
 
     @Command(aliases = { "fly" }, desc = "Toggle flight mode", usage = "[player]", max = 1)

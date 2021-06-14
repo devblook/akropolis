@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -17,7 +17,7 @@ public class ChatCommandBlock extends Module {
 
     private List<String> blockedCommands;
 
-    public ChatCommandBlock(DeluxeHub plugin) {
+    public ChatCommandBlock(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.COMMAND_BLOCK);
     }
 

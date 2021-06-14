@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -29,7 +29,7 @@ public class DoubleJump extends Module {
     private double launchY;
     private List<String> actions;
 
-    public DoubleJump(DeluxeHub plugin) {
+    public DoubleJump(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.DOUBLE_JUMP);
     }
 

@@ -13,12 +13,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.inventory.inventories.CustomGUI;
 
 public class InventoryManager {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
 
     private Map<String, AbstractInventory> inventories;
 
@@ -26,7 +26,7 @@ public class InventoryManager {
         inventories = new HashMap<>();
     }
 
-    public void onEnable(DeluxeHub plugin) {
+    public void onEnable(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
 
         loadCustomMenus();

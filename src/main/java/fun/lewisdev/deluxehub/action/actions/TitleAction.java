@@ -2,7 +2,7 @@ package fun.lewisdev.deluxehub.action.actions;
 
 import org.bukkit.entity.Player;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.reflection.Titles;
@@ -15,7 +15,7 @@ public class TitleAction implements Action {
     }
 
     @Override
-    public void execute(DeluxeHub plugin, Player player, String data) {
+    public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
 
         String mainTitle = TextUtil.color(args[0]);

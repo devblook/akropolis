@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -21,7 +21,7 @@ public class HologramManager extends Module {
 
     private Set<Hologram> holograms;
 
-    public HologramManager(DeluxeHub plugin) {
+    public HologramManager(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.HOLOGRAMS);
     }
 

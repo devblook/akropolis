@@ -7,7 +7,7 @@ import java.util.Map;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 
 public class ConfigManager {
 
@@ -17,7 +17,7 @@ public class ConfigManager {
         configurations = new HashMap<>();
     }
 
-    public void loadFiles(DeluxeHub plugin) {
+    public void loadFiles(DeluxeHubPlugin plugin) {
 
         registerFile(ConfigType.SETTINGS, new ConfigHandler(plugin, "config"));
         registerFile(ConfigType.MESSAGES, new ConfigHandler(plugin, "messages"));

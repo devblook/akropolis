@@ -4,18 +4,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.hook.PluginHook;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 
 public class DatabaseHead implements PluginHook, HeadHook, Listener {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
     private HeadDatabaseAPI api;
 
     @Override
-    public void onEnable(DeluxeHub plugin) {
+    public void onEnable(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         api = new HeadDatabaseAPI();

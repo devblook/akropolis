@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 
 public abstract class HotbarItem implements Listener {
@@ -42,7 +42,7 @@ public abstract class HotbarItem implements Listener {
         this.item = nbtItem.getItem();
     }
 
-    public DeluxeHub getPlugin() {
+    public DeluxeHubPlugin getPlugin() {
         return hotbarManager.getPlugin();
     }
 
@@ -143,7 +143,7 @@ public abstract class HotbarItem implements Listener {
         onInteract(player);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void hotbarPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!getHotbarManager().inDisabledWorld(player.getLocation()))

@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -21,7 +21,7 @@ public class PlayerVanish extends Module {
 
     private List<UUID> vanished;
 
-    public PlayerVanish(DeluxeHub plugin) {
+    public PlayerVanish(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.VANISH);
     }
 

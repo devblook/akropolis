@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.hook.hooks.head.HeadHook;
 import fun.lewisdev.deluxehub.utility.universal.XMaterial;
 
@@ -24,7 +24,7 @@ public class ItemStackBuilder {
 
     private final ItemStack ITEM_STACK;
 
-    private static final DeluxeHub PLUGIN = JavaPlugin.getPlugin(DeluxeHub.class);
+    private static final DeluxeHubPlugin PLUGIN = JavaPlugin.getPlugin(DeluxeHubPlugin.class);
 
     public ItemStackBuilder(ItemStack item) {
         this.ITEM_STACK = item;

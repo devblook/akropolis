@@ -1,10 +1,10 @@
-name: ${project.name}
+name: DeluxeHub
 author: ItsLewizzz
 version: ${project.version}
 description: ${project.description}
 website: ${project.url}
 api-version: 1.13
-main: fun.lewisdev.deluxehub.DeluxeHub
+main: fun.lewisdev.deluxehub.DeluxeHubPlugin
 loadbefore: [Essentials]
 softdepend: [PlaceholderAPI, HeadDatabase, Multiverse-Core]
 permissions:

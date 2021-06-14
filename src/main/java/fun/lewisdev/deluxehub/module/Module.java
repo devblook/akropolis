@@ -10,19 +10,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.cooldown.CooldownManager;
 import fun.lewisdev.deluxehub.cooldown.CooldownType;
 
 public abstract class Module implements Listener {
 
-    private DeluxeHub plugin;
+    private DeluxeHubPlugin plugin;
     private ModuleType moduleType;
     private List<String> disabledWorlds;
     private CooldownManager cooldownManager;
 
-    public Module(DeluxeHub plugin, ModuleType type) {
+    public Module(DeluxeHubPlugin plugin, ModuleType type) {
         this.plugin = plugin;
         this.moduleType = type;
         this.cooldownManager = plugin.getCooldownManager();
@@ -33,7 +33,7 @@ public abstract class Module implements Listener {
         this.disabledWorlds = disabledWorlds;
     }
 
-    public DeluxeHub getPlugin() {
+    public DeluxeHubPlugin getPlugin() {
         return plugin;
     }
 

@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -19,7 +19,7 @@ public class HotbarManager extends Module {
 
     private List<HotbarItem> hotbarItems;
 
-    public HotbarManager(DeluxeHub plugin) {
+    public HotbarManager(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.HOTBAR_ITEMS);
     }
 

@@ -6,19 +6,26 @@ import java.util.Objects;
 
 import com.google.common.base.Strings;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.reflection.ReflectionUtils;
 
 public class TablistHelper {
 
     public static void sendTabList(Player player, String header, String footer) {
+
         Objects.requireNonNull(player, "Cannot update tab for null player");
         header = Strings.isNullOrEmpty(header) ? ""
-                : ChatColor.translateAlternateColorCodes('&', header).replace("%player%", player.getDisplayName());
+                : TextUtil.color(header).replace("%player%", player.getDisplayName());
         footer = Strings.isNullOrEmpty(footer) ? ""
-                : ChatColor.translateAlternateColorCodes('&', footer).replace("%player%", player.getDisplayName());
+                : TextUtil.color(footer).replace("%player%", player.getDisplayName());
+
+        if (DeluxeHubPlugin.SERVER_VERSION > 13) {
+            player.setPlayerListHeaderFooter(header, footer);
+            return;
+        }
 
         try {
             Method chatComponentBuilderMethod = ReflectionUtils.getNMSClass("IChatBaseComponent")

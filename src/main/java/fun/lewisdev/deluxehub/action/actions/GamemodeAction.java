@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import fun.lewisdev.deluxehub.DeluxeHub;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
 
 public class GamemodeAction implements Action {
@@ -15,7 +15,7 @@ public class GamemodeAction implements Action {
     }
 
     @Override
-    public void execute(DeluxeHub plugin, Player player, String data) {
+    public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         try {
             player.setGameMode(GameMode.valueOf(data.toUpperCase()));
         } catch (IllegalArgumentException ex) {
