@@ -12,19 +12,30 @@ public class PlaceholderUtil {
 
     public static String setPlaceholders(String text, Player player) {
 
-        if (text.contains("%player%") && player != null)
+        if (text.contains("%player%") && player != null) {
             text = text.replace("%player%", player.getName());
+		}
 
-        if (text.contains("%online%"))
+        if (text.contains("%online%")) {
             text = text.replace("%online%", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()));
+		}
 
-        if (text.contains("%online_max%"))
+        if (text.contains("%online_max%")) {
             text = text.replace("%online_max%", String.valueOf(Bukkit.getServer().getMaxPlayers()));
+		}
 
         if (text.contains("%location%") && player != null) {
             Location l = player.getLocation();
             text = text.replace("%location%", l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ());
         }
+		
+		if (text.contains("%ping%") && player != null) {
+			text = text.replace("%ping%", String.valueOf(player.getPing()));
+		}
+		
+		if (text.contains("%world%")) {
+			text = text.replace("%world%", player.getWorld().getName());
+		}
 
         /*
          * try { final String BUNGEE_PATTERN = "%bungeecord_(\\w+)%"; Pattern pattern =
@@ -34,11 +45,10 @@ public class PlaceholderUtil {
          * matcher.group(1)))); } }catch (Exception ex) { ex.printStackTrace(); }
          */
 
-        if (PAPI && player != null)
+        if (PAPI && player != null) {
             text = PlaceholderAPI.setPlaceholders(player, text);
+		}
 
         return text;
-
     }
-
 }
