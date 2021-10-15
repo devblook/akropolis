@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
@@ -52,7 +51,7 @@ public class Launchpad extends Module {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerInteractEvent event) {
+    public void onLaunchPadInteract(PlayerInteractEvent event) {
         if(event.getAction() != Action.PHYSICAL) return;
         Player player = event.getPlayer();
         Location location = player.getLocation();
