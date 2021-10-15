@@ -52,9 +52,12 @@ public class Launchpad extends Module {
 
     @EventHandler
     public void onLaunchPadInteract(PlayerInteractEvent event) {
-        if(event.getAction() != Action.PHYSICAL) return;
+        if (event.getAction() != Action.PHYSICAL)
+            return;
+
         Player player = event.getPlayer();
         Location location = player.getLocation();
+
         if (inDisabledWorld(location))
             return;
 
