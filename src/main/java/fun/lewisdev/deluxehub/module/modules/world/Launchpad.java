@@ -7,7 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
@@ -50,14 +51,15 @@ public class Launchpad extends Module {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
+    public void onLaunchPadInteract(PlayerInteractEvent event) {
+        if(event.getAction() != Action.PHYSICAL) return;
         Player player = event.getPlayer();
         Location location = player.getLocation();
         if (inDisabledWorld(location))
             return;
 
         // Check for launchpad block and cooldown
-        if (location.getBlock().getType() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
+        if (event.getMaterial() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
                 && tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
             player.setVelocity(location.getDirection().multiply(launch).setY(launchY));
             executeActions(player, actions);
