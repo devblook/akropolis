@@ -23,7 +23,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class DoubleJump extends Module {
-
     private long cooldownDelay;
     private double launch;
     private double launchY;
@@ -49,11 +48,11 @@ public class DoubleJump extends Module {
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
-
         Player player = event.getPlayer();
 
         // Perform checks
@@ -76,6 +75,7 @@ public class DoubleJump extends Module {
 
         // Check for cooldown
         UUID uuid = player.getUniqueId();
+
         if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
             player.sendMessage(Messages.DOUBLE_JUMP_COOLDOWN.toString().replace("%time%",
                     getCooldown(uuid, CooldownType.DOUBLE_JUMP)));
@@ -90,6 +90,7 @@ public class DoubleJump extends Module {
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
+
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
                 && !inDisabledWorld(player.getLocation())) {
             player.getPlayer().setAllowFlight(true);
@@ -99,6 +100,7 @@ public class DoubleJump extends Module {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR)
             player.getPlayer().setAllowFlight(true);
     }

@@ -6,6 +6,10 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 
 public class ArmorStandName {
 
+    private ArmorStandName() {
+        throw new UnsupportedOperationException();
+    }
+
     public static String getName(ArmorStand stand) {
         if (DeluxeHubPlugin.SERVER_VERSION > 8)
             return stand.getCustomName();

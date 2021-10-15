@@ -16,13 +16,12 @@ import fun.lewisdev.deluxehub.cooldown.CooldownManager;
 import fun.lewisdev.deluxehub.cooldown.CooldownType;
 
 public abstract class Module implements Listener {
-
     private DeluxeHubPlugin plugin;
     private ModuleType moduleType;
     private List<String> disabledWorlds;
     private CooldownManager cooldownManager;
 
-    public Module(DeluxeHubPlugin plugin, ModuleType type) {
+    protected Module(DeluxeHubPlugin plugin, ModuleType type) {
         this.plugin = plugin;
         this.moduleType = type;
         this.cooldownManager = plugin.getCooldownManager();
@@ -68,5 +67,4 @@ public abstract class Module implements Listener {
     public abstract void onEnable();
 
     public abstract void onDisable();
-
 }

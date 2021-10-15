@@ -10,7 +10,6 @@ import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarItem;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
 
 public class CustomItem extends HotbarItem {
-
     private List<String> actions;
 
     public CustomItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {

@@ -5,7 +5,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public enum Messages {
-
     PREFIX("GENERAL.PREFIX"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
     CUSTOM_COMMAND_NO_PERMISSION("GENERAL.CUSTOM_COMMAND_NO_PERMISSION"), INVALID_PLAYER("GENERAL.INVALID_PLAYER"),
     CONFIG_RELOAD("GENERAL.CONFIG_RELOAD"), COOLDOWN_ACTIVE("GENERAL.COOLDOWN_ACTIVE"),
@@ -52,7 +51,7 @@ public enum Messages {
         this.path = path;
     }
 
-    public static void setConfiguration(FileConfiguration c) {
+    protected static void setConfiguration(FileConfiguration c) {
         config = c;
     }
 
@@ -71,5 +70,4 @@ public enum Messages {
     public String getPath() {
         return this.path;
     }
-
 }

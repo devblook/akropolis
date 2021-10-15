@@ -18,7 +18,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class HologramManager extends Module {
-
     private Set<Hologram> holograms;
 
     public HologramManager(DeluxeHubPlugin plugin) {
@@ -38,7 +37,6 @@ public class HologramManager extends Module {
 
     public void loadHolograms() {
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
-
             FileConfiguration config = getConfig(ConfigType.DATA);
 
             if (config.contains("holograms")) {
@@ -59,13 +57,15 @@ public class HologramManager extends Module {
 
     public void saveHolograms() {
         FileConfiguration config = getConfig(ConfigType.DATA);
+
         holograms.forEach(hologram -> {
             config.set("holograms." + hologram.getName() + ".location", hologram.getLocation());
-            List<String> lines = new ArrayList<String>();
+            List<String> lines = new ArrayList<>();
             for (ArmorStand stand : hologram.getStands())
                 lines.add(stand.getCustomName());
             config.set("holograms." + hologram.getName() + ".lines", lines);
         });
+
         getPlugin().getConfigManager().getFile(ConfigType.DATA).save();
         deleteAllHolograms();
     }
@@ -85,15 +85,18 @@ public class HologramManager extends Module {
 
     public Hologram createHologram(String name, Location location) {
         Hologram holo = new Hologram(name, location);
+
         holograms.add(holo);
+
         return holo;
     }
 
     public void deleteHologram(String name) {
         Hologram holo = getHologram(name);
-        holo.remove();
 
+        holo.remove();
         holograms.remove(holo);
+
         getConfig(ConfigType.DATA).set("holograms." + name, null);
         getPlugin().getConfigManager().getFile(ConfigType.DATA).save();
     }
@@ -105,10 +108,11 @@ public class HologramManager extends Module {
 
     public void deleteNearbyHolograms(Location location) {
         World world = location.getWorld();
+
         if (world == null)
             return;
+
         world.getNearbyEntities(location, 0, 20, 0).stream().filter(entity -> entity instanceof ArmorStand)
                 .forEach(Entity::remove);
     }
-
 }

@@ -9,5 +9,4 @@ public interface Action {
     String getIdentifier();
 
     void execute(DeluxeHubPlugin plugin, Player player, String data);
-
 }

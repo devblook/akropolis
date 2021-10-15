@@ -12,7 +12,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class ChatLock extends Module {
-
     private boolean isChatLocked;
 
     public ChatLock(DeluxeHubPlugin plugin) {

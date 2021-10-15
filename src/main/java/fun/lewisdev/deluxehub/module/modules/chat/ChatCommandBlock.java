@@ -14,7 +14,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class ChatCommandBlock extends Module {
-
     private List<String> blockedCommands;
 
     public ChatCommandBlock(DeluxeHubPlugin plugin) {
@@ -28,6 +27,7 @@ public class ChatCommandBlock extends Module {
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

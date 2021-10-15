@@ -1,7 +1,7 @@
 package fun.lewisdev.deluxehub.config;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,15 +10,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 
 public class ConfigManager {
-
     private Map<ConfigType, ConfigHandler> configurations;
 
     public ConfigManager() {
-        configurations = new HashMap<>();
+        configurations = new EnumMap<>(ConfigType.class);
     }
 
     public void loadFiles(DeluxeHubPlugin plugin) {
-
         registerFile(ConfigType.SETTINGS, new ConfigHandler(plugin, "config"));
         registerFile(ConfigType.MESSAGES, new ConfigHandler(plugin, "messages"));
         registerFile(ConfigType.DATA, new ConfigHandler(plugin, "data"));
@@ -49,5 +47,4 @@ public class ConfigManager {
     public FileConfiguration getFileConfiguration(File file) {
         return YamlConfiguration.loadConfiguration(file);
     }
-
 }

@@ -15,7 +15,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class LobbySpawn extends Module {
-
     private boolean spawnJoin;
     private Location location = null;
 
@@ -30,6 +29,7 @@ public class LobbySpawn extends Module {
             if (config.contains("spawn"))
                 location = (Location) config.get("spawn");
         });
+
         spawnJoin = getConfig(ConfigType.SETTINGS).getBoolean("join_settings.spawn_join", false);
     }
 

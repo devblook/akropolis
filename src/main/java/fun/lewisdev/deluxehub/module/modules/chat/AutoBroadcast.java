@@ -17,13 +17,11 @@ import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.universal.XSound;
 
 public class AutoBroadcast extends Module implements Runnable {
-
     private Map<Integer, List<String>> broadcasts;
     private int broadcastTask = 0;
     private int count = 0;
     private int size = 0;
     private int requiredPlayers = 0;
-
     private Sound sound = null;
     private double volume;
     private double pitch;
@@ -37,14 +35,15 @@ public class AutoBroadcast extends Module implements Runnable {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
 
         broadcasts = new HashMap<>();
-        int count = 0;
+        int announcementsCount = 0;
+
         for (String key : config.getConfigurationSection("announcements.announcements").getKeys(false)) {
-            broadcasts.put(count, config.getStringList("announcements.announcements." + key));
-            count++;
+            broadcasts.put(announcementsCount, config.getStringList("announcements.announcements." + key));
+            announcementsCount++;
         }
 
         if (config.getBoolean("announcements.sound.enabled")) {
-            sound = XSound.matchXSound(config.getString("announcements.sound.value")).get().parseSound();
+            XSound.matchXSound(config.getString("announcements.sound.value")).ifPresent(s -> sound = s.parseSound());
             volume = config.getDouble("announcements.sound.volume");
             pitch = config.getDouble("announcements.sound.pitch");
         }
@@ -62,6 +61,7 @@ public class AutoBroadcast extends Module implements Runnable {
         Bukkit.getScheduler().cancelTask(broadcastTask);
     }
 
+    // TODO: Refactor to reduce cognitive complexity from 16 to something minor.
     @Override
     public void run() {
         if (count == size)
@@ -81,8 +81,8 @@ public class AutoBroadcast extends Module implements Runnable {
                 if (sound != null)
                     player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);
             }
+
             count++;
         }
-
     }
 }

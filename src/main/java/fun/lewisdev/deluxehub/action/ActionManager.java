@@ -24,7 +24,6 @@ import fun.lewisdev.deluxehub.action.actions.TitleAction;
 import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 
 public class ActionManager {
-
     private DeluxeHubPlugin plugin;
     private Map<String, Action> actions;
 

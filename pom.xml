@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fun.lewisdev</groupId>
-    <artifactId>deluxehub</artifactId>
-    <version>3.5.0</version>
+    <artifactId>deluxe-hub</artifactId>
+    <version>3.5.1</version>
     <packaging>jar</packaging>
 
     <name>DeluxeHub</name>
@@ -19,7 +19,7 @@
     </developers>
 
     <properties>
-        <java.version>1.8</java.version>
+        <jdk.version>8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -32,8 +32,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -126,8 +126,8 @@
             <url>https://libraries.minecraft.net/</url>
         </repository>
         <repository>
-            <id>HeadDatabase-API</id>
-            <url>https://mvn.intellectualsites.com/content/repositories/thirdparty/</url>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -147,7 +147,7 @@
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>1.5.21</version>
+            <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -183,15 +183,21 @@
             <version>2.8.0</version>
         </dependency>
         <dependency>
-            <groupId>me.arcaniax</groupId>
+            <groupId>com.arcaniax</groupId>
             <artifactId>HeadDatabase-API</artifactId>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.mrmicky</groupId>
             <artifactId>fastboard</artifactId>
             <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

@@ -29,9 +29,13 @@ import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.UpdateChecker;
 
 public class DeluxeHubPlugin extends JavaPlugin {
+    private static final int BSTATS_ID;
+    public static final int SERVER_VERSION;
 
-    private static final int BSTATS_ID = 3151;
-    public static int SERVER_VERSION;
+    static {
+        BSTATS_ID = 3151;
+        SERVER_VERSION = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].replace(".", "#").split("#")[1]);
+    }
 
     private ConfigManager configManager;
     private ActionManager actionManager;
@@ -41,6 +45,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
     private ModuleManager moduleManager;
     private InventoryManager inventoryManager;
 
+    @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
 
@@ -48,7 +53,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, "| \\ |_ |  | | \\/ |_ |_| | | |_)   _)");
         getLogger().log(Level.INFO, "|_/ |_ |_ |_| /\\ |_ | | |_| |_)   _)");
         getLogger().log(Level.INFO, "");
-        getLogger().log(Level.INFO, "Version: " + getDescription().getVersion());
+        getLogger().log(Level.INFO, "Version: {0}", getDescription().getVersion());
         getLogger().log(Level.INFO, "Author: ItsLewizzz");
         getLogger().log(Level.INFO, "");
 
@@ -65,9 +70,8 @@ public class DeluxeHubPlugin extends JavaPlugin {
             return;
         }
 
-        SERVER_VERSION = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].replace(".", "#").split("#")[1]);
         if (SERVER_VERSION > 15)
-            TextUtil.HEX_USE = true;
+            TextUtil.setUseHex(true);
 
         // Enable bStats metrics
         new MetricsLite(this, BSTATS_ID);
@@ -110,15 +114,15 @@ public class DeluxeHubPlugin extends JavaPlugin {
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         getLogger().log(Level.INFO, "");
-        getLogger().log(Level.INFO, "Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");
+        getLogger().log(Level.INFO, "Successfully loaded in {0} ms", (System.currentTimeMillis() - start));
     }
 
+    @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         moduleManager.unloadModules();
         inventoryManager.onDisable();
         configManager.saveFiles();
-
     }
 
     public void reload() {
@@ -144,7 +148,6 @@ public class DeluxeHubPlugin extends JavaPlugin {
         } catch (MissingNestedCommandException e) {
             sender.sendMessage(ChatColor.RED + e.getUsage());
         } catch (CommandUsageException e) {
-            // sender.sendMessage(ChatColor.RED + e.getMessage());
             sender.sendMessage(ChatColor.RED + "Usage: " + e.getUsage());
         } catch (WrappedCommandException e) {
             if (e.getCause() instanceof NumberFormatException) {

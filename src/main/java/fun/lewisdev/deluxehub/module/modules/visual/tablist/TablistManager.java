@@ -20,11 +20,10 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 
 public class TablistManager extends Module {
-
     private List<UUID> players;
     private int tablistTask;
-
-    private String header, footer;
+    private String header;
+    private String footer;
 
     public TablistManager(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.TABLIST);
@@ -68,11 +67,13 @@ public class TablistManager extends Module {
             return false;
 
         Player player = Bukkit.getPlayer(uuid);
+
         if (player == null)
             return false;
 
         TablistHelper.sendTabList(player, PlaceholderUtil.setPlaceholders(header, player),
                 PlaceholderUtil.setPlaceholders(footer, player));
+
         return true;
     }
 
@@ -90,6 +91,7 @@ public class TablistManager extends Module {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
         if (!inDisabledWorld(player.getLocation()))
             createTablist(player);
     }
@@ -102,6 +104,7 @@ public class TablistManager extends Module {
     @EventHandler
     public void onWorldChange(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
+
         if (event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName()))
             return;
 
@@ -110,5 +113,4 @@ public class TablistManager extends Module {
         else
             createTablist(player);
     }
-
 }

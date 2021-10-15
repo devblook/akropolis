@@ -28,16 +28,15 @@ import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class DeluxeHubCommand {
-
     private DeluxeHubPlugin plugin;
 
     public DeluxeHubCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 
+    // TODO: Reduce cognitive complexity from 137 to something minor.
     @Command(aliases = { "deluxehub", "dhub" }, desc = "View plugin information")
     public void main(final CommandContext args, final CommandSender sender) throws CommandException {
-
         PluginDescriptionFile pdfFile = plugin.getDescription();
 
         /*
@@ -388,11 +387,7 @@ public class DeluxeHubCommand {
                     holo.setLocation(player.getLocation());
                     sender.sendMessage(Messages.HOLOGRAMS_MOVED.toString().replace("%name%", args.getString(2)));
                 }
-                return;
-
             }
-
         }
-
     }
 }

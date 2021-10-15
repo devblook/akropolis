@@ -16,6 +16,8 @@ public class PotionEffectAction implements Action {
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
-        player.addPotionEffect(XPotion.matchXPotion(args[0]).get().parsePotion(1000000, Integer.parseInt(args[1]) - 1));
+
+        XPotion.matchXPotion(args[0])
+                .ifPresent(p -> player.addPotionEffect(p.parsePotion(1000000, Integer.parseInt(args[1]) - 1)));
     }
 }

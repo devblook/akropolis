@@ -6,16 +6,15 @@ import java.util.List;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryItem {
-
     public final ItemStack itemStack;
     public final List<ClickAction> clickActions;
 
-    public InventoryItem(final ItemStack itemStack) {
+    public InventoryItem(ItemStack itemStack) {
         this.clickActions = new ArrayList<>();
         this.itemStack = itemStack;
     }
 
-    public InventoryItem addClickAction(final ClickAction clickAction) {
+    public InventoryItem addClickAction(ClickAction clickAction) {
         this.clickActions.add(clickAction);
         return this;
     }

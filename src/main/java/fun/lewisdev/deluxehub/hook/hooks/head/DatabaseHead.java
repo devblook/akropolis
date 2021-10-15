@@ -10,7 +10,6 @@ import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 
 public class DatabaseHead implements PluginHook, HeadHook, Listener {
-
     private DeluxeHubPlugin plugin;
     private HeadDatabaseAPI api;
 
@@ -30,5 +29,4 @@ public class DatabaseHead implements PluginHook, HeadHook, Listener {
     public void onDatabaseLoad(DatabaseLoadEvent event) {
         plugin.getInventoryManager().onEnable(plugin);
     }
-
 }

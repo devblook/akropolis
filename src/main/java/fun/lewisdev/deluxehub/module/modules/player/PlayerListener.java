@@ -24,17 +24,13 @@ import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class PlayerListener extends Module {
-
     private boolean joinQuitMessagesEnabled;
     private String joinMessage;
     private String quitMessage;
-
     private List<String> joinActions;
-
     private boolean spawnHeal;
     private boolean extinguish;
     private boolean clearInventory;
-
     private boolean fireworkEnabled;
     private boolean fireworkFirstJoin;
     private boolean fireworkFlicker;
@@ -49,7 +45,6 @@ public class PlayerListener extends Module {
 
     @Override
     public void onEnable() {
-
         // Load config stuff
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         joinQuitMessagesEnabled = config.getBoolean("join_leave_messages.enabled");
@@ -81,13 +76,15 @@ public class PlayerListener extends Module {
 
     @Override
     public void onDisable() {
-
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
+    // TODO: Reduce cognitive complexity from 18 to something minor.
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
         if (inDisabledWorld(player.getLocation()))
             return;
 
@@ -133,8 +130,8 @@ public class PlayerListener extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event) {
-
         Player player = event.getPlayer();
+
         if (inDisabledWorld(player.getLocation()))
             return;
 
@@ -148,12 +145,12 @@ public class PlayerListener extends Module {
         }
 
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
-
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
+
         if (inDisabledWorld(player.getLocation()))
             player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
     }
@@ -161,12 +158,10 @@ public class PlayerListener extends Module {
     public void spawnFirework(Player player) {
         Firework f = player.getWorld().spawn(player.getLocation(), Firework.class);
         FireworkMeta fm = f.getFireworkMeta();
+
         fm.addEffect(FireworkEffect.builder().flicker(fireworkFlicker).trail(fireworkTrail)
                 .with(FireworkEffect.Type.valueOf(fireworkType)).withColor(fireworkColors).build());
         fm.setPower(fireworkPower);
         f.setFireworkMeta(fm);
-
-        // Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> f.remove(),
-        // 100L);
     }
 }

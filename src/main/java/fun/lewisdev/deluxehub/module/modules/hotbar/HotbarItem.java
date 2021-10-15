@@ -23,7 +23,6 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 
 public abstract class HotbarItem implements Listener {
-
     private HotbarManager hotbarManager;
     private ItemStack item;
     private ConfigurationSection configurationSection;
@@ -32,7 +31,7 @@ public abstract class HotbarItem implements Listener {
     private int slot;
     private boolean allowMovement;
 
-    public HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
+    protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
         this.hotbarManager = hotbarManager;
         this.key = key;
         this.slot = slot;
@@ -89,6 +88,7 @@ public abstract class HotbarItem implements Listener {
             return;
 
         ItemStack newItem = item.clone();
+
         if (getConfigurationSection() != null && getConfigurationSection().contains("username")) {
             newItem = new ItemStackBuilder(newItem).setSkullOwner(player.getName()).build();
         }
@@ -98,9 +98,9 @@ public abstract class HotbarItem implements Listener {
 
     public void removeItem(Player player) {
         PlayerInventory inventory = player.getInventory();
-        ItemStack item = inventory.getItem(slot);
+        ItemStack itemInSlot = inventory.getItem(slot);
 
-        if (item != null && new NBTItem(item).getString("hotbarItem").equals(key)) {
+        if (itemInSlot != null && new NBTItem(itemInSlot).getString("hotbarItem").equals(key)) {
             inventory.remove(inventory.getItem(slot));
         }
     }
@@ -111,10 +111,12 @@ public abstract class HotbarItem implements Listener {
             return;
 
         Player player = (Player) event.getWhoClicked();
+
         if (getHotbarManager().inDisabledWorld(player.getLocation()))
             return;
 
         ItemStack clicked = event.getCurrentItem();
+
         if (clicked == null || clicked.getType() == Material.AIR)
             return;
 
@@ -127,17 +129,15 @@ public abstract class HotbarItem implements Listener {
     public void hotbarItemInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
+
         if (getPlugin().getServerVersionNumber() > 8 && event.getHand() != EquipmentSlot.HAND)
             return;
 
         Player player = event.getPlayer();
-        ItemStack item = player.getItemInHand();
+        ItemStack itemInHand = player.getItemInHand();
 
-        if (getHotbarManager().inDisabledWorld(player.getLocation()))
-            return;
-        else if (item.getType() == Material.AIR)
-            return;
-        else if (!new NBTItem(item).getString("hotbarItem").equals(key))
+        if (getHotbarManager().inDisabledWorld(player.getLocation()) || itemInHand.getType() == Material.AIR
+                || !new NBTItem(itemInHand).getString("hotbarItem").equals(key))
             return;
 
         onInteract(player);
@@ -146,6 +146,7 @@ public abstract class HotbarItem implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void hotbarPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
         if (!getHotbarManager().inDisabledWorld(player.getLocation()))
             giveItem(player);
     }
@@ -153,6 +154,7 @@ public abstract class HotbarItem implements Listener {
     @EventHandler
     public void hotbarPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+
         if (!getHotbarManager().inDisabledWorld(player.getLocation()))
             removeItem(player);
     }
@@ -160,6 +162,7 @@ public abstract class HotbarItem implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void hotbarWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
             if (getHotbarManager().inDisabledWorld(player.getLocation())) {
                 removeItem(player);
@@ -172,8 +175,8 @@ public abstract class HotbarItem implements Listener {
     @EventHandler
     public void hotbarPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
+
         if (!getHotbarManager().inDisabledWorld(player.getLocation()))
             giveItem(player);
     }
-
 }

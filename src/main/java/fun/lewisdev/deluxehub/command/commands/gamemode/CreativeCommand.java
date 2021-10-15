@@ -15,6 +15,7 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class CreativeCommand {
 
     public CreativeCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
     @Command(aliases = { "gmc" }, desc = "Change to creative mode", usage = "[player]", max = 1)
@@ -24,6 +25,7 @@ public class CreativeCommand {
                 throw new CommandException("Console cannot change gamemode");
 
             Player player = (Player) sender;
+
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 player.sendMessage(Messages.NO_PERMISSION.toString());
                 return;
@@ -38,6 +40,7 @@ public class CreativeCommand {
             }
 
             Player player = Bukkit.getPlayer(args.getString(0));
+
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
                 return;
@@ -50,6 +53,7 @@ public class CreativeCommand {
                 sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
                         .replace("%gamemode%", "CREATIVE"));
             }
+
             player.setGameMode(GameMode.CREATIVE);
         }
     }

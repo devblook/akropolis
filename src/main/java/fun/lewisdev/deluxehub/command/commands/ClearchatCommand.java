@@ -14,6 +14,7 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class ClearchatCommand {
 
     public ClearchatCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
     @Command(aliases = { "clearchat" }, desc = "Clear global or a player's chat", usage = "[player]", max = 1)
@@ -29,11 +30,13 @@ public class ClearchatCommand {
                 for (int i = 0; i < 100; i++) {
                     player.sendMessage("");
                 }
+
                 player.sendMessage(Messages.CLEARCHAT.toString().replace("%player%", sender.getName()));
             }
         } else if (args.argsLength() == 1) {
 
             Player player = Bukkit.getPlayer(args.getString(0));
+
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
                 return;
@@ -42,6 +45,7 @@ public class ClearchatCommand {
             for (int i = 0; i < 100; i++) {
                 player.sendMessage("");
             }
+
             sender.sendMessage(Messages.CLEARCHAT_PLAYER.toString().replace("%player%", sender.getName()));
         }
     }

@@ -1,5 +1,7 @@
 package fun.lewisdev.deluxehub.action.actions;
 
+import java.util.logging.Level;
+
 import org.bukkit.entity.Player;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
@@ -20,7 +22,7 @@ public class MenuAction implements Action {
         if (inventory != null) {
             inventory.openInventory(player);
         } else {
-            plugin.getLogger().warning("[MENU] Action Failed: Menu '" + data + "' not found.");
+            plugin.getLogger().log(Level.WARNING, "[MENU] Action Failed: Menu {0} not found.", data);
         }
     }
 }

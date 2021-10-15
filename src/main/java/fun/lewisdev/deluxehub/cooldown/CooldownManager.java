@@ -6,7 +6,6 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 public class CooldownManager {
-
     private Table<String, CooldownType, Long> cooldowns = HashBasedTable.create();
 
     /**

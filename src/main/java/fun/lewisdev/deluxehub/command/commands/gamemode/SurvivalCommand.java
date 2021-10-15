@@ -15,6 +15,7 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class SurvivalCommand {
 
     public SurvivalCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
     @Command(aliases = { "gms" }, desc = "Change to survival mode", usage = "[player]", max = 1)
@@ -24,6 +25,7 @@ public class SurvivalCommand {
                 throw new CommandException("Console cannot change gamemode");
 
             Player player = (Player) sender;
+
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
                 return;
@@ -38,6 +40,7 @@ public class SurvivalCommand {
             }
 
             Player player = Bukkit.getPlayer(args.getString(0));
+
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
                 return;

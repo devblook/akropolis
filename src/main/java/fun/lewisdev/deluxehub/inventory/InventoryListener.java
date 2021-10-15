@@ -11,9 +11,7 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-
         if (event.getView().getTopInventory().getHolder() instanceof InventoryBuilder) {
-
             event.setCancelled(true);
 
             if (event.getWhoClicked() instanceof Player) {
@@ -36,5 +34,4 @@ public class InventoryListener implements Listener {
             }
         }
     }
-
 }

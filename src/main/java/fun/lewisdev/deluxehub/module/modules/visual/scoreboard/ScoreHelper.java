@@ -10,7 +10,6 @@ import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class ScoreHelper {
-
     private final FastBoard fastBoard;
     private final Player player;
 

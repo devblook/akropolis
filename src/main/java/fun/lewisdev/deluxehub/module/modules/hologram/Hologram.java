@@ -13,7 +13,6 @@ import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.reflection.ArmorStandName;
 
 public class Hologram {
-
     private List<ArmorStand> stands;
     private Location location;
     private String name;
@@ -26,43 +25,51 @@ public class Hologram {
 
     public Hologram setLines(List<String> lines) {
         remove();
+
         for (String s : lines)
             addLine(s);
+
         return this;
     }
 
     public Hologram addLines(List<String> lines) {
         for (String s : lines)
             addLine(s);
+
         return this;
     }
 
     public Hologram addLine(String text) {
         ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location.clone().subtract(0, getHeight(), 0),
                 EntityType.ARMOR_STAND);
+
         stand.setVisible(false);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
         stand.setCustomName(TextUtil.color(text).trim());
         stand.setCanPickupItems(false);
         stands.add(stand);
+
         return this;
     }
 
     public Hologram setLine(int line, String text) {
         ArmorStand stand = stands.get(line - 1);
+
         stand.setCustomName(TextUtil.color(text).trim());
+
         return this;
     }
 
     public Hologram removeLine(int line) {
         ArmorStand stand = stands.get(line - 1);
-        stand.remove();
 
+        stand.remove();
         stands.remove(line - 1);
 
         if (!refreshLines(line - 1))
             return null;
+
         return this;
     }
 
@@ -70,6 +77,7 @@ public class Hologram {
         List<ArmorStand> standsTemp = new ArrayList<>();
 
         int count = 0;
+
         for (ArmorStand entry : stands) {
             if (count >= line)
                 standsTemp.add(entry);
@@ -85,6 +93,7 @@ public class Hologram {
     public Hologram setLocation(Location location) {
         this.location = location;
         setLines(stands.stream().map(ArmorStandName::getName).collect(Collectors.toList()));
+
         return this;
     }
 
@@ -97,6 +106,7 @@ public class Hologram {
             ArmorStand stand = it.next();
             stand.remove();
         }
+
         stands.clear();
     }
 
@@ -115,5 +125,4 @@ public class Hologram {
     private double getHeight() {
         return stands.size() * 0.25;
     }
-
 }

@@ -13,7 +13,6 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.player.PlayerVanish;
 
 public class VanishCommand {
-
     private DeluxeHubPlugin plugin;
 
     public VanishCommand(DeluxeHubPlugin plugin) {
@@ -22,7 +21,6 @@ public class VanishCommand {
 
     @Command(aliases = { "vanish" }, desc = "Disappear into thin air!")
     public void vanish(final CommandContext args, final CommandSender sender) throws CommandException {
-
         if (!sender.hasPermission(Permissions.COMMAND_VANISH.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
             return;
@@ -37,5 +35,4 @@ public class VanishCommand {
         PlayerVanish vanishModule = ((PlayerVanish) plugin.getModuleManager().getModule(ModuleType.VANISH));
         vanishModule.toggleVanish(player);
     }
-
 }

@@ -19,7 +19,7 @@
 #   %location% - Returns player location
 #   %online% - Returns number of players online
 #   %online_max% - Returns number of max player slots
-# 
+#
 #        *** USE PLACEHOLDERAPI TO GET MORE ***
 #  (https://www.spigotmc.org/resources/placeholderapi.6245/)
 #--------
@@ -58,7 +58,7 @@ disabled-worlds:
     - world_nether
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# | ANTI-WORLD DOWNLOADER                    | 
+# | ANTI-WORLD DOWNLOADER                    |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Prevent users downloading your world via the world downloader mod
@@ -182,7 +182,7 @@ launchpad:
 
   # Actions executed upon use of a launchpad
   actions:
-    - '[SOUND] ENTITY_BAT_TAKEOFF'
+    - "[SOUND] ENTITY_BAT_TAKEOFF"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | DOUBLE JUMP                              |
@@ -201,7 +201,7 @@ double_jump:
 
   # Actions executed upon use of double jump
   actions:
-    - '[SOUND] ENTITY_BAT_TAKEOFF'
+    - "[SOUND] ENTITY_BAT_TAKEOFF"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CHAT MANAGEMENT                          |
@@ -240,7 +240,6 @@ anti_swear:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 world_settings:
-
   # Player
   disable_hunger_loss: true
   disable_fall_damage: true
@@ -372,13 +371,13 @@ player_hider:
   not_hidden:
     material: LIME_DYE
     amount: 1
-    display_name: '&dPlayers &8&l> &aShown &7(Right-Click)'
+    display_name: "&dPlayers &8&l> &aShown &7(Right-Click)"
     lore:
-      - '&7Click to hide all players!'
+      - "&7Click to hide all players!"
 
   hidden:
     material: GRAY_DYE
     amount: 1
-    display_name: '&dPlayers &8&l> &cHidden &7(Right-Click)'
+    display_name: "&dPlayers &8&l> &cHidden &7(Right-Click)"
     lore:
-      - '&7Click to show all players!'
+      - "&7Click to show all players!"

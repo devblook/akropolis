@@ -4,7 +4,6 @@
 # You do not need to restart your server if you edit anything below here
 
 custom_commands:
-
   # Command name, this will be used as the main command
   website:
     # List any aliases for the command here
@@ -12,15 +11,15 @@ custom_commands:
       - web
     # Actions to be executed
     actions:
-      - '[MESSAGE] &bWebsite: &fwww.examplemc.net'
+      - "[MESSAGE] &bWebsite: &fwww.examplemc.net"
   clearinventory:
     # Players will require this permission to execute this command.
     permission: deluxehub.clearinventory
     aliases:
       - ci
     actions:
-      - '[CONSOLE] minecraft:clear %player%'
-      - '[MESSAGE] &dDeluxeHub &eYour inventory has been cleared!'
+      - "[CONSOLE] minecraft:clear %player%"
+      - "[MESSAGE] &dDeluxeHub &eYour inventory has been cleared!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | DELUXEHUB COMMANDS                       |

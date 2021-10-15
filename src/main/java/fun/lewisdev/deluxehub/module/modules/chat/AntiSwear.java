@@ -15,7 +15,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class AntiSwear extends Module {
-
     private List<String> blockedWords;
 
     public AntiSwear(DeluxeHubPlugin plugin) {
@@ -29,12 +28,13 @@ public class AntiSwear extends Module {
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-
         Player player = event.getPlayer();
+
         if (player.hasPermission(Permissions.ANTI_SWEAR_BYPASS.getPermission()))
             return;
 
@@ -42,7 +42,6 @@ public class AntiSwear extends Module {
 
         for (String word : blockedWords) {
             if (message.toLowerCase().contains(word.toLowerCase())) {
-
                 event.setCancelled(true);
                 player.sendMessage(Messages.ANTI_SWEAR_WORD_BLOCKED.toString());
 

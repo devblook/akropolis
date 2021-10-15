@@ -21,10 +21,8 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class ScoreboardManager extends Module {
-
     private int scoreTask;
     private Map<UUID, ScoreHelper> players;
-
     private long joinDelay;
     private long worldDelay;
     private String title;
@@ -50,9 +48,8 @@ public class ScoreboardManager extends Module {
                     config.getLong("scoreboard.refresh.rate"));
         }
 
-       Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers()
-                .stream().filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createScoreboard),
-                20L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
+                .filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createScoreboard), 20L);
     }
 
     @Override
@@ -71,8 +68,10 @@ public class ScoreboardManager extends Module {
             return null;
 
         ScoreHelper helper = players.get(player.getUniqueId());
+
         if (helper == null)
             helper = new ScoreHelper(player);
+
         helper.setTitle(title);
 
         helper.setSlotsFromList(lines);
@@ -122,5 +121,4 @@ public class ScoreboardManager extends Module {
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), worldDelay);
         }
     }
-
 }

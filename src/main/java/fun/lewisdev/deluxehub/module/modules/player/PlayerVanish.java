@@ -18,7 +18,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class PlayerVanish extends Module {
-
     private List<UUID> vanished;
 
     public PlayerVanish(DeluxeHubPlugin plugin) {
@@ -43,7 +42,6 @@ public class PlayerVanish extends Module {
 
             player.sendMessage(Messages.VANISH_DISABLE.toString());
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-
         } else {
             vanished.add(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.hidePlayer(player));

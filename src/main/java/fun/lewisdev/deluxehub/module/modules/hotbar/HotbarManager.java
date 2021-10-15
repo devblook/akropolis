@@ -16,7 +16,6 @@ import fun.lewisdev.deluxehub.module.modules.hotbar.items.PlayerHider;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 
 public class HotbarManager extends Module {
-
     private List<HotbarItem> hotbarItems;
 
     public HotbarManager(DeluxeHubPlugin plugin) {
@@ -29,7 +28,6 @@ public class HotbarManager extends Module {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
 
         if (config.getBoolean("custom_join_items.enabled")) {
-
             for (String entry : config.getConfigurationSection("custom_join_items.items").getKeys(false)) {
                 ItemStack item = ItemStackBuilder
                         .getItemStack(config.getConfigurationSection("custom_join_items.items." + entry)).build();
@@ -44,7 +42,6 @@ public class HotbarManager extends Module {
                 customItem.setAllowMovement(config.getBoolean("custom_join_items.disable_inventory_movement"));
                 registerHotbarItem(customItem);
             }
-
         }
 
         if (config.getBoolean("player_hider.enabled")) {
@@ -83,5 +80,4 @@ public class HotbarManager extends Module {
         Bukkit.getOnlinePlayers().stream().filter(player -> !inDisabledWorld(player.getLocation()))
                 .forEach(player -> hotbarItems.forEach(hotbarItem -> hotbarItem.removeItem(player)));
     }
-
 }

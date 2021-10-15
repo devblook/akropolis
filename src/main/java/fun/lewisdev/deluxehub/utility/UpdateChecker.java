@@ -24,16 +24,21 @@ import fun.lewisdev.deluxehub.Permissions;
    Credits: Benz56
    https://www.spigotmc.org/threads/async-update-checker-for-premium-and-regular-plugins.327921/
  */
-public class UpdateChecker {
 
+public class UpdateChecker {
     private final JavaPlugin plugin;
     private final String localPluginVersion;
     private String spigotPluginVersion;
 
-    private static final int ID = 49425;
-    private static final Permission UPDATE_PERM = new Permission(Permissions.UPDATE_NOTIFICATION.getPermission(),
-            PermissionDefault.TRUE);
-    private static final long CHECK_INTERVAL = 12_000;
+    private static final int ID;
+    private static final Permission UPDATE_PERM;
+    private static final long CHECK_INTERVAL;
+
+    static {
+        ID = 49425;
+        UPDATE_PERM = new Permission(Permissions.UPDATE_NOTIFICATION.getPermission(), PermissionDefault.TRUE);
+        CHECK_INTERVAL = 12_000;
+    }
 
     public UpdateChecker(JavaPlugin plugin) {
         this.plugin = plugin;

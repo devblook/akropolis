@@ -8,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 public class InventoryBuilder implements InventoryHolder {
-
     private final Map<Integer, InventoryItem> icons;
     private int size;
     private String title;

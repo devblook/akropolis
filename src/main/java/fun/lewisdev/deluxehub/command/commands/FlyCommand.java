@@ -14,8 +14,10 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class FlyCommand {
 
     public FlyCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
+    // TODO: Reduce cognitive complexity from 16 to something minor.
     @Command(aliases = { "fly" }, desc = "Toggle flight mode", usage = "[player]", max = 1)
     public void flight(final CommandContext args, final CommandSender sender) throws CommandException {
 

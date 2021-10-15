@@ -1,8 +1,9 @@
 package fun.lewisdev.deluxehub.module;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -31,10 +32,9 @@ import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.module.modules.world.WorldProtect;
 
 public class ModuleManager {
-
     private DeluxeHubPlugin plugin;
     private List<String> disabledWorlds;
-    private Map<ModuleType, Module> modules = new HashMap<>();
+    private Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
 
     public void loadModules(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
@@ -88,7 +88,7 @@ public class ModuleManager {
             }
         }
 
-        plugin.getLogger().info("Loaded " + modules.size() + " plugin modules.");
+        plugin.getLogger().log(Level.INFO, "Loaded {0} plugin modules.", modules.size());
     }
 
     public void unloadModules() {
@@ -102,6 +102,7 @@ public class ModuleManager {
                         .severe("There was an error unloading the " + module.getModuleType().toString() + " module.");
             }
         }
+
         modules.clear();
     }
 
@@ -114,7 +115,6 @@ public class ModuleManager {
     }
 
     public void registerModule(Module module, String isEnabledPath) {
-        DeluxeHubPlugin plugin = module.getPlugin();
         if (isEnabledPath != null
                 && !plugin.getConfigManager().getFile(ConfigType.SETTINGS).getConfig().getBoolean(isEnabledPath, false))
             return;

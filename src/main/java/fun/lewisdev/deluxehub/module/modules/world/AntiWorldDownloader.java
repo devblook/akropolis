@@ -15,7 +15,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class AntiWorldDownloader extends Module implements PluginMessageListener {
-
     private final boolean legacy;
 
     public AntiWorldDownloader(DeluxeHubPlugin plugin) {

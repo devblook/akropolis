@@ -24,6 +24,7 @@ public class TitleAction implements Action {
         int fadeIn;
         int stay;
         int fadeOut;
+
         try {
             fadeIn = Integer.parseInt(args[2]);
             stay = Integer.parseInt(args[3]);

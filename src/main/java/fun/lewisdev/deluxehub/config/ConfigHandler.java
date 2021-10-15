@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigHandler {
-
     private final JavaPlugin plugin;
     private final String name;
     private final File file;

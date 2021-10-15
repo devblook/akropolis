@@ -15,8 +15,10 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class GamemodeCommand {
 
     public GamemodeCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
+    // TODO: Refactor to reduce complexity from 17 to something minor.
     @Command(aliases = {
             "gamemode" }, desc = "Allows you to change gamemode", usage = "<gamemode> [player]", min = 1, max = 2)
     public void gamemode(final CommandContext args, final CommandSender sender) throws CommandException {

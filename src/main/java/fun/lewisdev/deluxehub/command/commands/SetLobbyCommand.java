@@ -14,7 +14,6 @@ import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class SetLobbyCommand {
-
     private DeluxeHubPlugin plugin;
 
     public SetLobbyCommand(DeluxeHubPlugin plugin) {
@@ -23,7 +22,6 @@ public class SetLobbyCommand {
 
     @Command(aliases = { "setlobby" }, desc = "Set the lobby location")
     public void setlobby(final CommandContext args, final CommandSender sender) throws CommandException {
-
         if (!sender.hasPermission(Permissions.COMMAND_SET_LOBBY.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
             return;
@@ -35,6 +33,7 @@ public class SetLobbyCommand {
         }
 
         Player player = (Player) sender;
+
         if (plugin.getModuleManager().getDisabledWorlds().contains(player.getWorld().getName())) {
             sender.sendMessage(TextUtil.color("&cYou cannot set the lobby location in a disabled world."));
             return;
@@ -43,7 +42,5 @@ public class SetLobbyCommand {
         LobbySpawn lobbyModule = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY));
         lobbyModule.setLocation(player.getLocation());
         sender.sendMessage(Messages.SET_LOBBY.toString());
-
     }
-
 }

@@ -14,8 +14,11 @@ import fun.lewisdev.deluxehub.utility.reflection.ReflectionUtils;
 
 public class TablistHelper {
 
-    public static void sendTabList(Player player, String header, String footer) {
+    private TablistHelper() {
+        throw new UnsupportedOperationException();
+    }
 
+    public static void sendTabList(Player player, String header, String footer) {
         Objects.requireNonNull(player, "Cannot update tab for null player");
         header = Strings.isNullOrEmpty(header) ? ""
                 : TextUtil.color(header).replace("%player%", player.getDisplayName());
@@ -35,25 +38,29 @@ public class TablistHelper {
             Object packet = ReflectionUtils.getNMSClass("PacketPlayOutPlayerListHeaderFooter").getConstructor()
                     .newInstance();
 
-            Field aField;
-            Field bField;
-            try {
-                aField = packet.getClass().getDeclaredField("a");
-                bField = packet.getClass().getDeclaredField("b");
-            } catch (Exception ex) {
-                aField = packet.getClass().getDeclaredField("header");
-                bField = packet.getClass().getDeclaredField("footer");
-            }
-
-            aField.setAccessible(true);
-            aField.set(packet, tabHeader);
-
-            bField.setAccessible(true);
-            bField.set(packet, tabFooter);
-
+            setFields(tabHeader, tabFooter, packet);
             ReflectionUtils.sendPacket(player, packet);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private static void setFields(Object tabHeader, Object tabFooter, Object packet)
+            throws IllegalAccessException, NoSuchFieldException {
+        Field aField;
+        Field bField;
+        try {
+            aField = packet.getClass().getDeclaredField("a");
+            bField = packet.getClass().getDeclaredField("b");
+        } catch (Exception ex) {
+            aField = packet.getClass().getDeclaredField("header");
+            bField = packet.getClass().getDeclaredField("footer");
+        }
+
+        aField.setAccessible(true);
+        aField.set(packet, tabHeader);
+
+        bField.setAccessible(true);
+        bField.set(packet, tabFooter);
     }
 }

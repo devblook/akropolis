@@ -13,7 +13,6 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 
 public class CustomCommands extends Module {
-
     private List<CustomCommand> commands;
 
     public CustomCommands(DeluxeHubPlugin plugin) {
@@ -27,12 +26,13 @@ public class CustomCommands extends Module {
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-
         Player player = event.getPlayer();
+
         if (inDisabledWorld(player.getLocation()))
             return;
 
@@ -40,17 +40,15 @@ public class CustomCommands extends Module {
 
         for (CustomCommand customCommand : commands) {
             if (customCommand.getAliases().stream().anyMatch(alias -> alias.equals(command))) {
-                if (customCommand.getPermission() != null)
-                    if (!player.hasPermission(customCommand.getPermission())) {
-                        player.sendMessage(Messages.CUSTOM_COMMAND_NO_PERMISSION.toString());
-                        event.setCancelled(true);
-                        return;
-                    }
+                if (customCommand.getPermission() != null && !player.hasPermission(customCommand.getPermission())) {
+                    player.sendMessage(Messages.CUSTOM_COMMAND_NO_PERMISSION.toString());
+                    event.setCancelled(true);
+                    return;
+                }
+
                 event.setCancelled(true);
                 getPlugin().getActionManager().executeActions(player, customCommand.getActions());
             }
         }
-
     }
-
 }

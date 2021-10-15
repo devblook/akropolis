@@ -53,14 +53,14 @@ items:
     slot: 11
     amount: 1
     glow: true
-    display_name: '&eFactions'
+    display_name: "&eFactions"
     lore:
-      - '&7Join now!'
-      - '&aPlaceholderAPI support!'
+      - "&7Join now!"
+      - "&aPlaceholderAPI support!"
     actions:
-      - '[CLOSE]'
-      - '[MESSAGE] &7Sending you to: &eFactions'
-      - '[BUNGEE] factions'
+      - "[CLOSE]"
+      - "[MESSAGE] &7Sending you to: &eFactions"
+      - "[BUNGEE] factions"
       # For multi-world servers using Multiverse-Core, use the action:
       # - '[CONSOLE] mvtp %player% world'
   survival:
@@ -68,11 +68,11 @@ items:
     slot: 15
     amount: 1
     glow: false
-    display_name: '&aSurvival'
+    display_name: "&aSurvival"
     lore:
-      - '&7Join now!'
-      - '&aMulti lore support too!'
+      - "&7Join now!"
+      - "&aMulti lore support too!"
     actions:
-      - '[CLOSE]'
-      - '[MESSAGE] &7Sending you to: &eSurvival'
-      - '[BUNGEE] survival'
+      - "[CLOSE]"
+      - "[MESSAGE] &7Sending you to: &eSurvival"
+      - "[BUNGEE] survival"

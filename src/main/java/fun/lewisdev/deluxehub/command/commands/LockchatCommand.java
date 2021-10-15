@@ -12,7 +12,6 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.chat.ChatLock;
 
 public class LockchatCommand {
-
     private DeluxeHubPlugin plugin;
 
     public LockchatCommand(DeluxeHubPlugin plugin) {
@@ -21,7 +20,6 @@ public class LockchatCommand {
 
     @Command(aliases = { "lockchat" }, desc = "Locks global chat")
     public void lockchat(final CommandContext args, final CommandSender sender) throws CommandException {
-
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
             return;

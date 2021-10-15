@@ -12,7 +12,6 @@ import fun.lewisdev.deluxehub.hook.hooks.head.DatabaseHead;
 import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 
 public class HooksManager {
-
     private Map<String, PluginHook> hooks;
 
     public HooksManager(DeluxeHubPlugin plugin) {
@@ -24,7 +23,7 @@ public class HooksManager {
         // PlaceholderAPI
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             hooks.put("PLACEHOLDER_API", null);
-            PlaceholderUtil.PAPI = true;
+            PlaceholderUtil.setPapiState(true);
             plugin.getLogger().info(" Hooked into PlaceholderAPI");
         }
 
@@ -34,7 +33,6 @@ public class HooksManager {
         }
 
         hooks.values().stream().filter(Objects::nonNull).forEach(pluginHook -> pluginHook.onEnable(plugin));
-
     }
 
     public boolean isHookEnabled(String id) {
@@ -44,5 +42,4 @@ public class HooksManager {
     public PluginHook getPluginHook(String id) {
         return hooks.get(id);
     }
-
 }

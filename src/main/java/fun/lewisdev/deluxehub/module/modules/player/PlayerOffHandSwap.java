@@ -16,10 +16,12 @@ public class PlayerOffHandSwap extends Module {
 
     @Override
     public void onEnable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

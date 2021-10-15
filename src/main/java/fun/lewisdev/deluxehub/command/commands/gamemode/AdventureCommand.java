@@ -15,6 +15,7 @@ import fun.lewisdev.deluxehub.config.Messages;
 public class AdventureCommand {
 
     public AdventureCommand(DeluxeHubPlugin plugin) {
+        // For injection purposes.
     }
 
     @Command(aliases = { "gma" }, desc = "Change to adventure mode", usage = "[player]", max = 1)
@@ -24,6 +25,7 @@ public class AdventureCommand {
                 throw new CommandException("Console cannot change gamemode");
 
             Player player = (Player) sender;
+
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 player.sendMessage(Messages.NO_PERMISSION.toString());
                 return;
@@ -38,6 +40,7 @@ public class AdventureCommand {
             }
 
             Player player = Bukkit.getPlayer(args.getString(0));
+
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
                 return;
@@ -50,6 +53,7 @@ public class AdventureCommand {
                 sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
                         .replace("%gamemode%", "ADVENTURE"));
             }
+
             player.setGameMode(GameMode.ADVENTURE);
         }
     }

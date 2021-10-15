@@ -17,6 +17,7 @@ public class MessageAction implements Action {
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         if (data.contains("<center>") && data.contains("</center>"))
             data = TextUtil.getCenteredMessage(data);
+
         player.sendMessage(TextUtil.color(data));
     }
 }

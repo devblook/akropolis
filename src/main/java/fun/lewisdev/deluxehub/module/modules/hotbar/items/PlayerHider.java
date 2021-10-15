@@ -24,7 +24,6 @@ import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 
 public class PlayerHider extends HotbarItem {
-
     private int cooldown;
     private ItemStack hiddenItem;
     private List<UUID> hidden;
@@ -43,7 +42,6 @@ public class PlayerHider extends HotbarItem {
     @SuppressWarnings("deprecation")
     @Override
     protected void onInteract(Player player) {
-
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
             player.sendMessage(Messages.COOLDOWN_ACTIVE.toString().replace("%time%",
                     getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER)));
@@ -54,6 +52,7 @@ public class PlayerHider extends HotbarItem {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 player.hidePlayer(pl);
             }
+
             hidden.add(player.getUniqueId());
             player.sendMessage(Messages.PLAYER_HIDER_HIDDEN.toString());
 
@@ -62,6 +61,7 @@ public class PlayerHider extends HotbarItem {
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
                 player.showPlayer(pl);
             }
+
             hidden.remove(player.getUniqueId());
             player.sendMessage(Messages.PLAYER_HIDER_SHOWN.toString());
 
@@ -79,6 +79,7 @@ public class PlayerHider extends HotbarItem {
                 player.showPlayer(pl);
             }
         }
+
         hidden.remove(player.getUniqueId());
     }
 
@@ -86,9 +87,8 @@ public class PlayerHider extends HotbarItem {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        hidden.forEach(uuid -> {
-            Bukkit.getPlayer(uuid).hidePlayer(player);
-        });
+
+        hidden.forEach(uuid -> Bukkit.getPlayer(uuid).hidePlayer(player));
     }
 
     @SuppressWarnings("deprecation")

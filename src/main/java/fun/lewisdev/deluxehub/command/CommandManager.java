@@ -27,7 +27,6 @@ import fun.lewisdev.deluxehub.command.commands.gamemode.SurvivalCommand;
 import fun.lewisdev.deluxehub.config.ConfigType;
 
 public class CommandManager {
-
     private DeluxeHubPlugin plugin;
     private FileConfiguration config;
 
@@ -93,39 +92,41 @@ public class CommandManager {
 
     private void registerCommand(String cmd, String[] aliases) {
         switch (cmd.toUpperCase()) {
-        case "GAMEMODE":
-            commandRegistry.register(GamemodeCommand.class, aliases);
-            break;
-        case "GMS":
-            commandRegistry.register(SurvivalCommand.class, aliases);
-            break;
-        case "GMC":
-            commandRegistry.register(CreativeCommand.class, aliases);
-            break;
-        case "GMA":
-            commandRegistry.register(AdventureCommand.class, aliases);
-            break;
-        case "GMSP":
-            commandRegistry.register(SpectatorCommand.class, aliases);
-            break;
-        case "CLEARCHAT":
-            commandRegistry.register(ClearchatCommand.class, aliases);
-            break;
-        case "FLY":
-            commandRegistry.register(FlyCommand.class, aliases);
-            break;
-        case "LOCKCHAT":
-            commandRegistry.register(LockchatCommand.class, aliases);
-            break;
-        case "SETLOBBY":
-            commandRegistry.register(SetLobbyCommand.class, aliases);
-            break;
-        case "LOBBY":
-            commandRegistry.register(LobbyCommand.class, aliases);
-            break;
-        case "VANISH":
-            commandRegistry.register(VanishCommand.class, aliases);
-            break;
+            case "GAMEMODE":
+                commandRegistry.register(GamemodeCommand.class, aliases);
+                break;
+            case "GMS":
+                commandRegistry.register(SurvivalCommand.class, aliases);
+                break;
+            case "GMC":
+                commandRegistry.register(CreativeCommand.class, aliases);
+                break;
+            case "GMA":
+                commandRegistry.register(AdventureCommand.class, aliases);
+                break;
+            case "GMSP":
+                commandRegistry.register(SpectatorCommand.class, aliases);
+                break;
+            case "CLEARCHAT":
+                commandRegistry.register(ClearchatCommand.class, aliases);
+                break;
+            case "FLY":
+                commandRegistry.register(FlyCommand.class, aliases);
+                break;
+            case "LOCKCHAT":
+                commandRegistry.register(LockchatCommand.class, aliases);
+                break;
+            case "SETLOBBY":
+                commandRegistry.register(SetLobbyCommand.class, aliases);
+                break;
+            case "LOBBY":
+                commandRegistry.register(LobbyCommand.class, aliases);
+                break;
+            case "VANISH":
+                commandRegistry.register(VanishCommand.class, aliases);
+                break;
+            default:
+                break;
         }
     }
 

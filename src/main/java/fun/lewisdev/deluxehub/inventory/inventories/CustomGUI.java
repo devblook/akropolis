@@ -11,7 +11,6 @@ import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 
 public class CustomGUI extends AbstractInventory {
-
     private InventoryBuilder inventory;
     private FileConfiguration config;
 
@@ -20,9 +19,9 @@ public class CustomGUI extends AbstractInventory {
         this.config = config;
     }
 
+    // TODO: Reduce cognitive complexity from 22 to something minor.
     @Override
     public void onEnable() {
-
         InventoryBuilder inventoryBuilder = new InventoryBuilder(config.getInt("slots"),
                 TextUtil.color(config.getString("title")));
 
@@ -31,7 +30,6 @@ public class CustomGUI extends AbstractInventory {
         }
 
         for (String entry : config.getConfigurationSection("items").getKeys(false)) {
-
             try {
                 ItemStackBuilder builder = ItemStackBuilder
                         .getItemStack(config.getConfigurationSection("items." + entry));
@@ -65,7 +63,6 @@ public class CustomGUI extends AbstractInventory {
         }
 
         inventory = inventoryBuilder;
-
     }
 
     @Override

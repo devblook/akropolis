@@ -17,7 +17,6 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.utility.universal.XMaterial;
 
 public class Launchpad extends Module {
-
     private double launch;
     private double launchY;
     private List<String> actions;
@@ -34,8 +33,10 @@ public class Launchpad extends Module {
         launch = config.getDouble("launchpad.launch_power", 1.3);
         launchY = config.getDouble("launchpad.launch_power_y", 1.2);
         actions = config.getStringList("launchpad.actions");
-        topBlock = XMaterial.matchXMaterial(config.getString("launchpad.top_block")).get().parseMaterial();
-        bottomBlock = XMaterial.matchXMaterial(config.getString("launchpad.bottom_block")).get().parseMaterial();
+
+        XMaterial.matchXMaterial(config.getString("launchpad.top_block")).ifPresent(m -> topBlock = m.parseMaterial());
+        XMaterial.matchXMaterial(config.getString("launchpad.bottom_block"))
+                .ifPresent(m -> bottomBlock = m.parseMaterial());
 
         if (launch > 4.0)
             launch = 4.0;
@@ -45,6 +46,7 @@ public class Launchpad extends Module {
 
     @Override
     public void onDisable() {
+        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler
@@ -54,16 +56,11 @@ public class Launchpad extends Module {
         if (inDisabledWorld(location))
             return;
 
-        // Check for launchpad block
-        if (location.getBlock().getType() == topBlock
-                && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock) {
-
-            // Check for cooldown
-            if (tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
-                player.setVelocity(location.getDirection().multiply(launch).setY(launchY));
-                executeActions(player, actions);
-            }
+        // Check for launchpad block and cooldown
+        if (location.getBlock().getType() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
+                && tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
+            player.setVelocity(location.getDirection().multiply(launch).setY(launchY));
+            executeActions(player, actions);
         }
     }
-
 }
