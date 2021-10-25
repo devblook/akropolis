@@ -62,7 +62,7 @@ public class Launchpad extends Module {
             return;
 
         // Check for launchpad block and cooldown
-        if (event.getMaterial() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
+        if (location.getBlock().getType() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
                 && tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
             player.setVelocity(location.getDirection().multiply(launch).setY(launchY));
             executeActions(player, actions);

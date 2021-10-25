@@ -44,9 +44,7 @@ public class InventoryManager {
 
             try (InputStream inputStream = this.plugin.getResource("serverselector.yml");
                     OutputStream outputStream = new FileOutputStream(file)) {
-                if (!file.createNewFile()) {
-                    return;
-                }
+                file.createNewFile();
 
                 byte[] buffer = new byte[inputStream.available()];
                 inputStream.read(buffer);
