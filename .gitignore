@@ -6,10 +6,6 @@ target/
 dependency-reduced-pom.xml
 pom.xml.versionsBackup
 
-### Gradle ###
-.gradle
-build/
-
 ### Visual Studio Code ###
 .vscode/*
 
@@ -91,3 +87,8 @@ local.properties
 *.ear
 /lib
 **/*~
+
+### Gradle ###
+.gradle
+build/
+!gradle-wrapper.jar
