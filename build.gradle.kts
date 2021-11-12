@@ -1,6 +1,19 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     java
     `maven-publish`
+    id("com.github.johnrengelman.shadow") version ("7.1.0")
+}
+
+group = "fun.lewisdev"
+version = property("projectVersion") as String
+description = "An all-in-one hub management system."
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {
@@ -30,15 +43,32 @@ dependencies {
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.0")
 }
 
-group = "fun.lewisdev"
-version = "3.5.3"
-description = "DeluxeHub"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
     }
+}
+
+tasks.withType<ProcessResources> {
+    filter<ReplaceTokens>()
+}
+
+tasks.withType<ShadowJar> {
+    archiveClassifier.set("")
+    minimize()
+
+    exclude(
+        "org.bukkit:bukkit:*",
+        "org.yaml:snakeyaml:*",
+        "com.google.code.gson:gson:*",
+        "org.apache.commons:commons-lang:*",
+        "de.tr7zw:functional-annotations:*"
+    )
+
+    relocate("org.bstats", "fun.lewisdev.deluxehub.libs.metrics")
+    relocate("cl.bgmp", "fun.lewisdev.deluxehub.libs.commandframework")
+    relocate("de.tr7zw.changeme.nbtapi", "fun.lewisdev.deluxehub.libs.nbtapi")
+    relocate("fr.mrmicky.fastboard", "fun.lewisdev.deluxehub.libs.fastboard")
 }
 
 tasks.withType<JavaCompile> {

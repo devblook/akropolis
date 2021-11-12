@@ -27,6 +27,7 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.hologram.HologramManager;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 import fun.lewisdev.deluxehub.utility.UpdateChecker;
+import org.jetbrains.annotations.NotNull;
 
 public class DeluxeHubPlugin extends JavaPlugin {
     private static final int BSTATS_ID;
@@ -140,7 +141,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String commandLabel, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.Command cmd, @NotNull String commandLabel, String[] args) {
         try {
             getCommandManager().execute(cmd.getName(), args, sender);
         } catch (CommandPermissionsException e) {
@@ -159,6 +160,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
         } catch (CommandException e) {
             sender.sendMessage(ChatColor.RED + e.getMessage());
         }
+
         return true;
     }
 

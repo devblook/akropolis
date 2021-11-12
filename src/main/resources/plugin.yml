@@ -1,7 +1,7 @@
 name: DeluxeHub
 author: ItsLewizzz
-version: ${project.version}
-description: ${project.description}
+version: ${version}
+description: ${description}
 website: ${project.url}
 api-version: 1.13
 main: fun.lewisdev.deluxehub.DeluxeHubPlugin
