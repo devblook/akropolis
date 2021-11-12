@@ -1,8 +1,6 @@
 package fun.lewisdev.deluxehub.module;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -45,9 +43,13 @@ public class ModuleManager {
         disabledWorlds = config.getStringList("disabled-worlds.worlds");
 
         if (config.getBoolean("disabled-worlds.invert")) {
+            List<String> newDisabledWorlds = new ArrayList<>();
+
             for (World world : Bukkit.getWorlds()) {
-                disabledWorlds.add(world.getName());
+                newDisabledWorlds.add(world.getName());
             }
+
+            disabledWorlds = newDisabledWorlds;
 
             for (String world : config.getStringList("disabled-worlds.worlds")) {
                 disabledWorlds.remove(world);
