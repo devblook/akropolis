@@ -4,7 +4,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -32,9 +31,9 @@ import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.module.modules.world.WorldProtect;
 
 public class ModuleManager {
+    private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
     private DeluxeHubPlugin plugin;
     private List<String> disabledWorlds;
-    private Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
 
     public void loadModules(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
@@ -46,9 +45,13 @@ public class ModuleManager {
         disabledWorlds = config.getStringList("disabled-worlds.worlds");
 
         if (config.getBoolean("disabled-worlds.invert")) {
-            disabledWorlds = Bukkit.getWorlds().stream().map(World::getName).collect(Collectors.toList());
-            for (String world : config.getStringList("disabled-worlds.worlds"))
+            for (World world : Bukkit.getWorlds()) {
+                disabledWorlds.add(world.getName());
+            }
+
+            for (String world : config.getStringList("disabled-worlds.worlds")) {
                 disabledWorlds.remove(world);
+            }
         }
 
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl.enabled");
