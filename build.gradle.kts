@@ -31,8 +31,9 @@ repositories {
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
-    implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT")
+    implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT") {
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
     implementation("de.tr7zw:item-nbt-api:2.8.0")
     implementation("fr.mrmicky:fastboard:1.2.0")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
@@ -55,15 +56,9 @@ tasks.withType<ProcessResources> {
 
 tasks.withType<ShadowJar> {
     archiveClassifier.set("")
-    minimize()
+    archiveFileName.set("DeluxeHub-${project.version}.jar")
 
-    exclude(
-        "org.bukkit:bukkit:*",
-        "org.yaml:snakeyaml:*",
-        "com.google.code.gson:gson:*",
-        "org.apache.commons:commons-lang:*",
-        "de.tr7zw:functional-annotations:*"
-    )
+    minimize()
 
     relocate("org.bstats", "fun.lewisdev.deluxehub.libs.metrics")
     relocate("cl.bgmp", "fun.lewisdev.deluxehub.libs.commandframework")
