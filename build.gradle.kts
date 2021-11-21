@@ -31,12 +31,15 @@ repositories {
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
+
     implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT") {
         exclude(group = "org.bukkit", module = "bukkit")
     }
+
     implementation("de.tr7zw:item-nbt-api:2.8.0")
     implementation("fr.mrmicky:fastboard:1.2.0")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
+
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.17-R0.1-SNAPSHOT")
     compileOnly("com.mojang:authlib:1.5.25")
