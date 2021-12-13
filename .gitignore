@@ -2,7 +2,6 @@
 .DS_Store
 
 ### Maven ###
-
 target/
 dependency-reduced-pom.xml
 pom.xml.versionsBackup
@@ -19,7 +18,6 @@ out/
 atlassian-ide-plugin.xml
 
 ### Eclipse ###
-
 .classpath
 .project
 codetemplates.xml
@@ -35,8 +33,7 @@ local.properties
 .loadpath
 .recommenders
 
-## EXTERNAL TOOLS ##
-
+## External tools ##
 .externalToolBuilders/
 
 # Locally stored "Eclipse launch configurations"
@@ -82,7 +79,6 @@ local.properties
 
 # Annotation Processing
 .apt_generated
-
 .sts4-cache/
 
 # Package Files #
@@ -91,3 +87,8 @@ local.properties
 *.ear
 /lib
 **/*~
+
+### Gradle ###
+.gradle
+build/
+!gradle-wrapper.jar
