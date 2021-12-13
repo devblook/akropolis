@@ -1,8 +1,8 @@
 name: DeluxeHub
 author: ItsLewizzz
 version: ${version}
-description: ${description}
-website: ${project.url}
+description: An all-in-one hub management system.
+website: https://www.spigotmc.org/resources/deluxehub.49425/
 api-version: 1.13
 main: fun.lewisdev.deluxehub.DeluxeHubPlugin
 loadbefore: [Essentials]

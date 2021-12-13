@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     java
@@ -10,6 +9,8 @@ plugins {
 group = "fun.lewisdev"
 version = property("projectVersion") as String
 description = "An all-in-one hub management system."
+
+val libsPackage = property("libsPackage") as String
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,7 +45,7 @@ dependencies {
     compileOnly("net.md-5:bungeecord-chat:1.17-R0.1-SNAPSHOT")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.10.10")
-    compileOnly("com.arcaniax:HeadDatabase-API:1.3.0")
+    compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
 }
 
 publishing {
@@ -54,7 +55,9 @@ publishing {
 }
 
 tasks.withType<ProcessResources> {
-    filter<ReplaceTokens>()
+    filesMatching("plugin.yml") {
+        expand("version" to project.version)
+    }
 }
 
 tasks.withType<ShadowJar> {
@@ -63,10 +66,10 @@ tasks.withType<ShadowJar> {
 
     minimize()
 
-    relocate("org.bstats", "fun.lewisdev.deluxehub.libs.metrics")
-    relocate("cl.bgmp", "fun.lewisdev.deluxehub.libs.commandframework")
-    relocate("de.tr7zw.changeme.nbtapi", "fun.lewisdev.deluxehub.libs.nbtapi")
-    relocate("fr.mrmicky.fastboard", "fun.lewisdev.deluxehub.libs.fastboard")
+    relocate("org.bstats", "${libsPackage}.metrics")
+    relocate("cl.bgmp", "${libsPackage}.commandframework")
+    relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
+    relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
 }
 
 tasks.withType<JavaCompile> {
