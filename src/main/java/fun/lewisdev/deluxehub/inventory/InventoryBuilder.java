@@ -1,16 +1,17 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import fun.lewisdev.deluxehub.utility.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InventoryBuilder implements InventoryHolder {
     private final Map<Integer, InventoryItem> icons;
     private int size;
-    private String title;
+    private final String title;
 
     public InventoryBuilder(int size, String title) {
         this.icons = new HashMap<>();
@@ -26,17 +27,14 @@ public class InventoryBuilder implements InventoryHolder {
         return icons.get(slot);
     }
 
-    public Map<Integer, InventoryItem> getIcons() {
-        return icons;
-    }
-
+    @SuppressWarnings("NullableProblems")
     public Inventory getInventory() {
         if (size > 54)
             size = 54;
         else if (size < 9)
             size = 9;
 
-        Inventory inventory = Bukkit.createInventory(this, size, title);
+        Inventory inventory = Bukkit.createInventory(this, size, TextUtil.color(title));
         for (Map.Entry<Integer, InventoryItem> entry : icons.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue().getItemStack());
         }

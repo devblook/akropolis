@@ -1,9 +1,7 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,13 +10,14 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractInventory implements Listener {
-    private DeluxeHubPlugin plugin;
+    private final DeluxeHubPlugin plugin;
     private boolean refreshEnabled = false;
-    private List<UUID> openInventories;
+    private final List<UUID> openInventories;
 
     protected AbstractInventory(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
@@ -46,15 +45,18 @@ public abstract class AbstractInventory implements Listener {
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = getInventory().getItem(i);
 
-            if (item == null || item.getType() == Material.AIR || !item.hasItemMeta())
-                continue;
+            if (item == null || item.getType() == Material.AIR) continue;
+            if (item.getItemMeta() == null || !item.hasItemMeta()) continue;
 
             ItemStackBuilder newItem = new ItemStackBuilder(item.clone());
 
-            if (item.getItemMeta().hasDisplayName())
+            if (item.getItemMeta().hasDisplayName()) {
                 newItem.withName(item.getItemMeta().getDisplayName(), player);
-            if (item.getItemMeta().hasLore())
+            }
+
+            if (item.getItemMeta().hasLore() && item.getItemMeta().getLore() != null) {
                 newItem.withLore(item.getItemMeta().getLore(), player);
+            }
 
             inventory.setItem(i, newItem.build());
         }

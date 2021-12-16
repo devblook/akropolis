@@ -1,25 +1,24 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class LobbyCommand {
-    private DeluxeHubPlugin plugin;
+    private final DeluxeHubPlugin plugin;
 
     public LobbyCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 
-    @Command(aliases = { "lobby" }, desc = "Teleport to the lobby (if set)")
+    @Command(aliases = {"lobby"}, desc = "Teleport to the lobby (if set)")
     public void lobby(final CommandContext args, final CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Console cannot teleport to spawn");

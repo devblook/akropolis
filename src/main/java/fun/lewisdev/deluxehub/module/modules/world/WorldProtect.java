@@ -1,40 +1,6 @@
 package fun.lewisdev.deluxehub.module.modules.world;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Painting;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.LeavesDecayEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.ItemStack;
-
+import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
@@ -44,7 +10,23 @@ import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.hologram.Hologram;
-import fun.lewisdev.deluxehub.utility.universal.XMaterial;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class WorldProtect extends Module {
@@ -66,7 +48,7 @@ public class WorldProtect extends Module {
     private boolean playerDrowning;
     private boolean fireDamage;
 
-    private List<Material> interactables = Arrays.asList(XMaterial.ACACIA_DOOR.parseMaterial(),
+    private final List<Material> interactables = Arrays.asList(XMaterial.ACACIA_DOOR.parseMaterial(),
             XMaterial.ACACIA_FENCE_GATE.parseMaterial(), XMaterial.ANVIL.parseMaterial(),
             XMaterial.FLOWER_POT.parseMaterial(), XMaterial.PAINTING.parseMaterial(), XMaterial.BEACON.parseMaterial(),
             XMaterial.RED_BED.parseMaterial(), XMaterial.BIRCH_DOOR.parseMaterial(),
@@ -200,6 +182,8 @@ public class WorldProtect extends Module {
 
         Entity entity = event.getEntity();
         Entity player = event.getRemover();
+
+        if (player == null) return;
 
         if (entity instanceof Painting || entity instanceof ItemFrame && player instanceof Player) {
             if (player.hasPermission(Permissions.EVENT_BLOCK_BREAK.getPermission()))

@@ -1,12 +1,12 @@
 package fun.lewisdev.deluxehub.cooldown;
 
-import java.util.UUID;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
+import java.util.UUID;
+
 public class CooldownManager {
-    private Table<String, CooldownType, Long> cooldowns = HashBasedTable.create();
+    private final Table<String, CooldownType, Long> cooldowns = HashBasedTable.create();
 
     /**
      * Retrieve the number of milliseconds left until a given cooldown expires.
@@ -28,10 +28,9 @@ public class CooldownManager {
      * @param uuid  - uuid of the player.
      * @param key   - cooldown to update.
      * @param delay - number of milliseconds until the cooldown will expire again.
-     * @return The previous number of milliseconds until expiration.
      */
-    public long setCooldown(UUID uuid, CooldownType key, long delay) {
-        return calculateRemainder(cooldowns.put(uuid.toString(), key, System.currentTimeMillis() + (delay * 1000)));
+    public void setCooldown(UUID uuid, CooldownType key, long delay) {
+        calculateRemainder(cooldowns.put(uuid.toString(), key, System.currentTimeMillis() + (delay * 1000)));
     }
 
     /**
@@ -42,22 +41,13 @@ public class CooldownManager {
      * @param key   - cooldown to update.
      * @param delay - number of milliseconds until the cooldown will expire again.
      * @return TRUE if the cooldown was expired/unset and has now been reset, FALSE
-     *         otherwise.
+     * otherwise.
      */
     public boolean tryCooldown(UUID uuid, CooldownType key, long delay) {
         if (getCooldown(uuid, key) / 1000 > 0)
             return false;
         setCooldown(uuid, key, delay + 1);
         return true;
-    }
-
-    /**
-     * Remove any cooldowns associated with the given player.
-     *
-     * @param uuid - the uuid of the player we will reset.
-     */
-    public void removeCooldowns(UUID uuid) {
-        cooldowns.row(uuid.toString()).clear();
     }
 
     private long calculateRemainder(Long expireTime) {

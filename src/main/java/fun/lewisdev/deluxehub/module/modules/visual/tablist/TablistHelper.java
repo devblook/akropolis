@@ -1,16 +1,14 @@
 package fun.lewisdev.deluxehub.module.modules.visual.tablist;
 
+import com.cryptomorin.xseries.ReflectionUtils;
+import com.google.common.base.Strings;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.entity.Player;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-
-import com.google.common.base.Strings;
-
-import org.bukkit.entity.Player;
-
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.utility.TextUtil;
-import fun.lewisdev.deluxehub.utility.reflection.ReflectionUtils;
 
 public class TablistHelper {
 
@@ -31,12 +29,19 @@ public class TablistHelper {
         }
 
         try {
-            Method chatComponentBuilderMethod = ReflectionUtils.getNMSClass("IChatBaseComponent")
-                    .getDeclaredClasses()[0].getMethod("a", String.class);
+            Class<?> chatNms = ReflectionUtils.getNMSClass("IChatBaseComponent");
+
+            if (chatNms == null) return;
+
+            Method chatComponentBuilderMethod = chatNms.getDeclaredClasses()[0].getMethod("a", String.class);
             Object tabHeader = chatComponentBuilderMethod.invoke(null, "{\"text\":\"" + header + "\"}");
             Object tabFooter = chatComponentBuilderMethod.invoke(null, "{\"text\":\"" + footer + "\"}");
-            Object packet = ReflectionUtils.getNMSClass("PacketPlayOutPlayerListHeaderFooter").getConstructor()
-                    .newInstance();
+
+            Class<?> packetNms = ReflectionUtils.getNMSClass("PacketPlayOutPlayerListHeaderFooter");
+
+            if (packetNms == null) return;
+
+            Object packet = packetNms.getConstructor().newInstance();
 
             setFields(tabHeader, tabFooter, packet);
             ReflectionUtils.sendPacket(player, packet);

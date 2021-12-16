@@ -1,6 +1,6 @@
 # Server Selector GUI
 # The ID of this inventory is 'serverselector' which you can open using the [MENU] action (e.g. "[MENU] serverselector").
-# You can create more custom GUIs, just copy this entire file and paste a new one in the menus directory. The name of the file is the menu ID.
+# You can create more custom GUIs, just copy this entire file and paste a new one in the menus' directory. The name of the file is the menu ID.
 #
 # PLAYER HEADS
 #   You can have player heads, using player names, base64 or HeadDatabase IDs.

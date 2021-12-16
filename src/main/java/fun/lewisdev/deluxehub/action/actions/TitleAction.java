@@ -1,11 +1,10 @@
 package fun.lewisdev.deluxehub.action.actions;
 
-import org.bukkit.entity.Player;
-
+import com.cryptomorin.xseries.messages.Titles;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
 import fun.lewisdev.deluxehub.utility.TextUtil;
-import fun.lewisdev.deluxehub.utility.reflection.Titles;
+import org.bukkit.entity.Player;
 
 public class TitleAction implements Action {
 
@@ -35,7 +34,7 @@ public class TitleAction implements Action {
             fadeOut = 1;
         }
 
-        if (plugin.getServerVersionNumber() > 10) {
+        if (DeluxeHubPlugin.SERVER_VERSION > 10) {
             player.sendTitle(mainTitle, subTitle, fadeIn * 20, stay * 20, fadeOut * 20);
         } else {
             Titles.sendTitle(player, fadeIn * 20, stay * 20, fadeOut * 20, mainTitle, subTitle);

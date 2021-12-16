@@ -1,25 +1,20 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.inventory.inventories.CustomGUI;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.inventory.inventories.CustomGUI;
-
 public class InventoryManager {
     private DeluxeHubPlugin plugin;
-    private Map<String, AbstractInventory> inventories;
+    private final Map<String, AbstractInventory> inventories;
 
     public InventoryManager() {
         inventories = new HashMap<>();
@@ -38,16 +33,30 @@ public class InventoryManager {
         File directory = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "menus");
 
         if (!directory.exists()) {
-            directory.mkdir();
+            if (!directory.mkdir()) {
+                plugin.getLogger().severe("Could not create menus' directory!");
+                plugin.getLogger().severe("The plugin will now disable.");
+                Bukkit.getPluginManager().disablePlugin(plugin);
+                return;
+            }
+
             File file = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "menus",
                     "serverselector.yml");
 
             try (InputStream inputStream = this.plugin.getResource("serverselector.yml");
-                    OutputStream outputStream = new FileOutputStream(file)) {
-                file.createNewFile();
+                 OutputStream outputStream = new FileOutputStream(file)) {
+                if (inputStream == null) {
+                    plugin.getLogger().severe("Resource serverselector.yml not available in plugin's JAR!");
+                    plugin.getLogger().severe("The plugin will now disable.");
+                    Bukkit.getPluginManager().disablePlugin(plugin);
+                    return;
+                }
 
                 byte[] buffer = new byte[inputStream.available()];
-                inputStream.read(buffer);
+
+                if (inputStream.read(buffer) != 0) {
+                    plugin.getLogger().info("Resource file serverselector.yml written sucessfully!");
+                }
 
                 outputStream.write(buffer);
             } catch (IOException e) {
@@ -84,10 +93,6 @@ public class InventoryManager {
             inventories.put(name, customGUI);
             plugin.getLogger().log(Level.INFO, "Loaded custom menu {0}.", name);
         }
-    }
-
-    public void addInventory(String key, AbstractInventory inventory) {
-        inventories.put(key, inventory);
     }
 
     public Map<String, AbstractInventory> getInventories() {

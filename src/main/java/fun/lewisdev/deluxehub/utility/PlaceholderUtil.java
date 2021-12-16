@@ -1,10 +1,9 @@
 package fun.lewisdev.deluxehub.utility;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import me.clip.placeholderapi.PlaceholderAPI;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
@@ -48,9 +47,5 @@ public class PlaceholderUtil {
 
     public static void setPapiState(boolean papiState) {
         papi = papiState;
-    }
-
-    public static boolean getPapiState() {
-        return papi;
     }
 }

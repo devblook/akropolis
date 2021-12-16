@@ -1,12 +1,12 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class InventoryTask implements Runnable {
-    private AbstractInventory inventory;
+    private final AbstractInventory inventory;
 
     InventoryTask(AbstractInventory inventory) {
         this.inventory = inventory;

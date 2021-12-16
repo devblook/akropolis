@@ -1,12 +1,11 @@
 package fun.lewisdev.deluxehub.module.modules.visual.scoreboard;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,10 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
+import java.util.*;
 
 public class ScoreboardManager extends Module {
     private int scoreTask;
@@ -83,7 +79,12 @@ public class ScoreboardManager extends Module {
     public void removeScoreboard(Player player) {
         if (players.containsKey(player.getUniqueId())) {
             players.remove(player.getUniqueId());
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+
+            org.bukkit.scoreboard.ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+
+            if (scoreboardManager == null) return;
+
+            player.setScoreboard(scoreboardManager.getNewScoreboard());
         }
     }
 
@@ -112,10 +113,16 @@ public class ScoreboardManager extends Module {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onWorldChange(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
-        if (event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName()))
-            return;
+        World fromWorld = event.getFrom().getWorld();
 
-        if (inDisabledWorld(event.getTo().getWorld()) && players.containsKey(player.getUniqueId())) {
+        if (event.getTo() == null) return;
+
+        World toWorld = event.getTo().getWorld();
+
+        if (toWorld == null) return;
+        if (fromWorld == toWorld) return;
+
+        if (inDisabledWorld(toWorld) && players.containsKey(player.getUniqueId())) {
             removeScoreboard(player);
         } else if (!players.containsKey(player.getUniqueId())) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), worldDelay);

@@ -1,16 +1,15 @@
 package fun.lewisdev.deluxehub.command.commands.gamemode;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class GamemodeCommand {
 
@@ -20,7 +19,7 @@ public class GamemodeCommand {
 
     // TODO: Refactor to reduce complexity from 17 to something minor.
     @Command(aliases = {
-            "gamemode" }, desc = "Allows you to change gamemode", usage = "<gamemode> [player]", min = 1, max = 2)
+            "gamemode"}, desc = "Allows you to change gamemode", usage = "<gamemode> [player]", min = 1, max = 2)
     public void gamemode(final CommandContext args, final CommandSender sender) throws CommandException {
 
         if (args.argsLength() == 1) {
@@ -64,12 +63,12 @@ public class GamemodeCommand {
                 return;
             }
 
+            String gamemodeChange = Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase());
+
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(
-                        Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase()));
+                player.sendMessage(gamemodeChange);
             } else {
-                player.sendMessage(
-                        Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase()));
+                player.sendMessage(gamemodeChange);
                 sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
                         .replace("%gamemode%", gamemode.toString().toUpperCase()));
             }

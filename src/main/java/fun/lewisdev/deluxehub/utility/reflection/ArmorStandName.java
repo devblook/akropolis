@@ -1,8 +1,7 @@
 package fun.lewisdev.deluxehub.utility.reflection;
 
-import org.bukkit.entity.ArmorStand;
-
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import org.bukkit.entity.ArmorStand;
 
 public class ArmorStandName {
 

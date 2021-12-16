@@ -1,5 +1,8 @@
 package fun.lewisdev.deluxehub.module.modules.hotbar;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,26 +12,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
-
 public abstract class HotbarItem implements Listener {
-    private HotbarManager hotbarManager;
-    private ItemStack item;
+    private final HotbarManager hotbarManager;
+    private final ItemStack item;
     private ConfigurationSection configurationSection;
-    private String key;
+    private final String key;
     private String permission = null;
-    private int slot;
+    private final int slot;
     private boolean allowMovement;
 
     protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
@@ -71,10 +66,6 @@ public abstract class HotbarItem implements Listener {
         this.allowMovement = allowMovement;
     }
 
-    public String getPermission() {
-        return permission;
-    }
-
     public void setConfigurationSection(ConfigurationSection configurationSection) {
         this.configurationSection = configurationSection;
     }
@@ -101,7 +92,7 @@ public abstract class HotbarItem implements Listener {
         ItemStack itemInSlot = inventory.getItem(slot);
 
         if (itemInSlot != null && new NBTItem(itemInSlot).getString("hotbarItem").equals(key)) {
-            inventory.remove(inventory.getItem(slot));
+            inventory.remove(itemInSlot);
         }
     }
 
@@ -130,7 +121,7 @@ public abstract class HotbarItem implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        if (getPlugin().getServerVersionNumber() > 8 && event.getHand() != EquipmentSlot.HAND)
+        if (DeluxeHubPlugin.SERVER_VERSION > 8 && event.getHand() != EquipmentSlot.HAND)
             return;
 
         Player player = event.getPlayer();

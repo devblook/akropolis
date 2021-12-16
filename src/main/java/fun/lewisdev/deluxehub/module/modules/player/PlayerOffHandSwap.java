@@ -1,12 +1,11 @@
 package fun.lewisdev.deluxehub.module.modules.player;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class PlayerOffHandSwap extends Module {
 

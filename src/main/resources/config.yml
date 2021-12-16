@@ -131,10 +131,10 @@ tablist:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 announcements:
-  # Should the announcements system be enabled ?
+  # Should the announcements' system be enabled ?
   enabled: true
 
-  # Delay to send announcements (in seconds)
+  # Delay sending announcements (in seconds)
   delay: 60
 
   # How many players should be required to send announcements?

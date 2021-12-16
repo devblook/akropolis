@@ -1,13 +1,12 @@
 package fun.lewisdev.deluxehub.module.modules.visual.scoreboard;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import fr.mrmicky.fastboard.FastBoard;
 import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreHelper {
     private final FastBoard fastBoard;
@@ -20,10 +19,6 @@ public class ScoreHelper {
 
     public void setTitle(String title) {
         fastBoard.updateTitle(setPlaceholders(title));
-    }
-
-    public void removeSlot(int slot) {
-        fastBoard.removeLine(slot);
     }
 
     public void setSlotsFromList(List<String> list) {

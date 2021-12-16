@@ -1,16 +1,12 @@
 package fun.lewisdev.deluxehub.config;
 
-import java.io.File;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+
 import java.util.EnumMap;
 import java.util.Map;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-
 public class ConfigManager {
-    private Map<ConfigType, ConfigHandler> configurations;
+    private final Map<ConfigType, ConfigHandler> configurations;
 
     public ConfigManager() {
         configurations = new EnumMap<>(ConfigType.class);
@@ -24,7 +20,7 @@ public class ConfigManager {
 
         configurations.values().forEach(ConfigHandler::saveDefaultConfig);
 
-        Messages.setConfiguration(getFile(ConfigType.MESSAGES).getConfig());
+        Messages.setConfiguration(getFile(ConfigType.MESSAGES).get());
     }
 
     public ConfigHandler getFile(ConfigType type) {
@@ -33,7 +29,7 @@ public class ConfigManager {
 
     public void reloadFiles() {
         configurations.values().forEach(ConfigHandler::reload);
-        Messages.setConfiguration(getFile(ConfigType.MESSAGES).getConfig());
+        Messages.setConfiguration(getFile(ConfigType.MESSAGES).get());
     }
 
     public void saveFiles() {
@@ -44,7 +40,4 @@ public class ConfigManager {
         configurations.put(type, config);
     }
 
-    public FileConfiguration getFileConfiguration(File file) {
-        return YamlConfiguration.loadConfiguration(file);
-    }
 }

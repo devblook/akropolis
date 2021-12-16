@@ -1,44 +1,34 @@
 package fun.lewisdev.deluxehub.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-
 import cl.bgmp.bukkit.util.BukkitCommandsManager;
 import cl.bgmp.bukkit.util.CommandsManagerRegistration;
 import cl.bgmp.minecraft.util.commands.CommandsManager;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import cl.bgmp.minecraft.util.commands.injection.SimpleInjector;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.command.commands.ClearchatCommand;
-import fun.lewisdev.deluxehub.command.commands.DeluxeHubCommand;
-import fun.lewisdev.deluxehub.command.commands.FlyCommand;
-import fun.lewisdev.deluxehub.command.commands.LobbyCommand;
-import fun.lewisdev.deluxehub.command.commands.LockchatCommand;
-import fun.lewisdev.deluxehub.command.commands.SetLobbyCommand;
-import fun.lewisdev.deluxehub.command.commands.VanishCommand;
-import fun.lewisdev.deluxehub.command.commands.gamemode.AdventureCommand;
-import fun.lewisdev.deluxehub.command.commands.gamemode.CreativeCommand;
-import fun.lewisdev.deluxehub.command.commands.gamemode.GamemodeCommand;
-import fun.lewisdev.deluxehub.command.commands.gamemode.SpectatorCommand;
-import fun.lewisdev.deluxehub.command.commands.gamemode.SurvivalCommand;
+import fun.lewisdev.deluxehub.command.commands.*;
+import fun.lewisdev.deluxehub.command.commands.gamemode.*;
 import fun.lewisdev.deluxehub.config.ConfigType;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandManager {
-    private DeluxeHubPlugin plugin;
-    private FileConfiguration config;
+    private final DeluxeHubPlugin plugin;
+    private final FileConfiguration config;
 
     @SuppressWarnings("rawtypes")
     private CommandsManager commands;
     private CommandsManagerRegistration commandRegistry;
 
-    private List<CustomCommand> customCommands;
+    private final List<CustomCommand> customCommands;
 
     public CommandManager(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).getConfig();
+        this.config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
         this.customCommands = new ArrayList<>();
     }
 
@@ -52,11 +42,18 @@ public class CommandManager {
 
         commandRegistry.register(DeluxeHubCommand.class);
 
-        for (String command : config.getConfigurationSection("commands").getKeys(false)) {
+        ConfigurationSection commandsSection = config.getConfigurationSection("commands");
+
+        if (commandsSection == null) {
+            plugin.getLogger().severe("Commands settings configuration section is missing!");
+            return;
+        }
+
+        for (String command : commandsSection.getKeys(false)) {
             if (!config.getBoolean("commands." + command + ".enabled"))
                 continue;
 
-            registerCommand(command, config.getStringList("commands." + command + ".aliases").toArray(new String[0]));
+            registerCommand(command, commandsSection.getStringList(command + ".aliases").toArray(new String[0]));
         }
 
         reloadCustomCommands();
@@ -68,25 +65,30 @@ public class CommandManager {
     }
 
     public void reloadCustomCommands() {
-        if (!customCommands.isEmpty())
-            customCommands.clear();
-        if (!config.isSet("custom_commands"))
-            return;
+        if (!customCommands.isEmpty()) customCommands.clear();
+        if (!config.isSet("custom_commands")) return;
 
-        for (String entry : config.getConfigurationSection("custom_commands").getKeys(false)) {
+        ConfigurationSection customCommandsSection = config.getConfigurationSection("custom_commands");
+
+        if (customCommandsSection == null) {
+            plugin.getLogger().severe("Custo commands configuration section is missing!");
+            return;
+        }
+
+        for (String entry : customCommandsSection.getKeys(false)) {
 
             CustomCommand customCommand = new CustomCommand(entry,
-                    config.getStringList("custom_commands." + entry + ".actions"));
+                    customCommandsSection.getStringList(entry + ".actions"));
 
-            if (config.contains("custom_commands." + entry + ".aliases")) {
+            if (customCommandsSection.contains(entry + ".aliases")) {
                 customCommand.addAliases(config.getStringList("custom_commands." + entry + ".aliases"));
             }
 
-            if (config.contains("custom_commands." + entry + ".permission")) {
+            if (customCommandsSection.contains(entry + ".permission")) {
                 customCommand.setPermission(config.getString("custom_commands." + entry + ".permission"));
             }
 
-            customCommands.add(customCommand);
+            this.customCommands.add(customCommand);
         }
     }
 

@@ -1,11 +1,12 @@
 package fun.lewisdev.deluxehub.action.actions;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
+import com.cryptomorin.xseries.XSound;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
-import fun.lewisdev.deluxehub.utility.universal.XSound;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 public class SoundAction implements Action {
 
@@ -16,10 +17,18 @@ public class SoundAction implements Action {
 
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
+        Optional<XSound> xsound = XSound.matchXSound(data);
+
         try {
-            XSound.matchXSound(data).ifPresent(s -> player.playSound(player.getLocation(), s.parseSound(), 1L, 1L));
+            xsound.ifPresent(s -> {
+                Sound sound = s.parseSound();
+
+                if (sound == null) throw new IllegalStateException();
+
+                player.playSound(player.getLocation(), sound, 1L, 1L);
+            });
         } catch (Exception ex) {
-            Bukkit.getLogger().warning("[DeluxeHub Action] Invalid sound name: " + data.toUpperCase());
+            plugin.getLogger().warning("[DeluxeHub Action] Invalid sound name: " + data.toUpperCase());
         }
     }
 }

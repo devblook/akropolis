@@ -1,12 +1,6 @@
 package fun.lewisdev.deluxehub.utility;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-
+import fun.lewisdev.deluxehub.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +12,11 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fun.lewisdev.deluxehub.Permissions;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /*
    Credits: Benz56

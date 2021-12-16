@@ -1,7 +1,11 @@
 package fun.lewisdev.deluxehub.module.modules.world;
 
-import java.util.List;
-
+import com.cryptomorin.xseries.XMaterial;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.cooldown.CooldownType;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,12 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.cooldown.CooldownType;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
-import fun.lewisdev.deluxehub.utility.universal.XMaterial;
+import java.util.List;
 
 public class Launchpad extends Module {
     private double launch;
@@ -35,14 +34,28 @@ public class Launchpad extends Module {
         launchY = config.getDouble("launchpad.launch_power_y", 1.2);
         actions = config.getStringList("launchpad.actions");
 
-        XMaterial.matchXMaterial(config.getString("launchpad.top_block")).ifPresent(m -> topBlock = m.parseMaterial());
-        XMaterial.matchXMaterial(config.getString("launchpad.bottom_block"))
-                .ifPresent(m -> bottomBlock = m.parseMaterial());
-
         if (launch > 4.0)
             launch = 4.0;
         if (launchY > 4.0)
             launchY = 4.0;
+
+
+        String rawTopBlock = config.getString("launchpad.top_block");
+        String rawBottomBlock = config.getString("launchpad.bottom_block");
+
+        if (rawTopBlock == null) {
+            getPlugin().getLogger().severe("Launchpad' top block is missing, using air item!");
+            XMaterial.matchXMaterial("AIR").ifPresent(m -> topBlock = m.parseMaterial());
+        } else {
+            XMaterial.matchXMaterial(rawTopBlock).ifPresent(m -> topBlock = m.parseMaterial());
+        }
+
+        if (rawBottomBlock == null) {
+            getPlugin().getLogger().severe("Launchpad' bottom block is missing, using air item!");
+            XMaterial.matchXMaterial("AIR").ifPresent(m -> bottomBlock = m.parseMaterial());
+        } else {
+            XMaterial.matchXMaterial(rawBottomBlock).ifPresent(m -> bottomBlock = m.parseMaterial());
+        }
     }
 
     @Override

@@ -1,14 +1,5 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
-
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
@@ -26,16 +17,24 @@ import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
 import fun.lewisdev.deluxehub.module.modules.visual.scoreboard.ScoreboardManager;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeluxeHubCommand {
-    private DeluxeHubPlugin plugin;
+    private final DeluxeHubPlugin plugin;
 
     public DeluxeHubCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 
     // TODO: Reduce cognitive complexity from 137 to something minor.
-    @Command(aliases = { "deluxehub", "dhub" }, desc = "View plugin information")
+    @Command(aliases = {"deluxehub", "dhub"}, desc = "View plugin information")
     public void main(final CommandContext args, final CommandSender sender) throws CommandException {
         PluginDescriptionFile pdfFile = plugin.getDescription();
 
@@ -164,7 +163,7 @@ public class DeluxeHubCommand {
             CommandManager commandManager = plugin.getCommandManager();
             sender.sendMessage(TextUtil.color("&7Custom commands (" + commandManager.getCustomCommands().size() + ")"
                     + " &8- &a" + (commandManager.getCustomCommands().stream()
-                            .map(command -> command.getAliases().get(0)).collect(Collectors.joining(", ")))));
+                    .map(command -> command.getAliases().get(0)).collect(Collectors.joining(", ")))));
 
             sender.sendMessage("");
 
@@ -270,7 +269,7 @@ public class DeluxeHubCommand {
                     }
 
                     Hologram holo = plugin.getHologramManager().createHologram(args.getString(2), player.getLocation());
-                    List<String> defaultMsg = new ArrayList<String>();
+                    List<String> defaultMsg = new ArrayList<>();
                     defaultMsg.add("&7Created new Hologram called &b" + args.getString(2));
                     defaultMsg.add("&7Use &b/deluxehub holo &7to customise");
                     holo.setLines(defaultMsg);
@@ -311,11 +310,12 @@ public class DeluxeHubCommand {
                     int line = Integer.parseInt(args.getString(3));
                     String text = TextUtil.joinString(5, args.getOriginalArgs());
 
-                    if (!holo.hasLine(line)) {
+                    if (holo.hasInvalidLine(line)) {
                         sender.sendMessage(
                                 Messages.HOLOGRAMS_INVALID_LINE.toString().replace("%line%", String.valueOf(line)));
                         return;
                     }
+
                     holo.setLine(line, text);
                     sender.sendMessage(Messages.HOLOGRAMS_LINE_SET.toString().replace("%line%", String.valueOf(line)));
                     return;
@@ -355,7 +355,7 @@ public class DeluxeHubCommand {
                     Hologram holo = plugin.getHologramManager().getHologram(args.getString(2));
                     int line = Integer.parseInt(args.getString(3));
 
-                    if (!holo.hasLine(line)) {
+                    if (holo.hasInvalidLine(line)) {
                         sender.sendMessage(
                                 Messages.HOLOGRAMS_INVALID_LINE.toString().replace("%line%", String.valueOf(line)));
                         return;

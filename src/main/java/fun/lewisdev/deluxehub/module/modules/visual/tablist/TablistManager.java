@@ -1,11 +1,12 @@
 package fun.lewisdev.deluxehub.module.modules.visual.tablist;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,11 +14,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
-import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class TablistManager extends Module {
     private List<UUID> players;
@@ -35,8 +34,8 @@ public class TablistManager extends Module {
 
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
 
-        header = config.getStringList("tablist.header").stream().collect(Collectors.joining("\n"));
-        footer = config.getStringList("tablist.footer").stream().collect(Collectors.joining("\n"));
+        header = String.join("\n", config.getStringList("tablist.header"));
+        footer = String.join("\n", config.getStringList("tablist.footer"));
 
         if (config.getBoolean("tablist.refresh.enabled")) {
             tablistTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new TablistUpdateTask(this), 0L,
@@ -104,13 +103,20 @@ public class TablistManager extends Module {
     @EventHandler
     public void onWorldChange(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
+        World fromWorld = event.getFrom().getWorld();
 
-        if (event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName()))
-            return;
+        if (event.getTo() == null) return;
 
-        if (inDisabledWorld(event.getTo().getWorld()) && players.contains(player.getUniqueId()))
+        World toWorld = event.getTo().getWorld();
+
+        if (toWorld == null) return;
+        if (fromWorld == toWorld) return;
+
+        if (inDisabledWorld(toWorld) && players.contains(player.getUniqueId())) {
             removeTablist(player);
-        else
-            createTablist(player);
+            return;
+        }
+
+        createTablist(player);
     }
 }

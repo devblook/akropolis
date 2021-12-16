@@ -1,8 +1,11 @@
 package fun.lewisdev.deluxehub.module.modules.player;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
+import fun.lewisdev.deluxehub.utility.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -16,12 +19,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
-import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerListener extends Module {
     private boolean joinQuitMessagesEnabled;

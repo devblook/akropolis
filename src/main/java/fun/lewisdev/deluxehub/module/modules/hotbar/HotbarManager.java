@@ -1,12 +1,5 @@
 package fun.lewisdev.deluxehub.module.modules.hotbar;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
-
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
@@ -14,6 +7,13 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.hotbar.items.CustomItem;
 import fun.lewisdev.deluxehub.module.modules.hotbar.items.PlayerHider;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HotbarManager extends Module {
     private List<HotbarItem> hotbarItems;
@@ -26,31 +26,29 @@ public class HotbarManager extends Module {
     public void onEnable() {
         hotbarItems = new ArrayList<>();
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        ConfigurationSection customItemsSections = config.getConfigurationSection("custom_join_items");
 
-        if (config.getBoolean("custom_join_items.enabled")) {
-            for (String entry : config.getConfigurationSection("custom_join_items.items").getKeys(false)) {
-                ItemStack item = ItemStackBuilder
-                        .getItemStack(config.getConfigurationSection("custom_join_items.items." + entry)).build();
-                CustomItem customItem = new CustomItem(this, item,
-                        config.getInt("custom_join_items.items." + entry + ".slot"), entry);
-
-                if (config.contains("custom_join_items.items." + entry + ".permission")) {
-                    customItem.setPermission(config.getString("custom_join_items.items." + entry + ".permission"));
-                }
-
-                customItem.setConfigurationSection(config.getConfigurationSection("custom_join_items.items." + entry));
-                customItem.setAllowMovement(config.getBoolean("custom_join_items.disable_inventory_movement"));
-                registerHotbarItem(customItem);
-            }
+        if (customItemsSections == null) {
+            getPlugin().getLogger().severe("Custom join items configuration section is missing!");
+            return;
         }
 
-        if (config.getBoolean("player_hider.enabled")) {
-            ItemStack item = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.not_hidden"))
-                    .build();
-            PlayerHider playerHider = new PlayerHider(this, item, config.getInt("player_hider.slot"), "PLAYER_HIDER");
+        if (customItemsSections.getBoolean("enabled")) {
+            registerCustomItems(customItemsSections);
+        }
 
-            playerHider.setAllowMovement(config.getBoolean("player_hider.disable_inventory_movement"));
+        ConfigurationSection hiderSection = config.getConfigurationSection("player_hider");
 
+        if (hiderSection == null) {
+            getPlugin().getLogger().severe("Player hider item configuration section is missing!");
+            return;
+        }
+
+        if (hiderSection.getBoolean("enabled")) {
+            ItemStack item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+            PlayerHider playerHider = new PlayerHider(this, item, hiderSection.getInt("slot"), "PLAYER_HIDER");
+
+            playerHider.setAllowMovement(hiderSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(playerHider);
         }
 
@@ -62,8 +60,26 @@ public class HotbarManager extends Module {
         removeItems();
     }
 
-    public List<HotbarItem> getHotbarItems() {
-        return hotbarItems;
+    private void registerCustomItems(ConfigurationSection customItemsSection) {
+        ConfigurationSection itemsSection = customItemsSection.getConfigurationSection("items");
+
+        if (itemsSection == null) {
+            getPlugin().getLogger().severe("Items of custom join items configuration section is missing!");
+            return;
+        }
+
+        for (String itemEntry : itemsSection.getKeys(false)) {
+            ItemStack item = ItemStackBuilder.getItemStack(itemsSection.getConfigurationSection(itemEntry)).build();
+            CustomItem customItem = new CustomItem(this, item, itemsSection.getInt(itemEntry + ".slot"), itemEntry);
+
+            if (itemsSection.contains(itemEntry + ".permission")) {
+                customItem.setPermission(itemsSection.getString(itemEntry + ".permission"));
+            }
+
+            customItem.setConfigurationSection(itemsSection.getConfigurationSection(itemEntry));
+            customItem.setAllowMovement(itemsSection.getBoolean("disable_inventory_movement"));
+            registerHotbarItem(customItem);
+        }
     }
 
     public void registerHotbarItem(HotbarItem hotbarItem) {
@@ -79,5 +95,9 @@ public class HotbarManager extends Module {
     private void removeItems() {
         Bukkit.getOnlinePlayers().stream().filter(player -> !inDisabledWorld(player.getLocation()))
                 .forEach(player -> hotbarItems.forEach(hotbarItem -> hotbarItem.removeItem(player)));
+    }
+
+    public List<HotbarItem> getHotbarItems() {
+        return hotbarItems;
     }
 }

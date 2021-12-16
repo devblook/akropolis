@@ -1,11 +1,10 @@
 package fun.lewisdev.deluxehub.utility;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 
-import net.md_5.bungee.api.ChatColor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TextUtil {
     private static final int CENTER_PX;
@@ -62,7 +61,7 @@ public class TextUtil {
             compensated += spaceLength;
         }
 
-        return sb.toString() + message;
+        return sb + message;
     }
 
     private static int getMessageSize(final String message) {
@@ -75,11 +74,7 @@ public class TextUtil {
                 previousCode = true;
             } else if (previousCode) {
                 previousCode = false;
-                if (messageChar == 'l' || messageChar == 'L') {
-                    isBold = true;
-                } else {
-                    isBold = false;
-                }
+                isBold = messageChar == 'l' || messageChar == 'L';
             } else {
                 DefaultFontInfo defaultFont = DefaultFontInfo.getDefaultFontInfo(messageChar);
                 messagePxSize += isBold ? defaultFont.getBoldLength() : defaultFont.getLength();

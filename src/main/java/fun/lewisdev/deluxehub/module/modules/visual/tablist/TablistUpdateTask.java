@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TablistUpdateTask implements Runnable {
-    private TablistManager tablistManager;
+    private final TablistManager tablistManager;
 
     public TablistUpdateTask(TablistManager tablistManager) {
         this.tablistManager = tablistManager;

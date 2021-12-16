@@ -1,11 +1,10 @@
 package fun.lewisdev.deluxehub.action.actions;
 
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.action.Action;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.action.Action;
 
 public class GamemodeAction implements Action {
 

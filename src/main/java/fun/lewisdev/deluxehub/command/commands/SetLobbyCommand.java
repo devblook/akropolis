@@ -1,27 +1,25 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
-import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SetLobbyCommand {
-    private DeluxeHubPlugin plugin;
+    private final DeluxeHubPlugin plugin;
 
     public SetLobbyCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
     }
 
-    @Command(aliases = { "setlobby" }, desc = "Set the lobby location")
-    public void setlobby(final CommandContext args, final CommandSender sender) throws CommandException {
+    @Command(aliases = {"setlobby"}, desc = "Set the lobby location")
+    public void setlobby(final CommandContext args, final CommandSender sender) {
         if (!sender.hasPermission(Permissions.COMMAND_SET_LOBBY.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
             return;

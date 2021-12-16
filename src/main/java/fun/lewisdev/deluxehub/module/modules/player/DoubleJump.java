@@ -1,8 +1,12 @@
 package fun.lewisdev.deluxehub.module.modules.player;
 
-import java.util.List;
-import java.util.UUID;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.cooldown.CooldownType;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,13 +18,8 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.Permissions;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.config.Messages;
-import fun.lewisdev.deluxehub.cooldown.CooldownType;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
+import java.util.List;
+import java.util.UUID;
 
 public class DoubleJump extends Module {
     private long cooldownDelay;
@@ -93,7 +92,7 @@ public class DoubleJump extends Module {
 
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
                 && !inDisabledWorld(player.getLocation())) {
-            player.getPlayer().setAllowFlight(true);
+            player.setAllowFlight(true);
         }
     }
 
@@ -102,6 +101,6 @@ public class DoubleJump extends Module {
         Player player = event.getPlayer();
 
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR)
-            player.getPlayer().setAllowFlight(true);
+            player.setAllowFlight(true);
     }
 }

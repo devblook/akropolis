@@ -1,9 +1,12 @@
 package fun.lewisdev.deluxehub.module.modules.hotbar.items;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.cooldown.CooldownType;
+import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarItem;
+import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
+import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -15,18 +18,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.config.Messages;
-import fun.lewisdev.deluxehub.cooldown.CooldownType;
-import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarItem;
-import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class PlayerHider extends HotbarItem {
-    private int cooldown;
-    private ItemStack hiddenItem;
-    private List<UUID> hidden;
+    private final int cooldown;
+    private final ItemStack hiddenItem;
+    private final List<UUID> hidden;
 
     public PlayerHider(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
         super(hotbarManager, item, slot, key);
@@ -86,9 +85,15 @@ public class PlayerHider extends HotbarItem {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+        Player playerToHide = event.getPlayer();
 
-        hidden.forEach(uuid -> Bukkit.getPlayer(uuid).hidePlayer(player));
+        hidden.forEach(uuid -> {
+            Player player = Bukkit.getPlayer(uuid);
+
+            if (player == null) return;
+
+            player.hidePlayer(playerToHide);
+        });
     }
 
     @SuppressWarnings("deprecation")

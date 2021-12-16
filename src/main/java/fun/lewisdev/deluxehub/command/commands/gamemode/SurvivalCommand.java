@@ -1,16 +1,15 @@
 package fun.lewisdev.deluxehub.command.commands.gamemode;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.Messages;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SurvivalCommand {
 
@@ -18,7 +17,7 @@ public class SurvivalCommand {
         // For injection purposes.
     }
 
-    @Command(aliases = { "gms" }, desc = "Change to survival mode", usage = "[player]", max = 1)
+    @Command(aliases = {"gms"}, desc = "Change to survival mode", usage = "[player]", max = 1)
     public void survival(final CommandContext args, final CommandSender sender) throws CommandException {
         if (args.argsLength() == 0) {
             if (!(sender instanceof Player))

@@ -1,34 +1,39 @@
 package fun.lewisdev.deluxehub.hook.hooks.head;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.hook.PluginHook;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.hook.PluginHook;
-import fun.lewisdev.deluxehub.utility.universal.XMaterial;
-
 public class BaseHead implements PluginHook, HeadHook {
+    private DeluxeHubPlugin plugin;
     private Map<String, ItemStack> cache;
 
     @Override
     public void onEnable(DeluxeHubPlugin plugin) {
+        this.plugin = plugin;
         cache = new HashMap<>();
     }
 
     @Override
     public ItemStack getHead(String data) {
-        if (cache.containsKey(data))
-            return cache.get(data);
+        if (cache.containsKey(data)) return cache.get(data);
 
         ItemStack head = XMaterial.PLAYER_HEAD.parseItem();
+
+        if (head == null) {
+            plugin.getLogger().severe("Could not parse head!");
+            return XMaterial.SKELETON_SKULL.parseItem();
+        }
+
         SkullMeta meta = (SkullMeta) head.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
 
@@ -36,6 +41,11 @@ public class BaseHead implements PluginHook, HeadHook {
         Field profileField;
 
         try {
+            if (meta == null) {
+                plugin.getLogger().severe("Could not parse head meta!");
+                return head;
+            }
+
             profileField = meta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(meta, profile);

@@ -1,8 +1,7 @@
 package fun.lewisdev.deluxehub.config;
 
-import org.bukkit.configuration.file.FileConfiguration;
-
 import fun.lewisdev.deluxehub.utility.TextUtil;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Messages {
     PREFIX("GENERAL.PREFIX"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
@@ -45,13 +44,13 @@ public enum Messages {
     WORLD_DOWNLOAD_NOTIFY("ANTI_WORLD_DOWNLOADER.ADMIN_NOTIFY");
 
     private static FileConfiguration config;
-    private String path;
+    private final String path;
 
     Messages(String path) {
         this.path = path;
     }
 
-    protected static void setConfiguration(FileConfiguration c) {
+    static void setConfiguration(FileConfiguration c) {
         config = c;
     }
 

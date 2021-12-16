@@ -1,25 +1,24 @@
 package fun.lewisdev.deluxehub.module;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.ConfigType;
+import fun.lewisdev.deluxehub.cooldown.CooldownManager;
+import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.cooldown.CooldownManager;
-import fun.lewisdev.deluxehub.cooldown.CooldownType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Module implements Listener {
-    private DeluxeHubPlugin plugin;
-    private ModuleType moduleType;
+    private final DeluxeHubPlugin plugin;
+    private final ModuleType moduleType;
     private List<String> disabledWorlds;
-    private CooldownManager cooldownManager;
+    private final CooldownManager cooldownManager;
 
     protected Module(DeluxeHubPlugin plugin, ModuleType type) {
         this.plugin = plugin;
@@ -37,7 +36,11 @@ public abstract class Module implements Listener {
     }
 
     public boolean inDisabledWorld(Location location) {
-        return disabledWorlds.contains(location.getWorld().getName());
+        World world = location.getWorld();
+
+        if (world == null) return false;
+
+        return disabledWorlds.contains(world.getName());
     }
 
     public boolean inDisabledWorld(World world) {
@@ -53,7 +56,7 @@ public abstract class Module implements Listener {
     }
 
     public FileConfiguration getConfig(ConfigType type) {
-        return getPlugin().getConfigManager().getFile(type).getConfig();
+        return getPlugin().getConfigManager().getFile(type).get();
     }
 
     public void executeActions(Player player, List<String> actions) {

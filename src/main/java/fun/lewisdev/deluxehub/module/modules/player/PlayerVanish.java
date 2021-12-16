@@ -1,9 +1,9 @@
 package fun.lewisdev.deluxehub.module.modules.player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.module.Module;
+import fun.lewisdev.deluxehub.module.ModuleType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +12,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.config.Messages;
-import fun.lewisdev.deluxehub.module.Module;
-import fun.lewisdev.deluxehub.module.ModuleType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class PlayerVanish extends Module {
     private List<UUID> vanished;
@@ -58,7 +57,13 @@ public class PlayerVanish extends Module {
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        vanished.forEach(hidden -> event.getPlayer().hidePlayer(Bukkit.getPlayer(hidden)));
+        vanished.forEach(hidden -> {
+            Player playerHidden = Bukkit.getPlayer(hidden);
+
+            if (playerHidden == null) return;
+
+            event.getPlayer().hidePlayer(playerHidden);
+        });
     }
 
     @EventHandler

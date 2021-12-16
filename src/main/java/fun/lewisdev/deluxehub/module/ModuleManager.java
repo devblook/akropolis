@@ -1,20 +1,8 @@
 package fun.lewisdev.deluxehub.module;
 
-import java.util.*;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.HandlerList;
-
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.module.modules.chat.AntiSwear;
-import fun.lewisdev.deluxehub.module.modules.chat.AutoBroadcast;
-import fun.lewisdev.deluxehub.module.modules.chat.ChatCommandBlock;
-import fun.lewisdev.deluxehub.module.modules.chat.ChatLock;
-import fun.lewisdev.deluxehub.module.modules.chat.CustomCommands;
+import fun.lewisdev.deluxehub.module.modules.chat.*;
 import fun.lewisdev.deluxehub.module.modules.hologram.HologramManager;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
 import fun.lewisdev.deluxehub.module.modules.player.DoubleJump;
@@ -27,6 +15,16 @@ import fun.lewisdev.deluxehub.module.modules.world.AntiWorldDownloader;
 import fun.lewisdev.deluxehub.module.modules.world.Launchpad;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.module.modules.world.WorldProtect;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 public class ModuleManager {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
@@ -39,7 +37,7 @@ public class ModuleManager {
         if (!modules.isEmpty())
             unloadModules();
 
-        FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).getConfig();
+        FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
         disabledWorlds = config.getStringList("disabled-worlds.worlds");
 
         if (config.getBoolean("disabled-worlds.invert")) {
@@ -74,7 +72,7 @@ public class ModuleManager {
         registerModule(new HologramManager(plugin));
 
         // Requires 1.9+
-        if (plugin.getServerVersionNumber() > 8) {
+        if (DeluxeHubPlugin.SERVER_VERSION > 8) {
             registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
         }
 
@@ -84,10 +82,8 @@ public class ModuleManager {
                 module.onEnable();
             } catch (Exception e) {
                 e.printStackTrace();
-                plugin.getLogger().severe("============= DELUXEHUB MODULE LOAD ERROR =============");
                 plugin.getLogger().severe("There was an error loading the " + module.getModuleType() + " module");
                 plugin.getLogger().severe("The plugin will now disable..");
-                plugin.getLogger().severe("============= DELUXEHUB MODULE LOAD ERROR =============");
                 plugin.getServer().getPluginManager().disablePlugin(plugin);
                 break;
             }
@@ -121,7 +117,7 @@ public class ModuleManager {
 
     public void registerModule(Module module, String isEnabledPath) {
         if (isEnabledPath != null
-                && !plugin.getConfigManager().getFile(ConfigType.SETTINGS).getConfig().getBoolean(isEnabledPath, false))
+                && !plugin.getConfigManager().getFile(ConfigType.SETTINGS).get().getBoolean(isEnabledPath, false))
             return;
 
         plugin.getServer().getPluginManager().registerEvents(module, plugin);
