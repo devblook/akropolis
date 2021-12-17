@@ -71,7 +71,6 @@ public class HologramManager extends Module {
             dataConfig.set("holograms." + hologram.getName() + ".lines", lines);
         });
 
-        getPlugin().getConfigManager().getFile(ConfigType.DATA).save();
         deleteAllHolograms();
     }
 

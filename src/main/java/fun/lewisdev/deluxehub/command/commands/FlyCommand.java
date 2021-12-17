@@ -5,15 +5,18 @@ import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class FlyCommand {
+    private final DeluxeHubPlugin plugin;
 
     public FlyCommand(DeluxeHubPlugin plugin) {
-        // For injection purposes.
+        this.plugin = plugin;
     }
 
     // TODO: Reduce cognitive complexity from 16 to something minor.
@@ -21,8 +24,7 @@ public class FlyCommand {
     public void flight(final CommandContext args, final CommandSender sender) throws CommandException {
 
         if (args.argsLength() == 0) {
-            if (!(sender instanceof Player))
-                throw new CommandException("Console cannot clear inventory");
+            if (!(sender instanceof Player)) throw new CommandException("Console cannot clear inventory");
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
@@ -45,10 +47,12 @@ public class FlyCommand {
             }
 
             Player player = Bukkit.getPlayer(args.getString(0));
+
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
                 return;
             }
+
             if (player.getAllowFlight()) {
                 player.sendMessage(Messages.FLIGHT_DISABLE.toString());
                 sender.sendMessage(Messages.FLIGHT_DISABLE_OTHER.toString().replace("%player%", player.getName()));
@@ -64,5 +68,11 @@ public class FlyCommand {
     private void toggleFlight(Player player, boolean value) {
         player.setAllowFlight(value);
         player.setFlying(value);
+
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+           FileConfiguration dataConfig = plugin.getConfigManager().getFile(ConfigType.DATA).get();
+
+           dataConfig.set("players." + player.getUniqueId() + ".fly", value);
+        });
     }
 }

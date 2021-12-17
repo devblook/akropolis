@@ -112,7 +112,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
         moduleManager.unloadModules();
         inventoryManager.onDisable();
-        configManager.saveFiles();
+        configManager.saveData();
     }
 
     public void reload() {

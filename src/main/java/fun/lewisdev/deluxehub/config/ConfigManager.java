@@ -32,7 +32,7 @@ public class ConfigManager {
         Messages.setConfiguration(getFile(ConfigType.MESSAGES).get());
     }
 
-    public void saveFiles() {
+    public void saveData() {
         getFile(ConfigType.DATA).save();
     }
 

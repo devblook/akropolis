@@ -9,6 +9,7 @@ import fun.lewisdev.deluxehub.utility.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -37,6 +38,7 @@ public class PlayerListener extends Module {
     private int fireworkPower;
     private String fireworkType;
     private List<Color> fireworkColors;
+    private ConfigurationSection playersSection;
 
     public PlayerListener(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.PLAYER_LISTENER);
@@ -46,6 +48,8 @@ public class PlayerListener extends Module {
     public void onEnable() {
         // Load config stuff
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        playersSection = getConfig(ConfigType.DATA).getConfigurationSection("players");
+
         joinQuitMessagesEnabled = config.getBoolean("join_leave_messages.enabled");
         joinMessage = config.getString("join_leave_messages.join_message");
         quitMessage = config.getString("join_leave_messages.quit_message");
@@ -84,8 +88,7 @@ public class PlayerListener extends Module {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (inDisabledWorld(player.getLocation()))
-            return;
+        if (inDisabledWorld(player.getLocation())) return;
 
         // Join message handling
         if (joinQuitMessagesEnabled) {
@@ -104,12 +107,17 @@ public class PlayerListener extends Module {
         }
 
         // Extinguish
-        if (extinguish)
-            player.setFireTicks(0);
+        if (extinguish) player.setFireTicks(0);
 
         // Clear the player inventory
-        if (clearInventory)
-            player.getInventory().clear();
+        if (clearInventory) player.getInventory().clear();
+
+        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+            boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+
+            player.setAllowFlight(hasFly);
+            player.setFlying(hasFly);
+        }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
             // Join events
@@ -118,8 +126,7 @@ public class PlayerListener extends Module {
             // Firework
             if (fireworkEnabled) {
                 if (fireworkFirstJoin) {
-                    if (!player.hasPlayedBefore())
-                        spawnFirework(player);
+                    if (!player.hasPlayedBefore()) spawnFirework(player);
                 } else {
                     spawnFirework(player);
                 }
