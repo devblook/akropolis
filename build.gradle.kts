@@ -38,7 +38,7 @@ dependencies {
     }
 
     implementation("de.tr7zw:item-nbt-api:2.8.0")
-    implementation("fr.mrmicky:fastboard:1.2.0")
+    implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
     implementation("com.github.cryptomorin:XSeries:8.5.0.1")
 
