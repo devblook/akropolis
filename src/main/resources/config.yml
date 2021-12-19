@@ -53,7 +53,7 @@ check-updates: true
 disabled-worlds:
   # Should we invert the list making it a whitelist rather than a blacklist?
   invert: false
-  # List your worlds here, set "worlds: []" to disable
+  # List your worlds here, set "worlds: []" to disable.
   worlds:
     - world_nether
 
@@ -61,15 +61,14 @@ disabled-worlds:
 # | ANTI-WORLD DOWNLOADER                    |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Prevent users downloading your world via the world downloader mod
+# Prevent users downloading your world via the world downloader mod.
+# There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download.
 anti_wdl:
   # Should AntiWDL be enabled?
   enabled: true
 
   # Should players with 'deluxehub.antiwdl.alert' will be notified?
   notify_admins: true
-
-  # There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SCOREBOARD                               |
@@ -80,7 +79,7 @@ scoreboard:
   enabled: true
 
   # Should we delay showing the scoreboard?
-  # Value in ticks (20 ticks = 1 second), 0 to disable
+  # Value in ticks (20 ticks = 1 second), 0 to disable.
   display_delay:
     server_enter: 60 # 3 seconds
     world_change: 40 # 2 seconds
@@ -88,7 +87,7 @@ scoreboard:
   # Should we refresh the scoreboard (update placeholders)?
   refresh:
     enabled: true
-    rate: 200 # In ticks (20 ticks = 1 second)
+    rate: 200 # In ticks (20 ticks = 1 second).
 
   title: "&d&lDeluxeHub 3 &7(%online%/%online_max%)"
   lines:
@@ -111,15 +110,15 @@ tablist:
   # Should we refresh the tablist (update placeholders)?
   refresh:
     enabled: true
-    rate: 400 # In ticks (20 ticks = 1 second)
+    rate: 400 # In ticks (20 ticks = 1 second).
 
-  # Modify the header of the tablist
+  # Modify the header of the tablist.
   header:
     - ""
     - "&d&lDeluxeHub &7(%online%/%online_max%)"
     - ""
 
-  # Modify the footer of the tablist
+  # Modify the footer of the tablist.
   footer:
     - ""
     - "&6&lWebsite &fwww.examplemc.net"
@@ -134,7 +133,7 @@ announcements:
   # Should the announcements' system be enabled ?
   enabled: true
 
-  # Delay sending announcements (in seconds)
+  # Delay sending announcements (in seconds).
   delay: 60
 
   # How many players should be required to send announcements?
@@ -146,7 +145,7 @@ announcements:
     volume: 1.0
     pitch: 1.0
 
-  # Announcement list
+  # Announcement list.
   announcements:
     test1:
       - "&r"
@@ -172,15 +171,15 @@ launchpad:
   # Should the launchpad feature be enabled ?
   enabled: true
 
-  # Launch power for launchpad (max 4.0)
+  # Launch power for launchpad (max 4.0).
   launch_power: 3.0
   launch_power_y: 1.0
 
-  # Top and bottom block required to make a launchpad
+  # Top and bottom block required to make a launchpad,
   top_block: STONE_PRESSURE_PLATE
   bottom_block: REDSTONE_BLOCK
 
-  # Actions executed upon use of a launchpad
+  # Actions executed upon use of a launchpad,
   actions:
     - "[SOUND] ENTITY_BAT_TAKEOFF"
 
@@ -192,16 +191,30 @@ double_jump:
   # Should the double jump feature be enabled?
   enabled: true
 
-  # Launch power for double jump (max 4.0)
+  # Launch power for double jump (max 4.0).
   launch_power: 1.0
   launch_power_y: 0.9
 
-  # Cooldown time in seconds (0 to disable)
+  # Cooldown time in seconds (0 to disable).
   cooldown: 3
 
-  # Actions executed upon use of double jump
+  # Actions executed upon use of double jump.
   actions:
     - "[SOUND] ENTITY_BAT_TAKEOFF"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | FLY                                      |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+fly:
+  # Choose to save the fly state of every player in data.yml across reboots (might impact performance).
+  # This option conflicts with double jump so if you enable it, players who toggle their fly won't
+  # be able to use the double jump feature.
+  save_state: false
+  
+  # This will force the fly to be enabled on join (if player has the permission to use the fly command).
+  # This option also respects the preference (if save_state is true) of the user if he disables the fly mode.
+  force_on_join: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CHAT MANAGEMENT                          |
@@ -211,7 +224,7 @@ command_block:
   # Should the command blocker feature be enabled?
   enabled: true
 
-  # List of commands that will be blocked
+  # List of commands that will be blocked.
   blocked_commands:
     - /pl
     - /plugins
@@ -229,7 +242,7 @@ anti_swear:
   # Should the anti-swear feature be enabled?
   enabled: true
 
-  # List of words that will be blocked
+  # List of words that will be blocked.
   blocked_words:
     - fuck
     - shit
@@ -274,11 +287,11 @@ join_leave_messages:
   # Should deluxehub handle join/quit messages?
   enabled: true
 
-  # Set to '' if you want silent join/quit messages
+  # Set to '' if you want silent join/quit messages.
   join_message: "&2&l+ &6%player% &7Connected"
   quit_message: "&4&l- &6%player% &7Disconnected"
 
-# Actions executed upon join
+# Actions executed upon join.
 join_events:
   - "[MESSAGE] &8&m+---------------***---------------+"
   - "[MESSAGE] &r"
@@ -304,7 +317,7 @@ join_settings:
   extinguish: true
   # Should we clear their inventory?
   clear_inventory: false
-  # Spawn a firework on join
+  # Spawn a firework on join.
   firework:
     # Should we send a firework on join?
     enabled: true

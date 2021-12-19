@@ -5,6 +5,7 @@ import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.config.ConfigManager;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
 import org.bukkit.Bukkit;
@@ -14,9 +15,16 @@ import org.bukkit.entity.Player;
 
 public class FlyCommand {
     private final DeluxeHubPlugin plugin;
+    private final FileConfiguration dataConfig;
+    private final boolean saveState;
 
     public FlyCommand(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
+
+        ConfigManager configManager = plugin.getConfigManager();
+
+        this.dataConfig = configManager.getFile(ConfigType.DATA).get();
+        this.saveState = configManager.getFile(ConfigType.SETTINGS).get().getBoolean("fly.save_state");
     }
 
     // TODO: Reduce cognitive complexity from 16 to something minor.
@@ -69,10 +77,9 @@ public class FlyCommand {
         player.setAllowFlight(value);
         player.setFlying(value);
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-           FileConfiguration dataConfig = plugin.getConfigManager().getFile(ConfigType.DATA).get();
+        if (!saveState) return;
 
-           dataConfig.set("players." + player.getUniqueId() + ".fly", value);
-        });
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () ->
+                dataConfig.set("players." + player.getUniqueId() + ".fly", value));
     }
 }

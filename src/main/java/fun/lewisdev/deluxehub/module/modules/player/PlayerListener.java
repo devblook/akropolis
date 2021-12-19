@@ -1,6 +1,7 @@
 package fun.lewisdev.deluxehub.module.modules.player;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerListener extends Module {
+    private ConfigurationSection playersSection;
     private boolean joinQuitMessagesEnabled;
     private String joinMessage;
     private String quitMessage;
@@ -38,7 +40,7 @@ public class PlayerListener extends Module {
     private int fireworkPower;
     private String fireworkType;
     private List<Color> fireworkColors;
-    private ConfigurationSection playersSection;
+    private boolean forceJoinFly;
 
     public PlayerListener(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.PLAYER_LISTENER);
@@ -59,6 +61,8 @@ public class PlayerListener extends Module {
         spawnHeal = config.getBoolean("join_settings.heal", false);
         extinguish = config.getBoolean("join_settings.extinguish", false);
         clearInventory = config.getBoolean("join_settings.clear_inventory", false);
+
+        forceJoinFly = config.getBoolean("fly.force_on_join", false);
 
         fireworkEnabled = config.getBoolean("join_settings.firework.enabled", true);
         if (fireworkEnabled) {
@@ -112,16 +116,19 @@ public class PlayerListener extends Module {
         // Clear the player inventory
         if (clearInventory) player.getInventory().clear();
 
-        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
-            boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
-
-            player.setAllowFlight(hasFly);
-            player.setFlying(hasFly);
-        }
-
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
             // Join events
             executeActions(player, joinActions);
+
+            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+                boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+
+                player.setAllowFlight(hasFly);
+                player.setFlying(hasFly);
+            } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
 
             // Firework
             if (fireworkEnabled) {
