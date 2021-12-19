@@ -1,5 +1,5 @@
-# This workflow will build a DeluxeHub with Maven.
-# It will be compiled against Java 8, 11 and 16.
+# This workflow will build a DeluxeHub with Gradle.
+# It will be compiled against Java 8, 11 and 17.
 name: Build DeluxeHub
 
 on:
@@ -33,6 +33,10 @@ jobs:
           java-version: ${{ matrix.java_version }}
           distribution: temurin
           cache: gradle
+
+      - name: Cleanup old JARs
+        run: |
+          rm -f build/libs/*.jar
 
       - name: Build with Gradle
         run: ./gradlew shadowJar
