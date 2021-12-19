@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.config;
 
+import com.tchristofferson.configupdater.ConfigUpdater;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,6 +30,7 @@ public class ConfigHandler {
         }
 
         try {
+            ConfigUpdater.update(plugin, name, file);
             configuration.load(file);
         } catch (InvalidConfigurationException | IOException e) {
             e.printStackTrace();
@@ -42,8 +44,8 @@ public class ConfigHandler {
     }
 
     public void save() {
-        if (configuration == null || file == null)
-            return;
+        if (configuration == null || file == null) return;
+
         try {
             get().save(file);
         } catch (IOException e) {
