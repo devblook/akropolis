@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     `maven-publish`
-    id("com.github.johnrengelman.shadow") version ("7.1.0")
+    id("com.github.johnrengelman.shadow") version ("7.1.1")
 }
 
 group = "fun.lewisdev"
@@ -71,6 +71,8 @@ tasks.withType<ShadowJar> {
     relocate("cl.bgmp", "${libsPackage}.commandframework")
     relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
     relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
+    relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
+    relocate("com.tchristofferson.configupdater", "${libsPackage}.configupdater")
 }
 
 tasks.withType<JavaCompile> {
