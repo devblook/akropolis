@@ -5,9 +5,9 @@ import fun.lewisdev.deluxehub.inventory.AbstractInventory;
 import fun.lewisdev.deluxehub.inventory.InventoryBuilder;
 import fun.lewisdev.deluxehub.inventory.InventoryItem;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.simpleyaml.configuration.ConfigurationSection;
+import org.simpleyaml.configuration.file.FileConfiguration;
 
 public class CustomGUI extends AbstractInventory {
     private final FileConfiguration config;

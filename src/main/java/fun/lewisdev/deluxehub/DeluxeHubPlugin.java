@@ -110,9 +110,12 @@ public class DeluxeHubPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
-        moduleManager.unloadModules();
-        inventoryManager.onDisable();
-        configManager.saveData();
+
+        if (moduleManager != null) moduleManager.unloadModules();
+
+        if (inventoryManager != null) inventoryManager.onDisable();
+
+        if (configManager != null) configManager.saveData();
     }
 
     public void reload() {

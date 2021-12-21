@@ -10,8 +10,8 @@ import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.simpleyaml.configuration.file.FileConfiguration;
 
 public class FlyCommand {
     private final DeluxeHubPlugin plugin;

@@ -1,7 +1,7 @@
 package fun.lewisdev.deluxehub.config;
 
 import fun.lewisdev.deluxehub.utility.TextUtil;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.simpleyaml.configuration.file.FileConfiguration;
 
 public enum Messages {
     PREFIX("GENERAL.PREFIX"), NO_PERMISSION("GENERAL.NO_PERMISSION"),

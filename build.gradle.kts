@@ -27,27 +27,29 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://libraries.minecraft.net/")
     maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://jitpack.io")
     mavenCentral()
 }
 
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT") {
-        exclude(group = "org.bukkit", module = "bukkit")
-    }
-
+    implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.8.0")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
     implementation("com.github.cryptomorin:XSeries:8.5.0.1")
-    implementation("com.tchristofferson:ConfigUpdater:2.0-SNAPSHOT")
+    implementation("me.carleslc.Simple-YAML:Simple-Yaml:1.7.2")
 
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.17-R0.1-SNAPSHOT")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.10.10")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
+}
+
+configurations.implementation {
+    exclude("org.bukkit", "bukkit")
 }
 
 publishing {
@@ -73,7 +75,8 @@ tasks.withType<ShadowJar> {
     relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
     relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
     relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
-    relocate("com.tchristofferson.configupdater", "${libsPackage}.configupdater")
+    relocate("org.yaml.snakeyaml", "${libsPackage}.snakeyaml")
+    relocate("org.simpleyaml", "${libsPackage}.simpleyaml")
 }
 
 tasks.withType<JavaCompile> {
