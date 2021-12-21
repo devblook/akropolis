@@ -3,8 +3,8 @@ package fun.lewisdev.deluxehub.inventory;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.inventory.inventories.CustomGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.simpleyaml.configuration.file.YamlConfiguration;
 
 import java.io.*;
 import java.util.HashMap;

@@ -39,7 +39,6 @@ dependencies {
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
     implementation("com.github.cryptomorin:XSeries:8.5.0.1")
-    implementation("me.carleslc.Simple-YAML:Simple-Yaml:1.7.2")
 
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.17-R0.1-SNAPSHOT")
@@ -75,8 +74,6 @@ tasks.withType<ShadowJar> {
     relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
     relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
     relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
-    relocate("org.yaml.snakeyaml", "${libsPackage}.snakeyaml")
-    relocate("org.simpleyaml", "${libsPackage}.simpleyaml")
 }
 
 tasks.withType<JavaCompile> {

@@ -8,9 +8,9 @@ import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.FileConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
