@@ -10,8 +10,8 @@ import fun.lewisdev.deluxehub.command.commands.*;
 import fun.lewisdev.deluxehub.command.commands.gamemode.*;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import org.bukkit.command.CommandSender;
-import org.simpleyaml.configuration.ConfigurationSection;
-import org.simpleyaml.configuration.file.FileConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,7 @@ public class CommandManager {
     private final DeluxeHubPlugin plugin;
     private final FileConfiguration config;
 
-    @SuppressWarnings("rawtypes")
-    private CommandsManager commands;
+    private CommandsManager<CommandSender> commands;
     private CommandsManagerRegistration commandRegistry;
 
     private final List<CustomCommand> customCommands;
@@ -33,8 +32,7 @@ public class CommandManager {
     }
 
     public void reload() {
-        if (commandRegistry != null)
-            commandRegistry.unregisterCommands();
+        if (commandRegistry != null) commandRegistry.unregisterCommands();
 
         commands = new BukkitCommandsManager();
         commandRegistry = new CommandsManagerRegistration(plugin, commands);
@@ -59,7 +57,6 @@ public class CommandManager {
         reloadCustomCommands();
     }
 
-    @SuppressWarnings("all")
     public void execute(String cmd, String[] args, CommandSender sender) throws CommandException {
         commands.execute(cmd, args, sender, sender);
     }
