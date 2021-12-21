@@ -1,7 +1,7 @@
 name: Bug Report
 description: Create a bug report and help us improve.
-title: "[BUG] <title>"
-labels: bug
+title: "A brief description of your report"
+labels: [ bug ]
 assignees:
   - zetastormy
 body:
@@ -15,19 +15,19 @@ body:
   - type: input
     attributes:
       label: Link to latest.log file
-      description: "Reproduce your problem, upload your `/logs/latest.log` file to https://mclo.gs/ or your prefer bin site, click \"Save\" button, and paste the URL below"
+      description: "Reproduce your problem, upload your `/logs/latest.log` file to https://mclo.gs/ or your prefered bin site, click \"Save\" button, and paste the URL below."
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: To Reproduce
+      label: Steps to reproduce
       description: |
-        - Steps to reproduce the problem
-        - 1. Change '...'
-        - 2. Enter '....'
-        - 3. Execute '....'
-        - 4. See error
+        - Describe the steps to reproduce the problem in a clear and detailed way. For example:
+        1. Change '...'
+        2. Enter '....'
+        3. Execute '....'
+        4. See error
     validations:
       required: true
 
