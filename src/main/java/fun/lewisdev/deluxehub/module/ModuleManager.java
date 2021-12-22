@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.module;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.modules.chat.*;
@@ -72,7 +73,7 @@ public class ModuleManager {
         registerModule(new HologramManager(plugin));
 
         // Requires 1.9+
-        if (DeluxeHubPlugin.SERVER_VERSION > 8) {
+        if (ReflectionUtils.supports(9)) {
             registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
         }
 

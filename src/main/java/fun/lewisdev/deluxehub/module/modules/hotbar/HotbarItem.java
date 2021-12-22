@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.module.modules.hotbar;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
@@ -121,7 +122,7 @@ public abstract class HotbarItem implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        if (DeluxeHubPlugin.SERVER_VERSION > 8 && event.getHand() != EquipmentSlot.HAND)
+        if (ReflectionUtils.supports(9) && event.getHand() != EquipmentSlot.HAND)
             return;
 
         Player player = event.getPlayer();

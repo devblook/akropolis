@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.action.actions;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.messages.Titles;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
@@ -34,7 +35,7 @@ public class TitleAction implements Action {
             fadeOut = 1;
         }
 
-        if (DeluxeHubPlugin.SERVER_VERSION > 10) {
+        if (ReflectionUtils.supports(11)) {
             player.sendTitle(mainTitle, subTitle, fadeIn * 20, stay * 20, fadeOut * 20);
         } else {
             Titles.sendTitle(player, fadeIn * 20, stay * 20, fadeOut * 20, mainTitle, subTitle);

@@ -2,7 +2,6 @@ package fun.lewisdev.deluxehub.module.modules.visual.tablist;
 
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.google.common.base.Strings;
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.utility.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -23,7 +22,7 @@ public class TablistHelper {
         footer = Strings.isNullOrEmpty(footer) ? ""
                 : TextUtil.color(footer).replace("%player%", player.getDisplayName());
 
-        if (DeluxeHubPlugin.SERVER_VERSION > 13) {
+        if (ReflectionUtils.supports(14)) {
             player.setPlayerListHeaderFooter(header, footer);
             return;
         }

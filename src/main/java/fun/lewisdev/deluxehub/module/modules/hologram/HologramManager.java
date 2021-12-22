@@ -37,7 +37,6 @@ public class HologramManager extends Module {
             return;
         }
 
-
         loadHolograms();
     }
 

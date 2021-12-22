@@ -1,6 +1,6 @@
 package fun.lewisdev.deluxehub.utility.reflection;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import com.cryptomorin.xseries.ReflectionUtils;
 import org.bukkit.entity.ArmorStand;
 
 public class ArmorStandName {
@@ -10,7 +10,7 @@ public class ArmorStandName {
     }
 
     public static String getName(ArmorStand stand) {
-        if (DeluxeHubPlugin.SERVER_VERSION > 8)
+        if (ReflectionUtils.supports(9))
             return stand.getCustomName();
 
         String name = null;

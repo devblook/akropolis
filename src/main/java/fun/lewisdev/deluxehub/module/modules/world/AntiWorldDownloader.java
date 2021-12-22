@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.module.modules.world;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
@@ -17,7 +18,7 @@ public class AntiWorldDownloader extends Module implements PluginMessageListener
 
     public AntiWorldDownloader(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.ANTI_WDL);
-        this.legacy = DeluxeHubPlugin.SERVER_VERSION < 13;
+        this.legacy = !ReflectionUtils.supports(14);
     }
 
     @Override

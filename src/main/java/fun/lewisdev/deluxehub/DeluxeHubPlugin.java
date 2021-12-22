@@ -1,6 +1,7 @@
 package fun.lewisdev.deluxehub;
 
 import cl.bgmp.minecraft.util.commands.exceptions.*;
+import com.cryptomorin.xseries.ReflectionUtils;
 import fun.lewisdev.deluxehub.action.ActionManager;
 import fun.lewisdev.deluxehub.command.CommandManager;
 import fun.lewisdev.deluxehub.config.ConfigManager;
@@ -26,11 +27,9 @@ import java.util.logging.Level;
 @SuppressWarnings("NullableProblems")
 public class DeluxeHubPlugin extends JavaPlugin {
     private static final int BSTATS_ID;
-    public static final int SERVER_VERSION;
 
     static {
         BSTATS_ID = 3151;
-        SERVER_VERSION = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].replace(".", "#").split("#")[1]);
     }
 
     private ConfigManager configManager;
@@ -64,7 +63,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
             return;
         }
 
-        if (SERVER_VERSION > 15) TextUtil.setUseHex(true);
+        if (ReflectionUtils.supports(16)) TextUtil.setUseHex(true);
 
         // Enable bStats metrics
         new MetricsLite(this, BSTATS_ID);
