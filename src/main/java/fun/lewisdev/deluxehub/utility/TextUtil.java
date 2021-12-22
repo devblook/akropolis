@@ -43,7 +43,7 @@ public class TextUtil {
     }
 
     public static String getCenteredMessage(String rawMessage) {
-        if (rawMessage == null || rawMessage.equals(""))
+        if (rawMessage == null || rawMessage.isEmpty())
             return "";
 
         String message = ChatColor.translateAlternateColorCodes('&', rawMessage).replace("<center>", "")

@@ -96,7 +96,7 @@ public class PlayerListener extends Module {
 
         // Join message handling
         if (joinQuitMessagesEnabled) {
-            if (joinMessage.equals(""))
+            if (joinMessage.isEmpty())
                 event.setJoinMessage(null);
             else {
                 String message = PlaceholderUtil.setPlaceholders(joinMessage, player);
@@ -149,7 +149,7 @@ public class PlayerListener extends Module {
             return;
 
         if (joinQuitMessagesEnabled) {
-            if (quitMessage.equals(""))
+            if (quitMessage.isEmpty())
                 event.setQuitMessage(null);
             else {
                 String message = PlaceholderUtil.setPlaceholders(quitMessage, player);
