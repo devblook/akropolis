@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     java
     `maven-publish`
@@ -57,25 +55,27 @@ publishing {
     }
 }
 
-tasks.withType<ProcessResources> {
-    filesMatching("plugin.yml") {
-        expand("version" to project.version)
+tasks {
+    processResources {
+        filesMatching("plugin.yml") {
+            expand("version" to project.version)
+        }
     }
-}
 
-tasks.withType<ShadowJar> {
-    archiveClassifier.set("")
-    archiveFileName.set("DeluxeHub-${project.version}.jar")
+    shadowJar {
+        archiveClassifier.set("")
+        archiveFileName.set("DeluxeHub-${project.version}.jar")
 
-    minimize()
+        minimize()
 
-    relocate("org.bstats", "${libsPackage}.metrics")
-    relocate("cl.bgmp", "${libsPackage}.commandframework")
-    relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
-    relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
-    relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
-}
+        relocate("org.bstats", "${libsPackage}.metrics")
+        relocate("cl.bgmp", "${libsPackage}.commandframework")
+        relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
+        relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
+        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
+    }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
 }
