@@ -77,7 +77,7 @@ public class HotbarManager extends Module {
             }
 
             customItem.setConfigurationSection(itemsSection.getConfigurationSection(itemEntry));
-            customItem.setAllowMovement(itemsSection.getBoolean("disable_inventory_movement"));
+            customItem.setAllowMovement(customItemsSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(customItem);
         }
     }
