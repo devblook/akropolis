@@ -24,7 +24,7 @@ public class FlyCommand {
         ConfigManager configManager = plugin.getConfigManager();
 
         this.dataConfig = configManager.getFile(ConfigType.DATA).get();
-        this.saveState = configManager.getFile(ConfigType.SETTINGS).get().getBoolean("fly.save_state");
+        this.saveState = configManager.getFile(ConfigType.SETTINGS).get().getBoolean("fly.save_state", false);
     }
 
     // TODO: Reduce cognitive complexity from 16 to something minor.

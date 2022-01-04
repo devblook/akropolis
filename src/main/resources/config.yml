@@ -214,7 +214,7 @@ fly:
   
   # This will force the fly to be enabled on join (if player has the permission to use the fly command).
   # This option also respects the preference (if save_state is true) of the user if he disables the fly mode.
-  force_on_join: true
+  force_on_join: false
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CHAT MANAGEMENT                          |
