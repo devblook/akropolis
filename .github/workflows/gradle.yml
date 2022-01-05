@@ -1,7 +1,11 @@
 # This workflow will build DeluxeHub with Gradle and execute a SonarCloud analysis.
 # It will be compiled against Java 8, 11 and 17.
 name: Build and analyze
-on: [ push, pull_request ]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   # Builds DeluxeHub in recommended JDK versions
