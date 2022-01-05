@@ -70,7 +70,7 @@ public class TextUtil {
         boolean isBold = false;
 
         for (final char messageChar : message.toCharArray()) {
-            if (messageChar == '�') {
+            if (messageChar == ChatColor.COLOR_CHAR) {
                 previousCode = true;
             } else if (previousCode) {
                 previousCode = false;
