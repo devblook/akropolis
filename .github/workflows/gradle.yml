@@ -23,8 +23,6 @@ jobs:
     steps:
       - name: Checkout GitHub repository
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis.
 
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
@@ -61,6 +59,8 @@ jobs:
         with:
           name: DeluxeHub Artifact
           path: build/libs/*.jar
+
+  # Executes an analysis using SonarCloud.
   analyze:
     name: Analyze with SonarCloud
     runs-on: ubuntu-latest
