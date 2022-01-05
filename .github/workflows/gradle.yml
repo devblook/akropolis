@@ -1,6 +1,6 @@
-# This workflow will build a DeluxeHub with Gradle.
+# This workflow will build a DeluxeHub with Gradle and execute a SonarCloud analysis.
 # It will be compiled against Java 8, 11 and 17.
-name: Build DeluxeHub
+name: Build and analyze DeluxeHub
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build on recommended JDK versions
+    name: Build on recommended JDK versions and execute analysis
     runs-on: ubuntu-latest
 
     # For Minecraft 1.8 - 1.12, Java 8 is recommended.
@@ -23,9 +23,14 @@ jobs:
     steps:
       - name: Checkout GitHub repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis.
 
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
+
+      - name: Cleanup old JARs
+        run: rm -f build/libs/*.jar
 
       - name: Set up JDK ${{ matrix.java_version }}
         uses: actions/setup-java@v2
@@ -34,12 +39,18 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      - name: Cleanup old JARs
-        run: |
-          rm -f build/libs/*.jar
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build with Gradle
-        run: ./gradlew shadowJar
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any.
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew shadowJar sonarqube --info
 
       - name: Cleanup Gradle Cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
