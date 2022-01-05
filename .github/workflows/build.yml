@@ -1,6 +1,6 @@
-# This workflow will build DeluxeHub with Gradle and execute a SonarCloud analysis.
+# This workflow will build DeluxeHub with Gradle.
 # It will be compiled against Java 8, 11 and 17.
-name: Build and analyze
+name: Build
 on: [ push, pull_request ]
 
 jobs:
