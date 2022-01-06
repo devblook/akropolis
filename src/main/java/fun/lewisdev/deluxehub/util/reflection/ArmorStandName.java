@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility.reflection;
+package fun.lewisdev.deluxehub.util.reflection;
 
 import com.cryptomorin.xseries.ReflectionUtils;
 import org.bukkit.entity.ArmorStand;

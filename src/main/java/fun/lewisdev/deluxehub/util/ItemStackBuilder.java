@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility;
+package fun.lewisdev.deluxehub.util;
 
 import com.cryptomorin.xseries.XMaterial;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;

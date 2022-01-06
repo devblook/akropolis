@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility;
+package fun.lewisdev.deluxehub.util;
 
 import fun.lewisdev.deluxehub.Permissions;
 import org.bukkit.Bukkit;

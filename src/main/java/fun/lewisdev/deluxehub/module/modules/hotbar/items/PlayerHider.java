@@ -6,7 +6,7 @@ import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarItem;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import fun.lewisdev.deluxehub.util.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

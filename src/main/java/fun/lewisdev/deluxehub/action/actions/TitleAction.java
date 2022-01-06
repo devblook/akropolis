@@ -4,7 +4,7 @@ import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.messages.Titles;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 public class TitleAction implements Action {

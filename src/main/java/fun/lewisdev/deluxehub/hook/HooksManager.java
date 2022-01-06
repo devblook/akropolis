@@ -3,7 +3,7 @@ package fun.lewisdev.deluxehub.hook;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.hook.hooks.head.BaseHead;
 import fun.lewisdev.deluxehub.hook.hooks.head.DatabaseHead;
-import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;

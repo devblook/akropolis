@@ -2,7 +2,7 @@ package fun.lewisdev.deluxehub.module.modules.visual.tablist;
 
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.google.common.base.Strings;
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;

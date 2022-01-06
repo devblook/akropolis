@@ -4,7 +4,7 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.inventory.AbstractInventory;
 import fun.lewisdev.deluxehub.inventory.InventoryBuilder;
 import fun.lewisdev.deluxehub.inventory.InventoryItem;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import fun.lewisdev.deluxehub.util.ItemStackBuilder;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;

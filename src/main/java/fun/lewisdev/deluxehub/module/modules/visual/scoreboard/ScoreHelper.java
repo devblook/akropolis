@@ -1,8 +1,8 @@
 package fun.lewisdev.deluxehub.module.modules.visual.scoreboard;
 
 import fr.mrmicky.fastboard.FastBoard;
-import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

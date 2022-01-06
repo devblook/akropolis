@@ -1,7 +1,7 @@
 package fun.lewisdev.deluxehub.module.modules.hologram;
 
-import fun.lewisdev.deluxehub.utility.TextUtil;
-import fun.lewisdev.deluxehub.utility.reflection.ArmorStandName;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import fun.lewisdev.deluxehub.util.reflection.ArmorStandName;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;

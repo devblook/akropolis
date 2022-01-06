@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility;
+package fun.lewisdev.deluxehub.util;
 
 public enum DefaultFontInfo {
     A('A', 5), A_LOWERCASE('a', 5), B('B', 5), B_LOWERCASE('b', 5), C('C', 5), C_LOWERCASE('c', 5), D('D', 5),

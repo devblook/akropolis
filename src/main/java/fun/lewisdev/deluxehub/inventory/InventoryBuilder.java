@@ -1,6 +1,6 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;

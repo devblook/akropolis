@@ -2,7 +2,7 @@ package fun.lewisdev.deluxehub.action;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.actions.*;
-import fun.lewisdev.deluxehub.utility.PlaceholderUtil;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 

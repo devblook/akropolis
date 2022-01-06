@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility;
+package fun.lewisdev.deluxehub.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;

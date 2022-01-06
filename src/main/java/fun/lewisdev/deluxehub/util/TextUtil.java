@@ -1,4 +1,4 @@
-package fun.lewisdev.deluxehub.utility;
+package fun.lewisdev.deluxehub.util;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;

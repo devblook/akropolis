@@ -1,6 +1,6 @@
 package fun.lewisdev.deluxehub.config;
 
-import fun.lewisdev.deluxehub.utility.TextUtil;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Messages {

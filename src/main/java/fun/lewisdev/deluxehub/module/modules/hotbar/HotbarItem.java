@@ -3,7 +3,7 @@ package fun.lewisdev.deluxehub.module.modules.hotbar;
 import com.cryptomorin.xseries.ReflectionUtils;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
-import fun.lewisdev.deluxehub.utility.ItemStackBuilder;
+import fun.lewisdev.deluxehub.util.ItemStackBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
