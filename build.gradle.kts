@@ -2,7 +2,6 @@ plugins {
     java
     `maven-publish`
     id("com.github.johnrengelman.shadow") version ("7.1.1")
-    id("org.sonarqube") version ("3.3")
 }
 
 group = "fun.lewisdev"
@@ -14,14 +13,6 @@ val libsPackage = property("libsPackage") as String
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "zolary_deluxe-hub")
-        property("sonar.organization", "zolary")
-        property("sonar.host.url", "https://sonarcloud.io")
-    }
 }
 
 repositories {
