@@ -36,7 +36,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.9.0")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
-    implementation("com.github.cryptomorin:XSeries:8.5.0.1")
+    implementation("com.github.cryptomorin:XSeries:8.6.1")
 
     compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.18-R0.1-SNAPSHOT")
