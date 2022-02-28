@@ -22,7 +22,7 @@ public class PotionEffectAction implements Action {
 
         try {
             xpotion.ifPresent(p -> {
-                PotionEffect potionEffect = p.parsePotion(1000000, Integer.parseInt(args[1]) - 1);
+                PotionEffect potionEffect = p.buildPotionEffect(1000000, Integer.parseInt(args[1]) - 1);
 
                 if (potionEffect == null) throw new IllegalStateException();
 
