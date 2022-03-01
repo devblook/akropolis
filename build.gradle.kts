@@ -20,7 +20,6 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://maven.bgmp.cl/")
     maven("https://repo.codemc.org/repository/maven-public")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://libraries.minecraft.net/")
@@ -32,7 +31,6 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("cl.bgmp:command-framework-bukkit:1.0.3-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.9.0")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")

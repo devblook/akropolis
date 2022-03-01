@@ -1,66 +1,65 @@
 package fun.lewisdev.deluxehub.command.commands.gamemode;
 
-import cl.bgmp.minecraft.util.commands.CommandContext;
-import cl.bgmp.minecraft.util.commands.annotations.Command;
-import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GamemodeCommand {
+import java.util.List;
 
-    public GamemodeCommand(DeluxeHubPlugin plugin) {
-        // For injection purposes.
+public class GamemodeCommand extends InjectableCommand {
+
+    public GamemodeCommand(DeluxeHubPlugin plugin, List<String> aliases) {
+        super(plugin, "gamemode", "Allows you to change gamemode", "/gamemode <gamemode> [player]", aliases);
     }
 
-    // TODO: Refactor to reduce complexity from 17 to something minor.
-    @Command(aliases = {
-            "gamemode"}, desc = "Allows you to change gamemode", usage = "<gamemode> [player]", min = 1, max = 2)
-    public void gamemode(final CommandContext args, final CommandSender sender) throws CommandException {
-
-        if (args.argsLength() == 1) {
-
-            if (!(sender instanceof Player))
-                throw new CommandException("Console cannot change gamemode");
-
-            Player player = (Player) sender;
-            if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return;
+    @Override
+    public boolean onCommand(CommandSender sender, String label, String[] args) {
+        if (args.length == 1) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Console cannot change gamemode");
+                return true;
             }
 
-            GameMode gamemode = getGamemode(args.getString(0));
+            Player player = (Player) sender;
+
+            if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
+                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                return true;
+            }
+
+            GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args.getString(0)));
-                return;
+                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
+                return true;
             }
 
             player.sendMessage(
                     Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase()));
             player.setGameMode(gamemode);
 
-        } else if (args.argsLength() == 2) {
+        } else if (args.length == 2) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return;
+                return true;
             }
 
-            Player player = Bukkit.getPlayer(args.getString(1));
+            Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
-                return;
+                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                return true;
             }
 
-            GameMode gamemode = getGamemode(args.getString(0));
+            GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args.getString(0)));
-                return;
+                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
+                return true;
             }
 
             String gamemodeChange = Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase());
@@ -75,6 +74,8 @@ public class GamemodeCommand {
 
             player.setGameMode(gamemode);
         }
+
+        return true;
     }
 
     private GameMode getGamemode(String gamemode) {
@@ -87,6 +88,7 @@ public class GamemodeCommand {
         } else if (gamemode.equals("3") || gamemode.equalsIgnoreCase("spectator") || gamemode.equalsIgnoreCase("sp")) {
             return GameMode.SPECTATOR;
         }
+
         return null;
     }
 }

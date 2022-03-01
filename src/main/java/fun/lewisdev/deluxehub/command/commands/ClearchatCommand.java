@@ -1,29 +1,29 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import cl.bgmp.minecraft.util.commands.CommandContext;
-import cl.bgmp.minecraft.util.commands.annotations.Command;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ClearchatCommand {
+import java.util.List;
 
-    public ClearchatCommand(DeluxeHubPlugin plugin) {
-        // For injection purposes.
+public class ClearchatCommand extends InjectableCommand {
+
+    public ClearchatCommand(DeluxeHubPlugin plugin, List<String> aliases) {
+        super(plugin, "clearchat", "Clear global or a player's chat", "/clearchat [player]", aliases);
     }
 
-    @Command(aliases = {"clearchat"}, desc = "Clear global or a player's chat", usage = "[player]", max = 1)
-    public void clearchat(final CommandContext args, final CommandSender sender) {
-
+    @Override
+    public boolean onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return;
+            return true;
         }
 
-        if (args.argsLength() == 0) {
+        if (args.length == 0) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 for (int i = 0; i < 100; i++) {
                     player.sendMessage("");
@@ -31,13 +31,13 @@ public class ClearchatCommand {
 
                 player.sendMessage(Messages.CLEARCHAT.toString().replace("%player%", sender.getName()));
             }
-        } else if (args.argsLength() == 1) {
+        } else if (args.length == 1) {
 
-            Player player = Bukkit.getPlayer(args.getString(0));
+            Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
-                return;
+                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                return true;
             }
 
             for (int i = 0; i < 100; i++) {
@@ -46,5 +46,7 @@ public class ClearchatCommand {
 
             sender.sendMessage(Messages.CLEARCHAT_PLAYER.toString().replace("%player%", sender.getName()));
         }
+
+        return true;
     }
 }

@@ -1,26 +1,28 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import cl.bgmp.minecraft.util.commands.CommandContext;
-import cl.bgmp.minecraft.util.commands.annotations.Command;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.chat.ChatLock;
 import org.bukkit.command.CommandSender;
 
-public class LockchatCommand {
+import java.util.List;
+
+public class LockchatCommand extends InjectableCommand {
     private final DeluxeHubPlugin plugin;
 
-    public LockchatCommand(DeluxeHubPlugin plugin) {
+    public LockchatCommand(DeluxeHubPlugin plugin, List<String> aliases) {
+        super(plugin, "lockchat", "Locks global chat", aliases);
         this.plugin = plugin;
     }
 
-    @Command(aliases = {"lockchat"}, desc = "Locks global chat")
-    public void lockchat(final CommandContext args, final CommandSender sender) {
+    @Override
+    public boolean onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return;
+            return true;
         }
 
         ChatLock chatLockModule = (ChatLock) plugin.getModuleManager().getModule(ModuleType.CHAT_LOCK);
@@ -34,5 +36,7 @@ public class LockchatCommand {
                     .broadcastMessage(Messages.CHAT_LOCKED_BROADCAST.toString().replace("%player%", sender.getName()));
             chatLockModule.setChatLocked(true);
         }
+
+        return true;
     }
 }

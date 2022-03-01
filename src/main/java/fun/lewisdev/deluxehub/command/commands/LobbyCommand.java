@@ -1,8 +1,7 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import cl.bgmp.minecraft.util.commands.CommandContext;
-import cl.bgmp.minecraft.util.commands.annotations.Command;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
 import fun.lewisdev.deluxehub.util.TextUtil;
@@ -11,26 +10,31 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class LobbyCommand {
+import java.util.List;
+
+public class LobbyCommand extends InjectableCommand {
     private final DeluxeHubPlugin plugin;
 
-    public LobbyCommand(DeluxeHubPlugin plugin) {
+    public LobbyCommand(DeluxeHubPlugin plugin, List<String> aliases) {
+        super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
         this.plugin = plugin;
     }
 
-    @Command(aliases = {"lobby"}, desc = "Teleport to the lobby (if set)")
-    public void lobby(final CommandContext args, final CommandSender sender) {
+    @Override
+    public boolean onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Console cannot teleport to spawn");
-            return;
+            return true;
         }
 
         Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
             sender.sendMessage(TextUtil.color("&cThe spawn location has not been set &7(/setlobby)&c."));
-            return;
+            return true;
         }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleport(location), 3L);
+
+        return true;
     }
 }

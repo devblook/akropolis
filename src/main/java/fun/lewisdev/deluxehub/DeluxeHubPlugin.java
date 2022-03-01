@@ -1,12 +1,10 @@
 package fun.lewisdev.deluxehub;
 
-import cl.bgmp.minecraft.util.commands.exceptions.*;
 import com.cryptomorin.xseries.ReflectionUtils;
 import fun.lewisdev.deluxehub.action.ActionManager;
 import fun.lewisdev.deluxehub.command.CommandManager;
 import fun.lewisdev.deluxehub.config.ConfigManager;
 import fun.lewisdev.deluxehub.config.ConfigType;
-import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.cooldown.CooldownManager;
 import fun.lewisdev.deluxehub.hook.HooksManager;
 import fun.lewisdev.deluxehub.inventory.InventoryManager;
@@ -17,14 +15,11 @@ import fun.lewisdev.deluxehub.util.TextUtil;
 import fun.lewisdev.deluxehub.util.UpdateChecker;
 import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
-@SuppressWarnings("NullableProblems")
 public class DeluxeHubPlugin extends JavaPlugin {
     private static final int BSTATS_ID;
 
@@ -129,30 +124,6 @@ public class DeluxeHubPlugin extends JavaPlugin {
         getCommandManager().reload();
 
         moduleManager.loadModules(this);
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String commandLabel, String[] args) {
-        try {
-            getCommandManager().execute(cmd.getName(), args, sender);
-        } catch (CommandPermissionsException e) {
-            sender.sendMessage(Messages.NO_PERMISSION.toString());
-        } catch (MissingNestedCommandException e) {
-            sender.sendMessage(ChatColor.RED + e.getUsage());
-        } catch (CommandUsageException e) {
-            sender.sendMessage(ChatColor.RED + "Usage: " + e.getUsage());
-        } catch (WrappedCommandException e) {
-            if (e.getCause() instanceof NumberFormatException) {
-                sender.sendMessage(ChatColor.RED + "Number expected, string received instead.");
-            } else {
-                sender.sendMessage(ChatColor.RED + "An internal error has occurred. See console.");
-                e.printStackTrace();
-            }
-        } catch (CommandException e) {
-            sender.sendMessage(ChatColor.RED + e.getMessage());
-        }
-
-        return true;
     }
 
     public HologramManager getHologramManager() {

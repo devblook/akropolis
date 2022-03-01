@@ -1,44 +1,41 @@
 package fun.lewisdev.deluxehub.command;
 
-import cl.bgmp.bukkit.util.BukkitCommandsManager;
-import cl.bgmp.bukkit.util.CommandsManagerRegistration;
-import cl.bgmp.minecraft.util.commands.CommandsManager;
-import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
-import cl.bgmp.minecraft.util.commands.injection.SimpleInjector;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.command.commands.*;
 import fun.lewisdev.deluxehub.command.commands.gamemode.*;
 import fun.lewisdev.deluxehub.config.ConfigType;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CommandManager {
     private final DeluxeHubPlugin plugin;
     private final FileConfiguration config;
 
-    private CommandsManager<CommandSender> commands;
-    private CommandsManagerRegistration commandRegistry;
-
+    private final Set<InjectableCommand> commands;
     private final List<CustomCommand> customCommands;
+    private CommandMap commandMap;
 
     public CommandManager(DeluxeHubPlugin plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
+        this.commands = new HashSet<>();
         this.customCommands = new ArrayList<>();
+        setCommandMap();
     }
 
     public void reload() {
-        if (commandRegistry != null) commandRegistry.unregisterCommands();
+        commands.forEach(c -> c.unregister(commandMap));
+        if (!commands.isEmpty()) commands.clear();
 
-        commands = new BukkitCommandsManager();
-        commandRegistry = new CommandsManagerRegistration(plugin, commands);
-        commands.setInjector(new SimpleInjector(plugin));
-
-        commandRegistry.register(DeluxeHubCommand.class);
+        registerCommand(new DeluxeHubCommand(plugin));
 
         ConfigurationSection commandsSection = config.getConfigurationSection("commands");
 
@@ -48,17 +45,12 @@ public class CommandManager {
         }
 
         for (String command : commandsSection.getKeys(false)) {
-            if (!config.getBoolean("commands." + command + ".enabled"))
-                continue;
+            if (!config.getBoolean("commands." + command + ".enabled")) continue;
 
-            registerCommand(command, commandsSection.getStringList(command + ".aliases").toArray(new String[0]));
+            registerCommand(command, commandsSection.getStringList(command + ".aliases"));
         }
 
         reloadCustomCommands();
-    }
-
-    public void execute(String cmd, String[] args, CommandSender sender) throws CommandException {
-        commands.execute(cmd, args, sender, sender);
     }
 
     public void reloadCustomCommands() {
@@ -68,7 +60,7 @@ public class CommandManager {
         ConfigurationSection customCommandsSection = config.getConfigurationSection("custom_commands");
 
         if (customCommandsSection == null) {
-            plugin.getLogger().severe("Custo commands configuration section is missing!");
+            plugin.getLogger().severe("Custom commands configuration section is missing!");
             return;
         }
 
@@ -89,47 +81,67 @@ public class CommandManager {
         }
     }
 
-    private void registerCommand(String cmd, String[] aliases) {
+    private void registerCommand(String cmd, List<String> aliases) {
         switch (cmd.toUpperCase()) {
             case "GAMEMODE":
-                commandRegistry.register(GamemodeCommand.class, aliases);
+                registerCommand(new GamemodeCommand(plugin, aliases));
                 break;
             case "GMS":
-                commandRegistry.register(SurvivalCommand.class, aliases);
+                registerCommand(new SurvivalCommand(plugin, aliases));
                 break;
             case "GMC":
-                commandRegistry.register(CreativeCommand.class, aliases);
+                registerCommand(new CreativeCommand(plugin, aliases));
                 break;
             case "GMA":
-                commandRegistry.register(AdventureCommand.class, aliases);
+                registerCommand(new AdventureCommand(plugin, aliases));
                 break;
             case "GMSP":
-                commandRegistry.register(SpectatorCommand.class, aliases);
+                registerCommand(new SpectatorCommand(plugin, aliases));
                 break;
             case "CLEARCHAT":
-                commandRegistry.register(ClearchatCommand.class, aliases);
+                registerCommand(new ClearchatCommand(plugin, aliases));
                 break;
             case "FLY":
-                commandRegistry.register(FlyCommand.class, aliases);
+                registerCommand(new FlyCommand(plugin, aliases));
                 break;
             case "LOCKCHAT":
-                commandRegistry.register(LockchatCommand.class, aliases);
+                registerCommand(new LockchatCommand(plugin, aliases));
                 break;
             case "SETLOBBY":
-                commandRegistry.register(SetLobbyCommand.class, aliases);
+                registerCommand(new SetLobbyCommand(plugin, aliases));
                 break;
             case "LOBBY":
-                commandRegistry.register(LobbyCommand.class, aliases);
+                registerCommand(new LobbyCommand(plugin, aliases));
                 break;
             case "VANISH":
-                commandRegistry.register(VanishCommand.class, aliases);
+                registerCommand(new VanishCommand(plugin, aliases));
                 break;
             default:
                 break;
         }
     }
 
+    private void registerCommand(InjectableCommand command) {
+        try {
+            commandMap.register("deluxehub", command);
+            commands.add(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<CustomCommand> getCustomCommands() {
         return customCommands;
+    }
+
+    public void setCommandMap() {
+        try {
+            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+
+            this.commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

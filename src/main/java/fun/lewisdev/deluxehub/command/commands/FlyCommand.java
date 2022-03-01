@@ -1,10 +1,8 @@
 package fun.lewisdev.deluxehub.command.commands;
 
-import cl.bgmp.minecraft.util.commands.CommandContext;
-import cl.bgmp.minecraft.util.commands.annotations.Command;
-import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
+import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.ConfigManager;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
@@ -13,12 +11,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class FlyCommand {
+import java.util.List;
+
+public class FlyCommand extends InjectableCommand {
     private final DeluxeHubPlugin plugin;
     private final FileConfiguration dataConfig;
     private final boolean saveState;
 
-    public FlyCommand(DeluxeHubPlugin plugin) {
+    public FlyCommand(DeluxeHubPlugin plugin, List<String> aliases) {
+        super(plugin, "fly", "Toggle flight mode", "/fly [player]", aliases);
         this.plugin = plugin;
 
         ConfigManager configManager = plugin.getConfigManager();
@@ -27,16 +28,17 @@ public class FlyCommand {
         this.saveState = configManager.getFile(ConfigType.SETTINGS).get().getBoolean("fly.save_state", false);
     }
 
-    // TODO: Reduce cognitive complexity from 16 to something minor.
-    @Command(aliases = {"fly"}, desc = "Toggle flight mode", usage = "[player]", max = 1)
-    public void flight(final CommandContext args, final CommandSender sender) throws CommandException {
-
-        if (args.argsLength() == 0) {
-            if (!(sender instanceof Player)) throw new CommandException("Console cannot clear inventory");
+    @Override
+    public boolean onCommand(CommandSender sender, String label, String[] args) {
+        if (args.length == 0) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Console cannot clear inventory");
+                return true;
+            }
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return;
+                return true;
             }
 
             Player player = (Player) sender;
@@ -48,17 +50,17 @@ public class FlyCommand {
                 player.sendMessage(Messages.FLIGHT_ENABLE.toString());
                 toggleFlight(player, true);
             }
-        } else if (args.argsLength() == 1) {
+        } else if (args.length == 1) {
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT_OTHERS.getPermission()))) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return;
+                return true;
             }
 
-            Player player = Bukkit.getPlayer(args.getString(0));
+            Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args.getString(0)));
-                return;
+                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                return true;
             }
 
             if (player.getAllowFlight()) {
@@ -71,6 +73,8 @@ public class FlyCommand {
                 toggleFlight(player, true);
             }
         }
+
+        return true;
     }
 
     private void toggleFlight(Player player, boolean value) {
