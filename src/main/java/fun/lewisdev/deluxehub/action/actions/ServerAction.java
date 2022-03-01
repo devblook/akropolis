@@ -6,11 +6,11 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
 import org.bukkit.entity.Player;
 
-public class BungeeAction implements Action {
+public class ServerAction implements Action {
 
     @Override
     public String getIdentifier() {
-        return "BUNGEE";
+        return "SERVER";
     }
 
     @Override

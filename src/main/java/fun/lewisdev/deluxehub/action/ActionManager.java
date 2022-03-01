@@ -24,7 +24,7 @@ public class ActionManager {
     private void load() {
         registerAction(new MessageAction(), new BroadcastMessageAction(), new CommandAction(),
                 new ConsoleCommandAction(), new SoundAction(), new PotionEffectAction(), new GamemodeAction(),
-                new BungeeAction(), new CloseInventoryAction(), new ActionbarAction(), new TitleAction(),
+                new ServerAction(), new CloseInventoryAction(), new ActionbarAction(), new TitleAction(),
                 new MenuAction());
     }
 
