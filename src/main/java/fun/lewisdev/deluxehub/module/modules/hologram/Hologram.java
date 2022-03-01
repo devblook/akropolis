@@ -25,9 +25,7 @@ public class Hologram {
     public void setLines(List<String> lines) {
         remove();
 
-        for (String s : lines)
-            addLine(s);
-
+        for (String s : lines) addLine(s);
     }
 
     public void addLine(String text) {
@@ -50,7 +48,6 @@ public class Hologram {
         ArmorStand stand = stands.get(line - 1);
 
         stand.setCustomName(TextUtil.color(text).trim());
-
     }
 
     public Hologram removeLine(int line) {
