@@ -31,15 +31,15 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("de.tr7zw:item-nbt-api:2.9.0")
+    implementation("de.tr7zw:item-nbt-api:2.9.2")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.7")
-    implementation("com.github.cryptomorin:XSeries:8.6.1")
+    implementation("com.github.cryptomorin:XSeries:8.7.0")
 
-    compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.18-R0.1-SNAPSHOT")
-    compileOnly("com.mojang:authlib:1.5.25")
-    compileOnly("me.clip:placeholderapi:2.10.10")
+    compileOnly("com.mojang:authlib:1.11")
+    compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
 }
 
