@@ -18,25 +18,25 @@ public class GamemodeCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 1) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Console cannot change gamemode");
-                return true;
+                return;
             }
 
             Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
                 sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
-                return true;
+                return;
             }
 
             player.sendMessage(
@@ -46,20 +46,20 @@ public class GamemodeCommand extends InjectableCommand {
         } else if (args.length == 2) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
-                return true;
+                return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
                 sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
-                return true;
+                return;
             }
 
             String gamemodeChange = Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase());
@@ -75,7 +75,6 @@ public class GamemodeCommand extends InjectableCommand {
             player.setGameMode(gamemode);
         }
 
-        return true;
     }
 
     private GameMode getGamemode(String gamemode) {

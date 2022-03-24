@@ -30,7 +30,7 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         try {
-            if (onCommand(sender, label, args)) return true;
+            onCommand(sender, label, args);
         } catch (Exception e) {
             sender.sendMessage(ChatColor.RED + "An error occurred processing this command. Please make sure your parameters are correct.");
             e.printStackTrace();
@@ -40,5 +40,5 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
         return true;
     }
 
-    protected abstract boolean onCommand(CommandSender sender, String label, String[] args);
+    protected abstract void onCommand(CommandSender sender, String label, String[] args);
 }

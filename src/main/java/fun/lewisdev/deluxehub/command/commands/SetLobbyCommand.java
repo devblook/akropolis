@@ -21,28 +21,27 @@ public class SetLobbyCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_SET_LOBBY.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return true;
+            return;
         }
 
         if (!(sender instanceof Player)) {
             sender.sendMessage("Console cannot set the spawn location.");
-            return true;
+            return;
         }
 
         Player player = (Player) sender;
 
         if (plugin.getModuleManager().getDisabledWorlds().contains(player.getWorld().getName())) {
             sender.sendMessage(TextUtil.color("&cYou cannot set the lobby location in a disabled world."));
-            return true;
+            return;
         }
 
         LobbySpawn lobbyModule = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY));
         lobbyModule.setLocation(player.getLocation());
         sender.sendMessage(Messages.SET_LOBBY.toString());
 
-        return true;
     }
 }

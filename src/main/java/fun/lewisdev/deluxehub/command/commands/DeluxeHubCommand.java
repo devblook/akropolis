@@ -34,7 +34,7 @@ public class DeluxeHubCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         PluginDescriptionFile pdfFile = plugin.getDescription();
 
         /*
@@ -45,7 +45,7 @@ public class DeluxeHubCommand extends InjectableCommand {
             if (!sender.hasPermission(Permissions.COMMAND_DELUXEHUB_HELP.getPermission())) {
                 sender.sendMessage(TextUtil.color(
                         "&8&l> &7Server is running &dDeluxeHub &ev" + pdfFile.getVersion() + " &7By &6ItsLewizzz"));
-                return true;
+                return;
             }
 
             sender.sendMessage("");
@@ -70,7 +70,7 @@ public class DeluxeHubCommand extends InjectableCommand {
             sender.sendMessage(TextUtil.color("  &d/clearchat &8- &7&oClear global chat"));
             sender.sendMessage(TextUtil.color("  &d/lockchat &8- &7&oLock/unlock global chat"));
             sender.sendMessage("");
-            return true;
+            return;
         }
 
         /*
@@ -80,7 +80,7 @@ public class DeluxeHubCommand extends InjectableCommand {
 
             if (!sender.hasPermission(Permissions.COMMAND_DELUXEHUB_RELOAD.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             long start = System.currentTimeMillis();
@@ -100,17 +100,17 @@ public class DeluxeHubCommand extends InjectableCommand {
 
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Console cannot toggle the scoreboard");
-                return true;
+                return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_SCOREBOARD_TOGGLE.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             if (!plugin.getModuleManager().isEnabled(ModuleType.SCOREBOARD)) {
                 sender.sendMessage(TextUtil.color("&cThe scoreboard module is not enabled in the configuration."));
-                return true;
+                return;
             }
 
             Player player = (Player) sender;
@@ -134,7 +134,7 @@ public class DeluxeHubCommand extends InjectableCommand {
 
             if (!sender.hasPermission(Permissions.COMMAND_DELUXEHUB_HELP.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             sender.sendMessage("");
@@ -182,23 +182,23 @@ public class DeluxeHubCommand extends InjectableCommand {
         else if (args[0].equalsIgnoreCase("open")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Console cannot open menus");
-                return true;
+                return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_OPEN_MENUS.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             if (args.length == 1) {
                 sender.sendMessage(TextUtil.color("&cUsage: /deluxehub open <menu>"));
-                return true;
+                return;
             }
 
             AbstractInventory inventory = plugin.getInventoryManager().getInventory(args[1]);
             if (inventory == null) {
                 sender.sendMessage(TextUtil.color("&c" + args[1] + " is not a valid menu ID."));
-                return true;
+                return;
             }
             inventory.openInventory((Player) sender);
         }
@@ -210,12 +210,12 @@ public class DeluxeHubCommand extends InjectableCommand {
 
             if (!(sender instanceof Player)) {
                 sender.sendMessage("You cannot do this command.");
-                return true;
+                return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_HOLOGRAMS.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             if (args.length == 1) {
@@ -238,7 +238,7 @@ public class DeluxeHubCommand extends InjectableCommand {
                 sender.sendMessage(TextUtil.color(" &d/" + label + " hologram removeline <id> <line>"));
                 sender.sendMessage(TextUtil.color("   &7&oRemove a line from a hologram"));
                 sender.sendMessage("");
-                return true;
+                return;
             }
 
             Player player = (Player) sender;
@@ -247,7 +247,7 @@ public class DeluxeHubCommand extends InjectableCommand {
 
                 if (plugin.getHologramManager().getHolograms().isEmpty()) {
                     sender.sendMessage(Messages.HOLOGRAMS_EMPTY.toString());
-                    return true;
+                    return;
                 }
 
                 sender.sendMessage("");
@@ -261,13 +261,13 @@ public class DeluxeHubCommand extends InjectableCommand {
             if (args[1].equalsIgnoreCase("create")) {
                 if (args.length == 2) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram create <id>"));
-                    return true;
+                    return;
                 }
 
                 if (plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_ALREADY_EXISTS.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 Hologram holo = plugin.getHologramManager().createHologram(args[2], player.getLocation());
@@ -276,36 +276,36 @@ public class DeluxeHubCommand extends InjectableCommand {
                 defaultMsg.add("&7Use &b/deluxehub holo &7to customise");
                 holo.setLines(defaultMsg);
                 sender.sendMessage(Messages.HOLOGRAMS_SPAWNED.toString().replace("%name%", args[2]));
-                return true;
+                return;
             }
 
             if (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("delete")) {
                 if (args.length == 2) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram remove <id>"));
-                    return true;
+                    return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_HOLOGRAM.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 plugin.getHologramManager().deleteHologram(args[2]);
                 sender.sendMessage(Messages.HOLOGRAMS_DESPAWNED.toString().replace("%name%", args[2]));
-                return true;
+                return;
             }
 
             if (args[1].equalsIgnoreCase("setline")) {
                 if (args.length < 5) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram setline <id> <line> <text>"));
-                    return true;
+                    return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_HOLOGRAM.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
@@ -315,24 +315,24 @@ public class DeluxeHubCommand extends InjectableCommand {
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_LINE.toString().replace("%line%", String.valueOf(line)));
-                    return true;
+                    return;
                 }
 
                 holo.setLine(line, text);
                 sender.sendMessage(Messages.HOLOGRAMS_LINE_SET.toString().replace("%line%", String.valueOf(line)));
-                return true;
+                return;
             }
 
             if (args[1].equalsIgnoreCase("addline")) {
                 if (args.length <= 3) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram addline <id> <text>"));
-                    return true;
+                    return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_HOLOGRAM.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
@@ -345,13 +345,13 @@ public class DeluxeHubCommand extends InjectableCommand {
             if (args[1].equalsIgnoreCase("removeline")) {
                 if (args.length != 4) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram removeline <id> <line>"));
-                    return true;
+                    return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_HOLOGRAM.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
@@ -360,7 +360,7 @@ public class DeluxeHubCommand extends InjectableCommand {
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_LINE.toString().replace("%line%", String.valueOf(line)));
-                    return true;
+                    return;
                 }
 
                 if (holo.removeLine(line) == null) {
@@ -369,19 +369,19 @@ public class DeluxeHubCommand extends InjectableCommand {
                             Messages.HOLOGRAMS_REMOVED_LINE.toString().replace("%name%", args[2]));
                 }
 
-                return true;
+                return;
             }
 
             if (args[1].equalsIgnoreCase("move")) {
                 if (args.length == 2) {
                     sender.sendMessage(TextUtil.color("&cUsage: /deluxehub hologram move <id>"));
-                    return true;
+                    return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
                             Messages.HOLOGRAMS_INVALID_HOLOGRAM.toString().replace("%name%", args[2]));
-                    return true;
+                    return;
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
@@ -391,6 +391,5 @@ public class DeluxeHubCommand extends InjectableCommand {
             }
         }
 
-        return true;
     }
 }

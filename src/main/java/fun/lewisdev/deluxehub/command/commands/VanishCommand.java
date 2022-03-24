@@ -20,21 +20,20 @@ public class VanishCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_VANISH.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return true;
+            return;
         }
 
         if (!(sender instanceof Player)) {
             sender.sendMessage("Console cannot set the spawn location.");
-            return true;
+            return;
         }
 
         Player player = (Player) sender;
         PlayerVanish vanishModule = ((PlayerVanish) plugin.getModuleManager().getModule(ModuleType.VANISH));
         vanishModule.toggleVanish(player);
 
-        return true;
     }
 }

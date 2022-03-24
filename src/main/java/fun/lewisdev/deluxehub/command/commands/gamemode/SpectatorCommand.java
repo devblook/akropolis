@@ -18,18 +18,18 @@ public class SpectatorCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Console cannot change gamemode");
-                return true;
+                return;
             }
 
             Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "SPECTATOR"));
@@ -37,14 +37,14 @@ public class SpectatorCommand extends InjectableCommand {
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
-                return true;
+                return;
             }
 
             if (sender.getName().equals(player.getName())) {
@@ -58,6 +58,5 @@ public class SpectatorCommand extends InjectableCommand {
             player.setGameMode(GameMode.SPECTATOR);
         }
 
-        return true;
     }
 }

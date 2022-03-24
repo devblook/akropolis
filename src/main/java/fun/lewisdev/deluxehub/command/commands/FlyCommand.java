@@ -29,16 +29,16 @@ public class FlyCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Console cannot clear inventory");
-                return true;
+                return;
             }
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             Player player = (Player) sender;
@@ -53,14 +53,14 @@ public class FlyCommand extends InjectableCommand {
         } else if (args.length == 1) {
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT_OTHERS.getPermission()))) {
                 sender.sendMessage(Messages.NO_PERMISSION.toString());
-                return true;
+                return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
-                return true;
+                return;
             }
 
             if (player.getAllowFlight()) {
@@ -74,7 +74,6 @@ public class FlyCommand extends InjectableCommand {
             }
         }
 
-        return true;
     }
 
     private void toggleFlight(Player player, boolean value) {

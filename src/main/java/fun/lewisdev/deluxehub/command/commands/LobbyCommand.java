@@ -21,20 +21,19 @@ public class LobbyCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Console cannot teleport to spawn");
-            return true;
+            return;
         }
 
         Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
             sender.sendMessage(TextUtil.color("&cThe spawn location has not been set &7(/setlobby)&c."));
-            return true;
+            return;
         }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleport(location), 3L);
 
-        return true;
     }
 }

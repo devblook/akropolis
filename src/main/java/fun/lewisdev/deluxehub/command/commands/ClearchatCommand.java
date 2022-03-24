@@ -17,10 +17,10 @@ public class ClearchatCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return true;
+            return;
         }
 
         if (args.length == 0) {
@@ -37,7 +37,7 @@ public class ClearchatCommand extends InjectableCommand {
 
             if (player == null) {
                 sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
-                return true;
+                return;
             }
 
             for (int i = 0; i < 100; i++) {
@@ -47,6 +47,5 @@ public class ClearchatCommand extends InjectableCommand {
             sender.sendMessage(Messages.CLEARCHAT_PLAYER.toString().replace("%player%", sender.getName()));
         }
 
-        return true;
     }
 }

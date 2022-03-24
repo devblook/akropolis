@@ -19,10 +19,10 @@ public class LockchatCommand extends InjectableCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, String label, String[] args) {
+    public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
             sender.sendMessage(Messages.NO_PERMISSION.toString());
-            return true;
+            return;
         }
 
         ChatLock chatLockModule = (ChatLock) plugin.getModuleManager().getModule(ModuleType.CHAT_LOCK);
@@ -37,6 +37,5 @@ public class LockchatCommand extends InjectableCommand {
             chatLockModule.setChatLocked(true);
         }
 
-        return true;
     }
 }
