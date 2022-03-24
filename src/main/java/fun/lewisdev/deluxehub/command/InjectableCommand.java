@@ -36,7 +36,6 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
             e.printStackTrace();
         }
 
-        sender.sendMessage(this.getUsage());
         return true;
     }
 
