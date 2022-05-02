@@ -20,7 +20,6 @@ repositories {
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.codemc.org/repository/maven-public")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.aikar.co/nexus/content/repositories/aikar-release/")
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://jitpack.io")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -32,12 +31,12 @@ dependencies {
 
     implementation("de.tr7zw:item-nbt-api:2.9.2")
     implementation("fr.mrmicky:fastboard:1.2.1")
-    implementation("org.bstats:bstats-bukkit-lite:1.7")
-    implementation("com.github.cryptomorin:XSeries:8.7.0")
+    implementation("org.bstats:bstats-bukkit-lite:1.8")
+    implementation("com.github.cryptomorin:XSeries:8.7.1")
 
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.18-R0.1-SNAPSHOT")
-    compileOnly("com.mojang:authlib:1.11")
+    compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
 }
