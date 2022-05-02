@@ -16,8 +16,6 @@ java {
 }
 
 repositories {
-    mavenLocal()
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.codemc.org/repository/maven-public")
@@ -25,6 +23,7 @@ repositories {
     maven("https://repo.aikar.co/nexus/content/repositories/aikar-release/")
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://jitpack.io")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     mavenCentral()
 }
 
