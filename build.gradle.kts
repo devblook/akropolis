@@ -1,6 +1,5 @@
 plugins {
     java
-    `maven-publish`
     id("com.github.johnrengelman.shadow") version ("7.1.2")
 }
 
@@ -43,12 +42,6 @@ dependencies {
 
 configurations.implementation {
     exclude("org.bukkit", "bukkit")
-}
-
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
 }
 
 tasks {
