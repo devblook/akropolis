@@ -87,7 +87,7 @@ public class HologramManager extends Module {
     }
 
     public Hologram createHologram(String name, Location location) {
-        Hologram holo = new Hologram(name, location, getPlugin().getTextUtil());
+        Hologram holo = new Hologram(name, location);
 
         holograms.add(holo);
 

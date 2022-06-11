@@ -1,6 +1,6 @@
 package fun.lewisdev.deluxehub.config;
 
-import fun.lewisdev.deluxehub.DeluxeHubPlugin;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Messages {
@@ -63,8 +63,7 @@ public enum Messages {
         }
 
         String prefix = config.getString("Messages." + PREFIX.getPath());
-        //TODO: Find a way to not make this class dependant on TextUtil.
-        return DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color(message.replace("%prefix%", prefix != null && !prefix.isEmpty() ? prefix : ""));
+        return TextUtil.color(message.replace("%prefix%", prefix != null && !prefix.isEmpty() ? prefix : ""));
     }
 
     public String getPath() {

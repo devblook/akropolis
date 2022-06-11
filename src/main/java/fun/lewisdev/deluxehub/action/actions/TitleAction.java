@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.messages.Titles;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 public class TitleAction implements Action {
@@ -17,8 +18,8 @@ public class TitleAction implements Action {
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
 
-        String mainTitle = plugin.getTextUtil().color(args[0]);
-        String subTitle = plugin.getTextUtil().color(args[1]);
+        String mainTitle = TextUtil.color(args[0]);
+        String subTitle = TextUtil.color(args[1]);
 
         int fadeIn;
         int stay;

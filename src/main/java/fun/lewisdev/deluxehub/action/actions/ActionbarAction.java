@@ -3,6 +3,7 @@ package fun.lewisdev.deluxehub.action.actions;
 import com.cryptomorin.xseries.messages.ActionBar;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 public class ActionbarAction implements Action {
@@ -14,6 +15,6 @@ public class ActionbarAction implements Action {
 
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
-        ActionBar.sendActionBar(player, plugin.getTextUtil().color(data));
+        ActionBar.sendActionBar(player, TextUtil.color(data));
     }
 }

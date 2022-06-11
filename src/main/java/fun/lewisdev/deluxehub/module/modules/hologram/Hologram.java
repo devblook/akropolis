@@ -12,14 +12,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hologram {
-    //TODO: Find a way to not make this class dependant on TextUtil.
-    private final TextUtil textUtil;
     private final List<ArmorStand> stands;
     private Location location;
     private final String name;
 
-    public Hologram(String name, Location location, TextUtil textUtil) {
-        this.textUtil = textUtil;
+    public Hologram(String name, Location location) {
         this.name = name;
         this.location = location;
         stands = new ArrayList<>();
@@ -42,7 +39,7 @@ public class Hologram {
         stand.setVisible(false);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(textUtil.color(text).trim());
+        stand.setCustomName(TextUtil.color(text).trim());
         stand.setCanPickupItems(false);
         stands.add(stand);
     }
@@ -50,7 +47,7 @@ public class Hologram {
     public void setLine(int line, String text) {
         ArmorStand stand = stands.get(line - 1);
 
-        stand.setCustomName(textUtil.color(text).trim());
+        stand.setCustomName(TextUtil.color(text).trim());
     }
 
     public Hologram removeLine(int line) {

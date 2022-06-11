@@ -4,6 +4,7 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -28,7 +29,7 @@ public class LobbyCommand extends InjectableCommand {
 
         Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
-            sender.sendMessage(plugin.getTextUtil().color("&cThe spawn location has not been set &7(/setlobby)&c."));
+            sender.sendMessage(TextUtil.color("&cThe spawn location has not been set &7(/setlobby)&c."));
             return;
         }
 

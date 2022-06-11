@@ -26,7 +26,6 @@ import java.util.List;
 
 public class PlayerListener extends Module {
     private ConfigurationSection playersSection;
-    private final TextUtil textUtil;
     private boolean joinQuitMessagesEnabled;
     private String joinMessage;
     private String quitMessage;
@@ -45,7 +44,6 @@ public class PlayerListener extends Module {
 
     public PlayerListener(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.PLAYER_LISTENER);
-        this.textUtil = plugin.getTextUtil();
     }
 
     @Override
@@ -76,7 +74,7 @@ public class PlayerListener extends Module {
 
             fireworkColors = new ArrayList<>();
             config.getStringList("join_settings.firework.colors").forEach(c -> {
-                Color color = textUtil.getColor(c);
+                Color color = TextUtil.getColor(c);
                 if (color != null)
                     fireworkColors.add(color);
             });
@@ -102,7 +100,7 @@ public class PlayerListener extends Module {
                 event.setJoinMessage(null);
             else {
                 String message = PlaceholderUtil.setPlaceholders(joinMessage, player);
-                event.setJoinMessage(textUtil.color(message));
+                event.setJoinMessage(TextUtil.color(message));
             }
         }
 
@@ -155,7 +153,7 @@ public class PlayerListener extends Module {
                 event.setQuitMessage(null);
             else {
                 String message = PlaceholderUtil.setPlaceholders(quitMessage, player);
-                event.setQuitMessage(textUtil.color(message));
+                event.setQuitMessage(TextUtil.color(message));
             }
         }
 
