@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.util;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 
@@ -7,23 +8,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TextUtil {
-    private static final int CENTER_PX;
-    private static final Pattern HEX_PATTERN;
+    private final int centerPx;
+    private final Pattern hexPattern;
+    private final boolean hexUse;
 
-    static {
-        CENTER_PX = 154;
-        HEX_PATTERN = Pattern.compile("#<([A-Fa-f0-9]){6}>");
+    public TextUtil() {
+        this.centerPx = 154;
+        this.hexPattern = Pattern.compile("#<([A-Fa-f0-9]){6}>");
+        this.hexUse = ReflectionUtils.supports(16);
     }
 
-    private static boolean hexUse = false;
-
-    private TextUtil() {
-        throw new UnsupportedOperationException();
-    }
-
-    public static String color(String message) {
+    public String color(String message) {
         if (hexUse) {
-            Matcher matcher = HEX_PATTERN.matcher(message);
+            Matcher matcher = hexPattern.matcher(message);
 
             while (matcher.find()) {
                 String hexString = matcher.group();
@@ -35,14 +32,14 @@ public class TextUtil {
                 String after = message.substring(matcher.end());
 
                 message = before + hex + after;
-                matcher = HEX_PATTERN.matcher(message);
+                matcher = hexPattern.matcher(message);
             }
         }
 
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public static String getCenteredMessage(String rawMessage) {
+    public String getCenteredMessage(String rawMessage) {
         if (rawMessage == null || rawMessage.isEmpty())
             return "";
 
@@ -51,7 +48,7 @@ public class TextUtil {
 
         int messagePxSize = getMessageSize(message);
         int halvedMessageSize = messagePxSize / 2;
-        int toCompensate = CENTER_PX - halvedMessageSize;
+        int toCompensate = centerPx - halvedMessageSize;
         int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
         int compensated = 0;
         StringBuilder sb = new StringBuilder();
@@ -64,7 +61,7 @@ public class TextUtil {
         return sb + message;
     }
 
-    private static int getMessageSize(final String message) {
+    private int getMessageSize(final String message) {
         int messagePxSize = 0;
         boolean previousCode = false;
         boolean isBold = false;
@@ -85,7 +82,7 @@ public class TextUtil {
         return messagePxSize;
     }
 
-    public static String joinString(int index, String[] args) {
+    public String joinString(int index, String[] args) {
         StringBuilder builder = new StringBuilder();
 
         for (int i = index; i < args.length; i++) {
@@ -95,7 +92,7 @@ public class TextUtil {
         return builder.toString();
     }
 
-    public static Color getColor(String s) {
+    public Color getColor(String s) {
         switch (s.toUpperCase()) {
             case "AQUA":
                 return Color.AQUA;
@@ -136,7 +133,4 @@ public class TextUtil {
         }
     }
 
-    public static void setUseHex(boolean useHex) {
-        hexUse = useHex;
-    }
 }

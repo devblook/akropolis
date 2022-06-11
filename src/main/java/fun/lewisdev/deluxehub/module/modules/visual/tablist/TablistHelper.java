@@ -2,7 +2,7 @@ package fun.lewisdev.deluxehub.module.modules.visual.tablist;
 
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.google.common.base.Strings;
-import fun.lewisdev.deluxehub.util.TextUtil;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -15,12 +15,13 @@ public class TablistHelper {
         throw new UnsupportedOperationException();
     }
 
+    //TODO: Find a way to not make this class dependant on TextUtil.
     public static void sendTabList(Player player, String header, String footer) {
         Objects.requireNonNull(player, "Cannot update tab for null player");
         header = Strings.isNullOrEmpty(header) ? ""
-                : TextUtil.color(header).replace("%player%", player.getDisplayName());
+                : DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color(header).replace("%player%", player.getDisplayName());
         footer = Strings.isNullOrEmpty(footer) ? ""
-                : TextUtil.color(footer).replace("%player%", player.getDisplayName());
+                : DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color(footer).replace("%player%", player.getDisplayName());
 
         if (ReflectionUtils.supports(14)) {
             player.setPlayerListHeaderFooter(header, footer);

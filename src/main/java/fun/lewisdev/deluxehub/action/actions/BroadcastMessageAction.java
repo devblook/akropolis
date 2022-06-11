@@ -15,11 +15,13 @@ public class BroadcastMessageAction implements Action {
 
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
+        TextUtil textUtil = plugin.getTextUtil();
+
         if (data.contains("<center>") && data.contains("</center>"))
-            data = TextUtil.getCenteredMessage(data);
+            data = textUtil.getCenteredMessage(data);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(TextUtil.color(data));
+            p.sendMessage(textUtil.color(data));
         }
     }
 }

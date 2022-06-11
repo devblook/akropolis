@@ -14,9 +14,11 @@ public class MessageAction implements Action {
 
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
-        if (data.contains("<center>") && data.contains("</center>"))
-            data = TextUtil.getCenteredMessage(data);
+        TextUtil textUtil = plugin.getTextUtil();
 
-        player.sendMessage(TextUtil.color(data));
+        if (data.contains("<center>") && data.contains("</center>"))
+            data = textUtil.getCenteredMessage(data);
+
+        player.sendMessage(textUtil.color(data));
     }
 }

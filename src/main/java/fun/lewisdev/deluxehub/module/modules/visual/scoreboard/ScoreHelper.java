@@ -1,8 +1,8 @@
 package fun.lewisdev.deluxehub.module.modules.visual.scoreboard;
 
 import fr.mrmicky.fastboard.FastBoard;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.util.PlaceholderUtil;
-import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class ScoreHelper {
     }
 
     public String setPlaceholders(String text) {
-        return TextUtil.color(PlaceholderUtil.setPlaceholders(text, player));
+        //TODO: Find a way to not make this class dependant on TextUtil.
+        return DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color(PlaceholderUtil.setPlaceholders(text, player));
     }
 }

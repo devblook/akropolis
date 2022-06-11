@@ -6,7 +6,6 @@ import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.world.LobbySpawn;
-import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -35,7 +34,7 @@ public class SetLobbyCommand extends InjectableCommand {
         Player player = (Player) sender;
 
         if (plugin.getModuleManager().getDisabledWorlds().contains(player.getWorld().getName())) {
-            sender.sendMessage(TextUtil.color("&cYou cannot set the lobby location in a disabled world."));
+            sender.sendMessage(plugin.getTextUtil().color("&cYou cannot set the lobby location in a disabled world."));
             return;
         }
 

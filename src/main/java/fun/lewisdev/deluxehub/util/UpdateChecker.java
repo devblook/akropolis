@@ -1,5 +1,6 @@
 package fun.lewisdev.deluxehub.util;
 
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -74,10 +75,12 @@ public class UpdateChecker {
                                     final Player player = event.getPlayer();
                                     if (!player.hasPermission(UPDATE_PERM))
                                         return;
+
+                                    //TODO: Find a way to not make this class dependant on TextUtil.
                                     player.sendMessage(
-                                            TextUtil.color("&7An update (v%VERSION%) for DeluxeHub is available at:"
+                                            DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color("&7An update (v%VERSION%) for DeluxeHub is available at:"
                                                     .replace("%VERSION%", spigotPluginVersion)));
-                                    player.sendMessage(TextUtil.color("&6https://www.spigotmc.org/resources/" + ID));
+                                    player.sendMessage(DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color("&6https://www.spigotmc.org/resources/" + ID));
                                 }
                             }, plugin));
 

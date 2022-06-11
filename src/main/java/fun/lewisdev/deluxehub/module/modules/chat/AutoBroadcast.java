@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AutoBroadcast extends Module implements Runnable {
+    private final TextUtil textUtil;
     private Map<Integer, List<String>> broadcasts;
     private int broadcastTask = 0;
     private int count = 0;
@@ -28,6 +29,7 @@ public class AutoBroadcast extends Module implements Runnable {
 
     public AutoBroadcast(DeluxeHubPlugin plugin) {
         super(plugin, ModuleType.ANNOUNCEMENTS);
+        this.textUtil = plugin.getTextUtil();
     }
 
     @Override
@@ -89,10 +91,10 @@ public class AutoBroadcast extends Module implements Runnable {
 
             broadcasts.get(count).forEach(message -> {
                 if (message.contains("<center>") && message.contains("</center>")) {
-                    message = TextUtil.getCenteredMessage(message);
+                    message = textUtil.getCenteredMessage(message);
                 }
 
-                player.sendMessage(TextUtil.color(message));
+                player.sendMessage(textUtil.color(message));
             });
 
             if (sound != null) player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);

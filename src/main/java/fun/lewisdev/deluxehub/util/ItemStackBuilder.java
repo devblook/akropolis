@@ -130,7 +130,7 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.setDisplayName(TextUtil.color(name));
+        itemMeta.setDisplayName(PLUGIN.getTextUtil().color(name));
         itemStack.setItemMeta(itemMeta);
     }
 
@@ -177,7 +177,7 @@ public class ItemStackBuilder {
 
         for (String line : lore) {
             line = PlaceholderUtil.setPlaceholders(line, player);
-            coloredLore.add(TextUtil.color(line));
+            coloredLore.add(PLUGIN.getTextUtil().color(line));
         }
 
         itemMeta.setLore(coloredLore);
@@ -195,7 +195,7 @@ public class ItemStackBuilder {
         List<String> coloredLore = new ArrayList<>();
 
         for (String line : lore) {
-            coloredLore.add(TextUtil.color(line));
+            coloredLore.add(PLUGIN.getTextUtil().color(line));
         }
 
         itemMeta.setLore(coloredLore);

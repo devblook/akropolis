@@ -1,6 +1,6 @@
 package fun.lewisdev.deluxehub.inventory;
 
-import fun.lewisdev.deluxehub.util.TextUtil;
+import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -34,7 +34,8 @@ public class InventoryBuilder implements InventoryHolder {
         else if (size < 9)
             size = 9;
 
-        Inventory inventory = Bukkit.createInventory(this, size, TextUtil.color(title));
+        //TODO: Find a way to not make this class dependant on TextUtil.
+        Inventory inventory = Bukkit.createInventory(this, size, DeluxeHubPlugin.getPlugin(DeluxeHubPlugin.class).getTextUtil().color(title));
         for (Map.Entry<Integer, InventoryItem> entry : icons.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue().getItemStack());
         }

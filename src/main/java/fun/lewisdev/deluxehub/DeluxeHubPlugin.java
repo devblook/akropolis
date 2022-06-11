@@ -1,6 +1,5 @@
 package fun.lewisdev.deluxehub;
 
-import com.cryptomorin.xseries.ReflectionUtils;
 import fun.lewisdev.deluxehub.action.ActionManager;
 import fun.lewisdev.deluxehub.command.CommandManager;
 import fun.lewisdev.deluxehub.config.ConfigManager;
@@ -34,6 +33,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
     private CooldownManager cooldownManager;
     private ModuleManager moduleManager;
     private InventoryManager inventoryManager;
+    private TextUtil textUtil;
 
     @Override
     public void onEnable() {
@@ -58,7 +58,7 @@ public class DeluxeHubPlugin extends JavaPlugin {
             return;
         }
 
-        if (ReflectionUtils.supports(16)) TextUtil.setUseHex(true);
+        textUtil = new TextUtil();
 
         // Enable bStats metrics
         new MetricsLite(this, BSTATS_ID);
@@ -156,5 +156,9 @@ public class DeluxeHubPlugin extends JavaPlugin {
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public TextUtil getTextUtil() {
+        return textUtil;
     }
 }
