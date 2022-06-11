@@ -65,6 +65,7 @@ tasks {
         relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
         relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
+        relocate("net.kyori", "${libsPackage}.adventure")
     }
 
     withType<JavaCompile> {
