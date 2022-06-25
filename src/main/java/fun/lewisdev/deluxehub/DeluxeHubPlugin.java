@@ -1,18 +1,14 @@
 package fun.lewisdev.deluxehub;
 
-import com.cryptomorin.xseries.ReflectionUtils;
 import fun.lewisdev.deluxehub.action.ActionManager;
 import fun.lewisdev.deluxehub.command.CommandManager;
 import fun.lewisdev.deluxehub.config.ConfigManager;
-import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.cooldown.CooldownManager;
 import fun.lewisdev.deluxehub.hook.HooksManager;
 import fun.lewisdev.deluxehub.inventory.InventoryManager;
 import fun.lewisdev.deluxehub.module.ModuleManager;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.hologram.HologramManager;
-import fun.lewisdev.deluxehub.util.TextUtil;
-import fun.lewisdev.deluxehub.util.UpdateChecker;
 import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -21,12 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 
 public class DeluxeHubPlugin extends JavaPlugin {
-    private static final int BSTATS_ID;
-
-    static {
-        BSTATS_ID = 3151;
-    }
-
+    private static final int BSTATS_ID = 3151;
     private ConfigManager configManager;
     private ActionManager actionManager;
     private HooksManager hooksManager;
@@ -58,8 +49,6 @@ public class DeluxeHubPlugin extends JavaPlugin {
             return;
         }
 
-        if (ReflectionUtils.supports(16)) TextUtil.setUseHex(true);
-
         // Enable bStats metrics
         new MetricsLite(this, BSTATS_ID);
 
@@ -90,10 +79,6 @@ public class DeluxeHubPlugin extends JavaPlugin {
 
         // Action system
         actionManager = new ActionManager(this);
-
-        // Load update checker (if enabled)
-        if (getConfigManager().getFile(ConfigType.SETTINGS).get().getBoolean("update-check"))
-            new UpdateChecker(this).checkForUpdate();
 
         // Register BungeeCord channels
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
