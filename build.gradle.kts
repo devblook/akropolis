@@ -33,7 +33,6 @@ dependencies {
 
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.1.0")
 
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
