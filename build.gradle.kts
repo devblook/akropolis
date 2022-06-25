@@ -10,8 +10,7 @@ description = "An all-in-one hub management system."
 val libsPackage = property("libsPackage") as String
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
@@ -19,9 +18,8 @@ repositories {
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.codemc.org/repository/maven-public")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://jitpack.io")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     mavenCentral()
 }
 
@@ -32,12 +30,13 @@ dependencies {
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:8.7.1")
-    implementation("net.kyori:adventure-text-minimessage:4.11.0")
-    implementation("net.kyori:adventure-api:4.11.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.1.0")
 
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-    compileOnly("net.md-5:bungeecord-chat:1.18-R0.1-SNAPSHOT")
+    compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
+    compileOnly("net.kyori:adventure-api:4.11.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.1.0")
+
+    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
