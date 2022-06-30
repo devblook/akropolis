@@ -29,7 +29,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.9.2")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
-    implementation("com.github.cryptomorin:XSeries:8.7.1")
+    implementation("com.github.cryptomorin:XSeries:8.8.0")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
