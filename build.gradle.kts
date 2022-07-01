@@ -26,7 +26,7 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("de.tr7zw:item-nbt-api:2.9.2")
+    implementation("de.tr7zw:item-nbt-api:2.11.0-SNAPSHOT")
     implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:8.8.0")
