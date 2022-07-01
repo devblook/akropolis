@@ -15,7 +15,7 @@
 #--------
 # BUILT IN PLUGIN PLACEHOLDERS:
 #
-#   %player% - Returns player name
+#   <player> - Returns player name
 #   %location% - Returns player location
 #   %online% - Returns number of players online
 #   %online_max% - Returns number of max player slots
@@ -45,9 +45,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | GENERAL SETTINGS                         |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
-# Check for latest SpigotMC updates (recommended).
-check-updates: true
 
 # List your worlds you don't want DeluxeHub to manage.
 disabled-worlds:
@@ -89,15 +86,15 @@ scoreboard:
     enabled: true
     rate: 200 # In ticks (20 ticks = 1 second).
 
-  title: "&d&lDeluxeHub 3 &7(%online%/%online_max%)"
+  title: "<light_purple><b>DeluxeHub 3 <gray>(%online%/%online_max%)"
   lines:
-    - "&7&m----------------------"
-    - "&e&lPlayer:"
-    - "  &f%player%"
+    - "<gray><st>----------------------"
+    - "<yellow><b>Player:"
+    - "  <white><player>"
     - ""
-    - "&e&lRank:"
-    - "  &f%vault_rank%"
-    - "&7&m----------------------"
+    - "<yellow><b>Rank:"
+    - "  <white>%vault_rank%"
+    - "<gray><st>----------------------"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # |TABLIST                                   |
@@ -115,14 +112,14 @@ tablist:
   # Modify the header of the tablist.
   header:
     - ""
-    - "&d&lDeluxeHub &7(%online%/%online_max%)"
+    - "<light_purple><b>DeluxeHub <gray>(%online%/%online_max%)"
     - ""
 
   # Modify the footer of the tablist.
   footer:
     - ""
-    - "&6&lWebsite &fwww.examplemc.net"
-    - "&e&lStore &fbuy.examplemc.net"
+    - "<gold><b>Website <white>www.examplemc.net"
+    - "<yellow><b>Store <white>buy.examplemc.net"
     - ""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -148,20 +145,20 @@ announcements:
   # Announcement list.
   announcements:
     test1:
-      - "&r"
-      - "<center>&e&lANNOUNCEMENT</center>"
-      - "<center>&7Rate this plugin 5 stars on Spigot!</center>"
-      - "&r"
+      - "<reset>"
+      - "<center><yellow><b>ANNOUNCEMENT</center>"
+      - "<center><gray>Rate this plugin 5 stars on Spigot!</center>"
+      - "<reset>"
     test2:
-      - "&r"
-      - "<center>&e&lANNOUNCEMENT</center>"
-      - "<center>&7This plugin was created by &eItsLewizzz</center>"
-      - "&r"
+      - "<reset>"
+      - "<center><yellow><b>ANNOUNCEMENT</center>"
+      - "<center><gray>This plugin was created by <yellow>ItsLewizzz</center>"
+      - "<reset>"
     test3:
-      - "&r"
-      - "<center>&e&lANNOUNCEMENT</center>"
-      - "<center>&7Configure these messages in the &bconfig.yml</center>"
-      - "&r"
+      - "<reset>"
+      - "<center><yellow><b>ANNOUNCEMENT</center>"
+      - "<center><gray>Configure these messages in the <aqua>config.yml</center>"
+      - "<reset>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | LAUNCHPAD                                |
@@ -288,22 +285,22 @@ join_leave_messages:
   enabled: true
 
   # Set to '' if you want silent join/quit messages.
-  join_message: "&2&l+ &6%player% &7Connected"
-  quit_message: "&4&l- &6%player% &7Disconnected"
+  join_message: "<dark_green><b>+ <gold><player> <gray>Connected"
+  quit_message: "<dark_red><b>- <gold><player> <gray>Disconnected"
 
 # Actions executed upon join.
 join_events:
-  - "[MESSAGE] &8&m+---------------***---------------+"
-  - "[MESSAGE] &r"
-  - "[MESSAGE] &r    &7Welcome, &b&n%player%&r &7to the server"
-  - "[MESSAGE] &r"
-  - "[MESSAGE] &r  &2&lWEBSITE &fwww.examplemc.net"
-  - "[MESSAGE] &r  &3&lSTORE &fstore.examplemc.net"
-  - "[MESSAGE] &r  &9&lDISCORD &fdiscord.examplemc.net"
-  - "[MESSAGE] &r"
-  - "[MESSAGE] &r            &7&oPowered By DeluxeHub"
-  - "[MESSAGE] &8&m+---------------***---------------+"
-  - "[TITLE] &b&lWELCOME;&f%player%;1;2;1"
+  - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE] <reset>    <gray>Welcome, <aqua><u><player><reset> <gray>to the server"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE] <reset>  <dark_green><b>WEBSITE <white>www.examplemc.net"
+  - "[MESSAGE] <reset>  <dark_aqua><b>STORE <white>store.examplemc.net"
+  - "[MESSAGE] <reset>  <gold><b>DISCORD <white>discord.examplemc.net"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE] <reset>            <gray><i>Powered By DeluxeHub"
+  - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
+  - "[TITLE] <aqua><b>WELCOME;<white><player>;1;2;1"
   - "[SOUND] ENTITY_PLAYER_LEVELUP"
   - "[GAMEMODE] survival"
   - "[EFFECT] SPEED;1"
@@ -345,24 +342,24 @@ custom_join_items:
       material: BOOK
       amount: 1
       slot: 0
-      display_name: "&dServer Information"
+      display_name: "<light_purple>Server Information"
       lore:
-        - "&7Right-click to see information about the server!"
+        - "<gray>Right-click to see information about the server!"
       actions:
-        - "[MESSAGE] &r"
-        - "[MESSAGE] &e&lServer Information"
-        - "[MESSAGE] &r"
-        - "[MESSAGE] &bWebsite: &fwww.examplemc.net"
-        - "[MESSAGE] &cStore: &fbuy.examplemc.net"
-        - "[MESSAGE] &dDiscord: &fdiscord.examplemc.net"
-        - "[MESSAGE] &r"
+        - "[MESSAGE] <reset>"
+        - "[MESSAGE] <yellow><b>Server Information"
+        - "[MESSAGE] <reset>"
+        - "[MESSAGE] <aqua>Website: <white>www.examplemc.net"
+        - "[MESSAGE] <red>Store: <white>buy.examplemc.net"
+        - "[MESSAGE] <light_purple>Discord: <white>discord.examplemc.net"
+        - "[MESSAGE] <reset>"
     server_selector:
       material: NETHER_STAR
       amount: 1
       slot: 4
-      display_name: "&eServer Selector"
+      display_name: "<yellow>Server Selector"
       lore:
-        - "&7Right-click to open the server selector!"
+        - "<gray>Right-click to open the server selector!"
       actions:
         - "[MENU] serverselector"
 
@@ -384,13 +381,13 @@ player_hider:
   not_hidden:
     material: LIME_DYE
     amount: 1
-    display_name: "&dPlayers &8&l> &aShown &7(Right-Click)"
+    display_name: "<light_purple>Players <dark_gray><b>> <green>Shown <gray>(Right-Click)"
     lore:
-      - "&7Click to hide all players!"
+      - "<gray>Click to hide all players!"
 
   hidden:
     material: GRAY_DYE
     amount: 1
-    display_name: "&dPlayers &8&l> &cHidden &7(Right-Click)"
+    display_name: "<light_purple>Players <dark_gray><b>> <red>Hidden <gray>(Right-Click)"
     lore:
-      - "&7Click to show all players!"
+      - "<gray>Click to show all players!"

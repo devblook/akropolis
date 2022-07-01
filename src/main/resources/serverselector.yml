@@ -53,26 +53,26 @@ items:
     slot: 11
     amount: 1
     glow: true
-    display_name: "&eFactions"
+    display_name: "<yellow>Factions"
     lore:
-      - "&7Join now!"
-      - "&aPlaceholderAPI support!"
+      - "<gray>Join now!"
+      - "<green>PlaceholderAPI support!"
     actions:
       - "[CLOSE]"
-      - "[MESSAGE] &7Sending you to: &eFactions"
+      - "[MESSAGE] <gray>Sending you to: <yellow>Factions"
       - "[SERVER] factions"
       # For multi-world servers using Multiverse-Core, use the action:
-      # - '[CONSOLE] mvtp %player% world'
+      # - '[CONSOLE] mvtp <player> world'
   survival:
     material: GRASS_BLOCK
     slot: 15
     amount: 1
     glow: false
-    display_name: "&aSurvival"
+    display_name: "<green>Survival"
     lore:
-      - "&7Join now!"
-      - "&aMulti lore support too!"
+      - "<gray>Join now!"
+      - "<green>Multi lore support too!"
     actions:
       - "[CLOSE]"
-      - "[MESSAGE] &7Sending you to: &eSurvival"
+      - "[MESSAGE] <gray>Sending you to: <yellow>Survival"
       - "[SERVER] survival"
