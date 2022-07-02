@@ -27,9 +27,12 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
 
     implementation("de.tr7zw:item-nbt-api:2.11.0-SNAPSHOT")
-    implementation("fr.mrmicky:fastboard:1.2.1")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:8.8.0")
+
+
+    implementation("com.github.MegavexNetwork.scoreboard-library:implementation:1.0.0-SNAPSHOT")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:1.0.0-SNAPSHOT")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
@@ -61,8 +64,8 @@ tasks {
         relocate("org.bstats", "${libsPackage}.metrics")
         relocate("cl.bgmp", "${libsPackage}.commandframework")
         relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
-        relocate("fr.mrmicky.fastboard", "${libsPackage}.fastboard")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
+        relocate("com.github.MegavexNetwork.scoreboard-library", "${libsPackage}.scoreboard-library")
     }
 
     withType<JavaCompile> {
