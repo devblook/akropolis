@@ -9,6 +9,9 @@ import fun.lewisdev.deluxehub.inventory.InventoryManager;
 import fun.lewisdev.deluxehub.module.ModuleManager;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.module.modules.hologram.HologramManager;
+import net.megavex.scoreboardlibrary.ScoreboardLibraryImplementation;
+import net.megavex.scoreboardlibrary.api.ScoreboardManager;
+import net.megavex.scoreboardlibrary.exception.ScoreboardLibraryLoadException;
 import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -17,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 
 public class DeluxeHubPlugin extends JavaPlugin {
+    private static DeluxeHubPlugin plugin;
     private static final int BSTATS_ID = 3151;
     private ConfigManager configManager;
     private ActionManager actionManager;
@@ -25,9 +29,13 @@ public class DeluxeHubPlugin extends JavaPlugin {
     private CooldownManager cooldownManager;
     private ModuleManager moduleManager;
     private InventoryManager inventoryManager;
+    private ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
+        // Set the unique plugin instance
+        setInstance(this);
+
         long start = System.currentTimeMillis();
 
         getLogger().log(Level.INFO, " _   _            _          _    _ ");
@@ -73,6 +81,16 @@ public class DeluxeHubPlugin extends JavaPlugin {
         inventoryManager = new InventoryManager();
         if (!hooksManager.isHookEnabled("HEAD_DATABASE")) inventoryManager.onEnable(this);
 
+        //Scoreboard library
+        try {
+            ScoreboardLibraryImplementation.init();
+        } catch (ScoreboardLibraryLoadException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        scoreboardManager = ScoreboardManager.scoreboardManager(this);
+
         // Core plugin modules
         moduleManager = new ModuleManager();
         moduleManager.loadModules(this);
@@ -92,6 +110,11 @@ public class DeluxeHubPlugin extends JavaPlugin {
 
         if (moduleManager != null) moduleManager.unloadModules();
 
+        if (scoreboardManager != null) {
+            scoreboardManager.close();
+            ScoreboardLibraryImplementation.close();
+        }
+
         if (inventoryManager != null) inventoryManager.onDisable();
 
         if (configManager != null) configManager.saveData();
@@ -110,6 +133,17 @@ public class DeluxeHubPlugin extends JavaPlugin {
 
         moduleManager.loadModules(this);
     }
+
+    public static synchronized void setInstance(DeluxeHubPlugin instance) {
+        if (plugin == null) {
+            plugin = instance;
+        }
+    }
+
+    public static synchronized DeluxeHubPlugin getInstance() {
+        return plugin;
+    }
+
 
     public HologramManager getHologramManager() {
         return (HologramManager) moduleManager.getModule(ModuleType.HOLOGRAMS);
@@ -141,5 +175,9 @@ public class DeluxeHubPlugin extends JavaPlugin {
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public ScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
     }
 }
