@@ -16,9 +16,9 @@
 # BUILT IN PLUGIN PLACEHOLDERS:
 #
 #   <player> - Returns player name
-#   %location% - Returns player location
-#   %online% - Returns number of players online
-#   %online_max% - Returns number of max player slots
+#   <location> - Returns player location
+#   <online> - Returns number of players online
+#   <online_max> - Returns number of max player slots
 #
 #        *** USE PLACEHOLDERAPI TO GET MORE ***
 #  (https://www.spigotmc.org/resources/placeholderapi.6245/)
@@ -86,7 +86,7 @@ scoreboard:
     enabled: true
     rate: 200 # In ticks (20 ticks = 1 second).
 
-  title: "<light_purple><b>DeluxeHub 3 <gray>(%online%/%online_max%)"
+  title: "<light_purple><b>DeluxeHub 3 <gray>(<online>/<online_max>)"
   lines:
     - "<gray><st>----------------------"
     - "<yellow><b>Player:"
@@ -112,7 +112,7 @@ tablist:
   # Modify the header of the tablist.
   header:
     - ""
-    - "<light_purple><b>DeluxeHub <gray>(%online%/%online_max%)"
+    - "<light_purple><b>DeluxeHub <gray>(<online>/<online_max>)"
     - ""
 
   # Modify the footer of the tablist.
