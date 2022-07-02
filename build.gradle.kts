@@ -30,9 +30,8 @@ dependencies {
     implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:8.8.0")
 
-
-    implementation("com.github.MegavexNetwork.scoreboard-library:implementation:1.0.0-SNAPSHOT")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:1.0.0-SNAPSHOT")
+    implementation("com.github.MegavexNetwork.scoreboard-library:implementation:86f647d8d7")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:86f647d8d7")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
