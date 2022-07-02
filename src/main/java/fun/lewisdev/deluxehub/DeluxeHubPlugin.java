@@ -46,12 +46,12 @@ public class DeluxeHubPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, "Author: ItsLewizzz");
         getLogger().log(Level.INFO, "");
 
-        // Check if using Spigot
+        // Check if using Paper
         try {
-            Class.forName("org.spigotmc.SpigotConfig");
+            Class.forName("com.destroystokyo.paper.PaperConfig");
         } catch (ClassNotFoundException ex) {
-            getLogger().severe("DeluxeHub requires Spigot to run, you can download");
-            getLogger().severe("Spigot here: https://www.spigotmc.org/wiki/spigot-installation/.");
+            getLogger().severe("DeluxeHub requires Paper 1.19+ to run, you can download");
+            getLogger().severe("Paper here: https://papermc.io/downloads.");
             getLogger().severe("The plugin will now disable.");
             getPluginLoader().disablePlugin(this);
             return;
