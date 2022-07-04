@@ -39,7 +39,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
     compileOnly("com.mojang:authlib:1.5.25")
-    compileOnly("me.clip:placeholderapi:2.11.1")
+    compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
 }
 
