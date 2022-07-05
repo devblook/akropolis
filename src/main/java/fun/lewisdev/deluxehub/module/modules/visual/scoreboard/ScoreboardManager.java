@@ -69,8 +69,9 @@ public class ScoreboardManager extends Module {
             helper = new ScoreHelper(player);
 
         helper.setTitle(title);
-
         helper.setSlotsFromList(lines);
+        helper.addPlayer();
+        helper.visible(true);
 
         return helper;
 
