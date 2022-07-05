@@ -51,8 +51,8 @@ public abstract class Module implements Listener {
         return cooldownManager.tryCooldown(uuid, type, delay);
     }
 
-    public String getCooldown(UUID uuid, CooldownType type) {
-        return String.valueOf(cooldownManager.getCooldown(uuid, type) / 1000);
+    public long getCooldown(UUID uuid, CooldownType type) {
+        return (cooldownManager.getCooldown(uuid, type) / 1000);
     }
 
     public FileConfiguration getConfig(ConfigType type) {
