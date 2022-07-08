@@ -58,13 +58,15 @@ tasks {
         archiveClassifier.set("")
         archiveFileName.set("DeluxeHub-${project.version}.jar")
 
-        minimize()
+        minimize {
+            exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
+        }
 
         relocate("org.bstats", "${libsPackage}.metrics")
         relocate("cl.bgmp", "${libsPackage}.commandframework")
         relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
-        relocate("com.github.MegavexNetwork.scoreboard-library", "${libsPackage}.scoreboard-library")
+        relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
 
     withType<JavaCompile> {
