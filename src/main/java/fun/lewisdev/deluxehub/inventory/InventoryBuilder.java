@@ -34,7 +34,7 @@ public class InventoryBuilder implements InventoryHolder {
         else if (size < 9)
             size = 9;
 
-        Inventory inventory = Bukkit.createInventory(this, size, TextUtil.color(title));
+        Inventory inventory = Bukkit.createInventory(this, size, TextUtil.parse(title));
         for (Map.Entry<Integer, InventoryItem> entry : icons.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue().getItemStack());
         }

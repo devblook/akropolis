@@ -51,11 +51,11 @@ public abstract class AbstractInventory implements Listener {
             ItemStackBuilder newItem = new ItemStackBuilder(item.clone());
 
             if (item.getItemMeta().hasDisplayName()) {
-                newItem.withName(item.getItemMeta().getDisplayName(), player);
+                newItem.withName(item.getItemMeta().displayName(), player);
             }
 
-            if (item.getItemMeta().hasLore() && item.getItemMeta().getLore() != null) {
-                newItem.withLore(item.getItemMeta().getLore(), player);
+            if (item.getItemMeta().hasLore() && item.getItemMeta().lore() != null) {
+                newItem.withLore(item.getItemMeta().lore(), player);
             }
 
             inventory.setItem(i, newItem.build());
