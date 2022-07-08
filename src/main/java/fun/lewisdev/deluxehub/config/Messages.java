@@ -1,6 +1,7 @@
 package fun.lewisdev.deluxehub.config;
 
 import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public enum Messages {
@@ -54,16 +55,15 @@ public enum Messages {
         config = c;
     }
 
-    @Override
-    public String toString() {
+    public Component toComponent() {
         String message = config.getString("Messages." + this.path);
 
         if (message == null || message.isEmpty()) {
-            return "DeluxeHub: message not found (" + this.path + ")";
+            return Component.text("DeluxeHub: message not found (" + this.path + ")");
         }
 
         String prefix = config.getString("Messages." + PREFIX.getPath());
-        return TextUtil.color(message.replace("%prefix%", prefix != null && !prefix.isEmpty() ? prefix : ""));
+        return TextUtil.parse(message.replace("<prefix>", prefix != null && !prefix.isEmpty() ? prefix : ""));
     }
 
     public String getPath() {
