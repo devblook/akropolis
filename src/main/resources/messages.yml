@@ -5,74 +5,74 @@
 Messages:
   GENERAL:
     PREFIX: "<light_purple>DeluxeHub <dark_gray>❙"
-    NO_PERMISSION: "%prefix% <red>You are forbidden to use this."
+    NO_PERMISSION: "<prefix> <red>You are forbidden to use this."
     CUSTOM_COMMAND_NO_PERMISSION: "<red>You are not allowed to execute this command."
-    INVALID_PLAYER: "%prefix% <red><player> is not online!"
-    CONFIG_RELOAD: "%prefix% <green>All configuration files has been reloaded in <gray>%time%ms"
-    COOLDOWN_ACTIVE: "%prefix% <red>You must wait <yellow>%time%s <red>before doing this again!"
+    INVALID_PLAYER: "<prefix> <red><player> is not online!"
+    CONFIG_RELOAD: "<prefix> <green>All configuration files has been reloaded in <gray><time>ms"
+    COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>before doing this again!"
 
   GAMEMODE:
-    GAMEMODE_CHANGE: "%prefix% <gray>You have changed gamemode to <green>%gamemode%"
-    GAMEMODE_CHANGE_OTHER: "%prefix% <gray>You have changed gamemode to <green>%gamemode% <gray>for <yellow><player>"
-    GAMEMODE_INVALID: "%prefix% <yellow>%gamemode% <red>is not a valid gamemode"
+    GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>"
+    GAMEMODE_CHANGE_OTHER: "<prefix> <gray>You have changed gamemode to <green><gamemode> <gray>for <yellow><player>"
+    GAMEMODE_INVALID: "<prefix> <yellow><gamemode> <red>is not a valid gamemode"
 
   VANISH:
-    ENABLE: "%prefix% <green>You have now vanished"
-    DISABLE: "%prefix% <red>You have now unvanished"
+    ENABLE: "<prefix> <green>You have now vanished"
+    DISABLE: "<prefix> <red>You have now unvanished"
 
   FLIGHT:
-    ENABLE: "%prefix% <green>You have enabled flight"
-    DISABLE: "%prefix% <red>You have disabled flight"
-    ENABLE_OTHER: "%prefix% <red>You have enabled flight for <gray><player>"
-    DISABLE_OTHER: "%prefix% <red>You have disabled flight for <gray><player>"
+    ENABLE: "<prefix> <green>You have enabled flight"
+    DISABLE: "<prefix> <red>You have disabled flight"
+    ENABLE_OTHER: "<prefix> <red>You have enabled flight for <gray><player>"
+    DISABLE_OTHER: "<prefix> <red>You have disabled flight for <gray><player>"
 
   PLAYER_HIDER:
-    HIDDEN: "%prefix% <red>Player visibility disabled"
-    SHOWN: "%prefix% <green>Player visibility enabled"
+    HIDDEN: "<prefix> <red>Player visibility disabled"
+    SHOWN: "<prefix> <green>Player visibility enabled"
 
   LOBBY:
-    SET_LOBBY: "%prefix% <green>You have successfully set the lobby spawn point"
+    SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point"
 
   CHAT:
     CLEARCHAT: "<aqua><b>* <white>Chat has been cleared by <yellow><player> <aqua><b>*"
     CLEARCHAT_PLAYER: "<red>Your chat has been cleared by an administrator."
 
-    LOCKED: "%prefix% <red>Chat is currently locked"
-    LOCKED_BROADCAST: "%prefix% <yellow><player> <red>has locked global chat"
-    UNLOCKED_BROADCAST: "%prefix% <yellow><player> <green>has unlocked global chat"
+    LOCKED: "<prefix> <red>Chat is currently locked"
+    LOCKED_BROADCAST: "<prefix> <yellow><player> <red>has locked global chat"
+    UNLOCKED_BROADCAST: "<prefix> <yellow><player> <green>has unlocked global chat"
 
-    ANTI_SWEAR_WORD_BLOCKED: "%prefix% <red>Message removed by anti-swear systems"
-    ANTI_SWEAR_ADMIN_NOTIFY: "%prefix% <red><player> <gray>attempted to say: <aqua>%word%"
+    ANTI_SWEAR_WORD_BLOCKED: "<prefix> <red>Message removed by anti-swear systems"
+    ANTI_SWEAR_ADMIN_NOTIFY: "<prefix> <red><player> <gray>attempted to say: <aqua>%word%"
 
-    COMMAND_BLOCKED: "%prefix% <red>This command has been restricted"
+    COMMAND_BLOCKED: "<prefix> <red>This command has been restricted"
 
   SCOREBOARD:
-    TOGGLE: "%prefix% <green>You have %value% the scoreboard"
+    TOGGLE: "<prefix> <green>You have %value% the scoreboard"
 
   DOUBLE_JUMP:
-    COOLDOWN_ACTIVE: "%prefix% <red>You must wait <yellow>%time%s <red>to Double Jump again!"
+    COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to Double Jump again!"
 
   WORLD_EVENT_MODIFICATIONS:
-    ITEM_DROP: "%prefix% <red>You are not allowed to drop items."
-    ITEM_PICKUP: "%prefix% <red>You are not allowed to pickup items."
-    BLOCK_PLACE: "%prefix% <red>You are not allowed to place blocks."
-    BLOCK_BREAK: "%prefix% <red>You are not allowed to break blocks."
-    BLOCK_INTERACT: "%prefix% <red>You are not allowed to use this."
-    PLAYER_PVP: "%prefix% <red>You are not allowed to pvp here."
+    ITEM_DROP: "<prefix> <red>You are not allowed to drop items."
+    ITEM_PICKUP: "<prefix> <red>You are not allowed to pickup items."
+    BLOCK_PLACE: "<prefix> <red>You are not allowed to place blocks."
+    BLOCK_BREAK: "<prefix> <red>You are not allowed to break blocks."
+    BLOCK_INTERACT: "<prefix> <red>You are not allowed to use this."
+    PLAYER_PVP: "<prefix> <red>You are not allowed to pvp here."
 
   HOLOGRAMS:
-    EMPTY: "%prefix% <red>Could not find any holograms."
-    ALREADY_EXISTS: "%prefix% <red>There is a hologram with this name already <gray>(%name%)<red>."
-    INVALID_HOLOGRAM: "%prefix% <red>There is no hologram with this name <gray>(%name%)<red>."
-    INVALID_LINE: "%prefix% <red>Could not find hologram line."
+    EMPTY: "<prefix> <red>Could not find any holograms."
+    ALREADY_EXISTS: "<prefix> <red>There is a hologram with this name already <gray>(<name>)<red>."
+    INVALID_HOLOGRAM: "<prefix> <red>There is no hologram with this name <gray>(<name>)<red>."
+    INVALID_LINE: "<prefix> <red>Could not find hologram line."
 
-    SPAWNED: "%prefix% <gray>Created new hologram with name <aqua>%name%<gray>."
-    DESPAWNED: "%prefix% <gray>Removed hologram with name <aqua>%name%<gray>."
-    MOVED: "%prefix% <gray>Moved hologram <aqua>%name%<gray>."
+    SPAWNED: "<prefix> <gray>Created new hologram with name <aqua><name><gray>."
+    DESPAWNED: "<prefix> <gray>Removed hologram with name <aqua><name><gray>."
+    MOVED: "<prefix> <gray>Moved hologram <aqua><name><gray>."
 
-    LINE_SET: "%prefix% <gray>Set line <aqua>%line%<gray>."
-    ADDED_LINE: "%prefix% <gray>Added new line."
-    REMOVED_LINE: "%prefix% <gray>Removed line <aqua>%line%<gray>."
+    LINE_SET: "<prefix> <gray>Set line <aqua><line><gray>."
+    ADDED_LINE: "<prefix> <gray>Added new line."
+    REMOVED_LINE: "<prefix> <gray>Removed line <aqua><line><gray>."
 
   ANTI_WORLD_DOWNLOADER:
-    ADMIN_NOTIFY: "%prefix% <white><player> <red>has joined with the World Downloader Mod, their ability to use it has been restricted by our systems."
+    ADMIN_NOTIFY: "<prefix> <white><player> <red>has joined with the World Downloader Mod, their ability to use it has been restricted by our systems."
