@@ -381,7 +381,7 @@ player_hider:
   not_hidden:
     material: LIME_DYE
     amount: 1
-    display_name: "<light_purple>Players <dark_gray><b>> <green>Shown <gray>(Right-Click)"
+    display_name: "<light_purple>Players <dark_gray><b> <green>Shown <gray>(Right-Click)"
     lore:
       - "<gray>Click to hide all players!"
 
