@@ -388,6 +388,6 @@ player_hider:
   hidden:
     material: GRAY_DYE
     amount: 1
-    display_name: "<light_purple>Players <dark_gray><b>> <red>Hidden <gray>(Right-Click)"
+    display_name: "<light_purple>Players <dark_gray><b> <red>Hidden <gray>(Right-Click)"
     lore:
       - "<gray>Click to show all players!"
