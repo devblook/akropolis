@@ -37,11 +37,11 @@ public class GamemodeCommand extends InjectableCommand {
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "<gamemode>", TextUtil.parse(args[0])));
+                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "gamemode", TextUtil.parse(args[0])));
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase())));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse(gamemode.toString().toUpperCase())));
             player.setGameMode(gamemode);
 
         } else if (args.length == 2) {
@@ -59,17 +59,17 @@ public class GamemodeCommand extends InjectableCommand {
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "<gamemode>", TextUtil.parse(args[0])));
+                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "gamemode", TextUtil.parse(args[0])));
                 return;
             }
 
-            Component gamemodeChange = TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase()));
+            Component gamemodeChange = TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse(gamemode.toString().toUpperCase()));
 
             if (sender.getName().equals(player.getName())) {
                 player.sendMessage(gamemodeChange);
             } else {
                 player.sendMessage(gamemodeChange);
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase())));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", TextUtil.parse(gamemode.toString().toUpperCase())));
             }
 
             player.setGameMode(gamemode);

@@ -33,7 +33,7 @@ public class CreativeCommand extends InjectableCommand {
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("CREATIVE")));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
             player.setGameMode(GameMode.CREATIVE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
@@ -49,10 +49,10 @@ public class CreativeCommand extends InjectableCommand {
             }
 
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("CREATIVE")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
             } else {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("CREATIVE")));
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", TextUtil.parse("CREATIVE")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", TextUtil.parse("CREATIVE")));
             }
 
             player.setGameMode(GameMode.CREATIVE);

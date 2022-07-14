@@ -34,7 +34,7 @@ public class SurvivalCommand extends InjectableCommand {
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("SURVIVAL")));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("SURVIVAL")));
             player.setGameMode(GameMode.SURVIVAL);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
@@ -49,8 +49,8 @@ public class SurvivalCommand extends InjectableCommand {
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("SURVIVAL")));
-            sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", Component.text("SURVIVAL")));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("SURVIVAL")));
+            sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", Component.text("SURVIVAL")));
             player.setGameMode(GameMode.SURVIVAL);
         }
 

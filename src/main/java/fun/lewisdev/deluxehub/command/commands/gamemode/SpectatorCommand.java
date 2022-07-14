@@ -34,7 +34,7 @@ public class SpectatorCommand extends InjectableCommand {
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("SPECTATOR")));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("SPECTATOR")));
             player.setGameMode(GameMode.SPECTATOR);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
@@ -50,10 +50,10 @@ public class SpectatorCommand extends InjectableCommand {
             }
 
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("SPECTATOR")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("SPECTATOR")));
             } else {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("SPECTATOR")));
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", Component.text("SPECTATOR")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("SPECTATOR")));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", Component.text("SPECTATOR")));
             }
 
             player.setGameMode(GameMode.SPECTATOR);

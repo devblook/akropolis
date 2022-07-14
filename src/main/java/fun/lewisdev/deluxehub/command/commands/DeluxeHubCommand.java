@@ -313,12 +313,12 @@ public class DeluxeHubCommand extends InjectableCommand {
 
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "<line>", TextUtil.parse(String.valueOf(line))));
+                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
                     return;
                 }
 
                 holo.setLine(line, text);
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_LINE_SET.toComponent(), "<line>", TextUtil.parse(String.valueOf(line))));
+                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_LINE_SET.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
                 return;
             }
 
@@ -358,7 +358,7 @@ public class DeluxeHubCommand extends InjectableCommand {
 
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "<line>", TextUtil.parse(String.valueOf(line))));
+                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
                     return;
                 }
 

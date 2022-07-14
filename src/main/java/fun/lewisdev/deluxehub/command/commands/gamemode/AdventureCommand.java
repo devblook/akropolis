@@ -34,7 +34,7 @@ public class AdventureCommand extends InjectableCommand {
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("ADVENTURE")));
             player.setGameMode(GameMode.ADVENTURE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
@@ -50,10 +50,10 @@ public class AdventureCommand extends InjectableCommand {
             }
 
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("ADVENTURE")));
             } else {
-                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", Component.text("ADVENTURE")));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "gamemode", Component.text("ADVENTURE")));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", Component.text("ADVENTURE")));
             }
 
             player.setGameMode(GameMode.ADVENTURE);
