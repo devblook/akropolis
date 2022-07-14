@@ -46,7 +46,7 @@ public class AntiSwear extends Module {
                 player.sendMessage(Messages.ANTI_SWEAR_WORD_BLOCKED.toComponent());
 
                 Bukkit.getOnlinePlayers().stream()
-                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "%word%", TextUtil.parse(message))));
+                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", TextUtil.parse(message))));
 
                 return;
             }
