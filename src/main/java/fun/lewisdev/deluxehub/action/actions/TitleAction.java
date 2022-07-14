@@ -1,11 +1,13 @@
 package fun.lewisdev.deluxehub.action.actions;
 
-import com.cryptomorin.xseries.ReflectionUtils;
-import com.cryptomorin.xseries.messages.Titles;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
-import fun.lewisdev.deluxehub.util.TextUtil;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
 
 public class TitleAction implements Action {
 
@@ -18,27 +20,23 @@ public class TitleAction implements Action {
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
 
-        String mainTitle = TextUtil.color(args[0]);
-        String subTitle = TextUtil.color(args[1]);
+        Component title = PlaceholderUtil.setPlaceholders(args[0], player);
+        Component subTitle = PlaceholderUtil.setPlaceholders(args[1], player);
 
-        int fadeIn;
-        int stay;
-        int fadeOut;
+        Duration fadeIn;
+        Duration stay;
+        Duration fadeOut;
 
         try {
-            fadeIn = Integer.parseInt(args[2]);
-            stay = Integer.parseInt(args[3]);
-            fadeOut = Integer.parseInt(args[4]);
+            fadeIn = Duration.ofSeconds(Long.parseLong(args[2]));
+            stay = Duration.ofSeconds(Long.parseLong(args[3]));
+            fadeOut = Duration.ofSeconds(Long.parseLong(args[4]));
         } catch (NumberFormatException ex) {
-            fadeIn = 1;
-            stay = 3;
-            fadeOut = 1;
+            fadeIn = Duration.ofSeconds(1);
+            stay = Duration.ofSeconds(3);
+            fadeOut = Duration.ofSeconds(1);
         }
 
-        if (ReflectionUtils.supports(11)) {
-            player.sendTitle(mainTitle, subTitle, fadeIn * 20, stay * 20, fadeOut * 20);
-        } else {
-            Titles.sendTitle(player, fadeIn * 20, stay * 20, fadeOut * 20, mainTitle, subTitle);
-        }
+        player.showTitle(Title.title(title, subTitle, Title.Times.times(fadeIn, stay, fadeOut)));
     }
 }

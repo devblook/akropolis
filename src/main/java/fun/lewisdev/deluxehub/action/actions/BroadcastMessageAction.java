@@ -2,6 +2,7 @@ package fun.lewisdev.deluxehub.action.actions;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class BroadcastMessageAction implements Action {
             data = TextUtil.getCenteredMessage(data);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(TextUtil.color(data));
+            p.sendMessage(PlaceholderUtil.setPlaceholders(data, player));
         }
     }
 }

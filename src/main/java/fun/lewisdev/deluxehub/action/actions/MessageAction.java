@@ -2,6 +2,7 @@ package fun.lewisdev.deluxehub.action.actions;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -17,6 +18,6 @@ public class MessageAction implements Action {
         if (data.contains("<center>") && data.contains("</center>"))
             data = TextUtil.getCenteredMessage(data);
 
-        player.sendMessage(TextUtil.color(data));
+        player.sendMessage(PlaceholderUtil.setPlaceholders(data, player));
     }
 }

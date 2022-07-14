@@ -2,8 +2,7 @@ package fun.lewisdev.deluxehub.action;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.actions.*;
-import fun.lewisdev.deluxehub.util.PlaceholderUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -32,17 +31,16 @@ public class ActionManager {
         Arrays.asList(actions).forEach(action -> this.actions.put(action.getIdentifier(), action));
     }
 
-    public void executeActions(Player player, List<String> items) {
-        items.forEach(item -> {
+    public void executeActions(Player player, List<String> actions) {
+        actions.forEach(actionContent -> {
 
-            String actionName = StringUtils.substringBetween(item, "[", "]").toUpperCase();
-            Action action = actionName.isEmpty() ? null : actions.get(actionName);
+            String actionName = StringUtils.substringBetween(actionContent, "[", "]").toUpperCase();
+            Action action = actionName.isEmpty() ? null : this.actions.get(actionName);
 
             if (action != null) {
-                item = item.contains(" ") ? item.split(" ", 2)[1] : "";
-                item = PlaceholderUtil.setPlaceholders(item, player);
+                actionContent = actionContent.contains(" ") ? actionContent.split(" ", 2)[1] : "";
 
-                action.execute(plugin, player, item);
+                action.execute(plugin, player, actionContent);
             }
         });
     }
