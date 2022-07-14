@@ -1,6 +1,7 @@
 package fun.lewisdev.deluxehub.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -12,34 +13,36 @@ public class PlaceholderUtil {
         throw new UnsupportedOperationException();
     }
 
-    public static String setPlaceholders(String text, Player player) {
-        if (text.contains("%player%") && player != null) {
-            text = text.replace("%player%", player.getName());
+    public static Component setPlaceholders(String rawText, Player player) {
+        Component text = TextUtil.parse(rawText);
+
+        if (rawText.contains("<player>") && player != null) {
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "player", player.name());
         }
 
-        if (text.contains("%online%")) {
-            text = text.replace("%online%", String.valueOf(Bukkit.getServer().getOnlinePlayers().size()));
+        if (rawText.contains("<online>")) {
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "online", Component.text(Bukkit.getOnlinePlayers().size()));
         }
 
-        if (text.contains("%online_max%")) {
-            text = text.replace("%online_max%", String.valueOf(Bukkit.getServer().getMaxPlayers()));
+        if (rawText.contains("<online_max>")) {
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "online_max", Component.text(Bukkit.getMaxPlayers()));
         }
 
-        if (text.contains("%location%") && player != null) {
+        if (rawText.contains("<location>") && player != null) {
             Location l = player.getLocation();
-            text = text.replace("%location%", l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ());
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "location", Component.text(l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ()));
         }
 
-        if (text.contains("%ping%") && player != null) {
-            text = text.replace("%ping%", String.valueOf(player.getPing()));
+        if (rawText.contains("<ping>") && player != null) {
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "ping", Component.text(player.getPing()));
         }
 
-        if (text.contains("%world%") && player != null) {
-            text = text.replace("%world%", player.getWorld().getName());
+        if (rawText.contains("<world>") && player != null) {
+            text = TextUtil.parseAndReplace(TextUtil.raw(text), "world", Component.text(player.getWorld().getName()));
         }
 
-        if (papi && player != null) {
-            text = PlaceholderAPI.setPlaceholders(player, text);
+        if (papi && PlaceholderAPI.containsPlaceholders(TextUtil.raw(text)) && player != null) {
+            text = TextUtil.parse(PlaceholderAPI.setPlaceholders(player, TextUtil.raw(text)));
         }
 
         return text;

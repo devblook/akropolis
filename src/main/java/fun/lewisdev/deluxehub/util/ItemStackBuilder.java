@@ -3,6 +3,7 @@ package fun.lewisdev.deluxehub.util;
 import com.cryptomorin.xseries.XMaterial;
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.hook.hooks.head.HeadHook;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -36,21 +37,29 @@ public class ItemStackBuilder {
         String username = section.getString("username");
 
         if (username != null && section.contains("username") && player != null) {
-            builder.setSkullOwner(username.replace("%player%", player.getName()));
+            builder.setSkullOwner(username.replace("player", player.getName()));
         }
 
         if (section.contains("display_name")) {
+            Component displayName = TextUtil.parse(section.getString("display_name"));
+
             if (player != null)
-                builder.withName(section.getString("display_name"), player);
+                builder.withName(displayName, player);
             else
-                builder.withName(section.getString("display_name"));
+                builder.withName(displayName);
         }
 
         if (section.contains("lore")) {
+            List<Component> lore = new ArrayList<>();
+
+            for (String line : section.getStringList("lore")) {
+                lore.add(TextUtil.parse(line));
+            }
+
             if (player != null)
-                builder.withLore(section.getStringList("lore"), player);
+                builder.withLore(lore, player);
             else
-                builder.withLore(section.getStringList("lore"));
+                builder.withLore(lore);
         }
 
         if (section.contains("glow") && section.getBoolean("glow")) {
@@ -122,7 +131,7 @@ public class ItemStackBuilder {
         itemStack.setItemMeta(itemMeta);
     }
 
-    public void withName(String name) {
+    public void withName(Component name) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta == null) {
@@ -130,11 +139,11 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.setDisplayName(TextUtil.color(name));
+        itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }
 
-    public void withName(String name, Player player) {
+    public void withName(Component name, Player player) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta == null) {
@@ -142,7 +151,7 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.setDisplayName(PlaceholderUtil.setPlaceholders(name, player));
+        itemMeta.displayName(PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player));
         itemStack.setItemMeta(itemMeta);
     }
 
@@ -165,7 +174,7 @@ public class ItemStackBuilder {
         return this;
     }
 
-    public void withLore(List<String> lore, Player player) {
+    public void withLore(List<Component> lore, Player player) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta == null) {
@@ -173,18 +182,18 @@ public class ItemStackBuilder {
             return;
         }
 
-        List<String> coloredLore = new ArrayList<>();
+        List<Component> coloredLore = new ArrayList<>();
 
-        for (String line : lore) {
-            line = PlaceholderUtil.setPlaceholders(line, player);
-            coloredLore.add(TextUtil.color(line));
+        for (Component line : lore) {
+            line = PlaceholderUtil.setPlaceholders(TextUtil.raw(line), player);
+            coloredLore.add(line);
         }
 
-        itemMeta.setLore(coloredLore);
+        itemMeta.lore(coloredLore);
         itemStack.setItemMeta(itemMeta);
     }
 
-    public void withLore(List<String> lore) {
+    public void withLore(List<Component> lore) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta == null) {
@@ -192,13 +201,7 @@ public class ItemStackBuilder {
             return;
         }
 
-        List<String> coloredLore = new ArrayList<>();
-
-        for (String line : lore) {
-            coloredLore.add(TextUtil.color(line));
-        }
-
-        itemMeta.setLore(coloredLore);
+        itemMeta.lore(lore);
         itemStack.setItemMeta(itemMeta);
     }
 

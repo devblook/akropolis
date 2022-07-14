@@ -1,47 +1,36 @@
 package fun.lewisdev.deluxehub.util;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class TextUtil {
-    private static final int CENTER_PX;
-    private static final Pattern HEX_PATTERN;
-
-    static {
-        CENTER_PX = 154;
-        HEX_PATTERN = Pattern.compile("#<([A-Fa-f0-9]){6}>");
-    }
-
-    private static boolean hexUse = false;
+    private static final int CENTER_PX = 154;
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private TextUtil() {
         throw new UnsupportedOperationException();
     }
 
-    public static String color(String message) {
-        if (hexUse) {
-            Matcher matcher = HEX_PATTERN.matcher(message);
-
-            while (matcher.find()) {
-                String hexString = matcher.group();
-
-                hexString = "#" + hexString.substring(2, hexString.length() - 1);
-
-                ChatColor hex = ChatColor.of(hexString);
-                String before = message.substring(0, matcher.start());
-                String after = message.substring(matcher.end());
-
-                message = before + hex + after;
-                matcher = HEX_PATTERN.matcher(message);
-            }
-        }
-
-        return ChatColor.translateAlternateColorCodes('&', message);
+    public static Component parse(String message) {
+        return MINI_MESSAGE.deserialize(message);
     }
 
+    public static String raw(Component message) {
+        return MINI_MESSAGE.serialize(message).replaceAll("\\\\<", "<");
+    }
+
+    public static Component parseAndReplace(String message, String pattern, Component replacement) {
+        return MINI_MESSAGE.deserialize(message, Placeholder.component(pattern, replacement));
+    }
+
+    public static Component replace(Component message, String pattern, Component replacement) {
+        return MINI_MESSAGE.deserialize(raw(message), Placeholder.component(pattern, replacement));
+    }
+
+    // TODO:  Make this work with MiniMessage tags.
     public static String getCenteredMessage(String rawMessage) {
         if (rawMessage == null || rawMessage.isEmpty())
             return "";
@@ -134,9 +123,5 @@ public class TextUtil {
             default:
                 return null;
         }
-    }
-
-    public static void setUseHex(boolean useHex) {
-        hexUse = useHex;
     }
 }
