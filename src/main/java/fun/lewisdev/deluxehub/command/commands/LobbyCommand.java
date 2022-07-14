@@ -29,7 +29,7 @@ public class LobbyCommand extends InjectableCommand {
 
         Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
-            sender.sendMessage(TextUtil.color("&cThe spawn location has not been set &7(/setlobby)&c."));
+            sender.sendMessage(TextUtil.parse("<red>The spawn location has not been set <gray>(/setlobby)<red>."));
             return;
         }
 

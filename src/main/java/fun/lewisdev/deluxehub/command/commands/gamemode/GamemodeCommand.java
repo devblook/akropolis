@@ -4,6 +4,8 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -28,48 +30,46 @@ public class GamemodeCommand extends InjectableCommand {
             Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "<gamemode>", TextUtil.parse(args[0])));
                 return;
             }
 
-            player.sendMessage(
-                    Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase()));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase())));
             player.setGameMode(gamemode);
 
         } else if (args.length == 2) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(Messages.GAMEMODE_INVALID.toString().replace("%gamemode%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.GAMEMODE_INVALID.toComponent(), "<gamemode>", TextUtil.parse(args[0])));
                 return;
             }
 
-            String gamemodeChange = Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", gamemode.toString().toUpperCase());
+            Component gamemodeChange = TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase()));
 
             if (sender.getName().equals(player.getName())) {
                 player.sendMessage(gamemodeChange);
             } else {
                 player.sendMessage(gamemodeChange);
-                sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
-                        .replace("%gamemode%", gamemode.toString().toUpperCase()));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", TextUtil.parse(gamemode.toString().toUpperCase())));
             }
 
             player.setGameMode(gamemode);

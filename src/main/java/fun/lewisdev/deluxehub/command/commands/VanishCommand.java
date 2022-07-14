@@ -22,7 +22,7 @@ public class VanishCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_VANISH.getPermission())) {
-            sender.sendMessage(Messages.NO_PERMISSION.toString());
+            sender.sendMessage(Messages.NO_PERMISSION.toComponent());
             return;
         }
 

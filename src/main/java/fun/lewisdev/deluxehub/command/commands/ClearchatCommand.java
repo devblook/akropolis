@@ -4,6 +4,7 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class ClearchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
-            sender.sendMessage(Messages.NO_PERMISSION.toString());
+            sender.sendMessage(Messages.NO_PERMISSION.toComponent());
             return;
         }
 
@@ -29,14 +30,14 @@ public class ClearchatCommand extends InjectableCommand {
                     player.sendMessage("");
                 }
 
-                player.sendMessage(Messages.CLEARCHAT.toString().replace("%player%", sender.getName()));
+                player.sendMessage(TextUtil.replace(Messages.CLEARCHAT.toComponent(), "player", sender.name()));
             }
         } else if (args.length == 1) {
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
                 return;
             }
 
@@ -44,7 +45,7 @@ public class ClearchatCommand extends InjectableCommand {
                 player.sendMessage("");
             }
 
-            sender.sendMessage(Messages.CLEARCHAT_PLAYER.toString().replace("%player%", sender.getName()));
+            sender.sendMessage(TextUtil.replace(Messages.CLEARCHAT_PLAYER.toComponent(), "player", sender.name()));
         }
 
     }

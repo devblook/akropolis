@@ -4,6 +4,8 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -28,28 +30,27 @@ public class SurvivalCommand extends InjectableCommand {
             Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
-            player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "SURVIVAL"));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", TextUtil.parse("SURVIVAL")));
             player.setGameMode(GameMode.SURVIVAL);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", Component.text(args[0])));
                 return;
             }
 
-            player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "SURVIVAL"));
-            sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
-                    .replace("%gamemode%", "SURVIVAL"));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("SURVIVAL")));
+            sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", Component.text("SURVIVAL")));
             player.setGameMode(GameMode.SURVIVAL);
         }
 

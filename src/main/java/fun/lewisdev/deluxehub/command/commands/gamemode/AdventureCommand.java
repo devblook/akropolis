@@ -4,6 +4,8 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.Permissions;
 import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -28,31 +30,30 @@ public class AdventureCommand extends InjectableCommand {
             Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                player.sendMessage(Messages.NO_PERMISSION.toString());
+                player.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
-            player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "ADVENTURE"));
+            player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
             player.setGameMode(GameMode.ADVENTURE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", Component.text(args[0])));
                 return;
             }
 
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "ADVENTURE"));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
             } else {
-                player.sendMessage(Messages.GAMEMODE_CHANGE.toString().replace("%gamemode%", "ADVENTURE"));
-                sender.sendMessage(Messages.GAMEMODE_CHANGE_OTHER.toString().replace("%player%", player.getName())
-                        .replace("%gamemode%", "ADVENTURE"));
+                player.sendMessage(TextUtil.replace(Messages.GAMEMODE_CHANGE.toComponent(), "<gamemode>", Component.text("ADVENTURE")));
+                sender.sendMessage(TextUtil.replace(TextUtil.replace(Messages.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "<gamemode>", Component.text("ADVENTURE")));
             }
 
             player.setGameMode(GameMode.ADVENTURE);

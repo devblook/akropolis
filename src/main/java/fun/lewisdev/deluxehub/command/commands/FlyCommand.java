@@ -6,6 +6,7 @@ import fun.lewisdev.deluxehub.command.InjectableCommand;
 import fun.lewisdev.deluxehub.config.ConfigManager;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -37,39 +38,39 @@ public class FlyCommand extends InjectableCommand {
             }
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             Player player = (Player) sender;
 
             if (player.getAllowFlight()) {
-                player.sendMessage(Messages.FLIGHT_DISABLE.toString());
+                player.sendMessage(Messages.FLIGHT_DISABLE.toComponent());
                 toggleFlight(player, false);
             } else {
-                player.sendMessage(Messages.FLIGHT_ENABLE.toString());
+                player.sendMessage(Messages.FLIGHT_ENABLE.toComponent());
                 toggleFlight(player, true);
             }
         } else if (args.length == 1) {
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT_OTHERS.getPermission()))) {
-                sender.sendMessage(Messages.NO_PERMISSION.toString());
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(Messages.INVALID_PLAYER.toString().replace("%player%", args[0]));
+                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
                 return;
             }
 
             if (player.getAllowFlight()) {
-                player.sendMessage(Messages.FLIGHT_DISABLE.toString());
-                sender.sendMessage(Messages.FLIGHT_DISABLE_OTHER.toString().replace("%player%", player.getName()));
+                player.sendMessage(Messages.FLIGHT_DISABLE.toComponent());
+                sender.sendMessage(TextUtil.replace(Messages.FLIGHT_DISABLE_OTHER.toComponent(), "player", player.name()));
                 toggleFlight(player, false);
             } else {
-                player.sendMessage(Messages.FLIGHT_ENABLE.toString());
-                sender.sendMessage(Messages.FLIGHT_ENABLE_OTHER.toString().replace("%player%", player.getName()));
+                player.sendMessage(Messages.FLIGHT_ENABLE.toComponent());
+                sender.sendMessage(TextUtil.replace(Messages.FLIGHT_ENABLE_OTHER.toComponent(), "player", player.name()));
                 toggleFlight(player, true);
             }
         }
