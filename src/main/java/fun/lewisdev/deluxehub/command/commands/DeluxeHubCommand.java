@@ -118,10 +118,10 @@ public class DeluxeHubCommand extends InjectableCommand {
 
             if (scoreboardManager.hasScore(player.getUniqueId())) {
                 scoreboardManager.removeScoreboard(player);
-                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "%value%", TextUtil.parse("disabled")));
+                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "value", TextUtil.parse("disabled")));
             } else {
                 scoreboardManager.createScoreboard(player);
-                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "%value%", TextUtil.parse("enabled")));
+                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "value", TextUtil.parse("enabled")));
             }
         }
 
