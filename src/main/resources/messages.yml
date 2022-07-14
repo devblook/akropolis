@@ -42,7 +42,7 @@ Messages:
     UNLOCKED_BROADCAST: "<prefix> <yellow><player> <green>has unlocked global chat"
 
     ANTI_SWEAR_WORD_BLOCKED: "<prefix> <red>Message removed by anti-swear systems"
-    ANTI_SWEAR_ADMIN_NOTIFY: "<prefix> <red><player> <gray>attempted to say: <aqua><word>
+    ANTI_SWEAR_ADMIN_NOTIFY: "<prefix> <red><player> <gray>attempted to say: <aqua><word>"
 
     COMMAND_BLOCKED: "<prefix> <red>This command has been restricted"
 
