@@ -63,7 +63,7 @@ public enum Messages {
         }
 
         String prefix = config.getString("Messages." + PREFIX.getPath());
-        return TextUtil.parse(message.replace("<prefix>", prefix != null && !prefix.isEmpty() ? prefix : ""));
+        return TextUtil.parseAndReplace(message, "prefix", TextUtil.parse(prefix != null && !prefix.isEmpty() ? prefix : ""));
     }
 
     public String getPath() {

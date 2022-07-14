@@ -19,28 +19,37 @@
 #   <location> - Returns player location
 #   <online> - Returns number of players online
 #   <online_max> - Returns number of max player slots
+#   <world> - Returns player ping
+#   <ping> - Returns player world name
 #
-#        *** USE PLACEHOLDERAPI TO GET MORE ***
-#  (https://www.spigotmc.org/resources/placeholderapi.6245/)
+#   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
+#   Take in mind that PlaceholderAPI's placeholders won't have the same tag format.
 #--------
 # ACTIONS:
 #
-# [MESSAGE] - Send a message to the player
-# [BROADCAST] - Broadcast a message to everyone
-# [TITLE] e.g. MainTitle;Subtitle;FadeIn;Stay:FadeOut - Send the player a title message
-# [ACTIONBAR] Send an actionbar message
-# [SOUND] - Send the player a sound
-# [COMMAND] - Execute a command as the player
-# [CONSOLE] - Execute a command as console
-# [GAMEMODE] - Change a players' gamemode
-# [SERVER] - Send a player to a server
-# [EFFECT] e.g. EFFECT;LEVEL - Give a potion effect
-# [MENU] - Open a menu from (plugins/DeluxeHub/menus)
-# [CLOSE] - Close an open inventory gui
+#   [MESSAGE] - Send a message to the player
+#   [BROADCAST] - Broadcast a message to everyone
+#   [TITLE] e.g. MainTitle;Subtitle;FadeIn;Stay:FadeOut - Send the player a title message
+#   [ACTIONBAR] Send an actionbar message
+#   [SOUND] - Send the player a sound
+#   [COMMAND] - Execute a command as the player
+#   [CONSOLE] - Execute a command as console
+#   [GAMEMODE] - Change a players' gamemode
+#   [SERVER] - Send a player to a server
+#   [EFFECT] e.g. EFFECT;LEVEL - Give a potion effect
+#   [MENU] - Open a menu from (plugins/DeluxeHub/menus)
+#   [CLOSE] - Close an open inventory gui
 #--------
 # MESSAGE FORMATTING:
-# #<hex-code> - Hex chat colour (requires Spigot 1.16+) (e.g. "#<5fad95>Hello!")
-# <center> Centered message! </center> - Centers a message in chat
+#
+#   The plugin uses MiniMessage to format the chat,
+#   so you can use tags to color messages, like this: <red> Red colored message!
+#   You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+#
+#   More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+#   There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
+#
+#   And additional tag is available, that allows to center message in the chat: <center> Centered message! </center>
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | GENERAL SETTINGS                         |
