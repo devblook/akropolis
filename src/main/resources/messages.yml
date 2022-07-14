@@ -47,7 +47,7 @@ Messages:
     COMMAND_BLOCKED: "<prefix> <red>This command has been restricted"
 
   SCOREBOARD:
-    TOGGLE: "<prefix> <green>You have %value% the scoreboard"
+    TOGGLE: "<prefix> <green>You have <value> the scoreboard"
 
   DOUBLE_JUMP:
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to Double Jump again!"
