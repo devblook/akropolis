@@ -39,13 +39,13 @@ public class PlayerVanish extends Module {
             vanished.remove(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.showPlayer(player));
 
-            player.sendMessage(Messages.VANISH_DISABLE.toString());
+            player.sendMessage(Messages.VANISH_DISABLE.toComponent());
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
         } else {
             vanished.add(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.hidePlayer(player));
 
-            player.sendMessage(Messages.VANISH_ENABLE.toString());
+            player.sendMessage(Messages.VANISH_ENABLE.toComponent());
             player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1000000, 1));
         }
     }

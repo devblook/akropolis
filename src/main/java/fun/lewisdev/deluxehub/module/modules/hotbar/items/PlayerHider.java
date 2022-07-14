@@ -7,6 +7,8 @@ import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarItem;
 import fun.lewisdev.deluxehub.module.modules.hotbar.HotbarManager;
 import fun.lewisdev.deluxehub.util.ItemStackBuilder;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -42,8 +44,7 @@ public class PlayerHider extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
-            player.sendMessage(Messages.COOLDOWN_ACTIVE.toString().replace("%time%",
-                    getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER)));
+            player.sendMessage(TextUtil.replace(Messages.COOLDOWN_ACTIVE.toComponent(), "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER))));
             return;
         }
 
@@ -53,7 +54,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_HIDDEN.toString());
+            player.sendMessage(Messages.PLAYER_HIDER_HIDDEN.toComponent());
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -62,7 +63,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_SHOWN.toString());
+            player.sendMessage(Messages.PLAYER_HIDER_SHOWN.toComponent());
 
             player.getInventory().setItem(getSlot(), getItem());
         }

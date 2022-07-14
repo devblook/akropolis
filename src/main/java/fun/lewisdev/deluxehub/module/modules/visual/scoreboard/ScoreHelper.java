@@ -2,7 +2,6 @@ package fun.lewisdev.deluxehub.module.modules.visual.scoreboard;
 
 import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.util.PlaceholderUtil;
-import fun.lewisdev.deluxehub.util.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.megavex.scoreboardlibrary.api.sidebar.Sidebar;
 import org.bukkit.entity.Player;
@@ -29,12 +28,17 @@ public class ScoreHelper {
     }
 
     public Component setPlaceholders(String text) {
-        return TextUtil.parse(PlaceholderUtil.setPlaceholders(text, player));
+        return PlaceholderUtil.setPlaceholders(text, player);
     }
 
     public void addPlayer() {
         sidebar.addPlayer(player);
     }
+
+    public void removePlayer() {
+        sidebar.removePlayer(player);
+    }
+
 
     public void visible(boolean visible) {
         sidebar.visible(visible);

@@ -129,7 +129,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-            player.sendMessage(Messages.EVENT_BLOCK_BREAK.toString());
+            player.sendMessage(Messages.EVENT_BLOCK_BREAK.toComponent());
         }
     }
 
@@ -159,7 +159,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(event.getPlayer().getUniqueId(), CooldownType.BLOCK_PLACE, 3)) {
-            player.sendMessage(Messages.EVENT_BLOCK_PLACE.toString());
+            player.sendMessage(Messages.EVENT_BLOCK_PLACE.toComponent());
         }
     }
 
@@ -192,7 +192,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_BREAK.toString());
+                player.sendMessage(Messages.EVENT_BLOCK_BREAK.toComponent());
             }
         }
     }
@@ -213,7 +213,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toString());
+                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
             }
         }
     }
@@ -236,7 +236,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toString());
+                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
             }
         }
     }
@@ -263,7 +263,7 @@ public class WorldProtect extends Module {
                     event.setCancelled(true);
 
                     if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                        player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toString());
+                        player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
                     }
 
                     return;
@@ -349,7 +349,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_DROP, 3)) {
-            player.sendMessage(Messages.EVENT_ITEM_DROP.toString());
+            player.sendMessage(Messages.EVENT_ITEM_DROP.toComponent());
         }
     }
 
@@ -369,7 +369,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_PICKUP, 3)) {
-            player.sendMessage(Messages.EVENT_ITEM_PICKUP.toString());
+            player.sendMessage(Messages.EVENT_ITEM_PICKUP.toComponent());
         }
     }
 
@@ -439,7 +439,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.PLAYER_PVP, 3)) {
-            event.getDamager().sendMessage(Messages.EVENT_PLAYER_PVP.toString());
+            event.getDamager().sendMessage(Messages.EVENT_PLAYER_PVP.toComponent());
         }
     }
 }

@@ -7,6 +7,8 @@ import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.cooldown.CooldownType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -76,8 +78,7 @@ public class DoubleJump extends Module {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
-            player.sendMessage(Messages.DOUBLE_JUMP_COOLDOWN.toString().replace("%time%",
-                    getCooldown(uuid, CooldownType.DOUBLE_JUMP)));
+            player.sendMessage(TextUtil.replace(Messages.DOUBLE_JUMP_COOLDOWN.toComponent(), "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP))));
             return;
         }
 

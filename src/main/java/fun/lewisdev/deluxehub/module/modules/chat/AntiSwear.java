@@ -6,6 +6,7 @@ import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,11 +43,10 @@ public class AntiSwear extends Module {
         for (String word : blockedWords) {
             if (message.toLowerCase().contains(word.toLowerCase())) {
                 event.setCancelled(true);
-                player.sendMessage(Messages.ANTI_SWEAR_WORD_BLOCKED.toString());
+                player.sendMessage(Messages.ANTI_SWEAR_WORD_BLOCKED.toComponent());
 
                 Bukkit.getOnlinePlayers().stream()
-                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toString()
-                                .replace("%player%", player.getName()).replace("%word%", message)));
+                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "%word%", TextUtil.parse(message))));
 
                 return;
             }

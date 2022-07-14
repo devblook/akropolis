@@ -9,6 +9,7 @@ import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.config.Messages;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -64,7 +65,7 @@ public class AntiWorldDownloader extends Module implements PluginMessageListener
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.ANTI_WDL_NOTIFY.getPermission())) {
-                    p.sendMessage(Messages.WORLD_DOWNLOAD_NOTIFY.toString().replace("%player%", player.getName()));
+                    p.sendMessage(TextUtil.replace(Messages.WORLD_DOWNLOAD_NOTIFY.toComponent(), "player", player.name()));
                 }
             }
         }

@@ -39,7 +39,7 @@ public class Hologram {
         stand.setVisible(false);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
-        stand.setCustomName(TextUtil.color(text).trim());
+        stand.customName(TextUtil.parse(text.trim()));
         stand.setCanPickupItems(false);
         stands.add(stand);
     }
@@ -47,7 +47,7 @@ public class Hologram {
     public void setLine(int line, String text) {
         ArmorStand stand = stands.get(line - 1);
 
-        stand.setCustomName(TextUtil.color(text).trim());
+        stand.customName(TextUtil.parse(text.trim()));
     }
 
     public Hologram removeLine(int line) {

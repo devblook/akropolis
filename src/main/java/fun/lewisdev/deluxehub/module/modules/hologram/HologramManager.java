@@ -4,6 +4,8 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -63,9 +65,16 @@ public class HologramManager extends Module {
     public void saveHolograms() {
         holograms.forEach(hologram -> {
             dataConfig.set("holograms." + hologram.getName() + ".location", hologram.getLocation());
+
             List<String> lines = new ArrayList<>();
 
-            for (ArmorStand stand : hologram.getStands()) lines.add(stand.getCustomName());
+            for (ArmorStand stand : hologram.getStands()) {
+                Component standName = stand.customName();
+
+                if (standName != null) {
+                    lines.add(TextUtil.raw(standName));
+                }
+            }
 
             dataConfig.set("holograms." + hologram.getName() + ".lines", lines);
         });

@@ -79,6 +79,7 @@ public class ScoreboardManager extends Module {
 
     public void removeScoreboard(Player player) {
         if (players.containsKey(player.getUniqueId())) {
+            players.get(player.getUniqueId()).removePlayer();
             players.remove(player.getUniqueId());
 
             org.bukkit.scoreboard.ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();

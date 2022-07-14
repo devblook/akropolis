@@ -7,6 +7,7 @@ import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
 import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -87,7 +88,6 @@ public class PlayerListener extends Module {
     }
 
     // TODO: Reduce cognitive complexity from 18 to something minor.
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -97,10 +97,10 @@ public class PlayerListener extends Module {
         // Join message handling
         if (joinQuitMessagesEnabled) {
             if (joinMessage.isEmpty())
-                event.setJoinMessage(null);
+                event.joinMessage(null);
             else {
-                String message = PlaceholderUtil.setPlaceholders(joinMessage, player);
-                event.setJoinMessage(TextUtil.color(message));
+                Component message = PlaceholderUtil.setPlaceholders(joinMessage, player);
+                event.joinMessage(message);
             }
         }
 
@@ -150,10 +150,10 @@ public class PlayerListener extends Module {
 
         if (joinQuitMessagesEnabled) {
             if (quitMessage.isEmpty())
-                event.setQuitMessage(null);
+                event.quitMessage(Component.empty());
             else {
-                String message = PlaceholderUtil.setPlaceholders(quitMessage, player);
-                event.setQuitMessage(TextUtil.color(message));
+                Component message = PlaceholderUtil.setPlaceholders(quitMessage, player);
+                event.quitMessage(message);
             }
         }
 

@@ -35,7 +35,7 @@ public class ChatLock extends Module {
             return;
 
         event.setCancelled(true);
-        player.sendMessage(Messages.CHAT_LOCKED.toString());
+        player.sendMessage(Messages.CHAT_LOCKED.toComponent());
     }
 
     public boolean isChatLocked() {

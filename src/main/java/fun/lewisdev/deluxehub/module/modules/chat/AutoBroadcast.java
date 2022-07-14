@@ -92,7 +92,7 @@ public class AutoBroadcast extends Module implements Runnable {
                     message = TextUtil.getCenteredMessage(message);
                 }
 
-                player.sendMessage(TextUtil.color(message));
+                player.sendMessage(TextUtil.parse(message));
             });
 
             if (sound != null) player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);
