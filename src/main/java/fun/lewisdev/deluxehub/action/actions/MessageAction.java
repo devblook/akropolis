@@ -4,6 +4,7 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.action.Action;
 import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class MessageAction implements Action {
@@ -15,9 +16,11 @@ public class MessageAction implements Action {
 
     @Override
     public void execute(DeluxeHubPlugin plugin, Player player, String data) {
-        if (data.contains("<center>") && data.contains("</center>"))
-            data = TextUtil.getCenteredMessage(data);
+        Component parsedData = PlaceholderUtil.setPlaceholders(data, player);
 
-        player.sendMessage(PlaceholderUtil.setPlaceholders(data, player));
+        if (data.contains("<center>") && data.contains("</center>"))
+            parsedData = TextUtil.getCenteredMessage(parsedData);
+
+        player.sendMessage(parsedData);
     }
 }

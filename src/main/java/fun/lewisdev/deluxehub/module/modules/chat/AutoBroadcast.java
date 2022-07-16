@@ -5,7 +5,9 @@ import fun.lewisdev.deluxehub.DeluxeHubPlugin;
 import fun.lewisdev.deluxehub.config.ConfigType;
 import fun.lewisdev.deluxehub.module.Module;
 import fun.lewisdev.deluxehub.module.ModuleType;
+import fun.lewisdev.deluxehub.util.PlaceholderUtil;
 import fun.lewisdev.deluxehub.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -88,11 +90,12 @@ public class AutoBroadcast extends Module implements Runnable {
             if (inDisabledWorld(player.getLocation())) continue;
 
             broadcasts.get(count).forEach(message -> {
-                if (message.contains("<center>") && message.contains("</center>")) {
-                    message = TextUtil.getCenteredMessage(message);
-                }
+                Component parsedMessage = PlaceholderUtil.setPlaceholders(message, player);
 
-                player.sendMessage(TextUtil.parse(message));
+                if (message.contains("<center>") && message.contains("</center>"))
+                    parsedMessage = TextUtil.getCenteredMessage(parsedMessage);
+
+                player.sendMessage(parsedMessage);
             });
 
             if (sound != null) player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);

@@ -3,6 +3,7 @@ package fun.lewisdev.deluxehub.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 
@@ -30,12 +31,14 @@ public class TextUtil {
         return MINI_MESSAGE.deserialize(raw(message), Placeholder.component(pattern, replacement));
     }
 
-    // TODO:  Make this work with MiniMessage tags.
-    public static String getCenteredMessage(String rawMessage) {
-        if (rawMessage == null || rawMessage.isEmpty())
-            return "";
+    public static Component getCenteredMessage(Component parsedMessage) {
+        String rawMessage = raw(parsedMessage);
 
-        String message = ChatColor.translateAlternateColorCodes('&', rawMessage).replace("<center>", "")
+        if (rawMessage.isEmpty())
+            return Component.empty();
+
+        String message = LegacyComponentSerializer.legacyAmpersand().serialize(parsedMessage)
+                .replace("<center>", "")
                 .replace("</center>", "");
 
         int messagePxSize = getMessageSize(message);
@@ -50,7 +53,7 @@ public class TextUtil {
             compensated += spaceLength;
         }
 
-        return sb + message;
+        return LegacyComponentSerializer.legacyAmpersand().deserialize(sb + message);
     }
 
     private static int getMessageSize(final String message) {
