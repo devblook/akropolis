@@ -1,0 +1,56 @@
+name: Bug Report
+description: Create a bug report and help us improve.
+title: "A brief description of your report"
+labels: [ bug ]
+assignees:
+  - zetastormy
+body:
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: "A clear and concise description of what the bug is."
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Link to latest.log file
+      description: "Reproduce your problem, upload your `/logs/latest.log` file to https://mclo.gs/ or your prefered bin site, click \"Save\" button, and paste the URL below."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: |
+        - Describe the steps to reproduce the problem in a clear and detailed way. For example:
+        1. Change '...'
+        2. Enter '....'
+        3. Execute '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Expected behavior
+      description: "A clear and concise description of what you expected to happen."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Technical information
+      description: |
+        - Server software: [e.g. Paper, Spigot]
+        - Server version: [e.g. 1.12.2, 1.8.8]
+        - Plugin version: [e.g. 3.5.5, 3.6.0]
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: "Add any other context about the problem here."
+    validations:
+      required: false
