@@ -1,5 +1,5 @@
 # This workflow will build DeluxeHub with Gradle.
-# It will be compiled against Java 8, 11 and 17.
+# It will be compiled against Java 17.
 name: Build
 on: [ push, pull_request ]
 
@@ -9,12 +9,10 @@ jobs:
     name: Build on recommended JDK versions
     runs-on: ubuntu-latest
 
-    # For Minecraft 1.8 - 1.12, Java 8 is recommended.
-    # For Minecraft 1.13 - 1.16, Java 8 can be used but Java 11 is recommended.
-    # For Minecraft 1.17 - 1.19, Java 17+ is needed/recommended.
+    # For Minecraft 1.19, Java 17+ is needed/recommended.
     strategy:
       matrix:
-        java_version: [ 8, 11, 17 ]
+        java_version: [ 17 ]
 
     steps:
       - name: Checkout GitHub repository
