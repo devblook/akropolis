@@ -6,7 +6,6 @@ on: [ push, pull_request ]
 jobs:
   # Builds DeluxeHub in recommended JDK versions.
   build:
-    name: Build on recommended JDK versions
     runs-on: ubuntu-latest
 
     # For Minecraft 1.19, Java 17+ is needed/recommended.
