@@ -5,7 +5,7 @@ plugins {
 
 group = "team.devblook"
 version = property("projectVersion") as String
-description = "An all-in-one hub management system."
+description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz."
 
 val libsPackage = property("libsPackage") as String
 
