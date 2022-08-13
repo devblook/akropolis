@@ -44,11 +44,9 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, "  / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\");
         getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
         getLogger().log(Level.INFO, "                        |_|                  ");
-        getLogger().log(Level.INFO, "");
-        getLogger().log(Level.INFO, "Version: {0}", getDescription().getVersion());
         getLogger().log(Level.INFO, "Author: ZetaStormy");
-        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz");
-        getLogger().log(Level.INFO, "");
+        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
+        getLogger().log(Level.INFO, "--------");
 
         // Check if using Paper
         try {
@@ -105,7 +103,7 @@ public class AkropolisPlugin extends JavaPlugin {
         // Register BungeeCord channels
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        getLogger().log(Level.INFO, "Successfully loaded in {0} ms", (System.currentTimeMillis() - start));
+        getLogger().log(Level.INFO, "Successfully loaded in {0} ms.", (System.currentTimeMillis() - start));
     }
 
     @Override
