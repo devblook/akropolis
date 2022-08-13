@@ -3,7 +3,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version ("7.1.2")
 }
 
-group = "fun.lewisdev"
+group = "team.devblook"
 version = property("projectVersion") as String
 description = "An all-in-one hub management system."
 

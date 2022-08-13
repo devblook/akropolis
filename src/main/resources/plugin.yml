@@ -4,7 +4,7 @@ version: ${version}
 description: An all-in-one hub management system.
 website: https://www.spigotmc.org/resources/deluxehub.49425/
 api-version: 1.13
-main: fun.lewisdev.deluxehub.DeluxeHubPlugin
+main: team.devblook.deluxehub.DeluxeHubPlugin
 loadbefore: [ Essentials ]
 softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core ]
 
