@@ -38,12 +38,16 @@ public class AkropolisPlugin extends JavaPlugin {
 
         long start = System.currentTimeMillis();
 
-        getLogger().log(Level.INFO, " _   _            _          _    _ ");
-        getLogger().log(Level.INFO, "| \\ |_ |  | | \\/ |_ |_| | | |_)   _)");
-        getLogger().log(Level.INFO, "|_/ |_ |_ |_| /\\ |_ | | |_| |_)   _)");
+        getLogger().log(Level.INFO, "     _    _                          _ _     ");
+        getLogger().log(Level.INFO, "    / \\  | | ___ __ ___  _ __   ___ | (_)___ ");
+        getLogger().log(Level.INFO, "   / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|");
+        getLogger().log(Level.INFO, "  / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\");
+        getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
+        getLogger().log(Level.INFO, "                        |_|                  ");
         getLogger().log(Level.INFO, "");
         getLogger().log(Level.INFO, "Version: {0}", getDescription().getVersion());
-        getLogger().log(Level.INFO, "Author: ItsLewizzz");
+        getLogger().log(Level.INFO, "Author: ZetaStormy");
+        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz");
         getLogger().log(Level.INFO, "");
 
         // Check if using Paper

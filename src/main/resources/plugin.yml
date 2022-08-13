@@ -1,8 +1,7 @@
 name: Akropolis
-author: ItsLewizzz
+authors: [ ZetaStormy, ItsLewizzz ]
 version: ${version}
-description: An all-in-one hub management system.
-website: https://www.spigotmc.org/resources/deluxehub.49425/
+description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz.
 api-version: 1.13
 main: team.devblook.akropolis.AkropolisPlugin
 loadbefore: [ Essentials ]
