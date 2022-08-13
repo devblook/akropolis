@@ -10,5 +10,5 @@ Akropolis is the all-in-one hub server solution compacting a large amount of hub
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE](license.txt) file for
+This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE](LICENSE) file for
 details.
