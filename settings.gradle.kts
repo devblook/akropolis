@@ -1,1 +1,1 @@
-rootProject.name = "deluxe-hub"
+rootProject.name = "akropolis"

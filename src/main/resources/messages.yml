@@ -4,7 +4,7 @@
 
 Messages:
   GENERAL:
-    PREFIX: "<light_purple>DeluxeHub <dark_gray>❙"
+    PREFIX: "<light_purple>Akropolis <dark_gray>❙"
     NO_PERMISSION: "<prefix> <red>You are forbidden to use this."
     CUSTOM_COMMAND_NO_PERMISSION: "<red>You are not allowed to execute this command."
     INVALID_PLAYER: "<prefix> <red><player> is not online!"

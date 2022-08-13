@@ -56,7 +56,7 @@ tasks {
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("DeluxeHub-${project.version}.jar")
+        archiveFileName.set("Akropolis-${project.version}.jar")
 
         minimize {
             exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))

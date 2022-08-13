@@ -9,7 +9,7 @@
 # Copyright Lewis D 2020. All rights reserved.
 #--------
 # CUSTOM MENUS
-#   You can add more menus to the "DeluxeHub/menus" directory,
+#   You can add more menus to the "Akropolis/menus" directory,
 #   copy and paste the default, server selector, menu and edit the file.
 #   Use the name of the file as the action ID.
 #--------
@@ -37,7 +37,7 @@
 #   [GAMEMODE] - Change a players' gamemode
 #   [SERVER] - Send a player to a server
 #   [EFFECT] e.g. EFFECT;LEVEL - Give a potion effect
-#   [MENU] - Open a menu from (plugins/DeluxeHub/menus)
+#   [MENU] - Open a menu from (plugins/Akropolis/menus)
 #   [CLOSE] - Close an open inventory gui
 #--------
 # MESSAGE FORMATTING:
@@ -55,7 +55,7 @@
 # | GENERAL SETTINGS                         |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# List your worlds you don't want DeluxeHub to manage.
+# List your worlds you don't want Akropolis to manage.
 disabled-worlds:
   # Should we invert the list making it a whitelist rather than a blacklist?
   invert: false
@@ -73,7 +73,7 @@ anti_wdl:
   # Should AntiWDL be enabled?
   enabled: true
 
-  # Should players with 'deluxehub.antiwdl.alert' will be notified?
+  # Should players with 'akropolis.antiwdl.alert' will be notified?
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -95,7 +95,7 @@ scoreboard:
     enabled: true
     rate: 200 # In ticks (20 ticks = 1 second).
 
-  title: "<light_purple><b>DeluxeHub 3 <gray>(<online>/<online_max>)"
+  title: "<light_purple><b>Akropolis 3 <gray>(<online>/<online_max>)"
   lines:
     - "<gray><st>----------------------"
     - "<yellow><b>Player:"
@@ -121,7 +121,7 @@ tablist:
   # Modify the header of the tablist.
   header:
     - ""
-    - "<light_purple><b>DeluxeHub <gray>(<online>/<online_max>)"
+    - "<light_purple><b>Akropolis <gray>(<online>/<online_max>)"
     - ""
 
   # Modify the footer of the tablist.
@@ -290,7 +290,7 @@ world_settings:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 join_leave_messages:
-  # Should deluxehub handle join/quit messages?
+  # Should akropolis handle join/quit messages?
   enabled: true
 
   # Set to '' if you want silent join/quit messages.
@@ -307,7 +307,7 @@ join_events:
   - "[MESSAGE] <reset>  <dark_aqua><b>STORE <white>store.examplemc.net"
   - "[MESSAGE] <reset>  <gold><b>DISCORD <white>discord.examplemc.net"
   - "[MESSAGE] <reset>"
-  - "[MESSAGE] <reset>            <gray><i>Powered By DeluxeHub"
+  - "[MESSAGE] <reset>            <gray><i>Powered By Akropolis"
   - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
   - "[TITLE] <aqua><b>WELCOME;<white><player>;1;2;1"
   - "[SOUND] ENTITY_PLAYER_LEVELUP"

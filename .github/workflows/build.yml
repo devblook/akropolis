@@ -1,10 +1,10 @@
-# This workflow will build DeluxeHub with Gradle.
+# This workflow will build Akropolis with Gradle.
 # It will be compiled against Java 17.
 name: Build
 on: [ push, pull_request ]
 
 jobs:
-  # Builds DeluxeHub in recommended JDK versions.
+  # Builds Akropolis in recommended JDK version.
   build-plugin:
     runs-on: ubuntu-latest
 
@@ -43,5 +43,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: DeluxeHub Artifact
+          name: Akropolis Artifact
           path: build/libs/*.jar
