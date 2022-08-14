@@ -103,7 +103,7 @@ public class AkropolisPlugin extends JavaPlugin {
         // Register BungeeCord channels
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-        getLogger().log(Level.INFO, "Successfully loaded in {0} ms.", (System.currentTimeMillis() - start));
+        getLogger().log(Level.INFO, "Successfully loaded in {0}ms.", (System.currentTimeMillis() - start));
     }
 
     @Override
