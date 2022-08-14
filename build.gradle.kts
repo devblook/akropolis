@@ -28,7 +28,7 @@ dependencies {
 
     implementation("de.tr7zw:item-nbt-api:2.11.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
-    implementation("com.github.cryptomorin:XSeries:8.8.0")
+    implementation("com.github.cryptomorin:XSeries:9.0.0")
 
     implementation("com.github.MegavexNetwork.scoreboard-library:implementation:-SNAPSHOT")
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:-SNAPSHOT")
