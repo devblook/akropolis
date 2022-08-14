@@ -1,56 +1,76 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# PLUGIN MESSAGES
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#     _    _                          _ _
+#    / \  | | ___ __ ___  _ __   ___ | (_)___
+#   / _ \ | |/ / '__/ _ \| '_ \ / _ \| | / __|
+#  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
+# /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
+#                        |_|
+#--------
+# MESSAGES CUSTOMIZATION:
+#
+#   Edit the messages of the plugin as you like. You can change the language, colors and almost everything
+#   you imagine! If there's a message you want to translate, and it isn't here, you can request it to be
+#   translatable by opening a feature request here:
+#   https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request
+#--------
+# MESSAGE FORMATTING:
+#
+#   The plugin uses MiniMessage to format the chat,
+#   so you can use tags to color messages, like this: <red> Red colored message!
+#   You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+#
+#   More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+#   There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
+#
 
 Messages:
   GENERAL:
-    PREFIX: "<light_purple>DeluxeHub <dark_gray>❙"
+    PREFIX: "<gold><b>Akropolis <reset><dark_gray>||"
     NO_PERMISSION: "<prefix> <red>You are forbidden to use this."
     CUSTOM_COMMAND_NO_PERMISSION: "<red>You are not allowed to execute this command."
-    INVALID_PLAYER: "<prefix> <red><player> is not online!"
-    CONFIG_RELOAD: "<prefix> <green>All configuration files has been reloaded in <gray><time>ms"
+    INVALID_PLAYER: "<prefix> <yellow><player> <red>is not online!"
+    CONFIG_RELOAD: "<prefix> <gray>All configuration files has been reloaded in <green><time>ms<gray>."
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>before doing this again!"
 
   GAMEMODE:
-    GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>"
-    GAMEMODE_CHANGE_OTHER: "<prefix> <gray>You have changed gamemode to <green><gamemode> <gray>for <yellow><player>"
-    GAMEMODE_INVALID: "<prefix> <yellow><gamemode> <red>is not a valid gamemode"
+    GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>."
+    GAMEMODE_CHANGE_OTHER: "<prefix> <gray>You have changed gamemode to <green><gamemode> <gray>for <yellow><player><gray>."
+    GAMEMODE_INVALID: "<prefix> <green><gamemode> <red>is not a valid gamemode."
 
   VANISH:
-    ENABLE: "<prefix> <green>You have now vanished"
-    DISABLE: "<prefix> <red>You have now unvanished"
+    ENABLE: "<prefix> <green>You have now vanished."
+    DISABLE: "<prefix> <red>You have now unvanished."
 
   FLIGHT:
-    ENABLE: "<prefix> <green>You have enabled flight"
-    DISABLE: "<prefix> <red>You have disabled flight"
-    ENABLE_OTHER: "<prefix> <red>You have enabled flight for <gray><player>"
-    DISABLE_OTHER: "<prefix> <red>You have disabled flight for <gray><player>"
+    ENABLE: "<prefix> <green>You have enabled flight."
+    DISABLE: "<prefix> <red>You have disabled flight."
+    ENABLE_OTHER: "<prefix> <red>You have enabled flight for <yellow><player>."
+    DISABLE_OTHER: "<prefix> <red>You have disabled flight for <yellow><player>."
 
   PLAYER_HIDER:
-    HIDDEN: "<prefix> <red>Player visibility disabled"
-    SHOWN: "<prefix> <green>Player visibility enabled"
+    HIDDEN: "<prefix> <red>Player visibility disabled."
+    SHOWN: "<prefix> <green>Player visibility enabled."
 
   LOBBY:
-    SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point"
+    SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point."
 
   CHAT:
-    CLEARCHAT: "<aqua><b>* <white>Chat has been cleared by <yellow><player> <aqua><b>*"
-    CLEARCHAT_PLAYER: "<red>Your chat has been cleared by an administrator."
+    CLEARCHAT: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white!"
+    CLEARCHAT_PLAYER: "prefix> <red>Your chat has been cleared by an administrator."
 
-    LOCKED: "<prefix> <red>Chat is currently locked"
-    LOCKED_BROADCAST: "<prefix> <yellow><player> <red>has locked global chat"
-    UNLOCKED_BROADCAST: "<prefix> <yellow><player> <green>has unlocked global chat"
+    LOCKED: "<prefix> <red>Chat is currently locked."
+    LOCKED_BROADCAST: "<prefix> <yellow><player> <red>has locked global chat."
+    UNLOCKED_BROADCAST: "<prefix> <yellow><player> <green>has unlocked global chat."
 
-    ANTI_SWEAR_WORD_BLOCKED: "<prefix> <red>Message removed by anti-swear systems"
-    ANTI_SWEAR_ADMIN_NOTIFY: "<prefix> <red><player> <gray>attempted to say: <aqua><word>"
+    ANTI_SWEAR_WORD_BLOCKED: "<prefix> <red>Message removed by anti-swear systems."
+    ANTI_SWEAR_ADMIN_NOTIFY: "<prefix> <yellow><player> <red>attempted to say<dark_gray>: <aqua><word>."
 
-    COMMAND_BLOCKED: "<prefix> <red>This command has been restricted"
+    COMMAND_BLOCKED: "<prefix> <red>This command has been restricted."
 
   SCOREBOARD:
-    TOGGLE: "<prefix> <green>You have <value> the scoreboard"
+    TOGGLE: "<prefix> <gray>You have <yellow><value> <gray>the scoreboard."
 
   DOUBLE_JUMP:
-    COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to Double Jump again!"
+    COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to double jump again!"
 
   WORLD_EVENT_MODIFICATIONS:
     ITEM_DROP: "<prefix> <red>You are not allowed to drop items."
@@ -62,17 +82,17 @@ Messages:
 
   HOLOGRAMS:
     EMPTY: "<prefix> <red>Could not find any holograms."
-    ALREADY_EXISTS: "<prefix> <red>There is a hologram with this name already <gray>(<name>)<red>."
-    INVALID_HOLOGRAM: "<prefix> <red>There is no hologram with this name <gray>(<name>)<red>."
+    ALREADY_EXISTS: "<prefix> <red>There is a hologram with this name already <yellow>(<name>)<red>."
+    INVALID_HOLOGRAM: "<prefix> <red>There is no hologram with this name <yellow>(<name>)<red>."
     INVALID_LINE: "<prefix> <red>Could not find hologram line."
 
-    SPAWNED: "<prefix> <gray>Created new hologram with name <aqua><name><gray>."
-    DESPAWNED: "<prefix> <gray>Removed hologram with name <aqua><name><gray>."
-    MOVED: "<prefix> <gray>Moved hologram <aqua><name><gray>."
+    SPAWNED: "<prefix> <gray>Created new hologram with name <yellow><name><gray>."
+    DESPAWNED: "<prefix> <gray>Removed hologram with name <yellow><name><gray>."
+    MOVED: "<prefix> <gray>Moved hologram <yellow><name><gray>."
 
-    LINE_SET: "<prefix> <gray>Set line <aqua><line><gray>."
+    LINE_SET: "<prefix> <gray>Set line <yellow><line><gray>."
     ADDED_LINE: "<prefix> <gray>Added new line."
-    REMOVED_LINE: "<prefix> <gray>Removed line <aqua><line><gray>."
+    REMOVED_LINE: "<prefix> <gray>Removed line <yellow><line><gray>."
 
   ANTI_WORLD_DOWNLOADER:
-    ADMIN_NOTIFY: "<prefix> <white><player> <red>has joined with the World Downloader Mod, their ability to use it has been restricted by our systems."
+    ADMIN_NOTIFY: "<prefix> <white><player> <red>has joined with the World Downloader mod, their ability to use it has been restricted."

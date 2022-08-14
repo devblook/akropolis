@@ -3,9 +3,9 @@ plugins {
     id("com.github.johnrengelman.shadow") version ("7.1.2")
 }
 
-group = "fun.lewisdev"
+group = "team.devblook"
 version = property("projectVersion") as String
-description = "An all-in-one hub management system."
+description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz."
 
 val libsPackage = property("libsPackage") as String
 
@@ -56,7 +56,7 @@ tasks {
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("DeluxeHub-${project.version}.jar")
+        archiveFileName.set("Akropolis-${project.version}.jar")
 
         minimize {
             exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
