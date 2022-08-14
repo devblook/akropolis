@@ -12,7 +12,6 @@ import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 import team.devblook.akropolis.util.PlaceholderUtil;
-import team.devblook.akropolis.util.TextUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -91,9 +90,6 @@ public class AutoBroadcast extends Module implements Runnable {
 
             broadcasts.get(count).forEach(message -> {
                 Component parsedMessage = PlaceholderUtil.setPlaceholders(message, player);
-
-                if (message.contains("<center>") && message.contains("</center>"))
-                    parsedMessage = TextUtil.getCenteredMessage(parsedMessage);
 
                 player.sendMessage(parsedMessage);
             });
