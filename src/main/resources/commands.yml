@@ -1,7 +1,29 @@
+#     _    _                          _ _
+#    / \  | | ___ __ ___  _ __   ___ | (_)___
+#   / _ \ | |/ / '__/ _ \| '_ \ / _ \| | / __|
+#  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
+# /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
+#                        |_|
+#--------
+# COMMANDS CUSTOMIZATION:
+#
+#   In this file you can enable or disable commands of the plugin as you like, and even create
+#   your own custom commands. ATTENTION: You will need to restart your server in order to apply
+#   changes made to this file!
+#--------
+# MESSAGE FORMATTING:
+#
+#   The plugin uses MiniMessage to format the chat,
+#   so you can use tags to color messages, like this: <red> Red colored message!
+#   You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+#
+#   More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+#   There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
+#
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CUSTOM COMMANDS                          |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# You do not need to restart your server if you edit anything below here
 
 custom_commands:
   # Command name, this will be used as the main command
@@ -11,7 +33,7 @@ custom_commands:
       - web
     # Actions to be executed
     actions:
-      - "[MESSAGE] <aqua>Website: <white>www.examplemc.net"
+      - "[MESSAGE] <dark_gray>| <click:open_url:'https://www.example.com/'><hover:show_text:'<yellow>Click here to navigate!'><gray>Click here to visit <aqua>www.example.com<gray>!</hover></click>"
   clearinventory:
     # Players will require this permission to execute this command.
     permission: akropolis.clearinventory
@@ -19,12 +41,11 @@ custom_commands:
       - ci
     actions:
       - "[CONSOLE] minecraft:clear <player>"
-      - "[MESSAGE] <light_purple>Akropolis <yellow>Your inventory has been cleared!"
+      - "[MESSAGE] <dark_gray>| <yellow>Your inventory has been cleared!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# | AKROPOLIS COMMANDS                       |
+# | PLUGIN COMMANDS                          |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# It's highly recommended to restart your server if you edit anything below
 
 commands:
   gamemode:
