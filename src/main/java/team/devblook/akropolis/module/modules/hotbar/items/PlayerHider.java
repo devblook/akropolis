@@ -1,8 +1,8 @@
 package team.devblook.akropolis.module.modules.hotbar.items;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +12,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.config.Messages;
 import team.devblook.akropolis.cooldown.CooldownType;
@@ -29,14 +32,19 @@ public class PlayerHider extends HotbarItem {
     private final ItemStack hiddenItem;
     private final List<UUID> hidden;
 
-    public PlayerHider(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
-        super(hotbarManager, item, slot, key);
+    public PlayerHider(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
+        super(hotbarManager, item, slot, keyValue);
         hidden = new ArrayList<>();
+
         FileConfiguration config = getHotbarManager().getConfig(ConfigType.SETTINGS);
-        NBTItem nbtItem = new NBTItem(
-                ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build());
-        nbtItem.setString("hotbarItem", key);
-        hiddenItem = nbtItem.getItem();
+        ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
+        ItemMeta hiddenItemMeta = hiddenItem.getItemMeta();
+        PersistentDataContainer hiddenItemContainer = hiddenItemMeta.getPersistentDataContainer();
+
+        hiddenItemContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+        hiddenItem.setItemMeta(hiddenItemMeta);
+
+        this.hiddenItem = hiddenItem;
         cooldown = config.getInt("player_hider.cooldown");
     }
 

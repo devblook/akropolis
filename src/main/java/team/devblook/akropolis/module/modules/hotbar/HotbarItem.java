@@ -1,9 +1,9 @@
 package team.devblook.akropolis.module.modules.hotbar;
 
 import com.cryptomorin.xseries.ReflectionUtils;
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +15,9 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
 
@@ -22,19 +25,23 @@ public abstract class HotbarItem implements Listener {
     private final HotbarManager hotbarManager;
     private final ItemStack item;
     private ConfigurationSection configurationSection;
-    private final String key;
+    private final String keyValue;
     private String permission = null;
     private final int slot;
     private boolean allowMovement;
 
-    protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String key) {
+    protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
         this.hotbarManager = hotbarManager;
-        this.key = key;
+        this.keyValue = keyValue;
         this.slot = slot;
 
-        NBTItem nbtItem = new NBTItem(item);
-        nbtItem.setString("hotbarItem", key);
-        this.item = nbtItem.getItem();
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+
+        container.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
+        item.setItemMeta(itemMeta);
+
+        this.item = item;
     }
 
     public AkropolisPlugin getPlugin() {
@@ -51,8 +58,8 @@ public abstract class HotbarItem implements Listener {
 
     protected abstract void onInteract(Player player);
 
-    public String getKey() {
-        return key;
+    public String getKeyValue() {
+        return keyValue;
     }
 
     public int getSlot() {
@@ -92,28 +99,34 @@ public abstract class HotbarItem implements Listener {
         PlayerInventory inventory = player.getInventory();
         ItemStack itemInSlot = inventory.getItem(slot);
 
-        if (itemInSlot != null && new NBTItem(itemInSlot).getString("hotbarItem").equals(key)) {
+        if (itemInSlot == null) return;
+
+        PersistentDataContainer container = itemInSlot.getItemMeta().getPersistentDataContainer();
+        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+
+        if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
             inventory.remove(itemInSlot);
         }
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!allowMovement)
-            return;
+        if (!allowMovement) return;
 
         Player player = (Player) event.getWhoClicked();
 
-        if (getHotbarManager().inDisabledWorld(player.getLocation()))
-            return;
+        if (getHotbarManager().inDisabledWorld(player.getLocation())) return;
 
         ItemStack clicked = event.getCurrentItem();
 
-        if (clicked == null || clicked.getType() == Material.AIR)
-            return;
+        if (clicked == null || clicked.getType() == Material.AIR) return;
 
-        if (event.getSlot() == slot && new NBTItem(clicked).getString("hotbarItem").equals(key))
+        PersistentDataContainer container = clicked.getItemMeta().getPersistentDataContainer();
+        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+
+        if (event.getSlot() == slot && keyValueInItem != null && keyValueInItem.equals(keyValue)) {
             event.setCancelled(true);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -128,9 +141,14 @@ public abstract class HotbarItem implements Listener {
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getItemInHand();
 
-        if (getHotbarManager().inDisabledWorld(player.getLocation()) || itemInHand.getType() == Material.AIR
-                || !new NBTItem(itemInHand).getString("hotbarItem").equals(key))
+        if (getHotbarManager().inDisabledWorld(player.getLocation()) || itemInHand.getType() == Material.AIR) {
             return;
+        }
+
+        PersistentDataContainer container = itemInHand.getItemMeta().getPersistentDataContainer();
+        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+
+        if (keyValueInItem != null && !keyValueInItem.equals(keyValue)) return;
 
         onInteract(player);
     }

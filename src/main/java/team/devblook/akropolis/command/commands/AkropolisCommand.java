@@ -158,7 +158,7 @@ public class AkropolisCommand extends InjectableCommand {
                     .getModule(ModuleType.HOTBAR_ITEMS));
             sender.sendMessage(TextUtil
                     .parse("<gray>Hotbar items (" + hotbarManager.getHotbarItems().size() + ")" + " <dark_gray>- <green>" + (hotbarManager
-                            .getHotbarItems().stream().map(HotbarItem::getKey).collect(Collectors.joining(", ")))));
+                            .getHotbarItems().stream().map(HotbarItem::getKeyValue).collect(Collectors.joining(", ")))));
 
             CommandManager commandManager = plugin.getCommandManager();
             sender.sendMessage(TextUtil.parse("<gray>Custom commands (" + commandManager.getCustomCommands().size() + ")"

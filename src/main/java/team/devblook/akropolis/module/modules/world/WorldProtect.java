@@ -1,10 +1,10 @@
 package team.devblook.akropolis.module.modules.world;
 
 import com.cryptomorin.xseries.XMaterial;
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
@@ -16,6 +16,8 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
@@ -133,8 +135,10 @@ public class WorldProtect extends Module {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockPlace(BlockPlaceEvent event) {
+    @EventHandler
+    public void onBlockPlace(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
         if (!blockPlace || event.isCancelled())
             return;
 
@@ -143,12 +147,13 @@ public class WorldProtect extends Module {
         if (inDisabledWorld(player.getLocation()))
             return;
 
-        ItemStack item = event.getItemInHand();
+        ItemStack item = event.getItem();
 
-        if (item.getType() == Material.AIR)
-            return;
+        if (item == null) return;
 
-        if (new NBTItem(event.getItemInHand()).hasKey("hotbarItem")) {
+        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+
+        if (container.has(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING)) {
             event.setCancelled(true);
             return;
         }
