@@ -26,7 +26,6 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("de.tr7zw:item-nbt-api:2.11.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:9.0.0")
 
@@ -64,7 +63,6 @@ tasks {
 
         relocate("org.bstats", "${libsPackage}.metrics")
         relocate("cl.bgmp", "${libsPackage}.commandframework")
-        relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
