@@ -43,8 +43,7 @@ public class AkropolisCommand extends InjectableCommand {
         if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 
             if (!sender.hasPermission(Permissions.COMMAND_AKROPOLIS_HELP.getPermission())) {
-                sender.sendMessage(TextUtil.parse(
-                        "<dark_gray><b> <gray>Server is running <light_purple>Akropolis <yellow>v" + pdfFile.getVersion() + " <gray>By <gold>ItsLewizzz"));
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
