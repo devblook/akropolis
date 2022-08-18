@@ -2,7 +2,7 @@
 
 Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizz.
 It contains almost all of its features and configuration files are almost the same, so you can just
-drop your configuration into the plugin's directory and use it.
+drop your configuration into the plugin's directory, make a few modifications and use it.
 
 The main difference between Akropolis and DeluxeHub is that Akropolis uses more modern technologies, like MiniMessage,
 the Paper API and updated Java versions. While this give us some performance and usability benefits, it also means
