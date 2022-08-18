@@ -148,7 +148,7 @@ public abstract class HotbarItem implements Listener {
         PersistentDataContainer container = itemInHand.getItemMeta().getPersistentDataContainer();
         String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
 
-        if (keyValueInItem != null && !keyValueInItem.equals(keyValue)) return;
+        if (keyValueInItem == null || !keyValueInItem.equals(keyValue)) return;
 
         onInteract(player);
     }
