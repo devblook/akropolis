@@ -29,7 +29,7 @@ public class AkropolisCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
 
     public AkropolisCommand(AkropolisPlugin plugin) {
-        super(plugin, "akropolis", "View plugin information and additional commands", Collections.singletonList("dhub"));
+        super(plugin, "akropolis", "View plugin information and additional commands", Collections.singletonList("akro"));
         this.plugin = plugin;
     }
 
