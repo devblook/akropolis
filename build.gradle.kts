@@ -62,7 +62,6 @@ tasks {
         }
 
         relocate("org.bstats", "${libsPackage}.metrics")
-        relocate("cl.bgmp", "${libsPackage}.commandframework")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
