@@ -84,8 +84,6 @@ public class ScoreboardManager extends Module {
 
             org.bukkit.scoreboard.ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
 
-            if (scoreboardManager == null) return;
-
             player.setScoreboard(scoreboardManager.getNewScoreboard());
         }
     }
@@ -116,9 +114,6 @@ public class ScoreboardManager extends Module {
     public void onWorldChange(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         World fromWorld = event.getFrom().getWorld();
-
-        if (event.getTo() == null) return;
-
         World toWorld = event.getTo().getWorld();
 
         if (toWorld == null) return;

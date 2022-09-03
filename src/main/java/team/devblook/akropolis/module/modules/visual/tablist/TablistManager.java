@@ -104,9 +104,6 @@ public class TablistManager extends Module {
     public void onWorldChange(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         World fromWorld = event.getFrom().getWorld();
-
-        if (event.getTo() == null) return;
-
         World toWorld = event.getTo().getWorld();
 
         if (toWorld == null) return;
