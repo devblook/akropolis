@@ -1,6 +1,5 @@
 package team.devblook.akropolis.module;
 
-import com.cryptomorin.xseries.ReflectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -71,11 +70,7 @@ public class ModuleManager {
         registerModule(new LobbySpawn(plugin));
         registerModule(new PlayerVanish(plugin));
         registerModule(new HologramManager(plugin));
-
-        // Requires 1.9+
-        if (ReflectionUtils.supports(9)) {
-            registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
-        }
+        registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
 
         for (Module module : modules.values()) {
             try {

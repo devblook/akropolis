@@ -50,7 +50,11 @@ public class HologramManager extends Module {
     public void loadHolograms() {
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
             for (String key : hologramsSection.getKeys(false)) {
-                List<String> lines = hologramsSection.getStringList(key + ".lines");
+                List<String> rawLines = hologramsSection.getStringList(key + ".lines");
+                List<Component> lines = new ArrayList<>();
+
+                rawLines.forEach(l -> lines.add(TextUtil.parse(l)));
+
                 Location location = (Location) hologramsSection.get(key + ".location");
 
                 if (location == null) continue;

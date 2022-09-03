@@ -1,6 +1,5 @@
 package team.devblook.akropolis.module.modules.hotbar;
 
-import com.cryptomorin.xseries.ReflectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -135,8 +134,7 @@ public abstract class HotbarItem implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        if (ReflectionUtils.supports(9) && event.getHand() != EquipmentSlot.HAND)
-            return;
+        if (event.getHand() != EquipmentSlot.HAND) return;
 
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getItemInHand();

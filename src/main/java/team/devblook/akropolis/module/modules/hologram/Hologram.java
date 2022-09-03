@@ -1,5 +1,6 @@
 package team.devblook.akropolis.module.modules.hologram;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -22,13 +23,13 @@ public class Hologram {
         stands = new ArrayList<>();
     }
 
-    public void setLines(List<String> lines) {
+    public void setLines(List<Component> lines) {
         remove();
 
-        for (String s : lines) addLine(s);
+        lines.forEach(this::addLine);
     }
 
-    public void addLine(String text) {
+    public void addLine(Component text) {
         World world = location.getWorld();
 
         if (world == null) return;
@@ -39,7 +40,7 @@ public class Hologram {
         stand.setVisible(false);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
-        stand.customName(TextUtil.parse(text.trim()));
+        stand.customName(text);
         stand.setCanPickupItems(false);
         stands.add(stand);
     }

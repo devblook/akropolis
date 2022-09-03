@@ -216,9 +216,9 @@ public class AkropolisCommand extends InjectableCommand {
                 }
 
                 Hologram holo = plugin.getHologramManager().createHologram(args[2], player.getLocation());
-                List<String> defaultMsg = new ArrayList<>();
-                defaultMsg.add("<gray>Created new Hologram called <aqua>" + args[2]);
-                defaultMsg.add("<gray>Use <aqua>/akropolis holo <gray>to customise");
+                List<Component> defaultMsg = new ArrayList<>();
+                defaultMsg.add(TextUtil.parse("<gray>Created new Hologram called <aqua>" + args[2]));
+                defaultMsg.add(TextUtil.parse("<gray>Use <aqua>/akropolis holo <gray>to customise"));
                 holo.setLines(defaultMsg);
                 sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_SPAWNED.toComponent(), "name", TextUtil.parse(args[2])));
                 return;
@@ -281,7 +281,7 @@ public class AkropolisCommand extends InjectableCommand {
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
-                String text = TextUtil.joinString(3, args);
+                Component text = TextUtil.parse(TextUtil.joinString(3, args));
 
                 holo.addLine(text);
                 sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_ADDED_LINE.toComponent(), "name", TextUtil.parse(args[2])));
