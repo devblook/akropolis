@@ -55,7 +55,7 @@ public class DoubleJump extends Module {
         Player player = event.getPlayer();
 
         // Perform checks
-        if (player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission()))
+        if (player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission()) || player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))
             return;
         else if (inDisabledWorld(player.getLocation()))
             return;
