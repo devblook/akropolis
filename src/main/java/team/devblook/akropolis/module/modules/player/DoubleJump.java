@@ -9,8 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
@@ -57,8 +55,7 @@ public class DoubleJump extends Module {
         Player player = event.getPlayer();
 
         // Perform checks
-        if (player
-                .hasPermission(new Permission(Permissions.DOUBLE_JUMP_BYPASS.getPermission(), PermissionDefault.FALSE)))
+        if (player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission()))
             return;
         else if (inDisabledWorld(player.getLocation()))
             return;
