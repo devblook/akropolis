@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Firework;
@@ -107,7 +109,11 @@ public class PlayerListener extends Module {
         // Heal the player
         if (spawnHeal) {
             player.setFoodLevel(20);
-            player.setHealth(player.getMaxHealth());
+
+            AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (maxHealth == null) return;
+
+            player.setHealth(maxHealth.getBaseValue());
         }
 
         // Extinguish

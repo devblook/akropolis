@@ -1,9 +1,10 @@
 package team.devblook.akropolis.module.modules.chat;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
@@ -32,21 +33,21 @@ public class AntiSwear extends Module {
     }
 
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onPlayerChat(AsyncChatEvent event) {
         Player player = event.getPlayer();
 
         if (player.hasPermission(Permissions.ANTI_SWEAR_BYPASS.getPermission()))
             return;
 
-        String message = event.getMessage();
+        Component message = event.originalMessage();
 
         for (String word : blockedWords) {
-            if (message.toLowerCase().contains(word.toLowerCase())) {
+            if (TextUtil.raw(message).contains(word.toLowerCase())) {
                 event.setCancelled(true);
                 player.sendMessage(Messages.ANTI_SWEAR_WORD_BLOCKED.toComponent());
 
                 Bukkit.getOnlinePlayers().stream()
-                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", TextUtil.parse(message))));
+                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Messages.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", message)));
 
                 return;
             }
