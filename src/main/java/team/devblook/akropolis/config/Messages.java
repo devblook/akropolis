@@ -4,10 +4,16 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import team.devblook.akropolis.util.TextUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Messages {
-    PREFIX("GENERAL.PREFIX"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
+    PREFIX("GENERAL.PREFIX"), USAGE("GENERAL.USAGE"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
+    CONSOLE_NOT_ALLOWED("GENERAL.CONSOLE_NOT_ALLOWED"),
     CUSTOM_COMMAND_NO_PERMISSION("GENERAL.CUSTOM_COMMAND_NO_PERMISSION"), INVALID_PLAYER("GENERAL.INVALID_PLAYER"),
     CONFIG_RELOAD("GENERAL.CONFIG_RELOAD"), COOLDOWN_ACTIVE("GENERAL.COOLDOWN_ACTIVE"),
+
+    HELP_PLUGIN("HELP.PLUGIN"), HELP_HOLOGRAM("HELP.HOLOGRAM"),
 
     GAMEMODE_CHANGE("GAMEMODE.GAMEMODE_CHANGE"), GAMEMODE_CHANGE_OTHER("GAMEMODE.GAMEMODE_CHANGE_OTHER"),
     GAMEMODE_INVALID("GAMEMODE.GAMEMODE_INVALID"),
@@ -26,7 +32,7 @@ public enum Messages {
     ANTI_SWEAR_WORD_BLOCKED("CHAT.ANTI_SWEAR_WORD_BLOCKED"), ANTI_SWEAR_ADMIN_NOTIFY("CHAT.ANTI_SWEAR_ADMIN_NOTIFY"),
     COMMAND_BLOCKED("CHAT.COMMAND_BLOCKED"),
 
-    SCOREBOARD_TOGGLE("SCOREBOARD.TOGGLE"),
+    SCOREBOARD_ENABLE("SCOREBOARD.ENABLE"), SCOREBOARD_DISABLE("SCOREBOARD.DISABLE"),
 
     DOUBLE_JUMP_COOLDOWN("DOUBLE_JUMP.COOLDOWN_ACTIVE"),
 
@@ -62,8 +68,26 @@ public enum Messages {
             return Component.text("Akropolis: message not found (" + this.path + ")");
         }
 
-        String prefix = config.getString("Messages." + PREFIX.getPath());
-        return TextUtil.parseAndReplace(message, "prefix", TextUtil.parse(prefix != null && !prefix.isEmpty() ? prefix : ""));
+        String rawPrefix = config.getString("Messages." + PREFIX.getPath());
+        Component prefix = TextUtil.parse(rawPrefix != null && !rawPrefix.isEmpty() ? rawPrefix : "");
+
+        return TextUtil.parseAndReplace(message, "prefix", prefix);
+    }
+
+    public List<Component> toComponentList() {
+        List<String> message = config.getStringList("Messages." + this.path);
+        List<Component> componentMessage = new ArrayList<>();
+
+        if (message.isEmpty()) {
+            componentMessage.add(Component.text("Akropolis: message not found (" + this.path + ")"));
+            return componentMessage;
+        }
+
+        String rawPrefix = config.getString("Messages." + PREFIX.getPath());
+        Component prefix = TextUtil.parse(rawPrefix != null && !rawPrefix.isEmpty() ? rawPrefix : "");
+
+        message.forEach(m -> componentMessage.add(TextUtil.parseAndReplace(m, "prefix", prefix)));
+        return componentMessage;
     }
 
     public String getPath() {

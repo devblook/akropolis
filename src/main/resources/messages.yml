@@ -25,11 +25,39 @@
 Messages:
   GENERAL:
     PREFIX: "<gold><b>Akropolis <reset><dark_gray>||"
+    USAGE: "<dark_gray>» <gray>Usage<dark_gray>: <gold>/<command>"
     NO_PERMISSION: "<prefix> <red>You are forbidden to use this."
+    CONSOLE_NOT_ALLOWED: "<prefix> <red>Console cannot do that."
     CUSTOM_COMMAND_NO_PERMISSION: "<red>You are not allowed to execute this command."
     INVALID_PLAYER: "<prefix> <yellow><player> <red>is not online!"
     CONFIG_RELOAD: "<prefix> <gray>All configuration files has been reloaded in <green><time>ms<gray>."
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>before doing this again!"
+
+  HELP:
+    PLUGIN:
+      - "<prefix> <gray>The following commands are available<dark_gray>:"
+      - "<dark_gray>/<gold>akropolis info <dark_gray>- <gray>Displays information about the current config"
+      - "<dark_gray>/<gold>akropolis scoreboard <dark_gray>- <gray>Toggle the scoreboard"
+      - "<dark_gray>/<gold>vanish <dark_gray>- <gray>Toggle vanish mode"
+      - "<dark_gray>/<gold>fly <dark_gray>- <gray>Toggle flight mode"
+      - "<dark_gray>/<gold>setlobby <dark_gray>- <gray>Set the spawn location"
+      - "<dark_gray>/<gold>lobby <dark_gray>- <gray>Teleport to the spawn location"
+      - "<dark_gray>/<gold>gamemode <gamemode> <dark_gray>- <gray>Set your gamemode"
+      - "<dark_gray>/<gold>gmc <dark_gray>- <gray>Go into creative mode"
+      - "<dark_gray>/<gold>gms <dark_gray>- <gray>Go into survival mode"
+      - "<dark_gray>/<gold>gma <dark_gray>- <gray>Go into adventure mode"
+      - "<dark_gray>/<gold>gmsp <dark_gray>- <gray>Go into spectator mode"
+      - "<dark_gray>/<gold>clearchat <dark_gray>- <gray>Clear global chat"
+      - "<dark_gray>/<gold>lockchat <dark_gray>- <gray>Lock/unlock global chat"
+    HOLOGRAM:
+      - "<prefix> <gray>The following hologram commands are available<dark_gray>:"
+      - "<dark_gray>/<gold>akropolis hologram list <dark_gray>- <gray>List all created holograms"
+      - "<dark_gray>/<gold>akropolis hologram create <id> <dark_gray>- <gray>Create a new hologram"
+      - "<dark_gray>/<gold>akropolis hologram remove <id> <dark_gray>- <gray>Delete an existing hologram"
+      - "<dark_gray>/<gold>akropolis hologram move <id> <dark_gray>- <gray>Move the location of a hologram"
+      - "<dark_gray>/<gold>akropolis hologram setline <id> <line> <text> <dark_gray>- <gray>Set the line of a specific hologram"
+      - "<dark_gray>/<gold>akropolis hologram addline <id> <text> <dark_gray>- <gray>Add a new line to a hologram"
+      - "<dark_gray>/<gold>akropolis hologram removeline <id> <line> <dark_gray>- <gray>Remove a line from a hologram"
 
   GAMEMODE:
     GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>."
@@ -67,7 +95,8 @@ Messages:
     COMMAND_BLOCKED: "<prefix> <red>This command has been restricted."
 
   SCOREBOARD:
-    TOGGLE: "<prefix> <gray>You have <yellow><value> <gray>the scoreboard."
+    ENABLE: "<prefix> <gray>You have <yellow>enabled <gray>the scoreboard."
+    DISABLE: "<prefix> <gray>You have <yellow>disabled <gray>the scoreboard."
 
   DOUBLE_JUMP:
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to double jump again!"

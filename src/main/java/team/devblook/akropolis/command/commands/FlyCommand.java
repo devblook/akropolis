@@ -33,7 +33,7 @@ public class FlyCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("Console cannot clear inventory");
+                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
 

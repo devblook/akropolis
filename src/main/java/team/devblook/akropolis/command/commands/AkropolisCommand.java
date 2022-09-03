@@ -1,9 +1,9 @@
 package team.devblook.akropolis.command.commands;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.command.CommandManager;
@@ -35,41 +35,17 @@ public class AkropolisCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
-        PluginDescriptionFile pdfFile = plugin.getDescription();
-
         /*
          * Command: help Description: displays help message
          */
         if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 
             if (!sender.hasPermission(Permissions.COMMAND_AKROPOLIS_HELP.getPermission())) {
-                sender.sendMessage(TextUtil.parse(
-                        "<dark_gray><b> <gray>Server is running <light_purple>Akropolis <yellow>v" + pdfFile.getVersion() + " <gray>By <gold>ItsLewizzz"));
+                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
                 return;
             }
 
-            sender.sendMessage("");
-            sender.sendMessage(TextUtil.parse("<light_purple><b>Akropolis " + "<white>v" + plugin.getDescription().getVersion()));
-            sender.sendMessage(TextUtil.parse("<gray>Author: <white>ItsLewizzz"));
-            sender.sendMessage("");
-            sender.sendMessage(
-                    TextUtil.parse(" <light_purple>/akropolis info <dark_gray>- <gray><i>Displays information about the current config"));
-            sender.sendMessage(TextUtil.parse(" <light_purple>/akropolis scoreboard <dark_gray>- <gray><i>Toggle the scoreboard"));
-            sender.sendMessage(TextUtil.parse(" <light_purple>/akropolis open <menu> <dark_gray>- <gray><i>Open a custom menu"));
-            sender.sendMessage(TextUtil.parse(" <light_purple>/akropolis hologram <dark_gray>- <gray><i>View the hologram help"));
-            sender.sendMessage("");
-            sender.sendMessage(TextUtil.parse("  <light_purple>/vanish <dark_gray>- <gray><i>Toggle vanish mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/fly <dark_gray>- <gray><i>Toggle flight mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/setlobby <dark_gray>- <gray><i>Set the spawn location"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/lobby <dark_gray>- <gray><i>Teleport to the spawn location"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/gamemode <gamemode> <dark_gray>- <gray><i>Set your gamemode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/gmc <dark_gray>- <gray><i>Go into creative mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/gms <dark_gray>- <gray><i>Go into survival mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/gma <dark_gray>- <gray><i>Go into adventure mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/gmsp <dark_gray>- <gray><i>Go into spectator mode"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/clearchat <dark_gray>- <gray><i>Clear global chat"));
-            sender.sendMessage(TextUtil.parse("  <light_purple>/lockchat <dark_gray>- <gray><i>Lock/unlock global chat"));
-            sender.sendMessage("");
+            Messages.HELP_PLUGIN.toComponentList().forEach(sender::sendMessage);
             return;
         }
 
@@ -86,10 +62,6 @@ public class AkropolisCommand extends InjectableCommand {
             long start = System.currentTimeMillis();
             plugin.reload();
             sender.sendMessage(TextUtil.replace(Messages.CONFIG_RELOAD.toComponent(), "time", TextUtil.parse(String.valueOf(System.currentTimeMillis() - start))));
-            int inventories = plugin.getInventoryManager().getInventories().size();
-            if (inventories > 0) {
-                sender.sendMessage(TextUtil.parse("<dark_gray>- <gray>Loaded <green>" + inventories + "<gray> custom menus."));
-            }
         }
 
         /*
@@ -98,7 +70,7 @@ public class AkropolisCommand extends InjectableCommand {
         else if (args[0].equalsIgnoreCase("scoreboard")) {
 
             if (!(sender instanceof Player)) {
-                sender.sendMessage("Console cannot toggle the scoreboard");
+                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
 
@@ -118,10 +90,10 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (scoreboardManager.hasScore(player.getUniqueId())) {
                 scoreboardManager.removeScoreboard(player);
-                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "value", TextUtil.parse("disabled")));
+                player.sendMessage(Messages.SCOREBOARD_DISABLE.toComponent());
             } else {
                 scoreboardManager.createScoreboard(player);
-                player.sendMessage(TextUtil.replace(Messages.SCOREBOARD_TOGGLE.toComponent(), "value", TextUtil.parse("enabled")));
+                player.sendMessage(Messages.SCOREBOARD_ENABLE.toComponent());
             }
         }
 
@@ -136,43 +108,35 @@ public class AkropolisCommand extends InjectableCommand {
                 return;
             }
 
-            sender.sendMessage("");
-            sender.sendMessage(TextUtil.parse("<light_purple><b>Plugin Information"));
-            sender.sendMessage("");
+            sender.sendMessage(TextUtil.parse("<gold><b>Akropolis <reset><dark_gray>|| <gray>Plugin information<dark_gray>:"));
 
             Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
             sender.sendMessage(
-                    TextUtil.parse("<gray>Spawn set <dark_gray>- " + (location != null ? "<green>yes" : "<red>no <gray><i>(/setlobby)")));
-
-            sender.sendMessage("");
+                    TextUtil.parse("<dark_gray>» <gray>Spawn set <dark_gray>- " + (location != null ? "<green>yes" : "<red>no <gray><i>(/setlobby)")));
 
             ModuleManager moduleManager = plugin.getModuleManager();
-            sender.sendMessage(TextUtil.parse("<gray>Disabled Worlds (" + moduleManager.getDisabledWorlds().size()
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>Disabled Worlds (" + moduleManager.getDisabledWorlds().size()
                     + ") <dark_gray>- <green>" + (String.join(", ", moduleManager.getDisabledWorlds()))));
 
             InventoryManager inventoryManager = plugin.getInventoryManager();
-            sender.sendMessage(TextUtil.parse("<gray>Custom menus (" + inventoryManager.getInventories().size() + ")"
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>Custom menus (" + inventoryManager.getInventories().size() + ")"
                     + " <dark_gray>- <green>" + (String.join(", ", inventoryManager.getInventories().keySet()))));
 
             HotbarManager hotbarManager = ((HotbarManager) plugin.getModuleManager()
                     .getModule(ModuleType.HOTBAR_ITEMS));
             sender.sendMessage(TextUtil
-                    .parse("<gray>Hotbar items (" + hotbarManager.getHotbarItems().size() + ")" + " <dark_gray>- <green>" + (hotbarManager
+                    .parse("<dark_gray>» <gray>Hotbar items (" + hotbarManager.getHotbarItems().size() + ")" + " <dark_gray>- <green>" + (hotbarManager
                             .getHotbarItems().stream().map(HotbarItem::getKeyValue).collect(Collectors.joining(", ")))));
 
             CommandManager commandManager = plugin.getCommandManager();
-            sender.sendMessage(TextUtil.parse("<gray>Custom commands (" + commandManager.getCustomCommands().size() + ")"
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>Custom commands (" + commandManager.getCustomCommands().size() + ")"
                     + " <dark_gray>- <green>" + (commandManager.getCustomCommands().stream()
                     .map(command -> command.getAliases().get(0)).collect(Collectors.joining(", ")))));
 
-            sender.sendMessage("");
-
-            sender.sendMessage(TextUtil.parse("<gray>PlaceholderAPI Hook: "
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>PlaceholderAPI hook<dark_gray>: "
                     + (plugin.getHookManager().isHookEnabled("PLACEHOLDER_API") ? "<green>yes" : "<red>no")));
-            sender.sendMessage(TextUtil.parse("<gray>HeadDatabase Hook: "
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>HeadDatabase hook<dark_gray>: "
                     + (plugin.getHookManager().isHookEnabled("HEAD_DATABASE") ? "<green>yes" : "<red>no")));
-
-            sender.sendMessage("");
         }
 
         /*
@@ -180,7 +144,7 @@ public class AkropolisCommand extends InjectableCommand {
          */
         else if (args[0].equalsIgnoreCase("open")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("Console cannot open menus");
+                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
 
@@ -190,7 +154,7 @@ public class AkropolisCommand extends InjectableCommand {
             }
 
             if (args.length == 1) {
-                sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis open <menu>"));
+                sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis open <menu>")));
                 return;
             }
 
@@ -208,7 +172,7 @@ public class AkropolisCommand extends InjectableCommand {
         if (args[0].equalsIgnoreCase("hologram") || args[0].equalsIgnoreCase("holo")) {
 
             if (!(sender instanceof Player)) {
-                sender.sendMessage("You cannot do this command.");
+                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
 
@@ -218,25 +182,7 @@ public class AkropolisCommand extends InjectableCommand {
             }
 
             if (args.length == 1) {
-                sender.sendMessage("");
-                sender.sendMessage(TextUtil.parse("<light_purple><b>Akropolis Holograms"));
-                sender.sendMessage("");
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram list"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>List all created holograms"));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram create <id>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Create a new hologram"));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram remove <id>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Delete an existing hologram"));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram move <id>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Move the location of a hologram"));
-                sender.sendMessage(TextUtil.parse(""));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram setline <id> <line> <text>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Set the line of a specific hologram"));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram addline <id> <text>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Add a new line to a hologram"));
-                sender.sendMessage(TextUtil.parse(" <light_purple>/" + label + " hologram removeline <id> <line>"));
-                sender.sendMessage(TextUtil.parse("   <gray><i>Remove a line from a hologram"));
-                sender.sendMessage("");
+                Messages.HELP_HOLOGRAM.toComponentList().forEach(sender::sendMessage);
                 return;
             }
 
@@ -259,7 +205,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("create")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram create <id>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram create <id>")));
                     return;
                 }
 
@@ -280,7 +226,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("delete")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram remove <id>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram remove <id>")));
                     return;
                 }
 
@@ -297,7 +243,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("setline")) {
                 if (args.length < 5) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram setline <id> <line> <text>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram setline <id> <line> <text>")));
                     return;
                 }
 
@@ -324,7 +270,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("addline")) {
                 if (args.length <= 3) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram addline <id> <text>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram addline <id> <text>")));
                     return;
                 }
 
@@ -343,7 +289,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("removeline")) {
                 if (args.length != 4) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram removeline <id> <line>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram removeline <id> <line>")));
                     return;
                 }
 
@@ -373,7 +319,7 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("move")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.parse("<red>Usage: /akropolis hologram move <id>"));
+                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram move <id>")));
                     return;
                 }
 
