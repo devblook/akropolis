@@ -16,7 +16,7 @@ public enum Permissions {
     LOCK_CHAT_BYPASS("bypass.lockchat"), ANTI_WDL_BYPASS("bypass.antiwdl"), DOUBLE_JUMP_BYPASS("bypass.doublejump"),
 
     // Notification permissions
-    ANTI_WDL_NOTIFY("alert.antiwdl"), ANTI_SWEAR_NOTIFY("alert.antiswear"), UPDATE_NOTIFICATION("alert.updates"),
+    ANTI_WDL_NOTIFY("alert.antiwdl"), ANTI_SWEAR_NOTIFY("alert.antiswear"),
 
     // Event permissions
     EVENT_ITEM_DROP("item.drop"), EVENT_ITEM_PICKUP("item.pickup"), EVENT_PLAYER_PVP("player.pvp"),
