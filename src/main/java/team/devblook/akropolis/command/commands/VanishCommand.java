@@ -26,12 +26,11 @@ public class VanishCommand extends InjectableCommand {
             return;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Console cannot set the spawn location.");
             return;
         }
 
-        Player player = (Player) sender;
         PlayerVanish vanishModule = ((PlayerVanish) plugin.getModuleManager().getModule(ModuleType.VANISH));
         vanishModule.toggleVanish(player);
 

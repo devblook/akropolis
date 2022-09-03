@@ -69,7 +69,7 @@ public class AkropolisCommand extends InjectableCommand {
          */
         else if (args[0].equalsIgnoreCase("scoreboard")) {
 
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
@@ -84,7 +84,6 @@ public class AkropolisCommand extends InjectableCommand {
                 return;
             }
 
-            Player player = (Player) sender;
             ScoreboardManager scoreboardManager = ((ScoreboardManager) plugin.getModuleManager()
                     .getModule(ModuleType.SCOREBOARD));
 
@@ -171,7 +170,7 @@ public class AkropolisCommand extends InjectableCommand {
          */
         if (args[0].equalsIgnoreCase("hologram") || args[0].equalsIgnoreCase("holo")) {
 
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
@@ -185,8 +184,6 @@ public class AkropolisCommand extends InjectableCommand {
                 Messages.HELP_HOLOGRAM.toComponentList().forEach(sender::sendMessage);
                 return;
             }
-
-            Player player = (Player) sender;
 
             if (args[1].equalsIgnoreCase("list")) {
 

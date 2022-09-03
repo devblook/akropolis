@@ -83,41 +83,19 @@ public class CommandManager {
 
     private void registerCommand(String cmd, List<String> aliases) {
         switch (cmd.toUpperCase()) {
-            case "GAMEMODE":
-                registerCommand(new GamemodeCommand(plugin, aliases));
-                break;
-            case "GMS":
-                registerCommand(new SurvivalCommand(plugin, aliases));
-                break;
-            case "GMC":
-                registerCommand(new CreativeCommand(plugin, aliases));
-                break;
-            case "GMA":
-                registerCommand(new AdventureCommand(plugin, aliases));
-                break;
-            case "GMSP":
-                registerCommand(new SpectatorCommand(plugin, aliases));
-                break;
-            case "CLEARCHAT":
-                registerCommand(new ClearchatCommand(plugin, aliases));
-                break;
-            case "FLY":
-                registerCommand(new FlyCommand(plugin, aliases));
-                break;
-            case "LOCKCHAT":
-                registerCommand(new LockchatCommand(plugin, aliases));
-                break;
-            case "SETLOBBY":
-                registerCommand(new SetLobbyCommand(plugin, aliases));
-                break;
-            case "LOBBY":
-                registerCommand(new LobbyCommand(plugin, aliases));
-                break;
-            case "VANISH":
-                registerCommand(new VanishCommand(plugin, aliases));
-                break;
-            default:
-                break;
+            case "GAMEMODE" -> registerCommand(new GamemodeCommand(plugin, aliases));
+            case "GMS" -> registerCommand(new SurvivalCommand(plugin, aliases));
+            case "GMC" -> registerCommand(new CreativeCommand(plugin, aliases));
+            case "GMA" -> registerCommand(new AdventureCommand(plugin, aliases));
+            case "GMSP" -> registerCommand(new SpectatorCommand(plugin, aliases));
+            case "CLEARCHAT" -> registerCommand(new ClearchatCommand(plugin, aliases));
+            case "FLY" -> registerCommand(new FlyCommand(plugin, aliases));
+            case "LOCKCHAT" -> registerCommand(new LockchatCommand(plugin, aliases));
+            case "SETLOBBY" -> registerCommand(new SetLobbyCommand(plugin, aliases));
+            case "LOBBY" -> registerCommand(new LobbyCommand(plugin, aliases));
+            case "VANISH" -> registerCommand(new VanishCommand(plugin, aliases));
+            default -> {
+            }
         }
     }
 

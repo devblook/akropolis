@@ -27,12 +27,10 @@ public class SetLobbyCommand extends InjectableCommand {
             return;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Console cannot set the spawn location.");
             return;
         }
-
-        Player player = (Player) sender;
 
         if (plugin.getModuleManager().getDisabledWorlds().contains(player.getWorld().getName())) {
             sender.sendMessage(TextUtil.parse("<red>You cannot set the lobby location in a disabled world."));

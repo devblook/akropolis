@@ -14,9 +14,8 @@ public class InventoryListener implements Listener {
         if (event.getView().getTopInventory().getHolder() instanceof InventoryBuilder) {
             event.setCancelled(true);
 
-            if (event.getWhoClicked() instanceof Player) {
+            if (event.getWhoClicked() instanceof Player player) {
 
-                Player player = (Player) event.getWhoClicked();
                 ItemStack itemStack = event.getCurrentItem();
 
                 if (itemStack == null || itemStack.getType() == Material.AIR)

@@ -22,12 +22,10 @@ public class SurvivalCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
                 return;
             }
-
-            Player player = (Player) sender;
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
                 sender.sendMessage(Messages.NO_PERMISSION.toComponent());

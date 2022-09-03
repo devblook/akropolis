@@ -232,8 +232,7 @@ public class WorldProtect extends Module {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
 
-        if (entity instanceof ItemFrame && damager instanceof Player) {
-            Player player = (Player) damager;
+        if (entity instanceof ItemFrame && damager instanceof Player player) {
 
             if (player.hasPermission(Permissions.EVENT_BLOCK_INTERACT.getPermission()))
                 return;
@@ -281,10 +280,8 @@ public class WorldProtect extends Module {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player))
+        if (!(event.getEntity() instanceof Player player))
             return;
-
-        Player player = (Player) event.getEntity();
 
         if (inDisabledWorld(player.getLocation()))
             return;
@@ -327,10 +324,8 @@ public class WorldProtect extends Module {
         if (!hungerLoss)
             return;
 
-        if (!(event.getEntity() instanceof Player))
+        if (!(event.getEntity() instanceof Player player))
             return;
-
-        Player player = (Player) event.getEntity();
 
         if (inDisabledWorld(player.getLocation()))
             return;
@@ -430,10 +425,8 @@ public class WorldProtect extends Module {
         if (!playerPvP)
             return;
 
-        if (!(event.getEntity() instanceof Player))
+        if (!(event.getEntity() instanceof Player player))
             return;
-
-        Player player = (Player) event.getEntity();
 
         if (inDisabledWorld(player.getLocation()))
             return;
