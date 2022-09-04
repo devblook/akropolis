@@ -44,7 +44,6 @@ permissions:
   akropolis.alert.*:
     description: Gives access to all alert permissions
     children:
-      akropolis.alert.updates: true
       akropolis.alert.antiswear: true
       akropolis.alert.antiwdl: true
   akropolis.item.*:
