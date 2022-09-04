@@ -3,9 +3,9 @@ plugins {
     id("com.github.johnrengelman.shadow") version ("7.1.2")
 }
 
-group = "fun.lewisdev"
+group = "team.devblook"
 version = property("projectVersion") as String
-description = "An all-in-one hub management system."
+description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz."
 
 val libsPackage = property("libsPackage") as String
 
@@ -26,9 +26,8 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("de.tr7zw:item-nbt-api:2.11.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit-lite:1.8")
-    implementation("com.github.cryptomorin:XSeries:8.8.0")
+    implementation("com.github.cryptomorin:XSeries:9.0.0")
 
     implementation("com.github.MegavexNetwork.scoreboard-library:implementation:-SNAPSHOT")
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:-SNAPSHOT")
@@ -36,7 +35,7 @@ dependencies {
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
@@ -56,15 +55,13 @@ tasks {
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("DeluxeHub-${project.version}.jar")
+        archiveFileName.set("Akropolis-${project.version}.jar")
 
         minimize {
             exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
         }
 
         relocate("org.bstats", "${libsPackage}.metrics")
-        relocate("cl.bgmp", "${libsPackage}.commandframework")
-        relocate("de.tr7zw.changeme.nbtapi", "${libsPackage}.nbtapi")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }

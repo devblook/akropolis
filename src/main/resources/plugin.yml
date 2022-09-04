@@ -1,65 +1,64 @@
-name: DeluxeHub
-author: ItsLewizzz
+name: Akropolis
+authors: [ ZetaStormy, ItsLewizzz ]
 version: ${version}
-description: An all-in-one hub management system.
-website: https://www.spigotmc.org/resources/deluxehub.49425/
+description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz.
 api-version: 1.13
-main: fun.lewisdev.deluxehub.DeluxeHubPlugin
+main: team.devblook.akropolis.AkropolisPlugin
 loadbefore: [ Essentials ]
 softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core ]
 
 permissions:
-  deluxehub.*:
-    description: Gives access to all DeluxeHub permissions
+  akropolis.*:
+    description: Gives access to all Akropolis permissions
     children:
-      deluxehub.command.*: true
-      deluxehub.bypass.*: true
-      deluxehub.alert.*: true
-      deluxehub.item.*: true
-      deluxehub.player.*: true
-      deluxehub.block.*: true
-  deluxehub.command.*:
+      akropolis.command.*: true
+      akropolis.bypass.*: true
+      akropolis.alert.*: true
+      akropolis.item.*: true
+      akropolis.player.*: true
+      akropolis.block.*: true
+  akropolis.command.*:
     description: Gives access to all command permissions
     children:
-      deluxehub.command.help: true
-      deluxehub.command.reload: true
-      deluxehub.command.scoreboard: true
-      deluxehub.command.openmenu: true
-      deluxehub.command.holograms: true
-      deluxehub.command.gamemode: true
-      deluxehub.command.gamemode.others: true
-      deluxehub.command.clearchat: true
-      deluxehub.command.lockchat: true
-      deluxehub.command.fly: true
-      deluxehub.command.fly.others: true
-      deluxehub.command.setlobby: true
-      deluxehub.command.vanish: true
-  deluxehub.bypass.*:
+      akropolis.command.help: true
+      akropolis.command.reload: true
+      akropolis.command.scoreboard: true
+      akropolis.command.openmenu: true
+      akropolis.command.holograms: true
+      akropolis.command.gamemode: true
+      akropolis.command.gamemode.others: true
+      akropolis.command.clearchat: true
+      akropolis.command.lockchat: true
+      akropolis.command.fly: true
+      akropolis.command.fly.others: true
+      akropolis.command.setlobby: true
+      akropolis.command.vanish: true
+  akropolis.bypass.*:
     description: Gives access to all bypass permissions
     children:
-      deluxehub.bypass.antiswear: true
-      deluxehub.bypass.commands: true
-      deluxehub.bypass.lockchat: true
-      deluxehub.bypass.antiwdl: true
-      deluxehub.bypass.doublejump: false
-  deluxehub.alert.*:
+      akropolis.bypass.antiswear: true
+      akropolis.bypass.commands: true
+      akropolis.bypass.lockchat: true
+      akropolis.bypass.antiwdl: true
+      akropolis.bypass.doublejump: false
+  akropolis.alert.*:
     description: Gives access to all alert permissions
     children:
-      deluxehub.alert.updates: true
-      deluxehub.alert.antiswear: true
-      deluxehub.alert.antiwdl: true
-  deluxehub.item.*:
+      akropolis.alert.updates: true
+      akropolis.alert.antiswear: true
+      akropolis.alert.antiwdl: true
+  akropolis.item.*:
     description: Gives access to all item based permissions
     children:
-      deluxehub.item.drop: true
-      deluxehub.item.pickup: true
-  deluxehub.player.*:
+      akropolis.item.drop: true
+      akropolis.item.pickup: true
+  akropolis.player.*:
     description: Gives access to all player based permissions
     children:
-      deluxehub.player.pvp: true
-  deluxehub.block.*:
+      akropolis.player.pvp: true
+  akropolis.block.*:
     description: Gives access to all block based permissions
     children:
-      deluxehub.block.break: true
-      deluxehub.block.place: true
-      deluxehub.block.interact: true
+      akropolis.block.break: true
+      akropolis.block.place: true
+      akropolis.block.interact: true

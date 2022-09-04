@@ -1,10 +1,20 @@
-# Server Selector GUI
-# The ID of this inventory is 'serverselector' which you can open using the [MENU] action (e.g. "[MENU] serverselector").
-# You can create more custom GUIs, just copy this entire file and paste a new one in the menus' directory. The name of the file is the menu ID.
+#     _    _                          _ _
+#    / \  | | ___ __ ___  _ __   ___ | (_)___
+#   / _ \ | |/ / '__/ _ \| '_ \ / _ \| | / __|
+#  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
+# /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
+#                        |_|
+#--------
+# SERVER SELECTOR GUI:
 #
-# PLAYER HEADS
+#   The ID of this inventory is 'serverselector' which you can open using the [MENU] action (e.g. "[MENU] serverselector").
+#   You can create more custom GUIs, just copy this entire file and paste a new one in the menus' directory.
+#   The name of the file is the menu ID.
+#--------
+# PLAYER HEADS:
+#
 #   You can have player heads, using player names, base64 or HeadDatabase IDs.
-#   Examples
+#   Examples:
 #     Username (must have logged into the server once)
 #       material: PLAYER_HEAD
 #       username: <name>
@@ -16,8 +26,9 @@
 #     HeadDatabase
 #       material: PLAYER_HEAD
 #       hdb: <hdb id>
+#--------
+# ITEM FLAGS:
 #
-# ITEM FLAGS
 #   You can add flags to the item (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html)
 #   Example:
 #     item_flags:
@@ -27,9 +38,31 @@
 #       - HIDE_PLACED_ON
 #       - HIDE_POTION_EFFECTS
 #       - HIDE_UNBREAKABLE
+#--------
+# ITEM ACTIONS:
 #
-# ITEM ACTIONS
-#   All item actions can be found here https://wiki.lewisdev.fun/free-resources/deluxehub/action-types
+#   [MESSAGE] - Send a message to the player
+#   [BROADCAST] - Broadcast a message to everyone
+#   [TITLE] e.g. MainTitle;Subtitle;FadeIn;Stay:FadeOut - Send the player a title message
+#   [ACTIONBAR] Send an actionbar message
+#   [SOUND] - Send the player a sound
+#   [COMMAND] - Execute a command as the player
+#   [CONSOLE] - Execute a command as console
+#   [GAMEMODE] - Change a players' gamemode
+#   [SERVER] - Send a player to a server
+#   [EFFECT] e.g. EFFECT;LEVEL - Give a potion effect
+#   [MENU] - Open a menu from (plugins/Akropolis/menus)
+#   [CLOSE] - Close an open inventory gui
+#--------
+# MESSAGE FORMATTING:
+#
+#   The plugin uses MiniMessage to format the chat,
+#   so you can use tags to color messages, like this: <red> Red colored message!
+#   You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+#
+#   More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+#   There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
+#
 
 # Slots of the GUI
 slots: 27
@@ -53,13 +86,12 @@ items:
     slot: 11
     amount: 1
     glow: true
-    display_name: "<yellow>Factions"
+    display_name: "<yellow><b>Factions"
     lore:
-      - "<gray>Join now!"
-      - "<green>PlaceholderAPI support!"
+      - "<dark_gray>» <gray>Join now to our coolest server!"
     actions:
       - "[CLOSE]"
-      - "[MESSAGE] <gray>Sending you to: <yellow>Factions"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions"
       - "[SERVER] factions"
       # For multi-world servers using Multiverse-Core, use the action:
       # - '[CONSOLE] mvtp <player> world'
@@ -68,11 +100,10 @@ items:
     slot: 15
     amount: 1
     glow: false
-    display_name: "<green>Survival"
+    display_name: "<green><b>Survival"
     lore:
-      - "<gray>Join now!"
-      - "<green>Multi lore support too!"
+      - "<dark_gray>» <gray>Never gonna give you up!"
     actions:
       - "[CLOSE]"
-      - "[MESSAGE] <gray>Sending you to: <yellow>Survival"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival"
       - "[SERVER] survival"
