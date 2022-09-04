@@ -38,6 +38,7 @@ Messages:
       - "<prefix> <gray>The following commands are available<dark_gray>:"
       - "<dark_gray>/<gold>akropolis info <dark_gray>- <gray>Displays information about the current config"
       - "<dark_gray>/<gold>akropolis scoreboard <dark_gray>- <gray>Toggle the scoreboard"
+      - "<dark_gray>/<gold>akropolis holo <dark_gray>- <gray>Displays hologram commands"
       - "<dark_gray>/<gold>vanish <dark_gray>- <gray>Toggle vanish mode"
       - "<dark_gray>/<gold>fly <dark_gray>- <gray>Toggle flight mode"
       - "<dark_gray>/<gold>setlobby <dark_gray>- <gray>Set the spawn location"
@@ -82,7 +83,7 @@ Messages:
     SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point."
 
   CHAT:
-    CLEARCHAT: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white!"
+    CLEARCHAT: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white>!"
     CLEARCHAT_PLAYER: "prefix> <red>Your chat has been cleared by an administrator."
 
     LOCKED: "<prefix> <red>Chat is currently locked."
