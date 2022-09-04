@@ -25,18 +25,18 @@
 #--------
 # ACTIONS:
 #
-#   [MESSAGE] - Send a message to the player
-#   [BROADCAST] - Broadcast a message to everyone
-#   [TITLE] e.g. MainTitle;Subtitle;FadeIn;Stay:FadeOut - Send the player a title message
-#   [ACTIONBAR] Send an actionbar message
-#   [SOUND] - Send the player a sound
-#   [COMMAND] - Execute a command as the player
-#   [CONSOLE] - Execute a command as console
-#   [GAMEMODE] - Change a players' gamemode
-#   [SERVER] - Send a player to a server
-#   [EFFECT] e.g. EFFECT;LEVEL - Give a potion effect
-#   [MENU] - Open a menu from (plugins/Akropolis/menus)
-#   [CLOSE] - Close an open inventory gui
+#   [MESSAGE] <message> - Send a message to the player
+#   [BROADCAST] <message> - Broadcast a message to everyone
+#   [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
+#   [ACTIONBAR] <message> - Send an action bar message
+#   [SOUND] <sound> - Send the player a sound
+#   [COMMAND] <command> - Execute a command as the player
+#   [CONSOLE] <command> - Execute a command as console
+#   [GAMEMODE] <gamemode> - Change a players' gamemode
+#   [SERVER] <server> - Send a player to a server
+#   [EFFECT] <effect;level>- Give a potion effect
+#   [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+#   [CLOSE] - Close an open inventory
 #--------
 # MESSAGE FORMATTING:
 #

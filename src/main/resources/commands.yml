@@ -11,6 +11,21 @@
 #   your own custom commands. ATTENTION: You will need to restart your server in order to apply
 #   changes made to this file!
 #--------
+# ACTIONS:
+#
+#   [MESSAGE] <message> - Send a message to the player
+#   [BROADCAST] <message> - Broadcast a message to everyone
+#   [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
+#   [ACTIONBAR] <message> - Send an action bar message
+#   [SOUND] <sound> - Send the player a sound
+#   [COMMAND] <command> - Execute a command as the player
+#   [CONSOLE] <command> - Execute a command as console
+#   [GAMEMODE] <gamemode> - Change a players' gamemode
+#   [SERVER] <server> - Send a player to a server
+#   [EFFECT] <effect;level>- Give a potion effect
+#   [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+#   [CLOSE] - Close an open inventory
+#--------
 # MESSAGE FORMATTING:
 #
 #   The plugin uses MiniMessage to format the chat,
