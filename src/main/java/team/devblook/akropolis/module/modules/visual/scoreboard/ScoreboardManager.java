@@ -37,7 +37,7 @@ import java.util.*;
 
 public class ScoreboardManager extends Module {
     private int scoreTask;
-    private Map<UUID, ScoreHelper> players;
+    private Map<UUID, ScoreboardHelper> players;
     private long joinDelay;
     private long worldDelay;
     private String title;
@@ -59,7 +59,7 @@ public class ScoreboardManager extends Module {
         worldDelay = config.getLong("scoreboard.display_delay.world_change", 0L);
 
         if (config.getBoolean("scoreboard.refresh.enabled")) {
-            scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreUpdateTask(this), 0L,
+            scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreboardUpdateTask(this), 0L,
                     config.getLong("scoreboard.refresh.rate"));
         }
 
@@ -77,18 +77,18 @@ public class ScoreboardManager extends Module {
         players.put(player.getUniqueId(), updateScoreboard(player.getUniqueId()));
     }
 
-    public ScoreHelper updateScoreboard(UUID uuid) {
+    public ScoreboardHelper updateScoreboard(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null)
             return null;
 
-        ScoreHelper helper = players.get(player.getUniqueId());
+        ScoreboardHelper helper = players.get(player.getUniqueId());
 
         if (helper == null)
-            helper = new ScoreHelper(player);
+            helper = new ScoreboardHelper(player);
 
         helper.setTitle(title);
-        helper.setSlotsFromList(lines);
+        helper.setLinesFromList(lines);
         helper.addPlayer();
         helper.visible(true);
 

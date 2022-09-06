@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ScoreUpdateTask implements Runnable {
+public class ScoreboardUpdateTask implements Runnable {
     private final ScoreboardManager scoreboardManager;
 
-    public ScoreUpdateTask(ScoreboardManager scoreboardManager) {
+    public ScoreboardUpdateTask(ScoreboardManager scoreboardManager) {
         this.scoreboardManager = scoreboardManager;
     }
 

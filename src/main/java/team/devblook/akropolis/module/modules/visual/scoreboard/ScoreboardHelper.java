@@ -27,11 +27,11 @@ import team.devblook.akropolis.util.PlaceholderUtil;
 
 import java.util.List;
 
-public class ScoreHelper {
+public class ScoreboardHelper {
     private final Sidebar sidebar;
     private final Player player;
 
-    public ScoreHelper(Player player) {
+    public ScoreboardHelper(Player player) {
         this.player = player;
         this.sidebar = AkropolisPlugin.getInstance().getScoreboardManager().sidebar(Sidebar.MAX_LINES);
     }
@@ -40,7 +40,7 @@ public class ScoreHelper {
         sidebar.title(setPlaceholders(title));
     }
 
-    public void setSlotsFromList(List<String> list) {
+    public void setLinesFromList(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
             sidebar.line(i, setPlaceholders(list.get(i)));
         }
