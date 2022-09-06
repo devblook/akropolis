@@ -25,7 +25,6 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import team.devblook.akropolis.util.TextUtil;
-import team.devblook.akropolis.util.reflection.ArmorStandName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +99,7 @@ public class Hologram {
 
     public void setLocation(Location location) {
         this.location = location;
-        setLines(stands.stream().map(ArmorStandName::getName).collect(Collectors.toList()));
-
+        setLines(stands.stream().map(ArmorStand::customName).collect(Collectors.toList()));
     }
 
     public boolean hasInvalidLine(int line) {
