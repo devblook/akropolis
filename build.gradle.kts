@@ -60,7 +60,6 @@ tasks {
             exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
         }
 
-        relocate("org.bstats", "${libsPackage}.metrics")
         relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
