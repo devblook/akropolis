@@ -22,7 +22,6 @@ package team.devblook.akropolis;
 import net.megavex.scoreboardlibrary.ScoreboardLibraryImplementation;
 import net.megavex.scoreboardlibrary.api.ScoreboardManager;
 import net.megavex.scoreboardlibrary.exception.ScoreboardLibraryLoadException;
-import org.bstats.bukkit.MetricsLite;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,7 +39,6 @@ import java.util.logging.Level;
 
 public class AkropolisPlugin extends JavaPlugin {
     private static AkropolisPlugin plugin;
-    private static final int BSTATS_ID = 3151;
     private ConfigManager configManager;
     private ActionManager actionManager;
     private HooksManager hooksManager;
@@ -77,9 +75,6 @@ public class AkropolisPlugin extends JavaPlugin {
             getPluginLoader().disablePlugin(this);
             return;
         }
-
-        // Enable bStats metrics
-        new MetricsLite(this, BSTATS_ID);
 
         // Check plugin hooks
         hooksManager = new HooksManager(this);
