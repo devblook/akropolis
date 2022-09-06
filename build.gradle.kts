@@ -26,7 +26,6 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("org.bstats:bstats-bukkit-lite:1.8")
     implementation("com.github.cryptomorin:XSeries:9.0.0")
 
     implementation("com.github.MegavexNetwork.scoreboard-library:implementation:-SNAPSHOT")
