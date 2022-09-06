@@ -20,7 +20,7 @@ running Paper 1.19+ so Akropolis can run properly. You can download Paper from [
 
 ### Compile
 
-Compiling Akropolis is pretty simple, just one command and you're ready to go:
+Compiling Akropolis is pretty simple, just one command, and you're ready to go:
 
 **Linux (and other UNIX derivatives):**
 
