@@ -6,6 +6,8 @@ api-version: 1.19
 main: team.devblook.akropolis.AkropolisPlugin
 loadbefore: [ Essentials ]
 softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core ]
+libraries:
+  - com.github.cryptomorin:XSeries:9.0.0
 
 permissions:
   akropolis.*:
