@@ -28,6 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
@@ -38,6 +39,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class HotbarItem implements Listener {
     private final HotbarManager hotbarManager;
@@ -135,15 +139,20 @@ public abstract class HotbarItem implements Listener {
 
         if (getHotbarManager().inDisabledWorld(player.getLocation())) return;
 
-        ItemStack clicked = event.getCurrentItem();
+        List<ItemStack> items = new ArrayList<>();
+        items.add(event.getCurrentItem());
+        items.add(event.getCursor());
+        items.add((event.getClick() == ClickType.NUMBER_KEY) ? player.getInventory().getItem(event.getHotbarButton()) : event.getCurrentItem());
 
-        if (clicked == null || clicked.getType() == Material.AIR) return;
+        for (ItemStack item : items) {
+            if (item == null || item.getType() == Material.AIR) continue;
 
-        PersistentDataContainer container = clicked.getItemMeta().getPersistentDataContainer();
-        String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
+            PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+            String keyValueInItem = container.get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
 
-        if (event.getSlot() == slot && keyValueInItem != null && keyValueInItem.equals(keyValue)) {
-            event.setCancelled(true);
+            if (keyValueInItem != null && keyValueInItem.equals(keyValue)) {
+                event.setCancelled(true);
+            }
         }
     }
 
