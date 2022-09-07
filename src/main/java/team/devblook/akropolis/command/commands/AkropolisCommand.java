@@ -211,12 +211,10 @@ public class AkropolisCommand extends InjectableCommand {
                     return;
                 }
 
-                sender.sendMessage("");
-                sender.sendMessage(TextUtil.parse("<light_purple><b>Hologram List"));
+                sender.sendMessage(TextUtil.parse("<gold><b>Akropolis <reset><dark_gray>|| <gray>Hologram list<dark_gray>:"));
                 for (Hologram entry : plugin.getHologramManager().getHolograms()) {
                     sender.sendMessage(TextUtil.parse("<dark_gray>- <gray>" + entry.getName()));
                 }
-                sender.sendMessage("");
             }
 
             if (args[1].equalsIgnoreCase("create")) {
