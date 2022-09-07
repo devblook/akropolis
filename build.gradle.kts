@@ -26,8 +26,6 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.cryptomorin:XSeries:9.0.0")
-
     implementation("com.github.MegavexNetwork.scoreboard-library:implementation:-SNAPSHOT")
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:-SNAPSHOT")
 
@@ -39,6 +37,7 @@ dependencies {
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
+    compileOnly("com.github.cryptomorin:XSeries:9.0.0")
 }
 
 configurations.implementation {
@@ -60,7 +59,6 @@ tasks {
             exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
         }
 
-        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
 
