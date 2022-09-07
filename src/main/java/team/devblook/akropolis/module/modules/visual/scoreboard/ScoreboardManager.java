@@ -1,3 +1,22 @@
+/*
+ * This file is part of Akropolis
+ *
+ * Copyright (c) 2022 DevBlook Team and others
+ *
+ * Akropolis free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Akropolis is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package team.devblook.akropolis.module.modules.visual.scoreboard;
 
 import org.bukkit.Bukkit;
@@ -18,7 +37,7 @@ import java.util.*;
 
 public class ScoreboardManager extends Module {
     private int scoreTask;
-    private Map<UUID, ScoreHelper> players;
+    private Map<UUID, ScoreboardHelper> players;
     private long joinDelay;
     private long worldDelay;
     private String title;
@@ -40,7 +59,7 @@ public class ScoreboardManager extends Module {
         worldDelay = config.getLong("scoreboard.display_delay.world_change", 0L);
 
         if (config.getBoolean("scoreboard.refresh.enabled")) {
-            scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreUpdateTask(this), 0L,
+            scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreboardUpdateTask(this), 0L,
                     config.getLong("scoreboard.refresh.rate"));
         }
 
@@ -58,18 +77,18 @@ public class ScoreboardManager extends Module {
         players.put(player.getUniqueId(), updateScoreboard(player.getUniqueId()));
     }
 
-    public ScoreHelper updateScoreboard(UUID uuid) {
+    public ScoreboardHelper updateScoreboard(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null)
             return null;
 
-        ScoreHelper helper = players.get(player.getUniqueId());
+        ScoreboardHelper helper = players.get(player.getUniqueId());
 
         if (helper == null)
-            helper = new ScoreHelper(player);
+            helper = new ScoreboardHelper(player);
 
         helper.setTitle(title);
-        helper.setSlotsFromList(lines);
+        helper.setLinesFromList(lines);
         helper.addPlayer();
         helper.visible(true);
 

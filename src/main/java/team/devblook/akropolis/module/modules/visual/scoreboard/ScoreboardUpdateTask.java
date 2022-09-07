@@ -17,28 +17,28 @@
  * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package team.devblook.akropolis.module.modules.visual.tablist;
+package team.devblook.akropolis.module.modules.visual.scoreboard;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TablistUpdateTask implements Runnable {
-    private final TablistManager tablistManager;
+public class ScoreboardUpdateTask implements Runnable {
+    private final ScoreboardManager scoreboardManager;
 
-    public TablistUpdateTask(TablistManager tablistManager) {
-        this.tablistManager = tablistManager;
+    public ScoreboardUpdateTask(ScoreboardManager scoreboardManager) {
+        this.scoreboardManager = scoreboardManager;
     }
 
     @Override
     public void run() {
         List<UUID> toRemove = new ArrayList<>();
 
-        tablistManager.getPlayers().forEach(uuid -> {
-            if (!tablistManager.updateTablist(uuid))
+        scoreboardManager.getPlayers().forEach(uuid -> {
+            if (scoreboardManager.updateScoreboard(uuid) == null)
                 toRemove.add(uuid);
         });
 
-        tablistManager.getPlayers().removeAll(toRemove);
+        scoreboardManager.getPlayers().removeAll(toRemove);
     }
 }

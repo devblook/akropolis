@@ -1,3 +1,22 @@
+/*
+ * This file is part of Akropolis
+ *
+ * Copyright (c) 2022 DevBlook Team and others
+ *
+ * Akropolis free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Akropolis is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package team.devblook.akropolis.module.modules.hologram;
 
 import net.kyori.adventure.text.Component;
@@ -6,7 +25,6 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import team.devblook.akropolis.util.TextUtil;
-import team.devblook.akropolis.util.reflection.ArmorStandName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,8 +99,7 @@ public class Hologram {
 
     public void setLocation(Location location) {
         this.location = location;
-        setLines(stands.stream().map(ArmorStandName::getName).collect(Collectors.toList()));
-
+        setLines(stands.stream().map(ArmorStand::customName).collect(Collectors.toList()));
     }
 
     public boolean hasInvalidLine(int line) {
