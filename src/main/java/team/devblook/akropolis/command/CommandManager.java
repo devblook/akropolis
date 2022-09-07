@@ -28,7 +28,6 @@ import team.devblook.akropolis.command.commands.*;
 import team.devblook.akropolis.command.commands.gamemode.*;
 import team.devblook.akropolis.config.ConfigType;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,14 +39,14 @@ public class CommandManager {
 
     private final Set<InjectableCommand> commands;
     private final List<CustomCommand> customCommands;
-    private CommandMap commandMap;
+    private final CommandMap commandMap;
 
     public CommandManager(AkropolisPlugin plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
         this.commands = new HashSet<>();
         this.customCommands = new ArrayList<>();
-        setCommandMap();
+        this.commandMap = Bukkit.getCommandMap();
     }
 
     public void reload() {
@@ -129,16 +128,5 @@ public class CommandManager {
 
     public List<CustomCommand> getCustomCommands() {
         return customCommands;
-    }
-
-    public void setCommandMap() {
-        try {
-            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            bukkitCommandMap.setAccessible(true);
-
-            this.commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

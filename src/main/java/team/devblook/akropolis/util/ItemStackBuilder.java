@@ -29,7 +29,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.hooks.head.HeadHook;
 
@@ -39,7 +38,7 @@ import java.util.Optional;
 
 public class ItemStackBuilder {
     private final ItemStack itemStack;
-    private static final AkropolisPlugin PLUGIN = JavaPlugin.getPlugin(AkropolisPlugin.class);
+    private static final AkropolisPlugin PLUGIN = AkropolisPlugin.getInstance();
 
     public ItemStackBuilder(ItemStack item) {
         this.itemStack = item;

@@ -92,7 +92,7 @@ public class Hologram {
         }
 
         for (ArmorStand stand : standsTemp)
-            stand.teleport(stand.getLocation().add(0, 0.25, 0));
+            stand.teleportAsync(stand.getLocation().add(0, 0.25, 0));
 
         return count >= 1;
     }
