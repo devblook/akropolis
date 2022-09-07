@@ -132,8 +132,10 @@ public class HologramManager extends Module {
         holo.remove();
         holograms.remove(holo);
 
-        hologramsSection.set(name, null);
-        getPlugin().getConfigManager().getFile(ConfigType.DATA).save();
+        if (hologramsSection != null && hologramsSection.get(name) != null) {
+            hologramsSection.set(name, null);
+            getPlugin().getConfigManager().getFile(ConfigType.DATA).save();
+        }
     }
 
     public void deleteAllHolograms() {
