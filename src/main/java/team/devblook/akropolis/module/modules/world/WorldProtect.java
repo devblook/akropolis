@@ -321,7 +321,7 @@ public class WorldProtect extends Module {
             if (location == null)
                 return;
 
-            Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> player.teleport(location), 3L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> player.teleportAsync(location), 3L);
             event.setCancelled(true);
         }
     }

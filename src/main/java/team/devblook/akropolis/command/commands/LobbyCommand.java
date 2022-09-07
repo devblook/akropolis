@@ -52,7 +52,7 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleport(location), 3L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleportAsync(location), 3L);
 
     }
 }
