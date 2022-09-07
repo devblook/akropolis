@@ -23,6 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.action.actions.*;
+import team.devblook.akropolis.util.PlaceholderUtil;
+import team.devblook.akropolis.util.TextUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,6 +60,7 @@ public class ActionManager {
 
             if (action != null) {
                 actionContent = actionContent.contains(" ") ? actionContent.split(" ", 2)[1] : "";
+                actionContent = TextUtil.raw(PlaceholderUtil.setPlaceholders(actionContent, player));
 
                 action.execute(plugin, player, actionContent);
             }
