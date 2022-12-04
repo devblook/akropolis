@@ -26,8 +26,8 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.MegavexNetwork.scoreboard-library:implementation:-SNAPSHOT")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:-SNAPSHOT")
+    implementation("com.github.MegavexNetwork.scoreboard-library:implementation:c12ff1df82")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:c12ff1df82")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
     compileOnly("net.kyori:adventure-api:4.11.0")
