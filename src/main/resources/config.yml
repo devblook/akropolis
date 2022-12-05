@@ -81,25 +81,13 @@ nametag:
   # Should the nametag feature be enabled?
   enabled: true
 
-  # Configure your nametag formats.
-  formats:
-    # Permissions for every format will be like: akropolis.nametag.<formatname>
-    # As you can see, this is the default format, so the permission
-    # will be: akropolis.nametag.default
-    # You mustn't delete this format.
-    default:
-      prefix: ""
-      suffix: " <yellow><ping>"
-      priority: 0
-    vip:
-      prefix: "<green><b>VIP "
-      suffix: "  <yellow><ping>"
-      priority: 1
-    # You can add as many formats as you want following the same format above.
-    helper:
-      prefix: "<aqua><b>HELPER "
-      suffix: "  <yellow><ping>"
-      priority: 2
+  # Configure the nametag format.
+  # For more complex use cases it is encouraged to use
+  # another plugin that is merely dedicated to this kind of features.
+  format:
+    prefix: "%luckperms_prefix "
+    name_color: "#FFFFFF" # Use the HEX color of your preference.
+    suffix: " <yellow><ping>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SCOREBOARD                               |
