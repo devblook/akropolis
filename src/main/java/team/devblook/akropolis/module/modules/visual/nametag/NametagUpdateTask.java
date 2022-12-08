@@ -28,7 +28,6 @@ import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.util.PlaceholderUtil;
 
 public class NametagUpdateTask implements Runnable {
-
     private final NametagHelper nametagHelper;
     private final String prefix;
     private final TextColor color;
@@ -47,7 +46,6 @@ public class NametagUpdateTask implements Runnable {
     @Override
     public void run() {
         Bukkit.getOnlinePlayers().forEach(player -> {
-
             ScoreboardTeam team = nametagHelper.getMainTeamManager().team(player.getName());
 
             if (team == null) return;
