@@ -81,6 +81,11 @@ nametag:
   # Should the nametag feature be enabled?
   enabled: true
 
+  # Should we refresh the nametag (update placeholders)?
+  refresh:
+    enabled: true
+    rate: 200 # In ticks (20 ticks = 1 second).
+
   # Configure the nametag format.
   # For more complex use cases it is encouraged to use
   # another plugin that is merely dedicated to this kind of features.
