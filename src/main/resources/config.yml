@@ -74,6 +74,29 @@ anti_wdl:
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | NAMETAG                                  |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+nametag:
+  # Should the nametag feature be enabled?
+  enabled: true
+
+  # Should we refresh the nametag (update placeholders)?
+  refresh:
+    enabled: true
+    rate: 200 # In ticks (20 ticks = 1 second).
+
+  # Configure the nametag format.
+  # For more complex use cases it is encouraged to use
+  # another plugin that is merely dedicated to this kind of features.
+  format:
+    prefix: "%luckperms_prefix%"
+    # Use the HEX color of your preference,
+    # the nearest Minecraft named color will be used.
+    name_color: "#FFFFFF"
+    suffix: " <yellow><ping>"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SCOREBOARD                               |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
