@@ -33,32 +33,51 @@ import java.util.Map;
 
 public class NametagHelper {
     private final TeamManager mainTeamManager;
-    private final Map<String, TeamInfo> teamInfos;
+    private final Map<Player, ScoreboardTeam> teams;
 
-    // TODO: refresh placeholders every x seconds
     public NametagHelper() {
         this.mainTeamManager = AkropolisPlugin.getInstance().getScoreboardManager().teamManager();
-        this.teamInfos = new HashMap<>();
+        this.teams = new HashMap<>();
     }
 
-    public void createFormat(String formatName, Component prefix, TextColor color, Component suffix, Player player) {
-        ScoreboardTeam team = mainTeamManager.createIfAbsent(formatName);
+    public void createFormat(Component prefix, TextColor color, Component suffix, Player player) {
+        if (teams.containsKey(player)) {
+            ScoreboardTeam team = teams.get(player);
+            TeamInfo teamInfo = team.globalInfo();
 
-        team.teamManager().addPlayer(player);
+            team.teamManager().addPlayer(player);
+            updateFormat(teamInfo, prefix, color, suffix);
+            teamInfo.addEntry(player.getName());
+            return;
+        }
 
+        ScoreboardTeam team = mainTeamManager.createIfAbsent(player.getName());
         TeamInfo teamInfo = team.globalInfo();
 
+        team.teamManager().addPlayer(player);
+        updateFormat(teamInfo, prefix, color, suffix);
+        teamInfo.addEntry(player.getName());
+        teams.put(player, team);
+    }
+
+    public void updateFormat(TeamInfo teamInfo, Component prefix, TextColor color, Component suffix) {
         teamInfo.prefix(prefix);
         teamInfo.playerColor(NamedTextColor.nearestTo(color));
         teamInfo.suffix(suffix);
-
-        teamInfo.addEntry(player.getName());
-        teamInfos.put(formatName, teamInfo);
     }
 
-    public void deleteFormat(String formatName, String playerName) {
-        if (!teamInfos.containsKey(formatName)) return;
+    public void deleteFormat(Player player) {
+        if (!teams.containsKey(player)) return;
 
-        teamInfos.get(formatName).removeEntry(playerName);
+        ScoreboardTeam team = teams.get(player);
+
+        if (team != null) {
+            team.teamManager().removePlayer(player);
+            team.globalInfo().removeEntry(player.getName());
+        }
+    }
+
+    public TeamManager getMainTeamManager() {
+        return mainTeamManager;
     }
 }
