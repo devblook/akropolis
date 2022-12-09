@@ -29,15 +29,15 @@ dependencies {
     implementation("com.github.MegavexNetwork.scoreboard-library:implementation:c12ff1df82")
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R1:c12ff1df82")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.11.0")
-    compileOnly("net.kyori:adventure-api:4.11.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
+    compileOnly("net.kyori:adventure-api:4.12.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
-    compileOnly("com.github.cryptomorin:XSeries:9.0.0")
+    compileOnly("com.github.cryptomorin:XSeries:9.1.0")
 }
 
 configurations.implementation {
