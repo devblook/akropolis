@@ -36,7 +36,7 @@ public class NametagHelper {
     private final Map<Player, ScoreboardTeam> teams;
 
     public NametagHelper() {
-        this.mainTeamManager = AkropolisPlugin.getInstance().getScoreboardManager().teamManager();
+        this.mainTeamManager = AkropolisPlugin.getInstance().getScoreboardLibrary().createTeamManager();
         this.teams = new HashMap<>();
     }
 
