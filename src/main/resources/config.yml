@@ -79,7 +79,9 @@ anti_wdl:
 
 nametag:
   # Should the nametag feature be enabled?
-  enabled: true
+  # Note: this feature doesn't work properly after a plugin reload.
+  # See https://github.com/devblook/akropolis/issues/1
+  enabled: false
 
   # Should we refresh the nametag (update placeholders)?
   refresh:
@@ -102,6 +104,8 @@ nametag:
 
 scoreboard:
   # Should the scoreboard feature be enabled?
+  # Note: this feature doesn't work properly after a plugin reload.
+  # See https://github.com/devblook/akropolis/issues/1
   enabled: true
 
   # Should we delay showing the scoreboard?

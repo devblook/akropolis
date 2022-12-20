@@ -33,7 +33,7 @@ public class ScoreboardHelper {
 
     public ScoreboardHelper(Player player) {
         this.player = player;
-        this.sidebar = AkropolisPlugin.getInstance().getScoreboardManager().sidebar(Sidebar.MAX_LINES);
+        this.sidebar = AkropolisPlugin.getInstance().getScoreboardLibrary().createSidebar(Sidebar.MAX_LINES);
     }
 
     public void setTitle(String title) {
@@ -56,10 +56,6 @@ public class ScoreboardHelper {
 
     public void removePlayer() {
         sidebar.removePlayer(player);
-    }
-
-
-    public void visible(boolean visible) {
-        sidebar.visible(visible);
+        sidebar.close(); // To prevent memory leaks
     }
 }

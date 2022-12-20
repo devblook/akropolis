@@ -91,7 +91,6 @@ public class ScoreboardManager extends Module {
         helper.setTitle(title);
         helper.setLinesFromList(lines);
         helper.addPlayer();
-        helper.visible(true);
 
         return helper;
 

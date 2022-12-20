@@ -19,9 +19,9 @@
 
 package team.devblook.akropolis;
 
-import net.megavex.scoreboardlibrary.ScoreboardLibraryImplementation;
-import net.megavex.scoreboardlibrary.api.ScoreboardManager;
-import net.megavex.scoreboardlibrary.exception.ScoreboardLibraryLoadException;
+import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
+import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
+import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,7 +46,7 @@ public class AkropolisPlugin extends JavaPlugin {
     private CooldownManager cooldownManager;
     private ModuleManager moduleManager;
     private InventoryManager inventoryManager;
-    private ScoreboardManager scoreboardManager;
+    private ScoreboardLibrary scoreboardLibrary;
 
     @Override
     public void onEnable() {
@@ -71,8 +71,7 @@ public class AkropolisPlugin extends JavaPlugin {
         } catch (ClassNotFoundException ex) {
             getLogger().severe("Akropolis requires Paper 1.19+ to run, you can download");
             getLogger().severe("Paper here: https://papermc.io/downloads.");
-            getLogger().severe("The plugin will now disable.");
-            getPluginLoader().disablePlugin(this);
+            setEnabled(false);
             return;
         }
 
@@ -99,13 +98,10 @@ public class AkropolisPlugin extends JavaPlugin {
 
         //Scoreboard library
         try {
-            ScoreboardLibraryImplementation.init();
-        } catch (ScoreboardLibraryLoadException e) {
-            e.printStackTrace();
-            return;
+            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
+        } catch (NoPacketAdapterAvailableException e) {
+            scoreboardLibrary = new NoopScoreboardLibrary();
         }
-
-        scoreboardManager = ScoreboardManager.scoreboardManager(this);
 
         // Core plugin modules
         moduleManager = new ModuleManager();
@@ -126,10 +122,7 @@ public class AkropolisPlugin extends JavaPlugin {
 
         if (moduleManager != null) moduleManager.unloadModules();
 
-        if (scoreboardManager != null) {
-            scoreboardManager.close();
-            ScoreboardLibraryImplementation.close();
-        }
+        if (scoreboardLibrary != null) scoreboardLibrary.close();
 
         if (inventoryManager != null) inventoryManager.onDisable();
 
@@ -193,7 +186,7 @@ public class AkropolisPlugin extends JavaPlugin {
         return actionManager;
     }
 
-    public ScoreboardManager getScoreboardManager() {
-        return scoreboardManager;
+    public ScoreboardLibrary getScoreboardLibrary() {
+        return scoreboardLibrary;
     }
 }
