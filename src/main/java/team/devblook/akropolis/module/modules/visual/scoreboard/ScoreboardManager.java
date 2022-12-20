@@ -43,6 +43,7 @@ public class ScoreboardManager extends Module {
     private String title;
     private List<String> lines;
 
+    // TODO: also make this work on reload :(
     public ScoreboardManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.SCOREBOARD);
     }
@@ -90,7 +91,6 @@ public class ScoreboardManager extends Module {
         helper.setTitle(title);
         helper.setLinesFromList(lines);
         helper.addPlayer();
-        helper.visible(true);
 
         return helper;
 

@@ -74,11 +74,38 @@ anti_wdl:
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | NAMETAG                                  |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+nametag:
+  # Should the nametag feature be enabled?
+  # Note: this feature doesn't work properly after a plugin reload.
+  # See https://github.com/devblook/akropolis/issues/1
+  enabled: false
+
+  # Should we refresh the nametag (update placeholders)?
+  refresh:
+    enabled: true
+    rate: 200 # In ticks (20 ticks = 1 second).
+
+  # Configure the nametag format.
+  # For more complex use cases it is encouraged to use
+  # another plugin that is merely dedicated to this kind of features.
+  format:
+    prefix: "%luckperms_prefix%"
+    # Use the HEX color of your preference,
+    # the nearest Minecraft named color will be used.
+    name_color: "#FFFFFF"
+    suffix: " <yellow><ping>"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SCOREBOARD                               |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 scoreboard:
   # Should the scoreboard feature be enabled?
+  # Note: this feature doesn't work properly after a plugin reload.
+  # See https://github.com/devblook/akropolis/issues/1
   enabled: true
 
   # Should we delay showing the scoreboard?
