@@ -79,7 +79,7 @@ anti_wdl:
 
 nametag:
   # Should the nametag feature be enabled?
-  enabled: true
+  enabled: false
 
   # Should we refresh the nametag (update placeholders)?
   refresh:
