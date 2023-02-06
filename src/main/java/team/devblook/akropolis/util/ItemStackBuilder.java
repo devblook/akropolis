@@ -21,6 +21,7 @@ package team.devblook.akropolis.util;
 
 import com.cryptomorin.xseries.XMaterial;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -157,6 +158,7 @@ public class ItemStackBuilder {
             return;
         }
 
+        name = name.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }
@@ -169,7 +171,8 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.displayName(PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player));
+        name = PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+        itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }
 
@@ -204,6 +207,7 @@ public class ItemStackBuilder {
 
         for (Component line : lore) {
             line = PlaceholderUtil.setPlaceholders(TextUtil.raw(line), player);
+            line = line.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
             coloredLore.add(line);
         }
 
@@ -219,7 +223,14 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.lore(lore);
+        List<Component> nonItalicLore = new ArrayList<>();
+
+        for (Component line : lore) {
+            line = line.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+            nonItalicLore.add(line);
+        }
+
+        itemMeta.lore(nonItalicLore);
         itemStack.setItemMeta(itemMeta);
     }
 
