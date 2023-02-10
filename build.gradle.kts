@@ -38,7 +38,7 @@ dependencies {
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
-    compileOnly("com.github.cryptomorin:XSeries:9.1.0")
+    compileOnly("com.github.cryptomorin:XSeries:9.2.0")
 }
 
 configurations.implementation {
