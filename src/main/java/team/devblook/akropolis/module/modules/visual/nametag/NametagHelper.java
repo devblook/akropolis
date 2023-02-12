@@ -67,7 +67,7 @@ public class NametagHelper {
     }
 
     public void deleteFormat(Player player) {
-        if (!teams.containsKey(player)) return;
+        if (!teams.containsKey(player) || mainTeamManager.closed()) return;
 
         ScoreboardTeam team = teams.get(player);
 
