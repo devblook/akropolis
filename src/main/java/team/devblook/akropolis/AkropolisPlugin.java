@@ -138,9 +138,17 @@ public class AkropolisPlugin extends JavaPlugin {
         inventoryManager.onDisable();
         inventoryManager.onEnable(this);
 
+        scoreboardLibrary.close();
+
         getCommandManager().reload();
 
         moduleManager.loadModules(this);
+
+        try {
+            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
+        } catch (NoPacketAdapterAvailableException e) {
+            scoreboardLibrary = new NoopScoreboardLibrary();
+        }
     }
 
     public static synchronized void setInstance(AkropolisPlugin instance) {
