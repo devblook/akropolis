@@ -55,6 +55,8 @@ public class ScoreboardHelper {
     }
 
     public void removePlayer() {
+        if (sidebar.closed()) return;
+
         sidebar.removePlayer(player);
         sidebar.close(); // To prevent memory leaks
     }
