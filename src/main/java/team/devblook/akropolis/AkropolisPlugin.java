@@ -142,13 +142,13 @@ public class AkropolisPlugin extends JavaPlugin {
 
         getCommandManager().reload();
 
-        moduleManager.loadModules(this);
-
         try {
             scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
         } catch (NoPacketAdapterAvailableException e) {
             scoreboardLibrary = new NoopScoreboardLibrary();
         }
+
+        moduleManager.loadModules(this);
     }
 
     public static synchronized void setInstance(AkropolisPlugin instance) {
