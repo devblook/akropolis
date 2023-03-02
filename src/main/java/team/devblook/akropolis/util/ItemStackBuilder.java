@@ -130,7 +130,7 @@ public class ItemStackBuilder {
         Optional<XMaterial> xmaterial = XMaterial.matchXMaterial(rawMaterial);
 
         if (xmaterial.isEmpty()) {
-            PLUGIN.getLogger().severe("Could not parse material '" + rawMaterial + "'");
+            PLUGIN.getLogger().severe("Could not parse material '" + rawMaterial + "'.");
             PLUGIN.getLogger().severe("Please check your config.yml!");
             return MALFORMED_ITEM;
         }
