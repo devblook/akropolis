@@ -38,8 +38,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class ItemStackBuilder {
+    private static final ItemStack MALFORMED_ITEM;
+    private static final AkropolisPlugin PLUGIN;
+
+    static {
+        PLUGIN = AkropolisPlugin.getInstance();
+        MALFORMED_ITEM = new ItemStack(Material.BARRIER);
+        ItemMeta malformedMeta = MALFORMED_ITEM.getItemMeta();
+
+        malformedMeta.displayName(TextUtil.parse("<red>Malformed item, check your config.yml!"));
+        MALFORMED_ITEM.setItemMeta(malformedMeta);
+    }
+
     private final ItemStack itemStack;
-    private static final AkropolisPlugin PLUGIN = AkropolisPlugin.getInstance();
 
     public ItemStackBuilder(ItemStack item) {
         this.itemStack = item;
@@ -48,6 +59,9 @@ public class ItemStackBuilder {
     public static ItemStackBuilder getItemStack(ConfigurationSection section, Player player) {
         ItemStack item = parseMaterial(section);
         ItemStackBuilder builder = new ItemStackBuilder(item);
+
+        if (item.getType().equals(Material.BARRIER))
+            return new ItemStackBuilder(MALFORMED_ITEM);
 
         if (section.contains("amount")) {
             builder.withAmount(section.getInt("amount"));
@@ -110,18 +124,20 @@ public class ItemStackBuilder {
 
         if (rawMaterial== null) {
             PLUGIN.getLogger().severe("Could not get material from configuration section!");
-            return new ItemStack(Material.AIR);
+            return MALFORMED_ITEM;
         }
 
         Optional<XMaterial> xmaterial = XMaterial.matchXMaterial(rawMaterial);
-        ItemStack item = xmaterial.isPresent() ? xmaterial.get().parseItem() : new ItemStack(Material.AIR);
 
-        if (item == null) {
-            PLUGIN.getLogger().severe("Could not parse material for item!");
-            return new ItemStack(Material.AIR);
+        if (xmaterial.isEmpty()) {
+            PLUGIN.getLogger().severe("Could not parse material '" + rawMaterial + "'.");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return MALFORMED_ITEM;
         }
 
-        if (item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {
+        ItemStack item = xmaterial.get().parseItem();
+
+        if (item != null && item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {
             if (section.contains("base64")) {
                 item = ((HeadHook) PLUGIN.getHookManager().getPluginHook("BASE64"))
                         .getHead(section.getString("base64"));
@@ -143,6 +159,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply item flags!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -155,6 +172,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply item name!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -168,6 +186,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply item name with placeholder!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -183,7 +202,8 @@ public class ItemStackBuilder {
 
             if (itemMeta == null) {
                 PLUGIN.getLogger().severe("Invalid item meta, could not set skull owner!");
-                return new ItemStackBuilder(new ItemStack(Material.AIR));
+                PLUGIN.getLogger().severe("Please check your config.yml!");
+                return new ItemStackBuilder(MALFORMED_ITEM);
             }
 
             itemMeta.setOwner(owner);
@@ -200,6 +220,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply lore with placeholders!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -220,6 +241,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply lore!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -239,6 +261,7 @@ public class ItemStackBuilder {
 
         if (itemMeta == null) {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply glow!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
         }
 
@@ -248,6 +271,13 @@ public class ItemStackBuilder {
     }
 
     public ItemStack build() {
+        if (itemStack.getItemMeta() == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not build item.");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+
+            return MALFORMED_ITEM;
+        }
+
         return itemStack;
     }
 }
