@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version ("7.1.2")
+    id("com.github.johnrengelman.shadow") version ("8.1.0")
 }
 
 group = "team.devblook"
@@ -26,9 +26,9 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.MegavexNetwork.scoreboard-library:api:2.0.0-RC2")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:implementation:2.0.0-RC2")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:v1_19_R2:2.0.0-RC2")
+    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC4")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC4")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_19_R2:2.0.0-RC4")
 
     compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
     compileOnly("net.kyori:adventure-api:4.12.0")
@@ -38,7 +38,7 @@ dependencies {
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
-    compileOnly("com.github.cryptomorin:XSeries:9.1.0")
+    compileOnly("com.github.cryptomorin:XSeries:9.2.0")
 }
 
 configurations.implementation {
