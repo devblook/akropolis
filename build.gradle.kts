@@ -26,14 +26,14 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC4")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC4")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_19_R2:2.0.0-RC4")
+    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC6")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC6")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_19_R2:2.0.0-RC6")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.12.0")
-    compileOnly("net.kyori:adventure-api:4.12.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.13.0")
+    compileOnly("net.kyori:adventure-api:4.13.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.2")
