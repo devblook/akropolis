@@ -17,8 +17,8 @@
 #   <location> - Returns player location
 #   <online> - Returns number of players online
 #   <online_max> - Returns number of max player slots
-#   <world> - Returns player ping
-#   <ping> - Returns player world name
+#   <world> - Returns player world name
+#   <ping> - Returns player ping
 #
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
 #   Take in mind that PlaceholderAPI's placeholders won't have the same tag format.
