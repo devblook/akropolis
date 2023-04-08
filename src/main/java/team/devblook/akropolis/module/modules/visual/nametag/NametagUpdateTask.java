@@ -53,7 +53,7 @@ public class NametagUpdateTask implements Runnable {
             Component prefix = PlaceholderUtil.setPlaceholders(this.prefix, player);
             Component suffix = PlaceholderUtil.setPlaceholders(this.suffix, player);
 
-            nametagHelper.updateFormat(team.globalInfo(), prefix, color, suffix);
+            nametagHelper.updateFormat(team.defaultDisplay(), prefix, color, suffix);
         });
     }
 }
