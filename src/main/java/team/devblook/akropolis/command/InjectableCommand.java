@@ -24,6 +24,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
+import team.devblook.akropolis.util.TextUtil;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
         try {
             onCommand(sender, label, args);
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.RED + "An error occurred processing this command. Please make sure your parameters are correct.");
+            sender.sendMessage(TextUtil.parse("<red>An error occurred processing this command. Please make sure your parameters are correct."));
             e.printStackTrace();
         }
 
