@@ -23,7 +23,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.megavex.scoreboardlibrary.api.team.ScoreboardTeam;
-import net.megavex.scoreboardlibrary.api.team.TeamInfo;
+import net.megavex.scoreboardlibrary.api.team.TeamDisplay;
 import net.megavex.scoreboardlibrary.api.team.TeamManager;
 import org.bukkit.entity.Player;
 import team.devblook.akropolis.AkropolisPlugin;
@@ -43,27 +43,27 @@ public class NametagHelper {
     public void createFormat(Component prefix, TextColor color, Component suffix, Player player) {
         if (teams.containsKey(player)) {
             ScoreboardTeam team = teams.get(player);
-            TeamInfo teamInfo = team.globalInfo();
+            TeamDisplay teamDisplay = team.defaultDisplay();
 
             team.teamManager().addPlayer(player);
-            updateFormat(teamInfo, prefix, color, suffix);
-            teamInfo.addEntry(player.getName());
+            updateFormat(teamDisplay, prefix, color, suffix);
+            teamDisplay.addEntry(player.getName());
             return;
         }
 
         ScoreboardTeam team = mainTeamManager.createIfAbsent(player.getName());
-        TeamInfo teamInfo = team.globalInfo();
+        TeamDisplay teamDisplay = team.defaultDisplay();
 
         team.teamManager().addPlayer(player);
-        updateFormat(teamInfo, prefix, color, suffix);
-        teamInfo.addEntry(player.getName());
+        updateFormat(teamDisplay, prefix, color, suffix);
+        teamDisplay.addEntry(player.getName());
         teams.put(player, team);
     }
 
-    public void updateFormat(TeamInfo teamInfo, Component prefix, TextColor color, Component suffix) {
-        teamInfo.prefix(prefix);
-        teamInfo.playerColor(NamedTextColor.nearestTo(color));
-        teamInfo.suffix(suffix);
+    public void updateFormat(TeamDisplay teamDisplay, Component prefix, TextColor color, Component suffix) {
+        teamDisplay.prefix(prefix);
+        teamDisplay.playerColor(NamedTextColor.nearestTo(color));
+        teamDisplay.suffix(suffix);
     }
 
     public void deleteFormat(Player player) {
@@ -73,7 +73,7 @@ public class NametagHelper {
 
         if (team != null) {
             team.teamManager().removePlayer(player);
-            team.globalInfo().removeEntry(player.getName());
+            team.defaultDisplay().removeEntry(player.getName());
         }
     }
 
