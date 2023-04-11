@@ -22,7 +22,6 @@ package team.devblook.akropolis.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Color;
 
 public class TextUtil {
@@ -34,10 +33,6 @@ public class TextUtil {
 
     public static Component parse(String message) {
         return MINI_MESSAGE.deserialize(message);
-    }
-
-    public static Component parse(String message, TagResolver resolver) {
-        return MINI_MESSAGE.deserialize(message, resolver);
     }
 
     public static String raw(Component message) {
