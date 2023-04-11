@@ -5,7 +5,7 @@ description: A modern Minecraft server hub core solution. Based on DeluxeHub by 
 api-version: 1.19
 main: team.devblook.akropolis.AkropolisPlugin
 loadbefore: [ Essentials ]
-softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core ]
+softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core, MiniPlaceholders ]
 libraries:
   - com.github.cryptomorin:XSeries:9.2.0
 
