@@ -21,6 +21,9 @@ package team.devblook.akropolis.util;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -60,8 +63,8 @@ public class PlaceholderUtil {
             text = TextUtil.parseAndReplace(TextUtil.raw(text), "world", Component.text(player.getWorld().getName()));
         }
 
-        if (papi && PlaceholderAPI.containsPlaceholders(TextUtil.raw(text)) && player != null) {
-            text = TextUtil.parse(PlaceholderAPI.setPlaceholders(player, TextUtil.raw(text)));
+        if (papi && player != null) {
+            text = TextUtil.parse(TextUtil.raw(TextUtil.parsePapi(TextUtil.raw(text), player)));
         }
 
         return text;
