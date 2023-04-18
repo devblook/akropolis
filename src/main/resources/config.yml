@@ -21,7 +21,8 @@
 #   <ping> - Returns player ping
 #
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
-#   Take in mind that PlaceholderAPI's placeholders won't have the same tag format.
+#   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
+#   Example: <papi:luckperms_prefix>
 #--------
 # ACTIONS:
 #
@@ -90,7 +91,7 @@ nametag:
   # For more complex use cases it is encouraged to use
   # another plugin that is merely dedicated to this kind of features.
   format:
-    prefix: "%luckperms_prefix%"
+    prefix: "<papi:luckperms_prefix>"
     # Use the HEX color of your preference,
     # the nearest Minecraft named color will be used.
     name_color: "#FFFFFF"
