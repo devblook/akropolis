@@ -6,9 +6,9 @@ import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
-public class ChatFormat extends Module {
+public class ChatGroups extends Module {
 
-    public ChatFormat(AkropolisPlugin plugin) {
+    public ChatGroups(AkropolisPlugin plugin) {
         super(plugin, ModuleType.CHAT_FORMAT);
     }
 
