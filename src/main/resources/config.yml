@@ -259,7 +259,7 @@ groups:
   # akropolis.chat.group.<group name>
   groups:
     default:
-      format: "<hover:show_text:'<rainbow>You can also use hover here!'>%luckperms_prefix%</hover> <gray><player> <dark_gray>» <gray>"
+      format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray>"
       # Just in case you want to slow down your players a little.
       cooldown:
         time: 3 # Time is in seconds.
