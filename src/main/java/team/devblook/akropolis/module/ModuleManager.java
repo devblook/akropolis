@@ -83,7 +83,7 @@ public class ModuleManager {
         registerModule(new AutoBroadcast(plugin), "announcements.enabled");
         registerModule(new AntiSwear(plugin), "anti_swear.enabled");
         registerModule(new ChatCommandBlock(plugin), "command_block.enabled");
-        registerModule(new ChatGroups(plugin), "groups.enabled");
+        registerModule(new ChatGroups(plugin));
         registerModule(new ChatLock(plugin));
         registerModule(new CustomCommands(plugin));
         registerModule(new PlayerListener(plugin));

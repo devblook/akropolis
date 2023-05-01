@@ -251,27 +251,23 @@ fly:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 groups:
-  # Should the chat groups feature be enabled?
-  enabled: true
-
   # Create all the group formats you want following the same template.
   # To use any of these formats, the player must have the permission
   # akropolis.chat.group.<group name>
-  groups:
-    default:
-      format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray>"
-      # Just in case you want to slow down your players a little.
-      cooldown:
-        time: 3 # Time is in seconds.
-        message: "<prefix> <red>Please wait <yellow><time>s <red>before talking again!"
-    staff:
-      format: "%luckperms_prefix% <red><player> <dark_gray>» <white>"
-    vip:
-      format: "%luckperms_prefix% <green><player> <dark_gray>» <white>"
-      # You can use the cooldown feature everywhere you want!
-      cooldown:
-        time: 1 # Time is in seconds.
-        message: "<prefix> <red>Please wait <yellow><time>s <red>before talking again!"
+  default:
+    format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray>"
+    # Just in case you want to slow down your players a little.
+    cooldown:
+      time: 3 # Time is in seconds.
+      message: "<prefix> <red>Please wait <yellow><time>s <red>before talking again!"
+  staff:
+    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white>"
+  vip:
+    format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white>"
+    # You can use the cooldown feature everywhere you want!
+    cooldown:
+      time: 1 # Time is in seconds.
+      message: "<prefix> <red>Please wait <yellow><time>s <red>before talking again!"
 
 command_block:
   # Should the command blocker feature be enabled?
