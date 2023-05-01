@@ -19,8 +19,6 @@
 
 package team.devblook.akropolis.util;
 
-import io.github.miniplaceholders.api.MiniPlaceholders;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,7 +26,6 @@ import org.bukkit.entity.Player;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
-    private static boolean miniplaceholders = false;
 
     private PlaceholderUtil() {
         throw new UnsupportedOperationException();
@@ -62,12 +59,8 @@ public class PlaceholderUtil {
             text = TextUtil.parseAndReplace(TextUtil.raw(text), "world", Component.text(player.getWorld().getName()));
         }
 
-        if (papi && PlaceholderAPI.containsPlaceholders(TextUtil.raw(text)) && player != null) {
-            text = TextUtil.parse(PlaceholderAPI.setPlaceholders(player, TextUtil.raw(text)));
-        }
-
-        if (miniplaceholders && player != null) {
-            text = TextUtil.parse(TextUtil.raw(text), MiniPlaceholders.getAudienceGlobalPlaceholders(player));
+        if (papi && player != null) {
+            text = TextUtil.parse(TextUtil.raw(TextUtil.parsePapi(TextUtil.raw(text), player)));
         }
 
         return text;
@@ -75,9 +68,5 @@ public class PlaceholderUtil {
 
     public static void setPapiState(boolean papiState) {
         papi = papiState;
-    }
-
-    public static void setMPState(boolean miniplaceholdersState) {
-        miniplaceholders = miniplaceholdersState;
     }
 }
