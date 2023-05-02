@@ -50,6 +50,12 @@ public class HooksManager {
             plugin.getLogger().info("Hooked into HeadDatabase");
         }
 
+        if (Bukkit.getPluginManager().isPluginEnabled("MiniPlaceholders")) {
+            hooks.put("MINIPLACEHOLDERS", null);
+            PlaceholderUtil.setMPState(true);
+            plugin.getLogger().info("Hooked into MiniPlaceholders");
+        }
+
         hooks.values().stream().filter(Objects::nonNull).forEach(pluginHook -> pluginHook.onEnable(plugin));
     }
 

@@ -39,6 +39,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
     compileOnly("com.github.cryptomorin:XSeries:9.2.0")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.0.0")
 }
 
 configurations.implementation {

@@ -41,8 +41,8 @@ public class TextUtil {
         return MINI_MESSAGE.deserialize(message);
     }
 
-    public static Component parsePapi(String message, Player player) {
-        return MINI_MESSAGE.deserialize(message, papiTag(player));
+    public static Component parse(String message, TagResolver resolver) {
+        return MINI_MESSAGE.deserialize(message, resolver);
     }
 
     public static String raw(Component message) {
@@ -88,15 +88,5 @@ public class TextUtil {
             case "YELLOW" -> Color.YELLOW;
             default -> null;
         };
-    }
-
-    public static TagResolver papiTag(Player player) {
-        return TagResolver.resolver("papi", (argumentQueue, context) -> {
-            String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
-            String parsedPlaceholder = ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%'));
-            Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
-
-            return Tag.selfClosingInserting(componentPlaceholder);
-        });
     }
 }
