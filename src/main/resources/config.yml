@@ -91,7 +91,7 @@ nametag:
   # For more complex use cases it is encouraged to use
   # another plugin that is merely dedicated to this kind of features.
   format:
-    prefix: "<papi:luckperms_prefix>"
+    prefix: "<papi:luckperms_prefix> "
     # Use the HEX color of your preference,
     # the nearest Minecraft named color will be used.
     name_color: "#FFFFFF"
