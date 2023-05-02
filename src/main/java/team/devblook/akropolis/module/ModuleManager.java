@@ -26,6 +26,7 @@ import org.bukkit.event.HandlerList;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.modules.chat.*;
+import team.devblook.akropolis.module.modules.chat.groups.ChatGroups;
 import team.devblook.akropolis.module.modules.hologram.HologramManager;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 import team.devblook.akropolis.module.modules.player.DoubleJump;
