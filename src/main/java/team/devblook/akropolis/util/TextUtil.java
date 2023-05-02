@@ -19,16 +19,11 @@
 
 package team.devblook.akropolis.util;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.entity.Player;
 
 public class TextUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
