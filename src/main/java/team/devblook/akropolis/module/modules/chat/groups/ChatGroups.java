@@ -64,6 +64,8 @@ public class ChatGroups extends Module {
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
+        if (event.isCancelled()) return;
+
         Player player = event.getPlayer();
         ChatGroup currentGroup = chatGroups.get("default");
 
