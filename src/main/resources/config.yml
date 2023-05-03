@@ -23,6 +23,10 @@
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
 #   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
 #   Example: <papi:luckperms_prefix>
+#
+#   If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
+#   by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
+#   For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
 #--------
 # ACTIONS:
 #
