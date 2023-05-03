@@ -23,6 +23,10 @@
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
 #   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
 #   Example: <papi:luckperms_prefix>
+#
+#   If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
+#   by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
+#   For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
 #--------
 # ACTIONS:
 #
@@ -91,7 +95,7 @@ nametag:
   # For more complex use cases it is encouraged to use
   # another plugin that is merely dedicated to this kind of features.
   format:
-    prefix: "<papi:luckperms_prefix>"
+    prefix: "<papi:luckperms_prefix> "
     # Use the HEX color of your preference,
     # the nearest Minecraft named color will be used.
     name_color: "#FFFFFF"
@@ -249,6 +253,25 @@ fly:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CHAT MANAGEMENT                          |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+groups:
+  # Create all the group formats you want following the same template.
+  # To use any of these formats, the player must have the permission
+  # akropolis.chat.group.<group name>
+  default:
+    format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
+    # Just in case you want to slow down your players a little.
+    cooldown:
+      time: 3 # Time is in seconds.
+      message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+  staff:
+    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
+  vip:
+    format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
+    # You can use the cooldown feature everywhere you want!
+    cooldown:
+      time: 1 # Time is in seconds.
+      message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
 
 command_block:
   # Should the command blocker feature be enabled?

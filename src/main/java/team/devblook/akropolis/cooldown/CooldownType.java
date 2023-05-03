@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2022 DevBlook Team and others
+ * Copyright (c) 2023 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,5 +20,6 @@
 package team.devblook.akropolis.cooldown;
 
 public enum CooldownType {
-    BLOCK_BREAK, BLOCK_PLACE, BLOCK_INTERACT, ITEM_DROP, ITEM_PICKUP, PLAYER_PVP, DOUBLE_JUMP, LAUNCHPAD, PLAYER_HIDER
+    BLOCK_BREAK, BLOCK_PLACE, BLOCK_INTERACT, ITEM_DROP, ITEM_PICKUP, PLAYER_PVP, DOUBLE_JUMP, LAUNCHPAD, PLAYER_HIDER,
+    CHAT
 }

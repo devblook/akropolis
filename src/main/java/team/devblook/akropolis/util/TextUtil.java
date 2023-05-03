@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2022 DevBlook Team and others
+ * Copyright (c) 2023 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,11 @@
 
 package team.devblook.akropolis.util;
 
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.entity.Player;
 
 public class TextUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
@@ -41,8 +36,8 @@ public class TextUtil {
         return MINI_MESSAGE.deserialize(message);
     }
 
-    public static Component parsePapi(String message, Player player) {
-        return MINI_MESSAGE.deserialize(message, papiTag(player));
+    public static Component parse(String message, TagResolver resolver) {
+        return MINI_MESSAGE.deserialize(message, resolver);
     }
 
     public static String raw(Component message) {
@@ -88,15 +83,5 @@ public class TextUtil {
             case "YELLOW" -> Color.YELLOW;
             default -> null;
         };
-    }
-
-    public static TagResolver papiTag(Player player) {
-        return TagResolver.resolver("papi", (argumentQueue, context) -> {
-            String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
-            String parsedPlaceholder = ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%'));
-            Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
-
-            return Tag.selfClosingInserting(componentPlaceholder);
-        });
     }
 }

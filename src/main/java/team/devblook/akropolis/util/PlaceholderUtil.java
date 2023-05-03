@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2022 DevBlook Team and others
+ * Copyright (c) 2023 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,20 @@
 
 package team.devblook.akropolis.util;
 
+import io.github.miniplaceholders.api.MiniPlaceholders;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
+    private static boolean miniplaceholders = false;
 
     private PlaceholderUtil() {
         throw new UnsupportedOperationException();
@@ -60,13 +67,31 @@ public class PlaceholderUtil {
         }
 
         if (papi && player != null) {
-            text = TextUtil.parse(TextUtil.raw(TextUtil.parsePapi(TextUtil.raw(text), player)));
+            text = TextUtil.parse(TextUtil.raw(text), papiTag(player));
+        }
+
+        if (miniplaceholders && player != null) {
+            text = TextUtil.parse(TextUtil.raw(text), MiniPlaceholders.getAudienceGlobalPlaceholders(player));
         }
 
         return text;
     }
 
+    public static TagResolver papiTag(Player player) {
+        return TagResolver.resolver("papi", (argumentQueue, context) -> {
+            String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
+            String parsedPlaceholder = ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%'));
+            Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
+
+            return Tag.selfClosingInserting(componentPlaceholder);
+        });
+    }
+
     public static void setPapiState(boolean papiState) {
         papi = papiState;
+    }
+
+    public static void setMPState(boolean miniplaceholdersState) {
+        miniplaceholders = miniplaceholdersState;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2022 DevBlook Team and others
+ * Copyright (c) 2023 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import org.bukkit.event.HandlerList;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.modules.chat.*;
+import team.devblook.akropolis.module.modules.chat.groups.ChatGroups;
 import team.devblook.akropolis.module.modules.hologram.HologramManager;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 import team.devblook.akropolis.module.modules.player.DoubleJump;
@@ -83,6 +84,7 @@ public class ModuleManager {
         registerModule(new AutoBroadcast(plugin), "announcements.enabled");
         registerModule(new AntiSwear(plugin), "anti_swear.enabled");
         registerModule(new ChatCommandBlock(plugin), "command_block.enabled");
+        registerModule(new ChatGroups(plugin));
         registerModule(new ChatLock(plugin));
         registerModule(new CustomCommands(plugin));
         registerModule(new PlayerListener(plugin));

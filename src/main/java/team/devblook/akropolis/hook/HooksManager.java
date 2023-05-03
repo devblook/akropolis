@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2022 DevBlook Team and others
+ * Copyright (c) 2023 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,12 @@ public class HooksManager {
         if (Bukkit.getPluginManager().isPluginEnabled("HeadDatabase")) {
             hooks.put("HEAD_DATABASE", new DatabaseHead());
             plugin.getLogger().info("Hooked into HeadDatabase");
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("MiniPlaceholders")) {
+            hooks.put("MINIPLACEHOLDERS", null);
+            PlaceholderUtil.setMPState(true);
+            plugin.getLogger().info("Hooked into MiniPlaceholders");
         }
 
         hooks.values().stream().filter(Objects::nonNull).forEach(pluginHook -> pluginHook.onEnable(plugin));
