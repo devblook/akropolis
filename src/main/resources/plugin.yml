@@ -7,7 +7,7 @@ main: team.devblook.akropolis.AkropolisPlugin
 loadbefore: [ Essentials ]
 softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core, MiniPlaceholders ]
 libraries:
-  - com.github.cryptomorin:XSeries:9.2.0
+  - com.github.cryptomorin:XSeries:9.3.1
 
 permissions:
   akropolis.*:
