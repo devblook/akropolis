@@ -67,13 +67,15 @@ public class ChatGroups extends Module {
         if (event.isCancelled()) return;
 
         Player player = event.getPlayer();
-        ChatGroup currentGroup = chatGroups.get("default");
+        ChatGroup currentGroup = null;
 
         for (String group : chatGroups.keySet()) {
             if (player.hasPermission("akropolis.chat.group." + group)) {
                 currentGroup = chatGroups.get(group);
             }
         }
+
+        if (currentGroup == null) return;
 
         event.setCancelled(true);
 

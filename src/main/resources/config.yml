@@ -258,6 +258,8 @@ groups:
   # Create all the group formats you want following the same template.
   # To use any of these formats, the player must have the permission
   # akropolis.chat.group.<group name>
+  # If you want to disable this feature, just deny the akropolis.chat.group.default
+  # permission in LuckPerms or whichever permission management plugin you use.
   default:
     format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
     # Just in case you want to slow down your players a little.
