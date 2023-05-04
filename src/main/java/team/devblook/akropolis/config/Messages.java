@@ -84,7 +84,7 @@ public enum Messages {
         String message = config.getString("Messages." + this.path);
 
         if (message == null || message.isEmpty()) {
-            return Component.text("Akropolis: message not found (" + this.path + ")");
+            return Component.empty();
         }
 
         String rawPrefix = config.getString("Messages." + PREFIX.getPath());
@@ -98,7 +98,7 @@ public enum Messages {
         List<Component> componentMessage = new ArrayList<>();
 
         if (message.isEmpty()) {
-            componentMessage.add(Component.text("Akropolis: message not found (" + this.path + ")"));
+            componentMessage.add(Component.empty());
             return componentMessage;
         }
 

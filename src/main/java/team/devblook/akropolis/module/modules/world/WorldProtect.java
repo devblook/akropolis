@@ -20,6 +20,7 @@
 package team.devblook.akropolis.module.modules.world;
 
 import com.cryptomorin.xseries.XMaterial;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -150,7 +151,9 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-            player.sendMessage(Messages.EVENT_BLOCK_BREAK.toComponent());
+            Component message = Messages.EVENT_BLOCK_BREAK.toComponent();
+
+            if (message != Component.empty()) player.sendMessage(message);
         }
     }
 
@@ -183,7 +186,9 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(event.getPlayer().getUniqueId(), CooldownType.BLOCK_PLACE, 3)) {
-            player.sendMessage(Messages.EVENT_BLOCK_PLACE.toComponent());
+            Component message = Messages.EVENT_BLOCK_PLACE.toComponent();
+
+            if (message != Component.empty()) player.sendMessage(message);
         }
     }
 
@@ -216,7 +221,9 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_BREAK.toComponent());
+                Component message = Messages.EVENT_BLOCK_BREAK.toComponent();
+
+                if (message != Component.empty()) player.sendMessage(message);
             }
         }
     }
@@ -237,7 +244,9 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
+                Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+
+                if (message != Component.empty()) player.sendMessage(message);
             }
         }
     }
@@ -259,7 +268,9 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
+                Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+
+                if (message != Component.empty()) player.sendMessage(message);
             }
         }
     }
@@ -286,7 +297,9 @@ public class WorldProtect extends Module {
                     event.setCancelled(true);
 
                     if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                        player.sendMessage(Messages.EVENT_BLOCK_INTERACT.toComponent());
+                        Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+
+                        if (message != Component.empty()) player.sendMessage(message);
                     }
 
                     return;
@@ -368,7 +381,9 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_DROP, 3)) {
-            player.sendMessage(Messages.EVENT_ITEM_DROP.toComponent());
+            Component message = Messages.EVENT_ITEM_DROP.toComponent();
+
+            if (message != Component.empty()) player.sendMessage(message);
         }
     }
 
@@ -388,7 +403,9 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_PICKUP, 3)) {
-            player.sendMessage(Messages.EVENT_ITEM_PICKUP.toComponent());
+            Component message = Messages.EVENT_ITEM_PICKUP.toComponent();
+
+            if (message != Component.empty()) player.sendMessage(message);
         }
     }
 
@@ -456,7 +473,9 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.PLAYER_PVP, 3)) {
-            event.getDamager().sendMessage(Messages.EVENT_PLAYER_PVP.toComponent());
+            Component message = Messages.EVENT_PLAYER_PVP.toComponent();
+
+            if (message != Component.empty()) event.getDamager().sendMessage(message);
         }
     }
 }

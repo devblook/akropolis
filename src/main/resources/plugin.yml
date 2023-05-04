@@ -63,3 +63,8 @@ permissions:
       akropolis.block.break: true
       akropolis.block.place: true
       akropolis.block.interact: true
+  akropolis.chat.group.*:
+    description: Determines which chat format and cooldown time should be used
+    children:
+      akropolis.chat.group.default:
+        default: true
