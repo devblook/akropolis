@@ -41,8 +41,7 @@ Then you will find the binary under the `build/libs/` directory.
 Reporting a bug or requesting a feature can be useful for further development of the plugin. To do that you just need
 to fill one of the issue templates we made for you:
 [Click here to report a bug](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=bug&template=bug_report.yml&title=A+brief+description+of+your+report)
-or [click here to request a feature](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request)
-.
+or [click here to request a feature](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request).
 
 ### Contribute
 
