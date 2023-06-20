@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version ("8.1.0")
+    id("com.github.johnrengelman.shadow") version ("8.1.1")
 }
 
 group = "team.devblook"
@@ -26,20 +26,20 @@ repositories {
 dependencies {
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC7")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC7")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_19_R3:2.0.0-RC7")
+    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC9")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC9")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_20_R1:2.0.0-RC9")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.13.1")
-    compileOnly("net.kyori:adventure-api:4.13.1")
+    compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
+    compileOnly("net.kyori:adventure-api:4.14.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.3")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
-    compileOnly("com.github.cryptomorin:XSeries:9.3.1")
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.1.0")
+    compileOnly("com.github.cryptomorin:XSeries:9.4.0")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.0")
 }
 
 configurations.implementation {
