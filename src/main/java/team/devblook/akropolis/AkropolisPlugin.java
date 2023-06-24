@@ -65,16 +65,6 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
         getLogger().log(Level.INFO, "--------");
 
-        // Check if using Paper
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-        } catch (ClassNotFoundException ex) {
-            getLogger().severe("Akropolis requires Paper 1.19+ to run, you can download");
-            getLogger().severe("Paper here: https://papermc.io/downloads.");
-            setEnabled(false);
-            return;
-        }
-
         // Check plugin hooks
         hooksManager = new HooksManager(this);
 
