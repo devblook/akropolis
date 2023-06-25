@@ -1,6 +1,7 @@
 plugins {
     java
     id("com.github.johnrengelman.shadow") version ("8.1.1")
+    id("io.papermc.paperweight.userdev") version ("1.5.5")
 }
 
 group = "team.devblook"
@@ -23,6 +24,8 @@ repositories {
 }
 
 dependencies {
+    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
+
     implementation("javax.inject:javax.inject:1")
 
     implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC9")
