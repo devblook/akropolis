@@ -100,7 +100,6 @@ public class HologramManager extends Module {
             }
 
             dataConfig.get().set("holograms." + hologram.getName() + ".lines", lines);
-            lines.forEach(l -> Bukkit.getLogger().warning(l));
         });
 
         dataConfig.save();
