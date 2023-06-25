@@ -42,13 +42,9 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
     }
 
     @Override
-    public Plugin getPlugin() {
-        return this.plugin;
-    }
-
-    @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         try {
+            if (!isRegistered()) return true;
             onCommand(sender, label, args);
         } catch (Exception e) {
             sender.sendMessage(TextUtil.parse("<red>An error occurred processing this command. Please make sure your parameters are correct."));
@@ -59,4 +55,9 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
     }
 
     protected abstract void onCommand(CommandSender sender, String label, String[] args);
+
+    @Override
+    public Plugin getPlugin() {
+        return this.plugin;
+    }
 }

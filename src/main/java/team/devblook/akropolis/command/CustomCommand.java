@@ -19,34 +19,44 @@
 
 package team.devblook.akropolis.command;
 
-import java.util.ArrayList;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import team.devblook.akropolis.AkropolisPlugin;
+import team.devblook.akropolis.config.Messages;
+
 import java.util.List;
 
-public class CustomCommand {
+public class CustomCommand extends InjectableCommand {
     private String permission;
-    private final List<String> aliases;
     private final List<String> actions;
 
-    public CustomCommand(String command, List<String> actions) {
-        this.aliases = new ArrayList<>();
-        this.aliases.add(command);
+    public CustomCommand(Plugin plugin, String name, List<String> aliases, List<String> actions) {
+        super(plugin, name, "A custom Akropolis command", aliases);
         this.actions = actions;
+    }
+
+    @Override
+    protected void onCommand(CommandSender sender, String label, String[] args) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
+            return;
+        }
+
+        if (permission != null && !sender.hasPermission(permission)) {
+            sender.sendMessage(Messages.CUSTOM_COMMAND_NO_PERMISSION.toComponent());
+            return;
+        }
+
+        AkropolisPlugin.getInstance().getActionManager().executeActions(player, actions);
     }
 
     public void setPermission(String permission) {
         this.permission = permission;
     }
 
-    public void addAliases(List<String> aliases) {
-        this.aliases.addAll(aliases);
-    }
-
     public String getPermission() {
         return permission;
-    }
-
-    public List<String> getAliases() {
-        return aliases;
     }
 
     public List<String> getActions() {

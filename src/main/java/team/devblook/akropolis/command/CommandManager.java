@@ -23,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.command.commands.*;
 import team.devblook.akropolis.command.commands.gamemode.*;
@@ -35,22 +36,22 @@ import java.util.Set;
 
 public class CommandManager {
     private final AkropolisPlugin plugin;
-    private final FileConfiguration config;
-
     private final Set<InjectableCommand> commands;
     private final List<CustomCommand> customCommands;
     private final CommandMap commandMap;
+    private FileConfiguration config;
 
     public CommandManager(AkropolisPlugin plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
         this.commands = new HashSet<>();
         this.customCommands = new ArrayList<>();
         this.commandMap = Bukkit.getCommandMap();
     }
 
     public void reload() {
-        commands.forEach(c -> c.unregister(commandMap));
+        config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
+
+        commands.forEach(this::unregisterCommand);
         if (!commands.isEmpty()) commands.clear();
 
         registerCommand(new AkropolisCommand(plugin));
@@ -63,16 +64,21 @@ public class CommandManager {
         }
 
         for (String command : commandsSection.getKeys(false)) {
-            if (!config.getBoolean("commands." + command + ".enabled")) continue;
+            if (!config.getBoolean("commands." + command + ".enabled")) {
+                continue;
+            }
 
             registerCommand(command, commandsSection.getStringList(command + ".aliases"));
         }
 
         reloadCustomCommands();
+        Bukkit.getOnlinePlayers().forEach(Player::updateCommands);
     }
 
     public void reloadCustomCommands() {
+        customCommands.forEach(this::unregisterCommand);
         if (!customCommands.isEmpty()) customCommands.clear();
+
         if (!config.isSet("custom_commands")) return;
 
         ConfigurationSection customCommandsSection = config.getConfigurationSection("custom_commands");
@@ -83,19 +89,20 @@ public class CommandManager {
         }
 
         for (String entry : customCommandsSection.getKeys(false)) {
-
-            CustomCommand customCommand = new CustomCommand(entry,
-                    customCommandsSection.getStringList(entry + ".actions"));
+            List<String> actions = customCommandsSection.getStringList(entry + ".actions");
+            List<String> aliases = new ArrayList<>();
 
             if (customCommandsSection.contains(entry + ".aliases")) {
-                customCommand.addAliases(config.getStringList("custom_commands." + entry + ".aliases"));
+                aliases = config.getStringList("custom_commands." + entry + ".aliases");
             }
+
+            CustomCommand customCommand = new CustomCommand(plugin, entry, aliases, actions);
 
             if (customCommandsSection.contains(entry + ".permission")) {
                 customCommand.setPermission(config.getString("custom_commands." + entry + ".permission"));
             }
 
-            this.customCommands.add(customCommand);
+            registerCommand(customCommand);
         }
     }
 
@@ -121,6 +128,17 @@ public class CommandManager {
         try {
             commandMap.register("akropolis", command);
             commands.add(command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void unregisterCommand(InjectableCommand command) {
+        try {
+            command.getAliases().forEach(a -> commandMap.getKnownCommands().remove(a));
+            commandMap.getKnownCommands().remove(command.getName());
+            commandMap.getKnownCommands().remove("akropolis:" + command.getName());
+            command.unregister(commandMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
