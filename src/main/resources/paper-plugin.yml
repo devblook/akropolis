@@ -2,12 +2,27 @@ name: Akropolis
 authors: [ ZetaStormy, ItsLewizzz ]
 version: ${version}
 description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz.
-api-version: 1.19
+api-version: "1.20"
 main: team.devblook.akropolis.AkropolisPlugin
-loadbefore: [ Essentials ]
-softdepend: [ PlaceholderAPI, HeadDatabase, Multiverse-Core, MiniPlaceholders ]
-libraries:
-  - com.github.cryptomorin:XSeries:9.3.1
+loader: team.devblook.akropolis.AkropolisPluginLoader
+
+dependencies:
+  server:
+    Essentials:
+      load: AFTER
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    HeadDatabase:
+      load: BEFORE
+      required: false
+    Multiverse-Core:
+      load: BEFORE
+      required: false
+    MiniPlaceholders:
+      load: BEFORE
+      required: false
 
 permissions:
   akropolis.*:

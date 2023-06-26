@@ -23,6 +23,7 @@ import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
 import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import team.devblook.akropolis.action.ActionManager;
@@ -64,16 +65,6 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, "Author: ZetaStormy");
         getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
         getLogger().log(Level.INFO, "--------");
-
-        // Check if using Paper
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-        } catch (ClassNotFoundException ex) {
-            getLogger().severe("Akropolis requires Paper 1.19+ to run, you can download");
-            getLogger().severe("Paper here: https://papermc.io/downloads.");
-            setEnabled(false);
-            return;
-        }
 
         // Check plugin hooks
         hooksManager = new HooksManager(this);
@@ -140,7 +131,12 @@ public class AkropolisPlugin extends JavaPlugin {
 
         scoreboardLibrary.close();
 
-        getCommandManager().reload();
+        try {
+            commandManager.reload();
+            ((CraftServer) getServer()).syncCommands();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);

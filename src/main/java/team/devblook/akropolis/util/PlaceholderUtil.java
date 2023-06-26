@@ -77,6 +77,7 @@ public class PlaceholderUtil {
         return text;
     }
 
+    @SuppressWarnings("deprecation")
     public static TagResolver papiTag(Player player) {
         return TagResolver.resolver("papi", (argumentQueue, context) -> {
             String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();

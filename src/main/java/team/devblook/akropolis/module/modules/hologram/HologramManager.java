@@ -24,10 +24,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import team.devblook.akropolis.AkropolisPlugin;
+import team.devblook.akropolis.config.ConfigHandler;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
@@ -40,7 +40,7 @@ import java.util.Set;
 
 public class HologramManager extends Module {
     private Set<Hologram> holograms;
-    private FileConfiguration dataConfig;
+    private ConfigHandler dataConfig;
     private ConfigurationSection hologramsSection;
 
     public HologramManager(AkropolisPlugin plugin) {
@@ -50,7 +50,7 @@ public class HologramManager extends Module {
     @Override
     public void onEnable() {
         holograms = new HashSet<>();
-        dataConfig = getConfig(ConfigType.DATA);
+        dataConfig = getPlugin().getConfigManager().getFile(ConfigType.DATA);
         hologramsSection = getConfig(ConfigType.DATA).getConfigurationSection("holograms");
 
         if (hologramsSection == null) {
@@ -87,7 +87,7 @@ public class HologramManager extends Module {
 
     public void saveHolograms() {
         holograms.forEach(hologram -> {
-            dataConfig.set("holograms." + hologram.getName() + ".location", hologram.getLocation());
+            dataConfig.get().set("holograms." + hologram.getName() + ".location", hologram.getLocation());
 
             List<String> lines = new ArrayList<>();
 
@@ -99,10 +99,11 @@ public class HologramManager extends Module {
                 }
             }
 
-            dataConfig.set("holograms." + hologram.getName() + ".lines", lines);
+            dataConfig.get().set("holograms." + hologram.getName() + ".lines", lines);
         });
 
-        deleteAllHolograms();
+        dataConfig.save();
+        removeAllHolograms();
     }
 
     public Set<Hologram> getHolograms() {
@@ -138,7 +139,7 @@ public class HologramManager extends Module {
         }
     }
 
-    public void deleteAllHolograms() {
+    public void removeAllHolograms() {
         holograms.forEach(Hologram::remove);
         holograms.clear();
     }
