@@ -50,7 +50,7 @@ public class TitleAction implements Action {
             fadeIn = Duration.ofSeconds(Long.parseLong(args[2]));
             stay = Duration.ofSeconds(Long.parseLong(args[3]));
             fadeOut = Duration.ofSeconds(Long.parseLong(args[4]));
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             fadeIn = Duration.ofSeconds(1);
             stay = Duration.ofSeconds(3);
             fadeOut = Duration.ofSeconds(1);
