@@ -32,6 +32,8 @@ dependencies {
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC9")
     runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-v1_20_R1:2.0.0-RC9")
 
+    compileOnly("org.spongepowered:configurate-hocon:4.1.2")
+
     compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
     compileOnly("net.kyori:adventure-api:4.14.0")
 
