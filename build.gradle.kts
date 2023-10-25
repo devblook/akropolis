@@ -1,7 +1,7 @@
 plugins {
     java
     id("com.github.johnrengelman.shadow") version ("8.1.1")
-    id("io.papermc.paperweight.userdev") version ("1.5.5")
+    id("io.papermc.paperweight.userdev") version ("1.5.8")
 }
 
 group = "team.devblook"
@@ -28,9 +28,9 @@ dependencies {
 
     implementation("javax.inject:javax.inject:1")
 
-    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC13")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC13")
-    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-modern:2.0.0-RC13")
+    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:2.0.0-RC14")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-implementation:2.0.0-RC14")
+    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-modern:2.0.0-RC14")
 
     compileOnly("org.spongepowered:configurate-hocon:4.1.2")
 
@@ -42,7 +42,7 @@ dependencies {
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.4")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.1")
-    compileOnly("com.github.cryptomorin:XSeries:9.6.0")
+    compileOnly("com.github.cryptomorin:XSeries:9.7.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.1")
 }
 
