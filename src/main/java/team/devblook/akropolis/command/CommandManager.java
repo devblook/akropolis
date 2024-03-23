@@ -84,7 +84,7 @@ public class CommandManager {
         ConfigurationSection customCommandsSection = config.getConfigurationSection("custom_commands");
 
         if (customCommandsSection == null) {
-            plugin.getLogger().severe("Custom commands configuration section is missing!");
+            plugin.getLogger().info("Skipping custom commands registration, configuration section is missing!");
             return;
         }
 
