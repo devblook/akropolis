@@ -34,6 +34,7 @@ import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Launchpad extends Module {
     private double launch;
@@ -84,19 +85,20 @@ public class Launchpad extends Module {
 
     @EventHandler
     public void onLaunchPadInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.PHYSICAL)
+        if (!event.hasBlock() || event.getAction() != Action.PHYSICAL)
             return;
 
         Player player = event.getPlayer();
-        Location location = player.getLocation();
+        Location playerLocation = player.getLocation();
+        Location blockLocation = Objects.requireNonNull(event.getClickedBlock()).getLocation();
 
-        if (inDisabledWorld(location))
+        if (inDisabledWorld(blockLocation))
             return;
 
         // Check for launchpad block and cooldown
-        if (location.getBlock().getType() == topBlock && location.subtract(0, 1, 0).getBlock().getType() == bottomBlock
+        if (blockLocation.getBlock().getType() == topBlock && blockLocation.subtract(0, 1, 0).getBlock().getType() == bottomBlock
                 && tryCooldown(player.getUniqueId(), CooldownType.LAUNCHPAD, 1)) {
-            player.setVelocity(location.getDirection().multiply(launch).setY(launchY));
+            player.setVelocity(playerLocation.getDirection().multiply(launch).setY(launchY));
             executeActions(player, actions);
         }
     }
