@@ -45,16 +45,17 @@ public class ChatGroups extends Module {
     @Override
     public void onEnable() {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        ConfigurationSection groups = config.getConfigurationSection("groups");
+        ConfigurationSection groupsSection = config.getConfigurationSection("groups");
 
-        if (groups == null) {
-            throw new NullPointerException("No chat groups in configuration, please add the new section to you config.yml!");
+        if (groupsSection == null) {
+            getPlugin().getLogger().info("Skipping chat groups creation, configuration section is missing!");
+            return;
         }
 
-        groups.getKeys(false).forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
-                groups.getString(groupName + ".format", "No format."),
-                groups.getInt(groupName + ".cooldown.time", 0),
-                groups.getString(groupName + ".cooldown.message", "No cooldown message."))));
+        groupsSection.getKeys(false).forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
+                groupsSection.getString(groupName + ".format", "No format."),
+                groupsSection.getInt(groupName + ".cooldown.time", 0),
+                groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."))));
     }
 
     @Override
