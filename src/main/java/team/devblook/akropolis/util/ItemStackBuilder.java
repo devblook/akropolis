@@ -30,18 +30,45 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.Bukkit;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.hooks.head.HeadHook;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.lang.reflect.Field;
 
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
     private static final AkropolisPlugin PLUGIN;
+	private static final Enchantment ARROW_INFINITE_ENCHANTMENT;
 
     static {
+		// Fix: unknown "ARROW_INFINITE" field on versions 1.20.6 or newer.
+		try {
+            // 1.20.6-R0.1-SNAPSHOT * split * 1.20.6 * substring * 20.6
+	        final String versionSplitted = Bukkit.getBukkitVersion().split("-")[0]
+	            .substring(2);
+	        // "20.6" from string, now represented as decimal. 
+	        final double versionWithDecimals = Double.parseDouble(versionSplitted);
+			Field field = null;
+	        // This would correspond to check if the version is higher or equals to
+	        // 1.20.6.
+	        if (versionWithDecimals >= 20.6) {
+			    // Use newer field name.
+	            field = Enchantment.class.getDeclaredField("INFINITY");
+	        } else {
+			    // Use older field name.
+                field = Enchantment.class.getDeclaredField("ARROW_INFINITE");
+            }
+			field.setAccessible(true);
+			ARROW_INFINITE_ENCHANTMENT = (Enchantment) field.get(Enchantment.class);
+			field.setAccessible(false);
+		} catch (final IllegalAccessException | NoSuchFieldException exception) {
+			throw new RuntimeException(exception);
+		}
+		
         PLUGIN = AkropolisPlugin.getInstance();
         MALFORMED_ITEM = new ItemStack(Material.BARRIER);
         ItemMeta malformedMeta = MALFORMED_ITEM.getItemMeta();
@@ -267,7 +294,7 @@ public class ItemStackBuilder {
 
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         itemStack.setItemMeta(itemMeta);
-        itemStack.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+        itemStack.addUnsafeEnchantment(ARROW_INFINITE_ENCHANTMENT, 1);
     }
 
     public ItemStack build() {
