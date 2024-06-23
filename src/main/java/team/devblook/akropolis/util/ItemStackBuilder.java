@@ -47,15 +47,12 @@ public class ItemStackBuilder {
     static {
 		// Fix: unknown "ARROW_INFINITE" field on versions 1.20.6 or newer.
 		try {
-            // 1.20.6-R0.1-SNAPSHOT * split * 1.20.6 * substring * 20.6
-	        final String versionSplitted = Bukkit.getBukkitVersion().split("-")[0]
-	            .substring(2);
-	        // "20.6" from string, now represented as decimal. 
-	        final double versionWithDecimals = Double.parseDouble(versionSplitted);
+            // 1.20.6 -> 206
+	        final byte version = Byte.parseByte(Bukkit.getMinecraftVersion().substring(2).replace("\\.", ""));
 			Field field = null;
 	        // This would correspond to check if the version is higher or equals to
 	        // 1.20.6.
-	        if (versionWithDecimals >= 20.6) {
+	        if (versionWithDecimals >= 206) {
 			    // Use newer field name.
 	            field = Enchantment.class.getDeclaredField("INFINITY");
 	        } else {
