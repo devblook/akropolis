@@ -52,7 +52,7 @@ public class ItemStackBuilder {
 			Field field = null;
 	        // This would correspond to check if the version is higher or equals to
 	        // 1.20.6.
-	        if (versionWithDecimals >= 206) {
+	        if (version >= 206) {
 			    // Use newer field name.
 	            field = Enchantment.class.getDeclaredField("INFINITY");
 	        } else {
