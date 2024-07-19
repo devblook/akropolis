@@ -22,6 +22,7 @@ package team.devblook.akropolis.util;
 import com.cryptomorin.xseries.XMaterial;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.hooks.head.HeadHook;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,8 +42,30 @@ import java.util.Optional;
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
     private static final AkropolisPlugin PLUGIN;
+    private static final Enchantment ARROW_INFINITE_ENCHANTMENT;
 
     static {
+        // Fix: unknown "ARROW_INFINITE" field on versions 1.20.6 or newer.
+        try {
+            // 1.20.6 -> 206
+            final int version = Integer.parseInt(Bukkit.getMinecraftVersion().substring(2).replace(".", ""));
+            Field field = null;
+            // This would correspond to check if the version is higher or equals to
+            // 1.20.6.
+            if (version >= 206) {
+                // Use newer field name.
+                field = Enchantment.class.getDeclaredField("INFINITY");
+            } else {
+                // Use older field name.
+                field = Enchantment.class.getDeclaredField("ARROW_INFINITE");
+            }
+            field.setAccessible(true);
+            ARROW_INFINITE_ENCHANTMENT = (Enchantment) field.get(Enchantment.class);
+            field.setAccessible(false);
+        } catch (final IllegalAccessException | NoSuchFieldException exception) {
+            throw new RuntimeException(exception);
+        }
+
         PLUGIN = AkropolisPlugin.getInstance();
         MALFORMED_ITEM = new ItemStack(Material.BARRIER);
         ItemMeta malformedMeta = MALFORMED_ITEM.getItemMeta();
@@ -122,7 +146,7 @@ public class ItemStackBuilder {
     public static ItemStack parseMaterial(ConfigurationSection section) {
         String rawMaterial = section.getString("material");
 
-        if (rawMaterial== null) {
+        if (rawMaterial == null) {
             PLUGIN.getLogger().severe("Could not get material from configuration section!");
             return MALFORMED_ITEM;
         }
@@ -267,7 +291,7 @@ public class ItemStackBuilder {
 
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         itemStack.setItemMeta(itemMeta);
-        itemStack.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+        itemStack.addUnsafeEnchantment(ARROW_INFINITE_ENCHANTMENT, 1);
     }
 
     public ItemStack build() {
