@@ -20,14 +20,15 @@
 package team.devblook.akropolis.hook.hooks.head;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.PluginHook;
 
-import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -54,25 +55,18 @@ public class BaseHead implements PluginHook, HeadHook {
         }
 
         SkullMeta meta = (SkullMeta) head.getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-
-        profile.getProperties().put("textures", new Property("textures", data));
-        Field profileField;
-
-        try {
-            if (meta == null) {
-                plugin.getLogger().severe("Could not parse head meta!");
-                return head;
-            }
-
-            profileField = meta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(meta, profile);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
+        if (meta == null) {
+            plugin.getLogger().severe("Could not parse head meta!");
+            return head;
         }
-
-        head.setItemMeta(meta);
+        head.editMeta(SkullMeta.class, skullMeta -> {
+            PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+            Collection<ProfileProperty> properties = profile.getProperties();
+            properties.clear();
+            properties.add(new ProfileProperty("textures", data, ""));
+            profile.setProperties(properties);
+            skullMeta.setPlayerProfile(profile);
+        });
         cache.put(data, head);
         return head;
     }
