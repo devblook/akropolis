@@ -49,7 +49,7 @@ public class PlayerOffHandSwap extends Module {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getRawSlot() != event.getSlot() && event.getCursor() != null && event.getSlot() == 40) {
+        if (event.getRawSlot() != event.getSlot() && event.getSlot() == 40) {
             event.setCancelled(true);
         }
     }

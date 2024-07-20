@@ -149,7 +149,7 @@ public class AkropolisCommand extends InjectableCommand {
             CommandManager commandManager = plugin.getCommandManager();
             sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>Custom commands (" + commandManager.getCustomCommands().size() + ")"
                     + " <dark_gray>- <green>" + (commandManager.getCustomCommands().stream()
-                    .map(command -> command.getAliases().get(0)).collect(Collectors.joining(", ")))));
+                    .map(command -> command.getAliases().getFirst()).collect(Collectors.joining(", ")))));
 
             sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>PlaceholderAPI hook<dark_gray>: "
                     + (plugin.getHookManager().isHookEnabled("PLACEHOLDER_API") ? "<green>yes" : "<red>no")));

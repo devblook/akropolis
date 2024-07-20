@@ -34,7 +34,7 @@ public class ServerAction implements Action {
 
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
-        @SuppressWarnings("UnstableApiUsage") ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("ConnectOther");
         out.writeUTF(player.getName());
         out.writeUTF(data);
