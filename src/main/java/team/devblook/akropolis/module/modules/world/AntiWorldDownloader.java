@@ -57,7 +57,7 @@ public class AntiWorldDownloader extends Module implements PluginMessageListener
 
         if (!channel.equals("wdl:init")) return;
 
-        @SuppressWarnings("UnstableApiUsage") ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeInt(0);
         out.writeBoolean(false);
 

@@ -49,7 +49,7 @@ public class ItemStackBuilder {
         try {
             // 1.20.6 -> 206
             final int version = Integer.parseInt(Bukkit.getMinecraftVersion().substring(2).replace(".", ""));
-            Field field = null;
+            Field field;
             // This would correspond to check if the version is higher or equals to
             // 1.20.6.
             if (version >= 206) {

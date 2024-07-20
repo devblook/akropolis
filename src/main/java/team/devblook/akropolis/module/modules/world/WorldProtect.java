@@ -212,8 +212,6 @@ public class WorldProtect extends Module {
         Entity entity = event.getEntity();
         Entity player = event.getRemover();
 
-        if (player == null) return;
-
         if (entity instanceof Painting || entity instanceof ItemFrame && player instanceof Player) {
             if (player.hasPermission(Permissions.EVENT_BLOCK_BREAK.getPermission()))
                 return;
