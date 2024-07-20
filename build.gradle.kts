@@ -59,7 +59,7 @@ tasks {
         archiveFileName.set("Akropolis-${project.version}.jar")
 
         minimize {
-            exclude(dependency("com.github.MegavexNetwork.scoreboard-library:.*:.*"))
+            exclude(dependency("net.megavex:.*:.*"))
         }
 
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
