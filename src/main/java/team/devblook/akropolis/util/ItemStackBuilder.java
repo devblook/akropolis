@@ -48,8 +48,13 @@ public class ItemStackBuilder {
         // Fix: unknown "ARROW_INFINITE" field on versions 1.20.6 or newer.
         try {
             // 1.20.6 -> 206
-            final int version = Integer.parseInt(Bukkit.getMinecraftVersion().substring(2).replace(".", ""));
-            Field field;
+            String strippedVersion = Bukkit.getMinecraftVersion()
+                    .substring(2)
+                    .replace(".", "");
+            // 1.21 -> 21 -> 210
+            int version = Integer.parseInt(strippedVersion.length() == 2 ? strippedVersion + "0" : strippedVersion);
+
+            Field field = null;
             // This would correspond to check if the version is higher or equals to
             // 1.20.6.
             if (version >= 206) {
