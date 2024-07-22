@@ -16,7 +16,7 @@ Simply use what you feel meets your needs.
 
 To use this plugin just a grab a binary from the [releases page](https://github.com/devblook/akropolis/releases)
 or [compile it](#compile) yourself and drop it into your `plugins/` directory. Take in mind that you will need to be
-running Paper 1.20+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
+running Paper 1.21+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
 
 ### Compile
 
