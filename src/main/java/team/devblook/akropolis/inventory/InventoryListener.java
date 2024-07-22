@@ -30,7 +30,7 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (InventoryManager.getTopInventory(event).getHolder() instanceof InventoryBuilder) {
+        if (event.getView().getTopInventory().getHolder() instanceof InventoryBuilder) {
             event.setCancelled(true);
 
             if (event.getWhoClicked() instanceof Player player) {
@@ -40,7 +40,7 @@ public class InventoryListener implements Listener {
                 if (itemStack == null || itemStack.getType() == Material.AIR)
                     return;
 
-                InventoryBuilder customHolder = (InventoryBuilder) InventoryManager.getTopInventory(event).getHolder();
+                InventoryBuilder customHolder = (InventoryBuilder) event.getView().getTopInventory().getHolder();
                 InventoryItem item = customHolder.getIcon(event.getRawSlot());
 
                 if (item == null)
