@@ -81,10 +81,12 @@ public class PlaceholderUtil {
     public static TagResolver papiTag(Player player) {
         return TagResolver.resolver("papi", (argumentQueue, context) -> {
             String papiPlaceholder = argumentQueue.popOr("papi tag requires an argument").value();
-            String parsedPlaceholder = ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%'));
-            Component componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder);
+            String parsedPlaceholder = TextUtil.raw(LegacyComponentSerializer
+                    .legacySection()
+                    .deserialize(ChatColor.translateAlternateColorCodes('&',
+                            PlaceholderAPI.setPlaceholders(player, '%' + papiPlaceholder + '%'))));
 
-            return Tag.selfClosingInserting(componentPlaceholder);
+            return Tag.selfClosingInserting(TextUtil.parse(parsedPlaceholder));
         });
     }
 
