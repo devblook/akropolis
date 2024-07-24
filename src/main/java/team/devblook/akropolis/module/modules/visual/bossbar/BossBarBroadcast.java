@@ -24,11 +24,14 @@ import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.config.ConfigType;
 import team.devblook.akropolis.module.Module;
@@ -88,11 +91,21 @@ public class BossBarBroadcast extends Module implements Runnable {
             }
         }
 
+        BossBar.Overlay overlayType = BossBar.Overlay
+                .valueOf(bossBarSettings.getString("overlay.type", "PROGRESS"));
+        float overlayProgress = (float) bossBarSettings.getDouble("overlay.progress", BossBar.MAX_PROGRESS);
+
         size = broadcasts.size();
         if (size > 0) {
             Component firstBroadcast = TextUtil.parse(broadcasts.get(0));
-            this.broadcastBar = BossBar.bossBar(firstBroadcast, 1, BossBar.Color.BLUE, BossBar.Overlay.NOTCHED_20);
+            this.broadcastBar = BossBar.bossBar(firstBroadcast, overlayProgress, BossBar.Color.BLUE, overlayType);
             count++;
+
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                if (!inDisabledWorld(p.getLocation())) {
+                    p.showBossBar(broadcastBar);
+                }
+            });
 
             broadcastTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), this,
                     60L, bossBarSettings.getLong("delay") * 20);
@@ -102,6 +115,7 @@ public class BossBarBroadcast extends Module implements Runnable {
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTask(broadcastTask);
+        Bukkit.getOnlinePlayers().forEach(player -> player.activeBossBars().forEach(player::hideBossBar));
     }
 
     @Override
@@ -134,6 +148,23 @@ public class BossBarBroadcast extends Module implements Runnable {
         Player player = event.getPlayer();
 
         if (inDisabledWorld(player.getLocation())) return;
+
+        player.showBossBar(broadcastBar);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onWorldChange(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        World fromWorld = event.getFrom().getWorld();
+        World toWorld = event.getTo().getWorld();
+
+        if (toWorld == null) return;
+        if (fromWorld == toWorld) return;
+
+        if (inDisabledWorld(toWorld)) {
+            player.hideBossBar(broadcastBar);
+            return;
+        }
 
         player.showBossBar(broadcastBar);
     }
