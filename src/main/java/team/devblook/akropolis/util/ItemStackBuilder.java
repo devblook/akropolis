@@ -111,6 +111,11 @@ public class ItemStackBuilder {
             builder.withFlags(flags.toArray(new ItemFlag[0]));
         }
 
+        if (section.contains("custom_model_data")) {
+            int data = section.getInt("custom_model_data");
+            builder.withCustomModelData(data);
+        }
+
         return builder;
     }
 
@@ -265,6 +270,19 @@ public class ItemStackBuilder {
         }
 
         itemMeta.setEnchantmentGlintOverride(true);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public void withCustomModelData(int data) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply custom model data!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        itemMeta.setCustomModelData(data);
         itemStack.setItemMeta(itemMeta);
     }
 
