@@ -36,6 +36,7 @@ import team.devblook.akropolis.module.modules.player.DoubleJump;
 import team.devblook.akropolis.module.modules.player.PlayerListener;
 import team.devblook.akropolis.module.modules.player.PlayerOffHandSwap;
 import team.devblook.akropolis.module.modules.player.PlayerVanish;
+import team.devblook.akropolis.module.modules.visual.bossbar.BossBarBroadcast;
 import team.devblook.akropolis.module.modules.visual.nametag.NametagManager;
 import team.devblook.akropolis.module.modules.visual.scoreboard.ScoreboardManager;
 import team.devblook.akropolis.module.modules.visual.tablist.TablistManager;
@@ -81,6 +82,7 @@ public class ModuleManager {
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl.enabled");
         registerModule(new DoubleJump(plugin), "double_jump.enabled");
         registerModule(new Launchpad(plugin), "launchpad.enabled");
+        registerModule(new BossBarBroadcast(plugin), "boss_bar_announcements.enabled");
         registerModule(new NametagManager(plugin), "nametag.enabled");
         registerModule(new ScoreboardManager(plugin), "scoreboard.enabled");
         registerModule(new TablistManager(plugin), "tablist.enabled");
