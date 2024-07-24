@@ -203,10 +203,18 @@ announcements:
 
 boss_bar_announcements:
   # Should the boss bar announcements' system be enabled?
-  enabled: true
+  enabled: false
 
   # Delay sending boss bar announcements (in seconds).
   delay: 60
+
+  # Choose how the boss bar looks.
+  overlay:
+    # Decide if the boss bar is continuous or split into segments.
+    # Valid options: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
+    type: "PROGRESS"
+    # The amount of boss bar that's filled up. A number in the interval [0, 1].
+    progress: 1.0
 
   sound:
     enabled: false
