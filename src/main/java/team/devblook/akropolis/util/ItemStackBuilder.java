@@ -22,7 +22,9 @@ package team.devblook.akropolis.util;
 import com.cryptomorin.xseries.XMaterial;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -68,8 +70,17 @@ public class ItemStackBuilder {
 
         String username = section.getString("username");
 
-        if (username != null && section.contains("username") && player != null) {
-            builder.setSkullOwner(username.replace("player", player.getName()));
+        if (username != null && section.contains("username")) {
+            if (player != null) {
+                String playerName = TextUtil.raw(PlaceholderUtil.setPlaceholders(username, player));
+                OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(playerName);
+
+                builder.setSkullOwner(skullPlayer);
+            } else if (username.equals("<player>")) {
+                builder.setSkullOwner(Bukkit.getOfflinePlayer("null"));
+            } else {
+                builder.setSkullOwner(Bukkit.getOfflinePlayer(username));
+            }
         }
 
         if (section.contains("display_name")) {
@@ -199,8 +210,7 @@ public class ItemStackBuilder {
         itemStack.setItemMeta(itemMeta);
     }
 
-    @SuppressWarnings("deprecation")
-    public ItemStackBuilder setSkullOwner(String owner) {
+    public ItemStackBuilder setSkullOwner(OfflinePlayer owner) {
         try {
             SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
 
@@ -210,7 +220,7 @@ public class ItemStackBuilder {
                 return new ItemStackBuilder(MALFORMED_ITEM);
             }
 
-            itemMeta.setOwner(owner);
+            itemMeta.setOwningPlayer(owner);
             itemStack.setItemMeta(itemMeta);
         } catch (ClassCastException expected) {
             // Expected.
