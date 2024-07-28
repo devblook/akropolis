@@ -20,12 +20,14 @@
 package team.devblook.akropolis.inventory;
 
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
 
@@ -75,6 +77,18 @@ public abstract class AbstractInventory implements Listener {
 
             if (item.getItemMeta().hasLore() && item.getItemMeta().lore() != null) {
                 newItem.withLore(item.getItemMeta().lore(), player);
+            }
+
+            if (item.getType() == Material.PLAYER_HEAD) {
+                SkullMeta itemMeta = (SkullMeta) item.getItemMeta();
+
+                if (itemMeta.hasOwner()) {
+                    OfflinePlayer owner = itemMeta.getOwningPlayer();
+
+                    if (owner != null && owner.getName() != null && owner.getName().equals("null")) {
+                        newItem.setSkullOwner(player);
+                    }
+                }
             }
 
             inventory.setItem(i, newItem.build());
