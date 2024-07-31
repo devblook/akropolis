@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import team.devblook.akropolis.AkropolisPlugin;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 
 import java.util.List;
 
@@ -39,12 +39,12 @@ public class CustomCommand extends InjectableCommand {
     @Override
     protected void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
+            sender.sendMessage(Message.CONSOLE_NOT_ALLOWED.toComponent());
             return;
         }
 
         if (permission != null && !sender.hasPermission(permission)) {
-            sender.sendMessage(Messages.CUSTOM_COMMAND_NO_PERMISSION.toComponent());
+            sender.sendMessage(Message.CUSTOM_COMMAND_NO_PERMISSION.toComponent());
             return;
         }
 

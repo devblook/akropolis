@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
@@ -58,7 +58,7 @@ public class ChatCommandBlock extends Module {
 
         if (blockedCommands.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
-            player.sendMessage(Messages.COMMAND_BLOCKED.toComponent());
+            player.sendMessage(Message.COMMAND_BLOCKED.toComponent());
         }
     }
 }

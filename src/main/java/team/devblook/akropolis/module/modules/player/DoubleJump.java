@@ -31,7 +31,7 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
@@ -94,7 +94,7 @@ public class DoubleJump extends Module {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
-            player.sendMessage(TextUtil.replace(Messages.DOUBLE_JUMP_COOLDOWN.toComponent(), "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP))));
+            player.sendMessage(TextUtil.replace(Message.DOUBLE_JUMP_COOLDOWN.toComponent(), "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP))));
             return;
         }
 

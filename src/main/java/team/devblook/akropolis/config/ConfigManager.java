@@ -39,7 +39,7 @@ public class ConfigManager {
 
         configurations.values().forEach(ConfigHandler::saveDefaultConfig);
 
-        Messages.setConfiguration(getFile(ConfigType.MESSAGES).get());
+        Message.setConfiguration(getFile(ConfigType.MESSAGES).get());
     }
 
     public ConfigHandler getFile(ConfigType type) {
@@ -48,7 +48,7 @@ public class ConfigManager {
 
     public void reloadFiles() {
         configurations.values().forEach(ConfigHandler::reload);
-        Messages.setConfiguration(getFile(ConfigType.MESSAGES).get());
+        Message.setConfiguration(getFile(ConfigType.MESSAGES).get());
     }
 
     public void saveData() {

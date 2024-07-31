@@ -35,7 +35,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.modules.hotbar.HotbarItem;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
@@ -71,7 +71,7 @@ public class PlayerHider extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
-            player.sendMessage(TextUtil.replace(Messages.COOLDOWN_ACTIVE.toComponent(), "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER))));
+            player.sendMessage(TextUtil.replace(Message.COOLDOWN_ACTIVE.toComponent(), "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER))));
             return;
         }
 
@@ -81,7 +81,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_HIDDEN.toComponent());
+            player.sendMessage(Message.PLAYER_HIDER_HIDDEN.toComponent());
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -90,7 +90,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_SHOWN.toComponent());
+            player.sendMessage(Message.PLAYER_HIDER_SHOWN.toComponent());
 
             player.getInventory().setItem(getSlot(), getItem());
         }

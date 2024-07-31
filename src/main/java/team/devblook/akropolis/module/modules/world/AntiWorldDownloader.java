@@ -27,7 +27,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 import team.devblook.akropolis.util.TextUtil;
@@ -69,7 +69,7 @@ public class AntiWorldDownloader extends Module implements PluginMessageListener
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.ANTI_WDL_NOTIFY.getPermission())) {
-                p.sendMessage(TextUtil.replace(Messages.WORLD_DOWNLOAD_NOTIFY.toComponent(), "player", player.name()));
+                p.sendMessage(TextUtil.replace(Message.WORLD_DOWNLOAD_NOTIFY.toComponent(), "player", player.name()));
             }
         }
     }

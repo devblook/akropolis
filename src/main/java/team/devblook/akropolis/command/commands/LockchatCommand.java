@@ -23,7 +23,7 @@ import org.bukkit.command.CommandSender;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.command.InjectableCommand;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.ModuleType;
 import team.devblook.akropolis.module.modules.chat.ChatLock;
 import team.devblook.akropolis.util.TextUtil;
@@ -41,7 +41,7 @@ public class LockchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
-            sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+            sender.sendMessage(Message.NO_PERMISSION.toComponent());
             return;
         }
 
@@ -49,12 +49,12 @@ public class LockchatCommand extends InjectableCommand {
 
         if (chatLockModule.isChatLocked()) {
             plugin.getServer().broadcast(
-                    TextUtil.replace(Messages.CHAT_UNLOCKED_BROADCAST.toComponent(), "player", sender.name()));
+                    TextUtil.replace(Message.CHAT_UNLOCKED_BROADCAST.toComponent(), "player", sender.name()));
             chatLockModule.setChatLocked(false);
         } else {
             plugin.getServer()
                     .broadcast(
-                            TextUtil.replace(Messages.CHAT_LOCKED_BROADCAST.toComponent(), "player", sender.name()));
+                            TextUtil.replace(Message.CHAT_LOCKED_BROADCAST.toComponent(), "player", sender.name()));
             chatLockModule.setChatLocked(true);
         }
 

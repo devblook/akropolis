@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.command.InjectableCommand;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.util.TextUtil;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class ClearchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
-            sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+            sender.sendMessage(Message.NO_PERMISSION.toComponent());
             return;
         }
 
@@ -49,14 +49,14 @@ public class ClearchatCommand extends InjectableCommand {
                     player.sendMessage("");
                 }
 
-                player.sendMessage(TextUtil.replace(Messages.CLEARCHAT.toComponent(), "player", sender.name()));
+                player.sendMessage(TextUtil.replace(Message.CLEARCHAT.toComponent(), "player", sender.name()));
             }
         } else if (args.length == 1) {
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(TextUtil.replace(Messages.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
+                sender.sendMessage(TextUtil.replace(Message.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
                 return;
             }
 
@@ -64,7 +64,7 @@ public class ClearchatCommand extends InjectableCommand {
                 player.sendMessage("");
             }
 
-            sender.sendMessage(TextUtil.replace(Messages.CLEARCHAT_PLAYER.toComponent(), "player", sender.name()));
+            sender.sendMessage(TextUtil.replace(Message.CLEARCHAT_PLAYER.toComponent(), "player", sender.name()));
         }
 
     }

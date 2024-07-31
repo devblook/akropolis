@@ -41,7 +41,7 @@ import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
@@ -151,7 +151,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-            Component message = Messages.EVENT_BLOCK_BREAK.toComponent();
+            Component message = Message.EVENT_BLOCK_BREAK.toComponent();
 
             if (message != Component.empty()) player.sendMessage(message);
         }
@@ -186,7 +186,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(event.getPlayer().getUniqueId(), CooldownType.BLOCK_PLACE, 3)) {
-            Component message = Messages.EVENT_BLOCK_PLACE.toComponent();
+            Component message = Message.EVENT_BLOCK_PLACE.toComponent();
 
             if (message != Component.empty()) player.sendMessage(message);
         }
@@ -219,7 +219,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_BREAK, 3)) {
-                Component message = Messages.EVENT_BLOCK_BREAK.toComponent();
+                Component message = Message.EVENT_BLOCK_BREAK.toComponent();
 
                 if (message != Component.empty()) player.sendMessage(message);
             }
@@ -242,7 +242,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+                Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
 
                 if (message != Component.empty()) player.sendMessage(message);
             }
@@ -266,7 +266,7 @@ public class WorldProtect extends Module {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+                Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
 
                 if (message != Component.empty()) player.sendMessage(message);
             }
@@ -295,7 +295,7 @@ public class WorldProtect extends Module {
                     event.setCancelled(true);
 
                     if (tryCooldown(player.getUniqueId(), CooldownType.BLOCK_INTERACT, 3)) {
-                        Component message = Messages.EVENT_BLOCK_INTERACT.toComponent();
+                        Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
 
                         if (message != Component.empty()) player.sendMessage(message);
                     }
@@ -379,7 +379,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_DROP, 3)) {
-            Component message = Messages.EVENT_ITEM_DROP.toComponent();
+            Component message = Message.EVENT_ITEM_DROP.toComponent();
 
             if (message != Component.empty()) player.sendMessage(message);
         }
@@ -401,7 +401,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.ITEM_PICKUP, 3)) {
-            Component message = Messages.EVENT_ITEM_PICKUP.toComponent();
+            Component message = Message.EVENT_ITEM_PICKUP.toComponent();
 
             if (message != Component.empty()) player.sendMessage(message);
         }
@@ -471,7 +471,7 @@ public class WorldProtect extends Module {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), CooldownType.PLAYER_PVP, 3)) {
-            Component message = Messages.EVENT_PLAYER_PVP.toComponent();
+            Component message = Message.EVENT_PLAYER_PVP.toComponent();
 
             if (message != Component.empty()) event.getDamager().sendMessage(message);
         }

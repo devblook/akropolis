@@ -26,7 +26,7 @@ import team.devblook.akropolis.util.TextUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Messages {
+public enum Message {
     PREFIX("GENERAL.PREFIX"), USAGE("GENERAL.USAGE"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
     CONSOLE_NOT_ALLOWED("GENERAL.CONSOLE_NOT_ALLOWED"),
     CUSTOM_COMMAND_NO_PERMISSION("GENERAL.CUSTOM_COMMAND_NO_PERMISSION"), INVALID_PLAYER("GENERAL.INVALID_PLAYER"),
@@ -72,7 +72,7 @@ public enum Messages {
     private static FileConfiguration config;
     private final String path;
 
-    Messages(String path) {
+    Message(String path) {
         this.path = path;
     }
 
