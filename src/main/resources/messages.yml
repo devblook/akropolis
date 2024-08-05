@@ -30,7 +30,7 @@ Messages:
     CONSOLE_NOT_ALLOWED: "<prefix> <red>Console cannot do that."
     CUSTOM_COMMAND_NO_PERMISSION: "<prefix> <red>You are not allowed to execute this command."
     INVALID_PLAYER: "<prefix> <yellow><player> <red>is not online!"
-    CONFIG_RELOAD: "<prefix> <gray>All configuration files has been reloaded in <green><time>ms<gray>."
+    CONFIG_RELOAD: "<prefix> <gray>All configuration files have been reloaded in <green><time>ms<gray>."
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>before doing this again!"
 
   HELP:
