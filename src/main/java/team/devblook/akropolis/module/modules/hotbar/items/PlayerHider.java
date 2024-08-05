@@ -40,7 +40,6 @@ import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.modules.hotbar.HotbarItem;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 import team.devblook.akropolis.util.ItemStackBuilder;
-import team.devblook.akropolis.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class PlayerHider extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
-            player.sendMessage(TextUtil.replace(Message.COOLDOWN_ACTIVE.toComponent(), "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER))));
+            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER)));
             return;
         }
 
@@ -81,7 +80,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            player.sendMessage(Message.PLAYER_HIDER_HIDDEN.toComponent());
+            Message.PLAYER_HIDER_HIDDEN.sendFrom(player);
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -90,7 +89,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            player.sendMessage(Message.PLAYER_HIDER_SHOWN.toComponent());
+            Message.PLAYER_HIDER_SHOWN.sendFrom(player);
 
             player.getInventory().setItem(getSlot(), getItem());
         }

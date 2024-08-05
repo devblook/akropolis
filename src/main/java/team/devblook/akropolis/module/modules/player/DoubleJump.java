@@ -35,7 +35,6 @@ import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
-import team.devblook.akropolis.util.TextUtil;
 
 import java.util.List;
 import java.util.UUID;
@@ -94,7 +93,7 @@ public class DoubleJump extends Module {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
-            player.sendMessage(TextUtil.replace(Message.DOUBLE_JUMP_COOLDOWN.toComponent(), "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP))));
+            Message.DOUBLE_JUMP_COOLDOWN.sendFromWithReplacement(player, "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP)));
             return;
         }
 

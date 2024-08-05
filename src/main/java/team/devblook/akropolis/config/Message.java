@@ -19,6 +19,7 @@
 
 package team.devblook.akropolis.config;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import team.devblook.akropolis.util.TextUtil;
@@ -78,6 +79,30 @@ public enum Message {
 
     static void setConfiguration(FileConfiguration c) {
         config = c;
+    }
+
+    public void sendFrom(Audience audience) {
+        Component messageContent = toComponent();
+
+        if (messageContent.equals(Component.empty())) return;
+
+        audience.sendMessage(messageContent);
+    }
+
+    public void sendFromAsList(Audience audience) {
+        List<Component> messageContent = toComponentList();
+
+        if (messageContent.getFirst().equals(Component.empty())) return;
+
+        messageContent.forEach(audience::sendMessage);
+    }
+
+    public void sendFromWithReplacement(Audience audience, String pattern, Component replacement) {
+        Component messageContent = TextUtil.replace(toComponent(), pattern, replacement);
+
+        if (messageContent.equals(Component.empty())) return;
+
+        audience.sendMessage(messageContent);
     }
 
     public Component toComponent() {

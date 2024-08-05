@@ -42,41 +42,41 @@ public class GamemodeCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 1) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(Message.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                sender.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(TextUtil.replace(Message.GAMEMODE_INVALID.toComponent(), "gamemode", TextUtil.parse(args[0])));
+                Message.GAMEMODE_INVALID.sendFromWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Message.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse(gamemode.toString().toUpperCase())));
+            Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse(gamemode.toString().toUpperCase()));
             player.setGameMode(gamemode);
 
         } else if (args.length == 2) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                sender.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                sender.sendMessage(TextUtil.replace(Message.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
+                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                sender.sendMessage(TextUtil.replace(Message.GAMEMODE_INVALID.toComponent(), "gamemode", TextUtil.parse(args[0])));
+                Message.GAMEMODE_INVALID.sendFromWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
                 return;
             }
 

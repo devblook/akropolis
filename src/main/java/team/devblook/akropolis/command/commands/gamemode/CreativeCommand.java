@@ -41,34 +41,34 @@ public class CreativeCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(Message.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                player.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(player);
                 return;
             }
 
-            player.sendMessage(TextUtil.replace(Message.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
+            Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
             player.setGameMode(GameMode.CREATIVE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                sender.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(TextUtil.replace(Message.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
+                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             if (sender.getName().equals(player.getName())) {
-                player.sendMessage(TextUtil.replace(Message.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
+                Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
             } else {
-                player.sendMessage(TextUtil.replace(Message.GAMEMODE_CHANGE.toComponent(), "gamemode", TextUtil.parse("CREATIVE")));
+                Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
                 sender.sendMessage(TextUtil.replace(TextUtil.replace(Message.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", TextUtil.parse("CREATIVE")));
             }
 

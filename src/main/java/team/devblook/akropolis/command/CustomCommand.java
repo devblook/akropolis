@@ -39,12 +39,12 @@ public class CustomCommand extends InjectableCommand {
     @Override
     protected void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Message.CONSOLE_NOT_ALLOWED.toComponent());
+            Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
             return;
         }
 
         if (permission != null && !sender.hasPermission(permission)) {
-            sender.sendMessage(Message.CUSTOM_COMMAND_NO_PERMISSION.toComponent());
+            Message.CUSTOM_COMMAND_NO_PERMISSION.sendFrom(sender);
             return;
         }
 

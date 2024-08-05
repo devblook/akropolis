@@ -52,42 +52,42 @@ public class FlyCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(Message.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
-                sender.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             if (player.getAllowFlight()) {
-                player.sendMessage(Message.FLIGHT_DISABLE.toComponent());
+                Message.FLIGHT_DISABLE.sendFrom(player);
                 toggleFlight(player, false);
             } else {
-                player.sendMessage(Message.FLIGHT_ENABLE.toComponent());
+                Message.FLIGHT_ENABLE.sendFrom(player);
                 toggleFlight(player, true);
             }
         } else if (args.length == 1) {
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT_OTHERS.getPermission()))) {
-                sender.sendMessage(Message.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(TextUtil.replace(Message.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
+                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             if (player.getAllowFlight()) {
-                player.sendMessage(Message.FLIGHT_DISABLE.toComponent());
-                sender.sendMessage(TextUtil.replace(Message.FLIGHT_DISABLE_OTHER.toComponent(), "player", player.name()));
+                Message.FLIGHT_DISABLE.sendFrom(player);
+                Message.FLIGHT_DISABLE_OTHER.sendFromWithReplacement(sender, "player", player.name());
                 toggleFlight(player, false);
             } else {
-                player.sendMessage(Message.FLIGHT_ENABLE.toComponent());
-                sender.sendMessage(TextUtil.replace(Message.FLIGHT_ENABLE_OTHER.toComponent(), "player", player.name()));
+                Message.FLIGHT_ENABLE.sendFrom(player);
+                Message.FLIGHT_ENABLE_OTHER.sendFromWithReplacement(sender, "player", player.name());
                 toggleFlight(player, true);
             }
         }

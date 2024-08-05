@@ -39,7 +39,7 @@ public class ClearchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
-            sender.sendMessage(Message.NO_PERMISSION.toComponent());
+            Message.NO_PERMISSION.sendFrom(sender);
             return;
         }
 
@@ -49,14 +49,14 @@ public class ClearchatCommand extends InjectableCommand {
                     player.sendMessage("");
                 }
 
-                player.sendMessage(TextUtil.replace(Message.CLEARCHAT.toComponent(), "player", sender.name()));
+                Message.CLEARCHAT.sendFromWithReplacement(player, "player", sender.name());
             }
         } else if (args.length == 1) {
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                sender.sendMessage(TextUtil.replace(Message.INVALID_PLAYER.toComponent(), "player", TextUtil.parse(args[0])));
+                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
@@ -64,7 +64,7 @@ public class ClearchatCommand extends InjectableCommand {
                 player.sendMessage("");
             }
 
-            sender.sendMessage(TextUtil.replace(Message.CLEARCHAT_PLAYER.toComponent(), "player", sender.name()));
+            Message.CLEARCHAT_PLAYER.sendFromWithReplacement(sender, "player", sender.name());
         }
 
     }

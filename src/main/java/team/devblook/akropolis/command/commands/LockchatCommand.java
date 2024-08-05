@@ -41,7 +41,7 @@ public class LockchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
-            sender.sendMessage(Message.NO_PERMISSION.toComponent());
+            Message.NO_PERMISSION.sendFrom(sender);
             return;
         }
 

@@ -63,7 +63,7 @@ public class AntiSwear extends Module {
         for (String word : blockedWords) {
             if (TextUtil.raw(message).contains(word.toLowerCase())) {
                 event.setCancelled(true);
-                player.sendMessage(Message.ANTI_SWEAR_WORD_BLOCKED.toComponent());
+                Message.ANTI_SWEAR_WORD_BLOCKED.sendFrom(player);
 
                 Bukkit.getOnlinePlayers().stream()
                         .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Message.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", message)));

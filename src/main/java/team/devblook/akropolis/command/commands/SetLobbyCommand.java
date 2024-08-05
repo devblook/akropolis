@@ -42,7 +42,7 @@ public class SetLobbyCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_SET_LOBBY.getPermission())) {
-            sender.sendMessage(Message.NO_PERMISSION.toComponent());
+            Message.NO_PERMISSION.sendFrom(sender);
             return;
         }
 
@@ -58,7 +58,7 @@ public class SetLobbyCommand extends InjectableCommand {
 
         LobbySpawn lobbyModule = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY));
         lobbyModule.setLocation(player.getLocation());
-        sender.sendMessage(Message.SET_LOBBY.toComponent());
+        Message.SET_LOBBY.sendFrom(sender);
 
     }
 }
