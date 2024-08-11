@@ -20,14 +20,16 @@
 package team.devblook.akropolis.inventory;
 
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
 
@@ -80,14 +82,11 @@ public abstract class AbstractInventory implements Listener {
             }
 
             if (item.getType() == Material.PLAYER_HEAD) {
-                SkullMeta itemMeta = (SkullMeta) item.getItemMeta();
+                ItemMeta itemMeta = item.getItemMeta();
+                PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
-                if (itemMeta.hasOwner()) {
-                    OfflinePlayer owner = itemMeta.getOwningPlayer();
-
-                    if (owner != null && owner.getName() != null && owner.getName().equals("null")) {
-                        newItem.setSkullOwner(player);
-                    }
+                if (container.has(NamespacedKey.minecraft("player-head"), PersistentDataType.BOOLEAN)) {
+                    newItem.setSkullOwner(player);
                 }
             }
 

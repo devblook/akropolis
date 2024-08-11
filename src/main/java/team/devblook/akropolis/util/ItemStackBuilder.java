@@ -24,6 +24,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -31,6 +32,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.hooks.head.HeadHook;
 
@@ -77,7 +80,7 @@ public class ItemStackBuilder {
 
                 builder.setSkullOwner(skullPlayer);
             } else if (username.equals("<player>")) {
-                builder.setSkullOwner(Bukkit.getOfflinePlayer("null"));
+                builder.withKey("player-head", PersistentDataType.BOOLEAN, true);
             } else {
                 builder.setSkullOwner(Bukkit.getOfflinePlayer(username));
             }
@@ -293,6 +296,20 @@ public class ItemStackBuilder {
         }
 
         itemMeta.setCustomModelData(data);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public <P, C> void withKey(String key, PersistentDataType<P, C> type, C value) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply NBT!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        container.set(NamespacedKey.minecraft(key), type, value);
         itemStack.setItemMeta(itemMeta);
     }
 
