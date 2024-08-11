@@ -1,6 +1,6 @@
 ![Akropolis banner](https://user-images.githubusercontent.com/56933557/188349705-b1f1eb56-8e4b-42d2-b99d-f21552ec84c2.png)
 
-Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizz.
+Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizzz.
 It contains almost all of its features and configuration files are almost the same, so you can just
 drop your configuration into the plugin's directory, make a few modifications and use it.
 

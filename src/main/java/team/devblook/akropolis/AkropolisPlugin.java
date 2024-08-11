@@ -63,7 +63,7 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
         getLogger().log(Level.INFO, "                        |_|                  ");
         getLogger().log(Level.INFO, "Author: ZetaStormy");
-        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
+        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizzz.");
         getLogger().log(Level.INFO, "--------");
 
         // Check plugin hooks
