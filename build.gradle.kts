@@ -1,12 +1,12 @@
 plugins {
     java
     id("io.github.goooler.shadow") version ("8.1.8")
-    id("io.papermc.paperweight.userdev") version ("1.7.1")
+    id("io.papermc.paperweight.userdev") version ("1.7.2")
 }
 
 group = "team.devblook"
 version = property("projectVersion") as String
-description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz."
+description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
 
 val libsPackage = property("libsPackage") as String
 
