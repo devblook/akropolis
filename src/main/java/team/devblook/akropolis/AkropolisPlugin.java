@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
         getLogger().log(Level.INFO, "                        |_|                  ");
         getLogger().log(Level.INFO, "Author: ZetaStormy");
-        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
+        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizzz.");
         getLogger().log(Level.INFO, "--------");
 
         // Check plugin hooks

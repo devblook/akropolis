@@ -1,12 +1,12 @@
 plugins {
     java
     id("io.github.goooler.shadow") version ("8.1.8")
-    id("io.papermc.paperweight.userdev") version ("1.7.1")
+    id("io.papermc.paperweight.userdev") version ("1.7.2")
 }
 
 group = "team.devblook"
 version = property("projectVersion") as String
-description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz."
+description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
 
 val libsPackage = property("libsPackage") as String
 
@@ -23,13 +23,13 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
 
     implementation("javax.inject:javax.inject:1")
 
-    implementation("net.megavex:scoreboard-library-api:2.1.11")
-    runtimeOnly("net.megavex:scoreboard-library-implementation:2.1.11")
-    runtimeOnly("net.megavex:scoreboard-library-modern:2.1.11:mojmap")
+    implementation("net.megavex:scoreboard-library-api:2.1.12")
+    runtimeOnly("net.megavex:scoreboard-library-implementation:2.1.12")
+    runtimeOnly("net.megavex:scoreboard-library-modern:2.1.12:mojmap")
 
     //compileOnly("org.spongepowered:configurate-yaml:4.1.2")
 
@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
-    compileOnly("com.github.cryptomorin:XSeries:11.2.0")
+    compileOnly("com.github.cryptomorin:XSeries:11.2.1")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
 }
 

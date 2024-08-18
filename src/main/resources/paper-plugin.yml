@@ -1,8 +1,8 @@
 name: Akropolis
 authors: [ ZetaStormy, ItsLewizzz ]
 version: ${version}
-description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizz.
-api-version: "1.20"
+description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz.
+api-version: "1.21"
 main: team.devblook.akropolis.AkropolisPlugin
 loader: team.devblook.akropolis.AkropolisPluginLoader
 
