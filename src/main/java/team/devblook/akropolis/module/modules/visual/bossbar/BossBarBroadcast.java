@@ -91,14 +91,28 @@ public class BossBarBroadcast extends Module implements Runnable {
             }
         }
 
-        BossBar.Overlay overlayType = BossBar.Overlay
-                .valueOf(bossBarSettings.getString("overlay.type", "PROGRESS"));
-        float overlayProgress = (float) bossBarSettings.getDouble("overlay.progress", BossBar.MAX_PROGRESS);
+        BossBar.Overlay overlayType = BossBar.Overlay.PROGRESS;
+
+        try {
+            overlayType = BossBar.Overlay.valueOf(bossBarSettings.getString("overlay.type", "PROGRESS"));
+        } catch (IllegalArgumentException e) {
+            getPlugin().getLogger().warning("An invalid overlay type has been found in the boss bar module, " +
+                    "the default type 'PROGRESS' will be used!");
+        }
+
+        double overlayProgress = bossBarSettings.getDouble("overlay.progress", BossBar.MAX_PROGRESS);
+
+        if (overlayProgress > 1 || overlayProgress < 0) {
+            getPlugin().getLogger().warning("An invalid overlay progress has been found in the boss bar module, " +
+                    "the default progress '1.0' will be used!");
+            overlayProgress = BossBar.MAX_PROGRESS;
+        }
 
         size = broadcasts.size();
         if (size > 0) {
             Component firstBroadcast = TextUtil.parse(broadcasts.get(0));
-            this.broadcastBar = BossBar.bossBar(firstBroadcast, overlayProgress, BossBar.Color.BLUE, overlayType);
+            this.broadcastBar = BossBar.bossBar(firstBroadcast, (float) overlayProgress,
+                    BossBar.Color.BLUE, overlayType);
             count++;
 
             Bukkit.getOnlinePlayers().forEach(p -> {
