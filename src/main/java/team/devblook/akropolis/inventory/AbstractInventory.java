@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,16 @@
 package team.devblook.akropolis.inventory;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
 
@@ -77,6 +81,15 @@ public abstract class AbstractInventory implements Listener {
                 newItem.withLore(item.getItemMeta().lore(), player);
             }
 
+            if (item.getType() == Material.PLAYER_HEAD) {
+                ItemMeta itemMeta = item.getItemMeta();
+                PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+
+                if (container.has(NamespacedKey.minecraft("player-head"), PersistentDataType.BOOLEAN)) {
+                    newItem.setSkullOwner(player);
+                }
+            }
+
             inventory.setItem(i, newItem.build());
         }
 
@@ -100,7 +113,7 @@ public abstract class AbstractInventory implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (InventoryManager.getTopInventory(event).getHolder() instanceof InventoryBuilder && refreshEnabled) {
+        if (event.getView().getTopInventory().getHolder() instanceof InventoryBuilder && refreshEnabled) {
             openInventories.remove(event.getPlayer().getUniqueId());
         }
     }

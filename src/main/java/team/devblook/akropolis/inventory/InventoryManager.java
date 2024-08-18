@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,14 +22,10 @@ package team.devblook.akropolis.inventory;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.inventory.Inventory;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.inventory.inventories.CustomGUI;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -115,17 +111,6 @@ public class InventoryManager {
 
             inventories.put(name, customGUI);
             plugin.getLogger().log(Level.INFO, "Loaded custom menu {0}.", name);
-        }
-    }
-
-    public static Inventory getTopInventory(InventoryEvent event) {
-        try {
-            Object view = event.getView();
-            Method getTopInventory = view.getClass().getMethod("getTopInventory");
-            getTopInventory.setAccessible(true);
-            return (Inventory) getTopInventory.invoke(view);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import team.devblook.akropolis.AkropolisPlugin;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
@@ -58,13 +58,13 @@ public class PlayerVanish extends Module {
             vanished.remove(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.showPlayer(player));
 
-            player.sendMessage(Messages.VANISH_DISABLE.toComponent());
+            Message.VANISH_DISABLE.sendFrom(player);
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
         } else {
             vanished.add(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.hidePlayer(player));
 
-            player.sendMessage(Messages.VANISH_ENABLE.toComponent());
+            Message.VANISH_ENABLE.sendFrom(player);
             player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1000000, 1));
         }
     }

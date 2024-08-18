@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 package team.devblook.akropolis.action.actions;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import team.devblook.akropolis.AkropolisPlugin;
@@ -37,7 +36,7 @@ public class GamemodeAction implements Action {
         try {
             player.setGameMode(GameMode.valueOf(data.toUpperCase()));
         } catch (IllegalArgumentException ex) {
-            Bukkit.getLogger().warning("[Akropolis Action] Invalid gamemode name: " + data.toUpperCase());
+            plugin.getLogger().warning("[Akropolis Action] Invalid gamemode name: " + data.toUpperCase());
         }
     }
 }

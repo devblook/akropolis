@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,19 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.hook.hooks.head.HeadHook;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,35 +44,8 @@ import java.util.Optional;
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
     private static final AkropolisPlugin PLUGIN;
-    private static final Enchantment ARROW_INFINITE_ENCHANTMENT;
 
     static {
-        // Fix: unknown "ARROW_INFINITE" field on versions 1.20.6 or newer.
-        try {
-            // 1.20.6 -> 206
-            String strippedVersion = Bukkit.getMinecraftVersion()
-                    .substring(2)
-                    .replace(".", "");
-            // 1.21 -> 21 -> 210
-            int version = Integer.parseInt(strippedVersion.length() == 2 ? strippedVersion + "0" : strippedVersion);
-
-            Field field = null;
-            // This would correspond to check if the version is higher or equals to
-            // 1.20.6.
-            if (version >= 206) {
-                // Use newer field name.
-                field = Enchantment.class.getDeclaredField("INFINITY");
-            } else {
-                // Use older field name.
-                field = Enchantment.class.getDeclaredField("ARROW_INFINITE");
-            }
-            field.setAccessible(true);
-            ARROW_INFINITE_ENCHANTMENT = (Enchantment) field.get(Enchantment.class);
-            field.setAccessible(false);
-        } catch (final IllegalAccessException | NoSuchFieldException exception) {
-            throw new RuntimeException(exception);
-        }
-
         PLUGIN = AkropolisPlugin.getInstance();
         MALFORMED_ITEM = new ItemStack(Material.BARRIER);
         ItemMeta malformedMeta = MALFORMED_ITEM.getItemMeta();
@@ -98,8 +73,17 @@ public class ItemStackBuilder {
 
         String username = section.getString("username");
 
-        if (username != null && section.contains("username") && player != null) {
-            builder.setSkullOwner(username.replace("player", player.getName()));
+        if (username != null && section.contains("username")) {
+            if (player != null) {
+                String playerName = TextUtil.raw(PlaceholderUtil.setPlaceholders(username, player));
+                OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(playerName);
+
+                builder.setSkullOwner(skullPlayer);
+            } else if (username.equals("<player>")) {
+                builder.withKey("player-head", PersistentDataType.BOOLEAN, true);
+            } else {
+                builder.setSkullOwner(Bukkit.getOfflinePlayer(username));
+            }
         }
 
         if (section.contains("display_name")) {
@@ -139,6 +123,11 @@ public class ItemStackBuilder {
                 }
             });
             builder.withFlags(flags.toArray(new ItemFlag[0]));
+        }
+
+        if (section.contains("custom_model_data")) {
+            int data = section.getInt("custom_model_data");
+            builder.withCustomModelData(data);
         }
 
         return builder;
@@ -224,8 +213,7 @@ public class ItemStackBuilder {
         itemStack.setItemMeta(itemMeta);
     }
 
-    @SuppressWarnings("deprecation")
-    public ItemStackBuilder setSkullOwner(String owner) {
+    public ItemStackBuilder setSkullOwner(OfflinePlayer owner) {
         try {
             SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
 
@@ -235,7 +223,7 @@ public class ItemStackBuilder {
                 return new ItemStackBuilder(MALFORMED_ITEM);
             }
 
-            itemMeta.setOwner(owner);
+            itemMeta.setOwningPlayer(owner);
             itemStack.setItemMeta(itemMeta);
         } catch (ClassCastException expected) {
             // Expected.
@@ -294,9 +282,35 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.setEnchantmentGlintOverride(true);
         itemStack.setItemMeta(itemMeta);
-        itemStack.addUnsafeEnchantment(ARROW_INFINITE_ENCHANTMENT, 1);
+    }
+
+    public void withCustomModelData(int data) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply custom model data!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        itemMeta.setCustomModelData(data);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public <P, C> void withKey(String key, PersistentDataType<P, C> type, C value) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply NBT!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        container.set(NamespacedKey.minecraft(key), type, value);
+        itemStack.setItemMeta(itemMeta);
     }
 
     public ItemStack build() {

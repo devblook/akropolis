@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,12 +35,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.modules.hotbar.HotbarItem;
 import team.devblook.akropolis.module.modules.hotbar.HotbarManager;
 import team.devblook.akropolis.util.ItemStackBuilder;
-import team.devblook.akropolis.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class PlayerHider extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER, cooldown)) {
-            player.sendMessage(TextUtil.replace(Messages.COOLDOWN_ACTIVE.toComponent(), "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER))));
+            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), CooldownType.PLAYER_HIDER)));
             return;
         }
 
@@ -81,7 +80,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_HIDDEN.toComponent());
+            Message.PLAYER_HIDER_HIDDEN.sendFrom(player);
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -90,7 +89,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            player.sendMessage(Messages.PLAYER_HIDER_SHOWN.toComponent());
+            Message.PLAYER_HIDER_SHOWN.sendFrom(player);
 
             player.getInventory().setItem(getSlot(), getItem());
         }

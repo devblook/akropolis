@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 package team.devblook.akropolis.config;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import team.devblook.akropolis.util.TextUtil;
@@ -26,7 +27,7 @@ import team.devblook.akropolis.util.TextUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Messages {
+public enum Message {
     PREFIX("GENERAL.PREFIX"), USAGE("GENERAL.USAGE"), NO_PERMISSION("GENERAL.NO_PERMISSION"),
     CONSOLE_NOT_ALLOWED("GENERAL.CONSOLE_NOT_ALLOWED"),
     CUSTOM_COMMAND_NO_PERMISSION("GENERAL.CUSTOM_COMMAND_NO_PERMISSION"), INVALID_PLAYER("GENERAL.INVALID_PLAYER"),
@@ -72,12 +73,36 @@ public enum Messages {
     private static FileConfiguration config;
     private final String path;
 
-    Messages(String path) {
+    Message(String path) {
         this.path = path;
     }
 
     static void setConfiguration(FileConfiguration c) {
         config = c;
+    }
+
+    public void sendFrom(Audience audience) {
+        Component messageContent = toComponent();
+
+        if (messageContent.equals(Component.empty())) return;
+
+        audience.sendMessage(messageContent);
+    }
+
+    public void sendFromAsList(Audience audience) {
+        List<Component> messageContent = toComponentList();
+
+        if (messageContent.getFirst().equals(Component.empty())) return;
+
+        messageContent.forEach(audience::sendMessage);
+    }
+
+    public void sendFromWithReplacement(Audience audience, String pattern, Component replacement) {
+        Component messageContent = TextUtil.replace(toComponent(), pattern, replacement);
+
+        if (messageContent.equals(Component.empty())) return;
+
+        audience.sendMessage(messageContent);
     }
 
     public Component toComponent() {

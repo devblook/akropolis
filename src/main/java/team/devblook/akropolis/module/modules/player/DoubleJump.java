@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +31,10 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.cooldown.CooldownType;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
-import team.devblook.akropolis.util.TextUtil;
 
 import java.util.List;
 import java.util.UUID;
@@ -94,7 +93,7 @@ public class DoubleJump extends Module {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, CooldownType.DOUBLE_JUMP, cooldownDelay)) {
-            player.sendMessage(TextUtil.replace(Messages.DOUBLE_JUMP_COOLDOWN.toComponent(), "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP))));
+            Message.DOUBLE_JUMP_COOLDOWN.sendFromWithReplacement(player, "time", Component.text(getCooldown(uuid, CooldownType.DOUBLE_JUMP)));
             return;
         }
 

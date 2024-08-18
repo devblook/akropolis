@@ -159,7 +159,7 @@ tablist:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 announcements:
-  # Should the announcements' system be enabled ?
+  # Should the announcements' system be enabled?
   enabled: true
 
   # Delay sending announcements (in seconds).
@@ -196,6 +196,36 @@ announcements:
       - "<blue><b>INFORMATION"
       - "<click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>"
       - "<reset>"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | BOSS BAR AUTO BROADCAST                  |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+boss_bar_announcements:
+  # Should the boss bar announcements' system be enabled?
+  enabled: false
+
+  # Delay sending boss bar announcements (in seconds).
+  delay: 60
+
+  # Choose how the boss bar looks.
+  overlay:
+    # Decide if the boss bar is continuous or split into segments.
+    # Valid options: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
+    type: "PROGRESS"
+    # The amount of boss bar that's filled up. A number in the interval [0, 1].
+    progress: 1.0
+
+  sound:
+    enabled: false
+    value: BLOCK_NOTE_BLOCK_PLING
+    volume: 1.0
+    pitch: 1.0
+
+  announcements:
+    - "<blue><b>THIS SERVER USES AKROPOLIS"
+    - "<gold><b>NOW WITH BOSS BAR ANNOUNCEMENTS!"
+    - "<gradient:green:blue><b>MINIMESSAGE SUPPORT!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | LAUNCHPAD                                |
@@ -258,8 +288,11 @@ groups:
   # Create all the group formats you want following the same template.
   # To use any of these formats, the player must have the permission
   # akropolis.chat.group.<group name>
-  # If you want to disable this feature, just deny the akropolis.chat.group.default
-  # permission in LuckPerms or whichever permission management plugin you use.
+
+  # If you want to disable this feature temporally, just deny the akropolis.chat.group.default
+  # permission in LuckPerms or whichever permission management plugin you use. Otherwise, use the option below.
+  enabled: false
+
   default:
     format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
     # Just in case you want to slow down your players a little.
@@ -400,6 +433,7 @@ custom_join_items:
       material: BOOK
       amount: 1
       slot: 0
+      # custom_model_data: 1234
       display_name: "<gold>Server Information <gray>(Right-Click)"
       lore:
         - "<dark_gray>» <gray>Right click to see information about the server!"

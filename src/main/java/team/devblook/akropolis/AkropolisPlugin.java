@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
 import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
+import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import team.devblook.akropolis.action.ActionManager;
@@ -63,7 +63,7 @@ public class AkropolisPlugin extends JavaPlugin {
         getLogger().log(Level.INFO, " /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/");
         getLogger().log(Level.INFO, "                        |_|                  ");
         getLogger().log(Level.INFO, "Author: ZetaStormy");
-        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizz.");
+        getLogger().log(Level.INFO, "Based on DeluxeHub by ItsLewizzz.");
         getLogger().log(Level.INFO, "--------");
 
         // Check plugin hooks

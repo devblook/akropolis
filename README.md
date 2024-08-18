@@ -1,6 +1,6 @@
 ![Akropolis banner](https://user-images.githubusercontent.com/56933557/188349705-b1f1eb56-8e4b-42d2-b99d-f21552ec84c2.png)
 
-Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizz.
+Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizzz.
 It contains almost all of its features and configuration files are almost the same, so you can just
 drop your configuration into the plugin's directory, make a few modifications and use it.
 
@@ -16,7 +16,7 @@ Simply use what you feel meets your needs.
 
 To use this plugin just a grab a binary from the [releases page](https://github.com/devblook/akropolis/releases)
 or [compile it](#compile) yourself and drop it into your `plugins/` directory. Take in mind that you will need to be
-running Paper 1.20+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
+running Paper 1.21+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
 
 ### Compile
 

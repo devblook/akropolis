@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ public class PlayerOffHandSwap extends Module {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getRawSlot() != event.getSlot() && event.getCursor() != null && event.getSlot() == 40) {
+        if (event.getRawSlot() != event.getSlot() && event.getSlot() == 40) {
             event.setCancelled(true);
         }
     }

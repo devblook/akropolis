@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ import org.bukkit.event.EventPriority;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.config.ConfigType;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.module.Module;
 import team.devblook.akropolis.module.ModuleType;
 
@@ -55,7 +55,7 @@ public class ChatLock extends Module {
             return;
 
         event.setCancelled(true);
-        player.sendMessage(Messages.CHAT_LOCKED.toComponent());
+        Message.CHAT_LOCKED.sendFrom(player);
     }
 
     public boolean isChatLocked() {

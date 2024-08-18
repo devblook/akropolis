@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.Permissions;
 import team.devblook.akropolis.command.CommandManager;
 import team.devblook.akropolis.command.InjectableCommand;
-import team.devblook.akropolis.config.Messages;
+import team.devblook.akropolis.config.Message;
 import team.devblook.akropolis.inventory.AbstractInventory;
 import team.devblook.akropolis.inventory.InventoryManager;
 import team.devblook.akropolis.module.ModuleManager;
@@ -60,11 +60,11 @@ public class AkropolisCommand extends InjectableCommand {
         if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
 
             if (!sender.hasPermission(Permissions.COMMAND_AKROPOLIS_HELP.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
-            Messages.HELP_PLUGIN.toComponentList().forEach(sender::sendMessage);
+            Message.HELP_PLUGIN.sendFromAsList(sender);
             return;
         }
 
@@ -74,13 +74,13 @@ public class AkropolisCommand extends InjectableCommand {
         else if (args[0].equalsIgnoreCase("reload")) {
 
             if (!sender.hasPermission(Permissions.COMMAND_AKROPOLIS_RELOAD.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             long start = System.currentTimeMillis();
             plugin.reload();
-            sender.sendMessage(TextUtil.replace(Messages.CONFIG_RELOAD.toComponent(), "time", TextUtil.parse(String.valueOf(System.currentTimeMillis() - start))));
+            Message.CONFIG_RELOAD.sendFromWithReplacement(sender, "time", TextUtil.parse(String.valueOf(System.currentTimeMillis() - start)));
         }
 
         /*
@@ -89,12 +89,12 @@ public class AkropolisCommand extends InjectableCommand {
         else if (args[0].equalsIgnoreCase("scoreboard")) {
 
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_SCOREBOARD_TOGGLE.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
@@ -108,10 +108,10 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (scoreboardManager.hasScore(player.getUniqueId())) {
                 scoreboardManager.removeScoreboard(player);
-                player.sendMessage(Messages.SCOREBOARD_DISABLE.toComponent());
+                Message.SCOREBOARD_DISABLE.sendFrom(player);
             } else {
                 scoreboardManager.createScoreboard(player);
-                player.sendMessage(Messages.SCOREBOARD_ENABLE.toComponent());
+                Message.SCOREBOARD_ENABLE.sendFrom(player);
             }
         }
 
@@ -122,7 +122,7 @@ public class AkropolisCommand extends InjectableCommand {
         else if (args[0].equalsIgnoreCase("info")) {
 
             if (!sender.hasPermission(Permissions.COMMAND_AKROPOLIS_HELP.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
@@ -149,7 +149,7 @@ public class AkropolisCommand extends InjectableCommand {
             CommandManager commandManager = plugin.getCommandManager();
             sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>Custom commands (" + commandManager.getCustomCommands().size() + ")"
                     + " <dark_gray>- <green>" + (commandManager.getCustomCommands().stream()
-                    .map(command -> command.getAliases().get(0)).collect(Collectors.joining(", ")))));
+                    .map(command -> command.getAliases().getFirst()).collect(Collectors.joining(", ")))));
 
             sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>PlaceholderAPI hook<dark_gray>: "
                     + (plugin.getHookManager().isHookEnabled("PLACEHOLDER_API") ? "<green>yes" : "<red>no")));
@@ -164,17 +164,17 @@ public class AkropolisCommand extends InjectableCommand {
          */
         else if (args[0].equalsIgnoreCase("open")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_OPEN_MENUS.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             if (args.length == 1) {
-                sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis open <menu>")));
+                Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis open <menu>"));
                 return;
             }
 
@@ -192,24 +192,24 @@ public class AkropolisCommand extends InjectableCommand {
         if (args[0].equalsIgnoreCase("hologram") || args[0].equalsIgnoreCase("holo")) {
 
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(Messages.CONSOLE_NOT_ALLOWED.toComponent());
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
                 return;
             }
 
             if (!sender.hasPermission(Permissions.COMMAND_HOLOGRAMS.getPermission())) {
-                sender.sendMessage(Messages.NO_PERMISSION.toComponent());
+                Message.NO_PERMISSION.sendFrom(sender);
                 return;
             }
 
             if (args.length == 1) {
-                Messages.HELP_HOLOGRAM.toComponentList().forEach(sender::sendMessage);
+                Message.HELP_HOLOGRAM.toComponentList().forEach(sender::sendMessage);
                 return;
             }
 
             if (args[1].equalsIgnoreCase("list")) {
 
                 if (plugin.getHologramManager().getHolograms().isEmpty()) {
-                    sender.sendMessage(Messages.HOLOGRAMS_EMPTY.toComponent());
+                    Message.HOLOGRAMS_EMPTY.sendFrom(sender);
                     return;
                 }
 
@@ -221,13 +221,13 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("create")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram create <id>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram create <id>"));
                     return;
                 }
 
                 if (plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_ALREADY_EXISTS.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_ALREADY_EXISTS.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
@@ -236,36 +236,36 @@ public class AkropolisCommand extends InjectableCommand {
                 defaultMsg.add(TextUtil.parse("<gray>Created new Hologram called <aqua>" + args[2]));
                 defaultMsg.add(TextUtil.parse("<gray>Use <aqua>/akropolis holo <gray>to customise"));
                 holo.setLines(defaultMsg);
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_SPAWNED.toComponent(), "name", TextUtil.parse(args[2])));
+                Message.HOLOGRAMS_SPAWNED.sendFromWithReplacement(sender, "name", TextUtil.parse(args[2]));
                 return;
             }
 
             if (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("delete")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram remove <id>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram remove <id>"));
                     return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
                 plugin.getHologramManager().deleteHologram(args[2]);
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_DESPAWNED.toComponent(), "name", TextUtil.parse(args[2])));
+                Message.HOLOGRAMS_DESPAWNED.sendFromWithReplacement(sender, "name", TextUtil.parse(args[2]));
                 return;
             }
 
             if (args[1].equalsIgnoreCase("setline")) {
                 if (args.length < 5) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram setline <id> <line> <text>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram setline <id> <line> <text>"));
                     return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
@@ -275,24 +275,24 @@ public class AkropolisCommand extends InjectableCommand {
 
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
                     return;
                 }
 
                 holo.setLine(line, text);
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_LINE_SET.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
+                Message.HOLOGRAMS_LINE_SET.sendFromWithReplacement(sender, "line", TextUtil.parse(String.valueOf(line)));
                 return;
             }
 
             if (args[1].equalsIgnoreCase("addline")) {
                 if (args.length <= 3) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram addline <id> <text>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram addline <id> <text>"));
                     return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
@@ -300,18 +300,18 @@ public class AkropolisCommand extends InjectableCommand {
                 Component text = TextUtil.parse(TextUtil.joinString(3, args));
 
                 holo.addLine(text);
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_ADDED_LINE.toComponent(), "name", TextUtil.parse(args[2])));
+                Message.HOLOGRAMS_ADDED_LINE.sendFromWithReplacement(sender, "name", TextUtil.parse(args[2]));
             }
 
             if (args[1].equalsIgnoreCase("removeline")) {
                 if (args.length != 4) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram removeline <id> <line>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram removeline <id> <line>"));
                     return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
@@ -320,14 +320,14 @@ public class AkropolisCommand extends InjectableCommand {
 
                 if (holo.hasInvalidLine(line)) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
                     return;
                 }
 
                 if (holo.removeLine(line) == null) {
                     plugin.getHologramManager().deleteHologram(args[2]);
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_REMOVED_LINE.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_REMOVED_LINE.toComponent(), "name", TextUtil.parse(args[2])));
                 }
 
                 return;
@@ -335,20 +335,20 @@ public class AkropolisCommand extends InjectableCommand {
 
             if (args[1].equalsIgnoreCase("move")) {
                 if (args.length == 2) {
-                    sender.sendMessage(TextUtil.replace(Messages.USAGE.toComponent(), "command", Component.text("akropolis hologram move <id>")));
+                    Message.USAGE.sendFromWithReplacement(sender, "command", Component.text("akropolis hologram move <id>"));
                     return;
                 }
 
                 if (!plugin.getHologramManager().hasHologram(args[2])) {
                     sender.sendMessage(
-                            TextUtil.replace(Messages.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_HOLOGRAM.toComponent(), "name", TextUtil.parse(args[2])));
                     return;
                 }
 
                 Hologram holo = plugin.getHologramManager().getHologram(args[2]);
 
                 holo.setLocation(player.getLocation());
-                sender.sendMessage(TextUtil.replace(Messages.HOLOGRAMS_MOVED.toComponent(), "name", TextUtil.parse(args[2])));
+                Message.HOLOGRAMS_MOVED.sendFromWithReplacement(sender, "name", TextUtil.parse(args[2]));
             }
         }
 

@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package team.devblook.akropolis.module.modules.hotbar;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +39,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import team.devblook.akropolis.AkropolisPlugin;
 import team.devblook.akropolis.util.ItemStackBuilder;
+import team.devblook.akropolis.util.PlaceholderUtil;
+import team.devblook.akropolis.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +113,11 @@ public abstract class HotbarItem implements Listener {
         ItemStack newItem = item.clone();
 
         if (getConfigurationSection() != null && getConfigurationSection().contains("username")) {
-            newItem = new ItemStackBuilder(newItem).setSkullOwner(player.getName()).build();
+            String skullName = TextUtil.raw(PlaceholderUtil
+                    .setPlaceholders(getConfigurationSection().getString("username", player.getName()), player));
+            OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(skullName);
+
+            newItem = new ItemStackBuilder(newItem).setSkullOwner(skullPlayer).build();
         }
 
         player.getInventory().setItem(slot, newItem);

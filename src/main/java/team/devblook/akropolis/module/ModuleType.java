@@ -1,7 +1,7 @@
 /*
  * This file is part of Akropolis
  *
- * Copyright (c) 2023 DevBlook Team and others
+ * Copyright (c) 2024 DevBlook Team and others
  *
  * Akropolis free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 package team.devblook.akropolis.module;
 
 public enum ModuleType {
-    ANTI_WDL, CHAT_FORMAT, CHAT_LOCK, CUSTOM_COMMANDS, DOUBLE_JUMP, LAUNCHPAD, NAMETAG, SCOREBOARD, TABLIST, ANNOUNCEMENTS, WORLD_PROTECT,
-    ANTI_SWEAR, COMMAND_BLOCK, LOBBY, VANISH, HOLOGRAMS, HOTBAR_ITEMS, PLAYER_LISTENER, PLAYER_OFFHAND_LISTENER
+    ANTI_WDL, CHAT_FORMAT, CHAT_LOCK, DOUBLE_JUMP, LAUNCHPAD, NAMETAG, SCOREBOARD, TABLIST,
+    ANNOUNCEMENTS, WORLD_PROTECT, ANTI_SWEAR, COMMAND_BLOCK, LOBBY, VANISH, HOLOGRAMS, HOTBAR_ITEMS, PLAYER_LISTENER,
+    PLAYER_OFFHAND_LISTENER, BOSS_BAR_BROADCAST
 }
