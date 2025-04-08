@@ -54,7 +54,7 @@ public class HooksManager {
         if (Bukkit.getPluginManager().isPluginEnabled("MiniPlaceholders")) {
             hooks.put("MINIPLACEHOLDERS", null);
             PlaceholderUtil.setMPState(true);
-            TextUtil.setMPSTATE(true);
+            TextUtil.setMPState(true);
             plugin.getLogger().info("Hooked into MiniPlaceholders");
         }
 
