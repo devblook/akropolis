@@ -20,6 +20,7 @@
 package me.zetastormy.akropolis.util;
 
 import com.cryptomorin.xseries.XMaterial;
+import java.util.Arrays;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
 import net.kyori.adventure.text.Component;
@@ -176,6 +177,12 @@ public class ItemStackBuilder {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply item flags!");
             PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
+        }
+
+        if (Arrays.asList(flags).contains(ItemFlag.HIDE_ATTRIBUTES)) {
+            if (!itemMeta.hasAttributeModifiers()) {
+                itemMeta.setAttributeModifiers(itemStack.getType().getDefaultAttributeModifiers());
+            }
         }
 
         itemMeta.addItemFlags(flags);
