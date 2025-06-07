@@ -19,6 +19,7 @@
 
 package team.devblook.akropolis.module;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,6 +39,7 @@ public abstract class Module implements Listener {
     private final ModuleType moduleType;
     private List<String> disabledWorlds;
     private final CooldownManager cooldownManager;
+    private boolean disabledWorldsInvert = false; // valor por defecto
 
     protected Module(AkropolisPlugin plugin, ModuleType type) {
         this.plugin = plugin;
@@ -46,8 +48,22 @@ public abstract class Module implements Listener {
         this.disabledWorlds = new ArrayList<>();
     }
 
-    public void setDisabledWorlds(List<String> disabledWorlds) {
-        this.disabledWorlds = disabledWorlds;
+    public void setDisabledWorlds(List<String> disabledWorlds, boolean invert) {
+        this.disabledWorldsInvert = invert;
+
+        if (!invert) {
+            this.disabledWorlds = disabledWorlds;
+            return;
+        }
+
+        List<String> inverted = new ArrayList<>();
+        for (World world : Bukkit.getWorlds()) {
+            if (!disabledWorlds.contains(world.getName())) {
+                inverted.add(world.getName());
+            }
+        }
+
+        this.disabledWorlds = inverted;
     }
 
     public AkropolisPlugin getPlugin() {
@@ -56,14 +72,15 @@ public abstract class Module implements Listener {
 
     public boolean inDisabledWorld(Location location) {
         World world = location.getWorld();
-
         if (world == null) return false;
-
-        return disabledWorlds.contains(world.getName());
+        return inDisabledWorld(world);
     }
 
     public boolean inDisabledWorld(World world) {
-        return disabledWorlds.contains(world.getName());
+        String worldName = world.getName();
+        return disabledWorldsInvert
+                ? !disabledWorlds.contains(worldName)
+                : disabledWorlds.contains(worldName);
     }
 
     public boolean tryCooldown(UUID uuid, CooldownType type, long delay) {

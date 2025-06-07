@@ -52,6 +52,9 @@ public class TablistManager extends Module {
         players = new ArrayList<>();
 
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        List<String> disabled = config.getStringList("disabled-worlds.worlds");
+        boolean invert = config.getBoolean("disabled-worlds.invert", false);
+        setDisabledWorlds(disabled, invert);
 
         header = String.join("\n", config.getStringList("tablist.header"));
         footer = String.join("\n", config.getStringList("tablist.footer"));
@@ -75,8 +78,12 @@ public class TablistManager extends Module {
     }
 
     public void createTablist(Player player) {
+        if (inDisabledWorld(player.getLocation())) return; // ✅ nuevo check de seguridad
+
         UUID uuid = player.getUniqueId();
-        players.add(uuid);
+        if (!players.contains(uuid)) {
+            players.add(uuid);
+        }
         updateTablist(uuid);
     }
 
@@ -133,6 +140,17 @@ public class TablistManager extends Module {
             return;
         }
 
+        if (!players.contains(player.getUniqueId()) && !inDisabledWorld(toWorld)) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createTablist(player), 20L);
+        }
         createTablist(player);
+    }
+
+    public boolean inDisabledWorld(World world) {
+        return super.inDisabledWorld(world);
+    }
+
+    public boolean inDisabledWorld(org.bukkit.Location location) {
+        return super.inDisabledWorld(location);
     }
 }

@@ -75,7 +75,12 @@ public class ScoreboardManager extends Module {
     }
 
     public void createScoreboard(Player player) {
-        players.put(player.getUniqueId(), updateScoreboard(player.getUniqueId()));
+        if (inDisabledWorld(player.getLocation())) return; // ✅ Evita scoreboard en mundos deshabilitados
+
+        UUID uuid = player.getUniqueId();
+        if (!players.containsKey(uuid)) {
+            players.put(uuid, updateScoreboard(uuid));
+        }
     }
 
     public ScoreboardHelper updateScoreboard(UUID uuid) {
@@ -140,8 +145,16 @@ public class ScoreboardManager extends Module {
 
         if (inDisabledWorld(toWorld) && players.containsKey(player.getUniqueId())) {
             removeScoreboard(player);
-        } else if (!players.containsKey(player.getUniqueId())) {
+        } else if (!players.containsKey(player.getUniqueId()) && !inDisabledWorld(toWorld)) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), worldDelay);
         }
+    }
+
+    public boolean inDisabledWorld(World world) {
+        return super.inDisabledWorld(world);
+    }
+
+    public boolean inDisabledWorld(org.bukkit.Location location) {
+        return super.inDisabledWorld(location);
     }
 }

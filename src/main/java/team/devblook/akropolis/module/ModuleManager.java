@@ -63,6 +63,7 @@ public class ModuleManager {
 
         FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
         disabledWorlds = config.getStringList("disabled-worlds.worlds");
+        boolean invert = config.getBoolean("disabled-worlds.invert", false);
 
         if (config.getBoolean("disabled-worlds.invert")) {
             List<String> newDisabledWorlds = new ArrayList<>();
@@ -99,7 +100,7 @@ public class ModuleManager {
 
         for (Module module : modules.values()) {
             try {
-                module.setDisabledWorlds(disabledWorlds);
+                module.setDisabledWorlds(disabledWorlds, invert);
                 module.onEnable();
             } catch (Exception e) {
                 e.printStackTrace();
