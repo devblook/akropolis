@@ -22,6 +22,9 @@ package me.zetastormy.akropolis.module.modules.world.music;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import org.bukkit.Bukkit;
+
+import java.io.File;
 
 public class MusicPlayer extends Module {
 
@@ -37,5 +40,20 @@ public class MusicPlayer extends Module {
     @Override
     public void onDisable() {
 
+    }
+
+    private void loadSongs() {
+        File directory = new File(getPlugin().getDataFolder().getAbsolutePath() + File.separator + "songs");
+
+        if (!directory.exists()) {
+            if (!directory.mkdir()) {
+                getPlugin().getLogger().severe("Could not create songs' directory!");
+                getPlugin().getLogger().severe("The plugin will now disable.");
+                Bukkit.getPluginManager().disablePlugin(getPlugin());
+                return;
+            }
+
+
+        }
     }
 }
