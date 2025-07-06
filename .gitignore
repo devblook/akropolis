@@ -6,6 +6,9 @@ target/
 dependency-reduced-pom.xml
 pom.xml.versionsBackup
 
+### Zed
+./zed/*
+
 ### Visual Studio Code ###
 .vscode/*
 
