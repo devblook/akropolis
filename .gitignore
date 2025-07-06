@@ -7,7 +7,7 @@ dependency-reduced-pom.xml
 pom.xml.versionsBackup
 
 ### Zed
-./zed/*
+.zed/
 
 ### Visual Studio Code ###
 .vscode/*
