@@ -20,6 +20,7 @@
 package me.zetastormy.akropolis.util;
 
 import com.cryptomorin.xseries.XMaterial;
+import java.util.Arrays;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
 import net.kyori.adventure.text.Component;
@@ -63,9 +64,6 @@ public class ItemStackBuilder {
     public static ItemStackBuilder getItemStack(ConfigurationSection section, Player player) {
         ItemStack item = parseMaterial(section);
         ItemStackBuilder builder = new ItemStackBuilder(item);
-
-        if (item.getType().equals(Material.BARRIER))
-            return new ItemStackBuilder(MALFORMED_ITEM);
 
         if (section.contains("amount")) {
             builder.withAmount(section.getInt("amount"));
@@ -179,6 +177,12 @@ public class ItemStackBuilder {
             PLUGIN.getLogger().severe("Invalid item meta, could not apply item flags!");
             PLUGIN.getLogger().severe("Please check your config.yml!");
             return;
+        }
+
+        if (Arrays.asList(flags).contains(ItemFlag.HIDE_ATTRIBUTES)) {
+            if (!itemMeta.hasAttributeModifiers()) {
+                itemMeta.setAttributeModifiers(itemStack.getType().getDefaultAttributeModifiers());
+            }
         }
 
         itemMeta.addItemFlags(flags);

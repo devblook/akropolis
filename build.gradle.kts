@@ -1,7 +1,7 @@
 plugins {
     java
-    id("com.gradleup.shadow") version ("9.0.0-beta11")
-    id("io.papermc.paperweight.userdev") version ("2.0.0-beta.16")
+    id("com.gradleup.shadow") version ("8.3.8")
+    id("io.papermc.paperweight.userdev") version ("2.0.0-beta.18")
 }
 
 group = "team.devblook"
@@ -23,23 +23,22 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.7-R0.1-SNAPSHOT")
 
     implementation("javax.inject:javax.inject:1")
 
-    implementation("net.megavex:scoreboard-library-api:2.2.2")
-    runtimeOnly("net.megavex:scoreboard-library-implementation:2.2.2")
-    runtimeOnly("net.megavex:scoreboard-library-modern:2.2.2:mojmap")
+    implementation("net.megavex:scoreboard-library-api:2.3.3")
+    runtimeOnly("net.megavex:scoreboard-library-implementation:2.3.3")
+    runtimeOnly("net.megavex:scoreboard-library-modern:2.3.3:mojmap")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.18.0")
-    compileOnly("net.kyori:adventure-api:4.18.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.22.0")
+    compileOnly("net.kyori:adventure-api:4.22.0")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
-    compileOnly("com.github.cryptomorin:XSeries:12.1.0")
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly("com.github.cryptomorin:XSeries:13.3.3")
+    compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.3.0")
 }
 
 configurations.implementation {

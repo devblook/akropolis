@@ -32,8 +32,8 @@ public class AkropolisPluginLoader implements PluginLoader {
     @Override
     public void classloader(PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.cryptomorin:XSeries:12.1.0"), null));
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2/").build());
+        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.cryptomorin:XSeries:13.3.2"), null));
+        resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
 
         classpathBuilder.addLibrary(resolver);
     }

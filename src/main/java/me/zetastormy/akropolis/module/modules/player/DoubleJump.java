@@ -26,12 +26,14 @@ import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
@@ -105,9 +107,8 @@ public class DoubleJump extends Module {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR
-                && !inDisabledWorld(player.getLocation())) {
-            player.setAllowFlight(true);
+        if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+            player.setAllowFlight(!inDisabledWorld(player.getLocation()));
         }
     }
 
@@ -116,6 +117,18 @@ public class DoubleJump extends Module {
         Player player = event.getPlayer();
 
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR)
-            player.setAllowFlight(true);
+            player.setAllowFlight(!inDisabledWorld(player.getLocation()));
+    }
+
+    @EventHandler
+    public void onGameModeChange(PlayerGameModeChangeEvent event) {
+        Player player = event.getPlayer();
+
+        if (inDisabledWorld(player.getLocation())) return;
+
+        GameMode newGameMode = event.getNewGameMode();
+        if (newGameMode != GameMode.CREATIVE && newGameMode != GameMode.SPECTATOR) {
+            Bukkit.getScheduler().runTaskLater(getPlugin(), () -> player.setAllowFlight(true), 1L);
+        }
     }
 }
