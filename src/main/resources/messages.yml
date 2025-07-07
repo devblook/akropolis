@@ -61,6 +61,10 @@ Messages:
       - "<dark_gray>/<gold>akropolis holo setline <id> <line> <text> <dark_gray>- <gray>Set the line of a specific hologram"
       - "<dark_gray>/<gold>akropolis holo addline <id> <text> <dark_gray>- <gray>Add a new line to a hologram"
       - "<dark_gray>/<gold>akropolis holo removeline <id> <line> <dark_gray>- <gray>Remove a line from a hologram"
+    SONG_PLAYER:
+      - "<prefix> <gray>The following song player commands are available<dark_gray>:"
+      - "<dark_gray>/<gold>akropolis sp setpos <dark_gray>- <gray>Set the position of the song player"
+      - "<dark_gray>/<gold>akropolis sp skip <dark_gray>- <gray>Skip a song"
 
   GAMEMODE:
     GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>."
@@ -83,6 +87,11 @@ Messages:
 
   LOBBY:
     SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point."
+
+  SONG_PLAYER:
+    SET_LOCATION: "<prefix> <green>You have successfully set the song player location."
+    SKIPPED: "<prefix> <green>Song skipped. Now playing <current_song>."
+    NOT_LOADED: "<prefix> <red>The song player isn't loaded."
 
   CHAT:
     CLEARCHAT: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white>!"

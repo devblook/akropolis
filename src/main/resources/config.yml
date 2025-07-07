@@ -19,6 +19,7 @@
 #   <online_max> - Returns number of max player slots
 #   <world> - Returns player world name
 #   <ping> - Returns player ping
+#   <current_song> - Returns the current song title
 #
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
 #   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
@@ -79,14 +80,26 @@ anti_wdl:
   notify_admins: true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# | MUSIC PLAYER                             |
+# | SONG PLAYER                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
 # directory.
-music_player:
+song_player:
   # Should we play music in the lobby?
-  enabled: true
+  enabled: false
+
+  # There are 2 types of song players:
+  # - RADIO: plays songs for all players no matter where they are.
+  # - POSITION: play songs for all added players in specified range from specified point.
+  type: "RADIO"
+
+  # Modify the range where a song is played while using POSITION song player.
+  # Use the "/akro sp setpos" command to set the position of the song player.
+  distance: 16
+
+  # Set the volume of the song player.
+  volume: 85
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
