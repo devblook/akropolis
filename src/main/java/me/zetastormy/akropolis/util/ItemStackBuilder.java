@@ -131,6 +131,11 @@ public class ItemStackBuilder {
             builder.withCustomModelData(data);
         }
 
+        if (section.contains("tooltip_style")) {
+            String data = section.getString("tooltip_style");
+            builder.withCustomTooltipStyle(data);
+        }
+
         return builder;
     }
 
@@ -306,6 +311,19 @@ public class ItemStackBuilder {
 
         modelDataComponent.setStrings(data);
         itemMeta.setCustomModelDataComponent(modelDataComponent);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public void withCustomTooltipStyle(String data) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply custom tooltip style!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        itemMeta.setTooltipStyle(NamespacedKey.fromString(data));
         itemStack.setItemMeta(itemMeta);
     }
 

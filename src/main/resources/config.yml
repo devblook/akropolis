@@ -482,6 +482,7 @@ custom_join_items:
       material: NETHER_STAR
       amount: 1
       slot: 4
+      # tooltip_style: minecraft:rainbow
       # Should we limit how fast a user can use this item?
       cooldown: 3 # seconds
       display_name: "<aqua>Server Selector <gray>(Right-Click)"
