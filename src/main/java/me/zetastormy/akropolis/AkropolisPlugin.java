@@ -19,6 +19,13 @@
 
 package me.zetastormy.akropolis;
 
+import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import me.zetastormy.akropolis.action.ActionManager;
 import me.zetastormy.akropolis.command.CommandManager;
 import me.zetastormy.akropolis.config.ConfigManager;
@@ -28,15 +35,10 @@ import me.zetastormy.akropolis.inventory.InventoryManager;
 import me.zetastormy.akropolis.module.ModuleManager;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hologram.HologramManager;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
 import net.megavex.scoreboardlibrary.api.noop.NoopScoreboardLibrary;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
 
 public class AkropolisPlugin extends JavaPlugin {
     private static AkropolisPlugin plugin;
@@ -157,6 +159,9 @@ public class AkropolisPlugin extends JavaPlugin {
         return plugin;
     }
 
+    public SongPlayerManager getSongPlayerManager() {
+        return (SongPlayerManager) moduleManager.getModule(ModuleType.SONG_PLAYER);
+    }
 
     public HologramManager getHologramManager() {
         return (HologramManager) moduleManager.getModule(ModuleType.HOLOGRAMS);

@@ -19,6 +19,17 @@
 
 package me.zetastormy.akropolis.module;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.modules.chat.AntiSwear;
@@ -39,18 +50,8 @@ import me.zetastormy.akropolis.module.modules.visual.tablist.TablistManager;
 import me.zetastormy.akropolis.module.modules.world.AntiWorldDownloader;
 import me.zetastormy.akropolis.module.modules.world.Launchpad;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
-import me.zetastormy.akropolis.module.modules.world.music.MusicPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.HandlerList;
-
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 
 public class ModuleManager {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
@@ -99,7 +100,9 @@ public class ModuleManager {
         registerModule(new PlayerVanish(plugin));
         registerModule(new HologramManager(plugin));
         registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
-        registerModule(new MusicPlayer(plugin), "music_player.enabled");
+
+        if (plugin.getHookManager().isHookEnabled("NOTEBLOCKAPI"))
+            registerModule(new SongPlayerManager(plugin), "song_player.enabled");
 
         for (Module module : modules.values()) {
             try {
@@ -108,7 +111,7 @@ public class ModuleManager {
             } catch (Exception e) {
                 e.printStackTrace();
                 plugin.getLogger().severe("There was an error loading the " + module.getModuleType() + " module");
-                plugin.getLogger().severe("The plugin will now disable..");
+                plugin.getLogger().severe("The plugin will now disable...");
                 plugin.getServer().getPluginManager().disablePlugin(plugin);
                 break;
             }
