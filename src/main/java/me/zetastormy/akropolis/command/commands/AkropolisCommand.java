@@ -19,6 +19,16 @@
 
 package me.zetastormy.akropolis.command.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.CommandManager;
@@ -33,16 +43,9 @@ import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.module.modules.visual.scoreboard.ScoreboardManager;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.util.TextUtil;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class AkropolisCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
@@ -384,5 +387,48 @@ public class AkropolisCommand extends InjectableCommand {
             }
         }
 
+        /*
+         * Song player
+         */
+        if (args[0].equalsIgnoreCase("songplayer") || args[0].equalsIgnoreCase("sp")) {
+            if (!(sender instanceof Player player)) {
+                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+                return;
+            }
+
+            if (!sender.hasPermission(Permissions.COMMAND_HOLOGRAMS.getPermission())) {
+                Message.NO_PERMISSION.sendFrom(sender);
+                return;
+            }
+
+            if (args.length == 1) {
+                Message.HELP_SONG_PLAYER.toComponentList().forEach(sender::sendMessage);
+                return;
+            }
+
+            SongPlayerManager songPlayerManager = plugin.getSongPlayerManager();
+
+            if (songPlayerManager.getSongPlayer() == null) {
+                Message.SONG_PLAYER_NOT_LOADED.sendFrom(sender);
+                return;
+            }
+
+            if (args[1].equalsIgnoreCase("setpos")) {
+                songPlayerManager.setLocation(player.getLocation());
+                Message.SONG_PLAYER_SET_LOCATION.sendFrom(sender);
+            }
+
+            if (args[1].equalsIgnoreCase("skip")) {
+                songPlayerManager.skip();
+
+                // Delay it, because the change is not immediate in the song player.
+                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                    Message.SONG_PLAYER_SKIPPED.sendFromWithReplacement(
+                        sender,
+                        "current_song",
+                        TextUtil.parse(songPlayerManager.getCurrentSong()));
+                }, 20L);
+            }
+        }
     }
 }
