@@ -465,7 +465,8 @@ custom_join_items:
       material: BOOK
       amount: 1
       slot: 0
-      # custom_model_data: 1234
+      # custom_model_data:
+      #   - test
       display_name: "<gold>Server Information <gray>(Right-Click)"
       lore:
         - "<dark_gray>» <gray>Right click to see information about the server!"

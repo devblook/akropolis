@@ -19,12 +19,11 @@
 
 package me.zetastormy.akropolis.util;
 
-import com.cryptomorin.xseries.XMaterial;
+import java.util.ArrayList;
 import java.util.Arrays;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
+import java.util.List;
+import java.util.Optional;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,12 +34,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.cryptomorin.xseries.XMaterial;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
@@ -124,7 +127,7 @@ public class ItemStackBuilder {
         }
 
         if (section.contains("custom_model_data")) {
-            int data = section.getInt("custom_model_data");
+            List<String> data = section.getStringList("custom_model_data");
             builder.withCustomModelData(data);
         }
 
@@ -290,7 +293,7 @@ public class ItemStackBuilder {
         itemStack.setItemMeta(itemMeta);
     }
 
-    public void withCustomModelData(int data) {
+    public void withCustomModelData(List<String> data) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta == null) {
@@ -299,7 +302,10 @@ public class ItemStackBuilder {
             return;
         }
 
-        itemMeta.setCustomModelData(data);
+        CustomModelDataComponent modelDataComponent = itemMeta.getCustomModelDataComponent();
+
+        modelDataComponent.setStrings(data);
+        itemMeta.setCustomModelDataComponent(modelDataComponent);
         itemStack.setItemMeta(itemMeta);
     }
 
