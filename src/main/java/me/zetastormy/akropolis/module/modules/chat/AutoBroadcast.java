@@ -19,22 +19,24 @@
 
 package me.zetastormy.akropolis.module.modules.chat;
 
-import com.cryptomorin.xseries.XSound;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import net.kyori.adventure.text.Component;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.cryptomorin.xseries.XSound;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
 
 public class AutoBroadcast extends Module implements Runnable {
     private Map<Integer, List<String>> broadcasts;
@@ -79,7 +81,7 @@ public class AutoBroadcast extends Module implements Runnable {
             String soundValue = announcementsSettings.getString("sound.value");
 
             if (soundValue != null) {
-                XSound.matchXSound(soundValue).ifPresent(s -> sound = s.parseSound());
+                XSound.of(soundValue).ifPresent(s -> sound = s.get());
                 volume = announcementsSettings.getDouble("sound.volume");
                 pitch = announcementsSettings.getDouble("sound.pitch");
             }

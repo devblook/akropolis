@@ -19,13 +19,15 @@
 
 package me.zetastormy.akropolis.action.actions;
 
-import com.cryptomorin.xseries.XPotion;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.action.Action;
+import java.util.Optional;
+
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.Optional;
+import com.cryptomorin.xseries.XPotion;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.action.Action;
 
 public class PotionEffectAction implements Action {
 
@@ -37,7 +39,7 @@ public class PotionEffectAction implements Action {
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
-        Optional<XPotion> xpotion = XPotion.matchXPotion(args[0]);
+        Optional<XPotion> xpotion = XPotion.of(args[0]);
 
         try {
             xpotion.ifPresent(p -> {

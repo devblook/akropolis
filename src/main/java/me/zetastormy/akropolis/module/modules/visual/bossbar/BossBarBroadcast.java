@@ -19,14 +19,10 @@
 
 package me.zetastormy.akropolis.module.modules.visual.bossbar;
 
-import com.cryptomorin.xseries.XSound;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.bossbar.BossBar;
-import net.kyori.adventure.text.Component;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -38,9 +34,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.cryptomorin.xseries.XSound;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.TextUtil;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 
 public class BossBarBroadcast extends Module implements Runnable {
     private Map<Integer, String> broadcasts;
@@ -85,7 +87,7 @@ public class BossBarBroadcast extends Module implements Runnable {
             String soundValue = bossBarSettings.getString("sound.value");
 
             if (soundValue != null) {
-                XSound.matchXSound(soundValue).ifPresent(s -> sound = s.parseSound());
+                XSound.of(soundValue).ifPresent(s -> sound = s.get());
                 volume = bossBarSettings.getDouble("sound.volume");
                 pitch = bossBarSettings.getDouble("sound.pitch");
             }

@@ -19,13 +19,15 @@
 
 package me.zetastormy.akropolis.action.actions;
 
-import com.cryptomorin.xseries.XSound;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.action.Action;
+import java.util.Optional;
+
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import java.util.Optional;
+import com.cryptomorin.xseries.XSound;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.action.Action;
 
 public class SoundAction implements Action {
 
@@ -36,11 +38,11 @@ public class SoundAction implements Action {
 
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
-        Optional<XSound> xsound = XSound.matchXSound(data);
+        Optional<XSound> xsound = XSound.of(data);
 
         try {
             xsound.ifPresent(s -> {
-                Sound sound = s.parseSound();
+                Sound sound = s.get();
 
                 if (sound == null) throw new IllegalStateException();
 
