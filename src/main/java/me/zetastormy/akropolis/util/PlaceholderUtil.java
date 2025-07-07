@@ -19,16 +19,18 @@
 
 package me.zetastormy.akropolis.util;
 
-import io.github.miniplaceholders.api.MiniPlaceholders;
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.tag.Tag;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import io.github.miniplaceholders.api.MiniPlaceholders;
+import me.clip.placeholderapi.PlaceholderAPI;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
@@ -64,6 +66,13 @@ public class PlaceholderUtil {
 
         if (rawText.contains("<world>") && player != null) {
             text = TextUtil.parseAndReplace(TextUtil.raw(text), "world", Component.text(player.getWorld().getName()));
+        }
+
+        if (rawText.contains("<current_song>")) {
+            text = TextUtil.parseAndReplace(
+                TextUtil.raw(text),
+                "current_song",
+                Component.text(AkropolisPlugin.getInstance().getSongPlayerManager().getCurrentSong()));
         }
 
         if (papi && player != null) {
