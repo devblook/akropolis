@@ -101,6 +101,11 @@ song_player:
   # Set the volume of the song player.
   volume: 85
 
+  # Fade effect duration in ticks (20 ticks = 1 second).
+  fade:
+    in: 20
+    out: 20
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
