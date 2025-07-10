@@ -19,12 +19,13 @@
 
 package me.zetastormy.akropolis.action.actions;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.action.Action;
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.action.Action;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
 
 public class BroadcastMessageAction implements Action {
 
@@ -35,7 +36,7 @@ public class BroadcastMessageAction implements Action {
 
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
-        Component parsedData = TextUtil.parse(data);
+        Component parsedData = PlaceholderUtil.setPlaceholders(data, player);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.sendMessage(parsedData);

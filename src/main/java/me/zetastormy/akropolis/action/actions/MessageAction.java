@@ -19,11 +19,12 @@
 
 package me.zetastormy.akropolis.action.actions;
 
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.action.Action;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
-import org.bukkit.entity.Player;
 
 public class MessageAction implements Action {
 
@@ -34,7 +35,7 @@ public class MessageAction implements Action {
 
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
-        Component parsedData = TextUtil.parse(data);
+        Component parsedData = PlaceholderUtil.setPlaceholders(data, player);
 
         player.sendMessage(parsedData);
     }

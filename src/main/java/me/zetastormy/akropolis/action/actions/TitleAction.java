@@ -19,14 +19,15 @@
 
 package me.zetastormy.akropolis.action.actions;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.action.Action;
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
+import java.time.Duration;
+
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.action.Action;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 
 public class TitleAction implements Action {
 
@@ -39,8 +40,8 @@ public class TitleAction implements Action {
     public void execute(AkropolisPlugin plugin, Player player, String data) {
         String[] args = data.split(";");
 
-        Component title = TextUtil.parse(args[0]);
-        Component subTitle = TextUtil.parse(args[1]);
+        Component title = PlaceholderUtil.setPlaceholders(args[0], player);
+        Component subTitle = PlaceholderUtil.setPlaceholders(args[1], player);
 
         Duration fadeIn;
         Duration stay;

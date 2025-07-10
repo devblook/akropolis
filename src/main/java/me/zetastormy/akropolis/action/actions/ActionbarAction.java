@@ -19,10 +19,12 @@
 
 package me.zetastormy.akropolis.action.actions;
 
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.action.Action;
-import me.zetastormy.akropolis.util.TextUtil;
-import org.bukkit.entity.Player;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
 
 public class ActionbarAction implements Action {
 
@@ -33,6 +35,8 @@ public class ActionbarAction implements Action {
 
     @Override
     public void execute(AkropolisPlugin plugin, Player player, String data) {
-        player.sendActionBar(TextUtil.parse(data));
+        Component parsedData = PlaceholderUtil.setPlaceholders(data, player);
+
+        player.sendActionBar(parsedData);
     }
 }
