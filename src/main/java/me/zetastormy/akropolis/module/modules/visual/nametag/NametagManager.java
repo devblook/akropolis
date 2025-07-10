@@ -19,6 +19,17 @@
 
 package me.zetastormy.akropolis.module.modules.visual.nametag;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.Module;
@@ -26,13 +37,6 @@ import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 public class NametagManager extends Module {
     private ConfigurationSection format;
@@ -76,6 +80,8 @@ public class NametagManager extends Module {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        if (inDisabledWorld(player.getWorld())) return;
+
         Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
         TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
         Component suffix = PlaceholderUtil.setPlaceholders(format.getString("suffix"), player);
@@ -88,5 +94,25 @@ public class NametagManager extends Module {
         Player player = event.getPlayer();
 
         nametagHelper.deleteFormat(player);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onWorldChange(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        World fromWorld = event.getFrom().getWorld();
+        World toWorld = event.getTo().getWorld();
+
+        if (toWorld == null) return;
+        if (fromWorld == toWorld) return;
+
+        if (inDisabledWorld(toWorld)) {
+            nametagHelper.deleteFormat(player);
+        } else {
+            Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
+            TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
+            Component suffix = PlaceholderUtil.setPlaceholders(format.getString("suffix"), player);
+
+            nametagHelper.createFormat(prefix, color, suffix, player);
+        }
     }
 }
