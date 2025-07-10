@@ -21,6 +21,7 @@ package me.zetastormy.akropolis.module.modules.world;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import com.xxmicloxx.NoteBlockAPI.event.SongNextEvent;
 import com.xxmicloxx.NoteBlockAPI.model.FadeType;
 import com.xxmicloxx.NoteBlockAPI.model.Playlist;
 import com.xxmicloxx.NoteBlockAPI.model.RepeatMode;
@@ -53,6 +55,7 @@ import me.zetastormy.akropolis.module.ModuleType;
 public class SongPlayerManager extends Module {
     private SongPlayer songPlayer;
     private ConfigHandler dataConfig;
+    private List<String> actions;
 
     public SongPlayerManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.SONG_PLAYER);
@@ -77,6 +80,7 @@ public class SongPlayerManager extends Module {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         String type = config.getString("song_player.type", "RADIO");
         int distance = config.getInt("song_player.distance", 16);
+        actions = config.getStringList("song_player.actions");
 
         int fadeInDuration = config.getInt("song_player.fade.in", 20);
         int fadeOutDuration = config.getInt("song_player.fade.out", 20);
@@ -186,12 +190,19 @@ public class SongPlayerManager extends Module {
         }
     }
 
+    @EventHandler
+    public void onSongNext(SongNextEvent event) {
+        if (songPlayer == null) return;
+
+        songPlayer.getPlayerUUIDs().forEach(uuid -> executeActions(getPlugin().getServer().getPlayer(uuid), actions));
+    }
+
     public void setLocation(Location location) {
         dataConfig.get().set("song_player.location", location);
         dataConfig.save();
     }
 
-    public 1void skip() {
+    public void skip() {
         if (songPlayer == null) return;
 
         songPlayer.playNextSong();

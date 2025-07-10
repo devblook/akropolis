@@ -106,6 +106,10 @@ song_player:
     in: 20
     out: 20
 
+  # Actions to perform when a song starts playing.
+  actions:
+    - "[ACTIONBAR] <gray>Now playing<dark_gray>: <yellow><current_song>"
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
