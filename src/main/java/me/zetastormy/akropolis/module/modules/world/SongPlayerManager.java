@@ -25,10 +25,14 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import com.xxmicloxx.NoteBlockAPI.model.FadeType;
 import com.xxmicloxx.NoteBlockAPI.model.Playlist;
@@ -161,9 +165,25 @@ public class SongPlayerManager extends Module {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (songPlayer == null || inDisabledWorld(event.getPlayer().getLocation())) return;
+        if (songPlayer == null) return;
 
         songPlayer.removePlayer(event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onWorldChange(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        World fromWorld = event.getFrom().getWorld();
+        World toWorld = event.getTo().getWorld();
+
+        if (toWorld == null) return;
+        if (fromWorld == toWorld) return;
+
+        if (inDisabledWorld(toWorld)) {
+            songPlayer.removePlayer(player);
+        } else {
+            songPlayer.addPlayer(player);
+        }
     }
 
     public void setLocation(Location location) {
@@ -171,7 +191,7 @@ public class SongPlayerManager extends Module {
         dataConfig.save();
     }
 
-    public void skip() {
+    public 1void skip() {
         if (songPlayer == null) return;
 
         songPlayer.playNextSong();
