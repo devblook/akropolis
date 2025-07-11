@@ -496,6 +496,64 @@ custom_join_items:
         - "[MENU] serverselector"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | FIGHT MODE                               |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+fight_mode:
+  # Should the fight mode feature be enabled?
+  enabled: true
+  # Slot the item should be given to?
+  slot: 7
+  # Should we prevent them from moving/dropping the item?
+  disable_inventory_movement: true
+  # Delay in seconds before the fight mode gets activated.
+  hold_delay: 5
+
+  # The item that will toggle the fight mode and also the sword used to fight.
+  item:
+    material: DIAMOND_SWORD
+    amount: 1
+    display_name: "<red>Fight Mode <gray>(Hold to activate)"
+    lore:
+      - "<dark_gray>» <gray>Hold for 5 seconds to activate the fight mode!"
+    enchantments:
+      - "SHARPNESS:1" # ENCHANTMENT:LEVEL
+
+  # The armor that will be given to the player when they enter fight mode.
+  armor:
+    helmet:
+      material: DIAMOND_HELMET
+      amount: 1
+      enchantments:
+        - "PROTECTION:4"
+        - "UNBREAKING:3"
+    chestplate:
+      material: DIAMOND_CHESTPLATE
+      amount: 1
+      enchantments:
+        - "PROTECTION:4"
+        - "UNBREAKING:3"
+    leggings:
+      material: DIAMOND_LEGGINGS
+      amount: 1
+      enchantments:
+        - "PROTECTION:4"
+        - "UNBREAKING:3"
+    boots:
+      material: DIAMOND_BOOTS
+      amount: 1
+      enchantments:
+        - "PROTECTION:4"
+        - "UNBREAKING:3"
+
+  # Actions to execute when the fight mode gets activated or deactivated.
+  actions:
+    activated:
+      - "[TITLE] <red><b>Fight mode activated!;<white>Try to survive!"
+    deactivated:
+      - "[TITLE] <green><b>Fight mode deactivated;<white>You've survived, uh?"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | PLAYER HIDER                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
