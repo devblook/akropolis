@@ -145,7 +145,7 @@ public class ItemStackBuilder {
                 Enchantment enchant = RegistryAccess
                                         .registryAccess()
                                         .getRegistry(RegistryKey.ENCHANTMENT)
-                                        .get(NamespacedKey.fromString(parts[0]));
+                                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
                 int level = Integer.parseInt(parts[1]);
 
                 enchantments.put(enchant, level);
