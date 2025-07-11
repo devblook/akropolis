@@ -21,7 +21,9 @@ package me.zetastormy.akropolis.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
@@ -29,6 +31,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +43,8 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.cryptomorin.xseries.XMaterial;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
 import net.kyori.adventure.text.Component;
@@ -129,6 +134,24 @@ public class ItemStackBuilder {
         if (section.contains("custom_model_data")) {
             List<String> data = section.getStringList("custom_model_data");
             builder.withCustomModelData(data);
+        }
+
+        if (section.contains("enchantments")) {
+            List<String> rawEnchantments = section.getStringList("enchantments");
+            Map<Enchantment, Integer> enchantments = new HashMap<>();
+
+            for (String enchantment : rawEnchantments) {
+                String[] parts = enchantment.split(":");
+                Enchantment enchant = RegistryAccess
+                                        .registryAccess()
+                                        .getRegistry(RegistryKey.ENCHANTMENT)
+                                        .get(NamespacedKey.fromString(parts[0]));
+                int level = Integer.parseInt(parts[1]);
+
+                enchantments.put(enchant, level);
+            }
+
+            builder.withEnchantments(enchantments);
         }
 
         if (section.contains("tooltip_style")) {
@@ -295,6 +318,19 @@ public class ItemStackBuilder {
         }
 
         itemMeta.setEnchantmentGlintOverride(true);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public void withEnchantments(Map<Enchantment, Integer> enchantments) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply enchantments!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        enchantments.forEach((enchantment, level) -> itemMeta.addEnchant(enchantment, level, true));
         itemStack.setItemMeta(itemMeta);
     }
 
