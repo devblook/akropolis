@@ -19,20 +19,26 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.module.modules.hotbar.items.CustomItem;
-import me.zetastormy.akropolis.module.modules.hotbar.items.PlayerHider;
-import me.zetastormy.akropolis.util.ItemStackBuilder;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.module.modules.hotbar.items.CustomItem;
+import me.zetastormy.akropolis.module.modules.hotbar.items.FightMode;
+import me.zetastormy.akropolis.module.modules.hotbar.items.PlayerHider;
+import me.zetastormy.akropolis.util.ItemStackBuilder;
 
 public class HotbarManager extends Module {
     private List<HotbarItem> hotbarItems;
@@ -59,14 +65,23 @@ public class HotbarManager extends Module {
             registerCustomItems(customItemsSections);
         }
 
+        ConfigurationSection fightModeSection = config.getConfigurationSection("fight_mode");
+
+        if (fightModeSection == null) {
+            getPlugin().getLogger().severe("Fight mode item configuration section is missing!");
+        } else if (fightModeSection.getBoolean("enabled")) {
+            ItemStack item = ItemStackBuilder.getItemStack(fightModeSection.getConfigurationSection("item")).build();
+            FightMode fightMode = new FightMode(this, item, fightModeSection.getInt("slot"), "FIGHT_MODE_ITEM");
+
+            fightMode.setAllowMovement(fightModeSection.getBoolean("disable_inventory_movement"));
+            registerHotbarItem(fightMode);
+        }
+
         ConfigurationSection hiderSection = config.getConfigurationSection("player_hider");
 
         if (hiderSection == null) {
             getPlugin().getLogger().severe("Player hider item configuration section is missing!");
-            return;
-        }
-
-        if (hiderSection.getBoolean("enabled")) {
+        } else if (hiderSection.getBoolean("enabled")) {
             boolean playersHidden = config.getBoolean("join_settings.players_hidden", false);
             ItemStack item;
 
