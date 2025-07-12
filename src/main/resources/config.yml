@@ -506,8 +506,12 @@ fight_mode:
   slot: 7
   # Should we prevent them from moving/dropping the item?
   disable_inventory_movement: true
-  # Delay in seconds before the fight mode gets activated.
-  hold_delay: 5
+  # Delay in seconds before the fight mode gets toggled.
+  hold_delay:
+    # The sword should be held for this amount of time to activate the fight mode.
+    activate: 5
+    # Any other item that isn't the sword should be held for this amount of time to deactivate the fight mode.
+    deactivate: 5
 
   # The item that will toggle the fight mode and also the sword used to fight.
   item:
@@ -515,7 +519,7 @@ fight_mode:
     amount: 1
     display_name: "<red>Fight Mode <gray>(Hold to activate)"
     lore:
-      - "<dark_gray>» <gray>Hold for 5 seconds to activate the fight mode!"
+      - "<dark_gray>» <gray>Hold for 5 seconds to toggle the fight mode!"
     enchantments:
       - "sharpness:1" # enchantment:level
 
