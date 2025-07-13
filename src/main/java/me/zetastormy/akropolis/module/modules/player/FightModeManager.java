@@ -42,7 +42,7 @@ import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
 import net.kyori.adventure.text.Component;
 
-public class FightModeHandler extends Module {
+public class FightModeManager extends Module {
     private final Map<UUID, Integer> holdTasks;
     private final Map<UUID, Integer> holdTimers;
     private final Set<UUID> fighters;
@@ -56,7 +56,7 @@ public class FightModeHandler extends Module {
     private List<String> activatedActions;
     private List<String> deactivatedActions;
 
-    public FightModeHandler(AkropolisPlugin plugin) {
+    public FightModeManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.FIGHT_MODE);
 
         this.holdTasks = new HashMap<>();

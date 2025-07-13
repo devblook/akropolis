@@ -32,15 +32,15 @@ import org.bukkit.inventory.ItemStack;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
-import me.zetastormy.akropolis.module.modules.player.FightModeHandler;
+import me.zetastormy.akropolis.module.modules.player.FightModeManager;
 
 public class FightMode extends HotbarItem {
-    private final FightModeHandler fightModeHandler;
+    private final FightModeManager fightModeManager;
 
     public FightMode(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
         super(hotbarManager, item, slot, keyValue);
 
-        this.fightModeHandler = (FightModeHandler) getPlugin().getModuleManager().getModule(ModuleType.FIGHT_MODE);
+        this.fightModeManager = (FightModeManager) getPlugin().getModuleManager().getModule(ModuleType.FIGHT_MODE);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FightMode extends HotbarItem {
     @Override
     public void removeItem(Player player) {
         super.removeItem(player);
-        fightModeHandler.disableFightMode(player);
+        fightModeManager.disableFightMode(player);
     }
 
     @EventHandler
@@ -60,36 +60,36 @@ public class FightMode extends HotbarItem {
         UUID playerUuid = player.getUniqueId();
         ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
 
-        if (fightModeHandler.isFightModeActive(playerUuid)) {
-            if (fightModeHandler.isValidItem(newItem)) {
-                fightModeHandler.cancelHoldTask(playerUuid);
-            } else if (!fightModeHandler.hasHoldTask(playerUuid)) {
-                fightModeHandler.startDeactivationTimer(player);
+        if (fightModeManager.isFightModeActive(playerUuid)) {
+            if (fightModeManager.isValidItem(newItem)) {
+                fightModeManager.cancelHoldTask(playerUuid);
+            } else if (!fightModeManager.hasHoldTask(playerUuid)) {
+                fightModeManager.startDeactivationTimer(player);
             }
 
             return;
         }
 
-        if (fightModeHandler.isValidItem(newItem)) {
-            fightModeHandler.cancelHoldTask(playerUuid);
-            fightModeHandler.startActivationTimer(player);
+        if (fightModeManager.isValidItem(newItem)) {
+            fightModeManager.cancelHoldTask(playerUuid);
+            fightModeManager.startActivationTimer(player);
         } else {
-            fightModeHandler.cancelHoldTask(playerUuid);
+            fightModeManager.cancelHoldTask(playerUuid);
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        fightModeHandler.disableFightMode(event.getPlayer());
+        fightModeManager.disableFightMode(event.getPlayer());
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
-        fightModeHandler.disableFightMode(event.getPlayer());
+        fightModeManager.disableFightMode(event.getPlayer());
     }
 
     @EventHandler()
     public void onRespawnEvent(PlayerRespawnEvent event) {
-        fightModeHandler.disableFightMode(event.getPlayer());
+        fightModeManager.disableFightMode(event.getPlayer());
     }
 }
