@@ -19,11 +19,12 @@
 
 package me.zetastormy.akropolis.util;
 
+import org.bukkit.Color;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.Color;
 
 public class TextUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();

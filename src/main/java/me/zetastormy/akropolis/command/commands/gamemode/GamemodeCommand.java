@@ -19,18 +19,19 @@
 
 package me.zetastormy.akropolis.command.commands.gamemode;
 
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.TextUtil;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class GamemodeCommand extends InjectableCommand {
 
@@ -42,41 +43,41 @@ public class GamemodeCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 1) {
             if (!(sender instanceof Player player)) {
-                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+                Message.CONSOLE_NOT_ALLOWED.send(sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                Message.NO_PERMISSION.sendFrom(sender);
+                Message.NO_PERMISSION.send(sender);
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                Message.GAMEMODE_INVALID.sendFromWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
+                Message.GAMEMODE_INVALID.sendWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
                 return;
             }
 
-            Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse(gamemode.toString().toUpperCase()));
+            Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse(gamemode.toString().toUpperCase()));
             player.setGameMode(gamemode);
 
         } else if (args.length == 2) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                Message.NO_PERMISSION.sendFrom(sender);
+                Message.NO_PERMISSION.send(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[1]);
             if (player == null) {
-                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
+                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             GameMode gamemode = getGamemode(args[0]);
 
             if (gamemode == null) {
-                Message.GAMEMODE_INVALID.sendFromWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
+                Message.GAMEMODE_INVALID.sendWithReplacement(sender, "gamemode", TextUtil.parse(args[0]));
                 return;
             }
 

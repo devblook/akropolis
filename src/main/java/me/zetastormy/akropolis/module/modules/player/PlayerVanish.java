@@ -19,10 +19,10 @@
 
 package me.zetastormy.akropolis.module.modules.player;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,9 +31,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
 
 public class PlayerVanish extends Module {
     private List<UUID> vanished;
@@ -58,13 +59,13 @@ public class PlayerVanish extends Module {
             vanished.remove(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.showPlayer(player));
 
-            Message.VANISH_DISABLE.sendFrom(player);
+            Message.VANISH_DISABLE.send(player);
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
         } else {
             vanished.add(player.getUniqueId());
             Bukkit.getOnlinePlayers().forEach(pl -> pl.hidePlayer(player));
 
-            Message.VANISH_ENABLE.sendFrom(player);
+            Message.VANISH_ENABLE.send(player);
             player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1000000, 1));
         }
     }

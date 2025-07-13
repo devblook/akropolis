@@ -19,6 +19,13 @@
 
 package me.zetastormy.akropolis.command.commands;
 
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
@@ -26,12 +33,6 @@ import me.zetastormy.akropolis.config.ConfigManager;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class FlyCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
@@ -52,42 +53,42 @@ public class FlyCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+                Message.CONSOLE_NOT_ALLOWED.send(sender);
                 return;
             }
 
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))) {
-                Message.NO_PERMISSION.sendFrom(sender);
+                Message.NO_PERMISSION.send(sender);
                 return;
             }
 
             if (player.getAllowFlight()) {
-                Message.FLIGHT_DISABLE.sendFrom(player);
+                Message.FLIGHT_DISABLE.send(player);
                 toggleFlight(player, false);
             } else {
-                Message.FLIGHT_ENABLE.sendFrom(player);
+                Message.FLIGHT_ENABLE.send(player);
                 toggleFlight(player, true);
             }
         } else if (args.length == 1) {
             if (!(sender.hasPermission(Permissions.COMMAND_FLIGHT_OTHERS.getPermission()))) {
-                Message.NO_PERMISSION.sendFrom(sender);
+                Message.NO_PERMISSION.send(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
+                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             if (player.getAllowFlight()) {
-                Message.FLIGHT_DISABLE.sendFrom(player);
-                Message.FLIGHT_DISABLE_OTHER.sendFromWithReplacement(sender, "player", player.name());
+                Message.FLIGHT_DISABLE.send(player);
+                Message.FLIGHT_DISABLE_OTHER.sendWithReplacement(sender, "player", player.name());
                 toggleFlight(player, false);
             } else {
-                Message.FLIGHT_ENABLE.sendFrom(player);
-                Message.FLIGHT_ENABLE_OTHER.sendFromWithReplacement(sender, "player", player.name());
+                Message.FLIGHT_ENABLE.send(player);
+                Message.FLIGHT_ENABLE_OTHER.sendWithReplacement(sender, "player", player.name());
                 toggleFlight(player, true);
             }
         }

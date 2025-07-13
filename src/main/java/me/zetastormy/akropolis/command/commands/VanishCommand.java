@@ -19,16 +19,17 @@
 
 package me.zetastormy.akropolis.command.commands;
 
+import java.util.List;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.player.PlayerVanish;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class VanishCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
@@ -41,7 +42,7 @@ public class VanishCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission(Permissions.COMMAND_VANISH.getPermission())) {
-            Message.NO_PERMISSION.sendFrom(sender);
+            Message.NO_PERMISSION.send(sender);
             return;
         }
 

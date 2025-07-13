@@ -19,17 +19,18 @@
 
 package me.zetastormy.akropolis.command.commands.gamemode;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.util.TextUtil;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.Permissions;
+import me.zetastormy.akropolis.command.InjectableCommand;
+import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.util.TextUtil;
 
 public class CreativeCommand extends InjectableCommand {
 
@@ -41,34 +42,34 @@ public class CreativeCommand extends InjectableCommand {
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+                Message.CONSOLE_NOT_ALLOWED.send(sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                Message.NO_PERMISSION.sendFrom(player);
+                Message.NO_PERMISSION.send(player);
                 return;
             }
 
-            Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
+            Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
             player.setGameMode(GameMode.CREATIVE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                Message.NO_PERMISSION.sendFrom(sender);
+                Message.NO_PERMISSION.send(sender);
                 return;
             }
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
+                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
             if (sender.getName().equals(player.getName())) {
-                Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
+                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
             } else {
-                Message.GAMEMODE_CHANGE.sendFromWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
+                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
                 sender.sendMessage(TextUtil.replace(TextUtil.replace(Message.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", TextUtil.parse("CREATIVE")));
             }
 

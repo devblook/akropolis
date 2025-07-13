@@ -19,12 +19,10 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar.items;
 
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
-import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
-import me.zetastormy.akropolis.util.ItemStackBuilder;
-import net.kyori.adventure.text.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -40,9 +38,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
+import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
+import me.zetastormy.akropolis.util.ItemStackBuilder;
+import net.kyori.adventure.text.Component;
 
 public class PlayerHider extends HotbarItem {
     private final List<UUID> hidden;
@@ -81,7 +82,7 @@ public class PlayerHider extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), "player_hider", cooldown)) {
-            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), "player_hider")));
+            Message.COOLDOWN_ACTIVE.sendWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), "player_hider")));
             return;
         }
 
@@ -91,7 +92,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            Message.PLAYER_HIDER_HIDDEN.sendFrom(player);
+            Message.PLAYER_HIDER_HIDDEN.send(player);
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -100,7 +101,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            Message.PLAYER_HIDER_SHOWN.sendFrom(player);
+            Message.PLAYER_HIDER_SHOWN.send(player);
 
             player.getInventory().setItem(getSlot(), notHiddenItem);
         }

@@ -19,17 +19,18 @@
 
 package me.zetastormy.akropolis.module.modules.chat;
 
+import java.util.List;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
-import java.util.List;
 
 public class ChatCommandBlock extends Module {
     private List<String> blockedCommands;
@@ -58,7 +59,7 @@ public class ChatCommandBlock extends Module {
 
         if (blockedCommands.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
-            Message.COMMAND_BLOCKED.sendFrom(player);
+            Message.COMMAND_BLOCKED.send(player);
         }
     }
 }

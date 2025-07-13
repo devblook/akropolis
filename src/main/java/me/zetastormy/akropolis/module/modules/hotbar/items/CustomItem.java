@@ -19,17 +19,18 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar.items;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import net.kyori.adventure.text.Component;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Collections;
-import java.util.List;
 
 public class CustomItem extends HotbarItem {
     private final String key;
@@ -56,7 +57,7 @@ public class CustomItem extends HotbarItem {
     @Override
     protected void onInteract(Player player) {
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), key, cooldown)) {
-            Message.COOLDOWN_ACTIVE.sendFromWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), key)));
+            Message.COOLDOWN_ACTIVE.sendWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), key)));
             return;
         }
 

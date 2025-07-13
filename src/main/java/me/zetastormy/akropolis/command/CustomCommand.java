@@ -19,13 +19,14 @@
 
 package me.zetastormy.akropolis.command;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.Message;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.Message;
 
 public class CustomCommand extends InjectableCommand {
     private String permission;
@@ -39,12 +40,12 @@ public class CustomCommand extends InjectableCommand {
     @Override
     protected void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            Message.CONSOLE_NOT_ALLOWED.sendFrom(sender);
+            Message.CONSOLE_NOT_ALLOWED.send(sender);
             return;
         }
 
         if (permission != null && !sender.hasPermission(permission)) {
-            Message.CUSTOM_COMMAND_NO_PERMISSION.sendFrom(sender);
+            Message.CUSTOM_COMMAND_NO_PERMISSION.send(sender);
             return;
         }
 

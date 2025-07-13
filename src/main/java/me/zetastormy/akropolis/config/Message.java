@@ -98,6 +98,9 @@ public enum Message {
     SONG_PLAYER_SKIPPED("SONG_PLAYER.SKIPPED"),
     SONG_PLAYER_NOT_LOADED("SONG_PLAYER.NOT_LOADED"),
 
+    FIGHT_MODE_ACTIVATE_DELAY("FIGHT_MODE.ACTIVATE_DELAY"),
+    FIGHT_MODE_DEACTIVATE_DELAY("FIGHT_MODE.DEACTIVATE_DELAY"),
+
     WORLD_DOWNLOAD_NOTIFY("ANTI_WORLD_DOWNLOADER.ADMIN_NOTIFY");
 
     private static FileConfiguration config;
@@ -111,7 +114,7 @@ public enum Message {
         config = c;
     }
 
-    public void sendFrom(Audience audience) {
+    public void send(Audience audience) {
         Component messageContent = toComponent();
 
         if (messageContent.equals(Component.empty())) return;
@@ -119,7 +122,7 @@ public enum Message {
         audience.sendMessage(messageContent);
     }
 
-    public void sendFromAsList(Audience audience) {
+    public void sendAsList(Audience audience) {
         List<Component> messageContent = toComponentList();
 
         if (messageContent.getFirst().equals(Component.empty())) return;
@@ -127,7 +130,7 @@ public enum Message {
         messageContent.forEach(audience::sendMessage);
     }
 
-    public void sendFromWithReplacement(Audience audience, String pattern, Component replacement) {
+    public void sendWithReplacement(Audience audience, String pattern, Component replacement) {
         Component messageContent = TextUtil.replace(
             toComponent(),
             pattern,

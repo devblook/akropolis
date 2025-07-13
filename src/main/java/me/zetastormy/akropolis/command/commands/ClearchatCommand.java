@@ -19,16 +19,17 @@
 
 package me.zetastormy.akropolis.command.commands;
 
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public class ClearchatCommand extends InjectableCommand {
 
@@ -39,7 +40,7 @@ public class ClearchatCommand extends InjectableCommand {
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
-            Message.NO_PERMISSION.sendFrom(sender);
+            Message.NO_PERMISSION.send(sender);
             return;
         }
 
@@ -49,14 +50,14 @@ public class ClearchatCommand extends InjectableCommand {
                     player.sendMessage("");
                 }
 
-                Message.CLEARCHAT.sendFromWithReplacement(player, "player", sender.name());
+                Message.CLEARCHAT.sendWithReplacement(player, "player", sender.name());
             }
         } else if (args.length == 1) {
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                Message.INVALID_PLAYER.sendFromWithReplacement(sender, "player", TextUtil.parse(args[0]));
+                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
                 return;
             }
 
@@ -64,7 +65,7 @@ public class ClearchatCommand extends InjectableCommand {
                 player.sendMessage("");
             }
 
-            Message.CLEARCHAT_PLAYER.sendFromWithReplacement(sender, "player", sender.name());
+            Message.CLEARCHAT_PLAYER.sendWithReplacement(sender, "player", sender.name());
         }
 
     }

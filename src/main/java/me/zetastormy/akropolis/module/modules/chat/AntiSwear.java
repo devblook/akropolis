@@ -19,6 +19,12 @@
 
 package me.zetastormy.akropolis.module.modules.chat;
 
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
@@ -28,11 +34,6 @@ import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.TextUtil;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-
-import java.util.List;
 
 public class AntiSwear extends Module {
     private List<String> blockedWords;
@@ -63,7 +64,7 @@ public class AntiSwear extends Module {
         for (String word : blockedWords) {
             if (TextUtil.raw(message).contains(word.toLowerCase())) {
                 event.setCancelled(true);
-                Message.ANTI_SWEAR_WORD_BLOCKED.sendFrom(player);
+                Message.ANTI_SWEAR_WORD_BLOCKED.send(player);
 
                 Bukkit.getOnlinePlayers().stream()
                         .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Message.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", message)));

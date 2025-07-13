@@ -19,13 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.player;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import net.kyori.adventure.text.Component;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -37,8 +33,13 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
-import java.util.List;
-import java.util.UUID;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.Permissions;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import net.kyori.adventure.text.Component;
 
 public class DoubleJump extends Module {
     private long cooldownDelay;
@@ -94,7 +95,7 @@ public class DoubleJump extends Module {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, "double_jump", cooldownDelay)) {
-            Message.DOUBLE_JUMP_COOLDOWN.sendFromWithReplacement(player, "time", Component.text(getCooldown(uuid, "double_jump")));
+            Message.DOUBLE_JUMP_COOLDOWN.sendWithReplacement(player, "time", Component.text(getCooldown(uuid, "double_jump")));
             return;
         }
 
