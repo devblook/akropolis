@@ -526,13 +526,15 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        if (!deathMessage || !inventoryDrop)
-            return;
-
         if (inDisabledWorld(event.getEntity().getLocation()))
             return;
 
-        event.setDeathMessage(null);
+        if (deathMessage)
+            event.setDeathMessage(null);
+
+        if (!inventoryDrop)
+            return;
+
         event.getDrops().clear();
     }
 
