@@ -545,8 +545,8 @@ public class WorldProtect extends Module {
             return;
 
         FightModeManager fightModeManager = getPlugin().getFightModeManager();
-        boolean attackedInFightMode = fightModeManager.isFightModeActive(player.getUniqueId());
-        boolean attackerInFightMode = fightModeManager.isFightModeActive(event.getDamager().getUniqueId());
+        boolean attackedInFightMode = fightModeManager.isInFightMode(player.getUniqueId());
+        boolean attackerInFightMode = fightModeManager.isInFightMode(event.getDamager().getUniqueId());
 
         if (attackedInFightMode && attackerInFightMode) {
             return;

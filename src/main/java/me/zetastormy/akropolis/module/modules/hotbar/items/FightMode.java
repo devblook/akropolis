@@ -60,7 +60,7 @@ public class FightMode extends HotbarItem {
         UUID playerUuid = player.getUniqueId();
         ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
 
-        if (fightModeManager.isFightModeActive(playerUuid)) {
+        if (fightModeManager.isInFightMode(playerUuid)) {
             if (fightModeManager.isValidItem(newItem)) {
                 fightModeManager.cancelHoldTask(playerUuid);
             } else if (!fightModeManager.hasHoldTask(playerUuid)) {

@@ -177,7 +177,7 @@ public class FightModeManager extends Module {
     }
 
     public void enableFightMode(Player player) {
-        if (isFightModeActive(player.getUniqueId())) return;
+        if (isInFightMode(player.getUniqueId())) return;
 
         giveArmor(player);
         fighters.add(player.getUniqueId());
@@ -185,14 +185,14 @@ public class FightModeManager extends Module {
     }
 
     public void disableFightMode(Player player) {
-        if (!isFightModeActive(player.getUniqueId())) return;
+        if (!isInFightMode(player.getUniqueId())) return;
 
         removeArmor(player);
         fighters.remove(player.getUniqueId());
         executeActions(player, deactivatedActions);
     }
 
-    public boolean isFightModeActive(UUID playerUuid) {
+    public boolean isInFightMode(UUID playerUuid) {
         return fighters.contains(playerUuid);
     }
 
