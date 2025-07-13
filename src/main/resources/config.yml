@@ -517,7 +517,7 @@ fight_mode:
   item:
     material: DIAMOND_SWORD
     amount: 1
-    display_name: "<red>Fight Mode <gray>(Hold to activate)"
+    display_name: "<red>Fight Mode <gray>(Hold to toggle)"
     lore:
       - "<dark_gray>» <gray>Hold for 5 seconds to toggle the fight mode!"
     enchantments:
@@ -552,10 +552,14 @@ fight_mode:
 
   # Actions to execute when the fight mode gets activated or deactivated.
   actions:
+    countdown:
+      - "[SOUND] BLOCK_AMETHYST_BLOCK_PLACE"
     activated:
-      - "[TITLE] <red><b>Fight mode activated!;<white>Try to survive!"
+      - "[TITLE] <red><b>PvP activated!;<white>Try to survive!"
+      - "[SOUND] ENTITY_ENDER_DRAGON_GROWL"
     deactivated:
-      - "[TITLE] <green><b>Fight mode deactivated;<white>You've survived, uh?"
+      - "[TITLE] <green><b>PvP deactivated;<white>You've survived, uh?"
+      - "[SOUND] ENTITY_SNIFFER_HAPPY"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | PLAYER HIDER                             |

@@ -93,6 +93,10 @@ Messages:
     SKIPPED: "<prefix> <green>Song skipped. Now playing <current_song>."
     NOT_LOADED: "<prefix> <red>The song player isn't loaded."
 
+  FIGHT_MODE:
+    ACTIVATE_DELAY: "<prefix> <gray>Activating fight mode in <red><seconds> second(s)."
+    DEACTIVATE_DELAY: "<prefix> <gray>Deactivating fight mode in <green><seconds> second(s)."
+
   CHAT:
     CLEARCHAT: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white>!"
     CLEARCHAT_PLAYER: "prefix> <red>Your chat has been cleared by an administrator."
