@@ -90,6 +90,7 @@ public class WorldProtect extends Module {
     private boolean playerPvP;
     private boolean playerDrowning;
     private boolean fireDamage;
+    private boolean inventoryDrop;
 
     private static final Set<Material> INTERACTABLE;
 
@@ -203,6 +204,7 @@ public class WorldProtect extends Module {
         leafDecay = config.getBoolean("world_settings.disable_block_leaf_decay");
         playerDrowning = config.getBoolean("world_settings.disable_drowning");
         fireDamage = config.getBoolean("world_settings.disable_fire_damage");
+        inventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
     }
 
     @Override
@@ -524,13 +526,14 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        if (!deathMessage)
+        if (!deathMessage || !inventoryDrop)
             return;
 
         if (inDisabledWorld(event.getEntity().getLocation()))
             return;
 
         event.setDeathMessage(null);
+        event.getDrops().clear();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

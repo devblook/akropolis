@@ -19,15 +19,14 @@
 
 package me.zetastormy.akropolis.module.modules.player;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.ConfigurationSection;
@@ -41,8 +40,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import java.util.ArrayList;
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.Permissions;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.PlaceholderUtil;
+import me.zetastormy.akropolis.util.TextUtil;
+import net.kyori.adventure.text.Component;
 
 public class PlayerListener extends Module {
     private ConfigurationSection playersSection;
