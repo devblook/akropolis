@@ -368,6 +368,16 @@ anti_swear:
     - shit
     - bitch
 
+emojis:
+  # Should the emoji feature be enabled?
+  enabled: true
+
+  # The strings to be replaced with emojis.
+  strings:
+    # :smile: will be replaced with "😀"
+    smile: "😀"
+    sunglasses: "😎"
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | WORLD EVENT SETTINGS                     |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
