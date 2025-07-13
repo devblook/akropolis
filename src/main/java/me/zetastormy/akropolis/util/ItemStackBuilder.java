@@ -77,6 +77,10 @@ public class ItemStackBuilder {
             builder.withAmount(section.getInt("amount"));
         }
 
+        if (section.contains("unbreakable")) {
+            builder.setUnbreakable(section.getBoolean("unbreakable"));
+        }
+
         String username = section.getString("username");
 
         if (username != null && section.contains("username")) {
@@ -199,6 +203,19 @@ public class ItemStackBuilder {
 
     public void withAmount(int amount) {
         itemStack.setAmount(amount);
+    }
+
+    public void setUnbreakable(boolean unbreakable) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not set item if the item is unbreakable or not!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        itemMeta.setUnbreakable(unbreakable);
+        itemStack.setItemMeta(itemMeta);
     }
 
     public void withFlags(ItemFlag... flags) {
