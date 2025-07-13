@@ -35,6 +35,7 @@ import me.zetastormy.akropolis.inventory.InventoryManager;
 import me.zetastormy.akropolis.module.ModuleManager;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hologram.HologramManager;
+import me.zetastormy.akropolis.module.modules.player.FightModeManager;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;
 import net.megavex.scoreboardlibrary.api.exception.NoPacketAdapterAvailableException;
@@ -157,6 +158,10 @@ public class AkropolisPlugin extends JavaPlugin {
 
     public static synchronized AkropolisPlugin getInstance() {
         return plugin;
+    }
+
+    public FightModeManager getFightModeManager() {
+        return (FightModeManager) moduleManager.getModule(ModuleType.FIGHT_MODE);
     }
 
     public SongPlayerManager getSongPlayerManager() {
