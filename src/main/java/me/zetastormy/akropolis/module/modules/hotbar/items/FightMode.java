@@ -19,72 +19,77 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar.items;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
-import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
-import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
-import me.zetastormy.akropolis.util.ItemStackBuilder;
+import me.zetastormy.akropolis.module.modules.player.FightModeHandler;
 
 public class FightMode extends HotbarItem {
-    private final Set<UUID> fighters;
-    private final ItemStack fightItem;
+    private final FightModeHandler fightModeHandler;
 
     public FightMode(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
         super(hotbarManager, item, slot, keyValue);
-        fighters = new HashSet<>();
 
-        FileConfiguration config = getHotbarManager().getConfig(ConfigType.SETTINGS);
-
-        ItemStack fightItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("fight_mode.item")).build();
-
-        ItemMeta fightMeta = item.getItemMeta();
-        PersistentDataContainer fightContainer = fightMeta.getPersistentDataContainer();
-        fightContainer.set(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING, keyValue);
-
-        fightItem.setItemMeta(fightMeta);
-
-        this.fightItem = fightItem;
+        this.fightModeHandler = (FightModeHandler) getPlugin().getModuleManager().getModule(ModuleType.FIGHT_MODE);
     }
 
     @Override
     protected void onInteract(Player player) {
+        // Not used.
+    }
 
+    @Override
+    public void removeItem(Player player) {
+        super.removeItem(player);
+        fightModeHandler.disableFightMode(player);
+    }
+
+    @EventHandler
+    public void onPlayerItemHeld(PlayerItemHeldEvent event) {
+        Player player = event.getPlayer();
+        UUID playerUuid = player.getUniqueId();
+        ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
+
+        if (fightModeHandler.isFightModeActive(playerUuid)) {
+            if (fightModeHandler.isValidItem(newItem)) {
+                fightModeHandler.cancelHoldTask(playerUuid);
+            } else if (!fightModeHandler.hasHoldTask(playerUuid)) {
+                fightModeHandler.startDeactivationTimer(player);
+            }
+
+            return;
+        }
+
+        if (fightModeHandler.isValidItem(newItem)) {
+            fightModeHandler.cancelHoldTask(playerUuid);
+            fightModeHandler.startActivationTimer(player);
+        } else {
+            fightModeHandler.cancelHoldTask(playerUuid);
+        }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-
-    }
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-
+        fightModeHandler.disableFightMode(event.getPlayer());
     }
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
-
+        fightModeHandler.disableFightMode(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler()
     public void onRespawnEvent(PlayerRespawnEvent event) {
-
+        fightModeHandler.disableFightMode(event.getPlayer());
     }
 }

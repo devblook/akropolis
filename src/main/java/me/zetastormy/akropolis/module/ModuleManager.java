@@ -40,6 +40,7 @@ import me.zetastormy.akropolis.module.modules.chat.groups.ChatGroups;
 import me.zetastormy.akropolis.module.modules.hologram.HologramManager;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.module.modules.player.DoubleJump;
+import me.zetastormy.akropolis.module.modules.player.FightModeHandler;
 import me.zetastormy.akropolis.module.modules.player.PlayerListener;
 import me.zetastormy.akropolis.module.modules.player.PlayerOffHandSwap;
 import me.zetastormy.akropolis.module.modules.player.PlayerVanish;
@@ -100,6 +101,7 @@ public class ModuleManager {
         registerModule(new PlayerVanish(plugin));
         registerModule(new HologramManager(plugin));
         registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
+        registerModule(new FightModeHandler(plugin), "fight_mode.enabled");
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCKAPI"))
             registerModule(new SongPlayerManager(plugin), "song_player.enabled");

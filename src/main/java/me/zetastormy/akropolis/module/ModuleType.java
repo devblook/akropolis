@@ -40,4 +40,5 @@ public enum ModuleType {
     PLAYER_OFFHAND_LISTENER,
     BOSS_BAR_BROADCAST,
     SONG_PLAYER,
+    FIGHT_MODE
 }
