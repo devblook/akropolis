@@ -162,7 +162,7 @@ public class FightModeManager extends Module {
                         .getPersistentDataContainer()
                         .get(NamespacedKey.minecraft("hotbar-item"), PersistentDataType.STRING);
 
-        return key.equals("FIGHT_MODE_ITEM");
+        return key == null ? false : key.equals("FIGHT_MODE_ITEM");
     }
 
     public void cancelHoldTask(UUID playerUuid) {
