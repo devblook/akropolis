@@ -396,7 +396,7 @@ public class AkropolisCommand extends InjectableCommand {
                 return;
             }
 
-            if (!sender.hasPermission(Permissions.COMMAND_HOLOGRAMS.getPermission())) {
+            if (!sender.hasPermission(Permissions.COMMAND_SONG_PLAYER.getPermission())) {
                 Message.NO_PERMISSION.send(sender);
                 return;
             }
