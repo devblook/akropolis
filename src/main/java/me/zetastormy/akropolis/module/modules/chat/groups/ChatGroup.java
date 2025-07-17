@@ -19,21 +19,24 @@
 
 package me.zetastormy.akropolis.module.modules.chat.groups;
 
+import org.bukkit.entity.Player;
+
 import me.zetastormy.akropolis.util.PlaceholderUtil;
 import me.zetastormy.akropolis.util.TextUtil;
 import net.kyori.adventure.text.Component;
-import org.bukkit.entity.Player;
 
 public class ChatGroup {
     private final String rawFormat;
     private final int cooldownTime;
     private final String cooldownMessage;
+    private final Emojis emojis;
     private final String permission;
 
-    public ChatGroup(String groupName, String rawFormat, int cooldownTime, String cooldownMessage) {
+    public ChatGroup(String groupName, String rawFormat, int cooldownTime, String cooldownMessage, Emojis emojis) {
         this.rawFormat = rawFormat;
         this.cooldownTime = cooldownTime;
         this.cooldownMessage = cooldownMessage;
+        this.emojis = emojis;
         this.permission = "akropolis.chat.group." + groupName;
     }
 

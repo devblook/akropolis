@@ -19,6 +19,15 @@
 
 package me.zetastormy.akropolis.module.modules.chat.groups;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
@@ -27,14 +36,6 @@ import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChatGroups extends Module {
     private final Map<String, ChatGroup> chatGroups = new HashMap<>();
@@ -58,7 +59,8 @@ public class ChatGroups extends Module {
                 .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
                 groupsSection.getString(groupName + ".format", "No format."),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
-                groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."))));
+                groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."),
+                new Emojis(groupsSection.getConfigurationSection("groupName" + ".emojis")))));
     }
 
     @Override
