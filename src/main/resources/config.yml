@@ -331,6 +331,16 @@ groups:
     cooldown:
       time: 3 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+    emojis:
+      smile:
+        emoticon: [":)", ":smile:"]
+        emoji: "<yellow>😀"
+      sunglasses:
+        emoticon: ["B)", ":sunglasses:"]
+        emoji: "<yellow>😎"
+      heart:
+        emoticon: ["<3", ":heart:"]
+        emoji: "<red>❤️"
   staff:
     format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
   vip:
@@ -339,6 +349,16 @@ groups:
     cooldown:
       time: 1 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+    emojis:
+      tableflip:
+        emoticon: ":tableflip:"
+        emoji: "<red>(╯°□°）╯<white>︵<gray> ┻━┻"
+      wave:
+        emoticon: ["o/", ":wave:"]
+        emoji: "<green>( ﾟ◡ﾟ)/"
+      music:
+        emoticon: ":music:"
+        emoji: ["<red>♫", "<blue>♬", "<dark_aqua>♪", "<dark_purple>♩", "<green>♭", "<yellow>♪"]
 
 command_block:
   # Should the command blocker feature be enabled?
@@ -367,16 +387,6 @@ anti_swear:
     - fuck
     - shit
     - bitch
-
-emojis:
-  # Should the emoji feature be enabled?
-  enabled: true
-
-  # The strings to be replaced with emojis.
-  strings:
-    # :smile: will be replaced with "😀"
-    smile: "😀"
-    sunglasses: "😎"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | WORLD EVENT SETTINGS                     |
