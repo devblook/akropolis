@@ -337,13 +337,13 @@ groups:
       smile:
         # ":)" or ":smile:" will be replaced by "<yellow>😀".
         emoticon: [":)", ":smile:"]
-        emoji: "<yellow>😀"
+        emoji: "<yellow>😀<reset>"
       sunglasses:
         emoticon: ["B)", ":sunglasses:"]
-        emoji: "<yellow>😎"
+        emoji: "<yellow>😎<reset>"
       heart:
         emoticon: ["<3", ":heart:"]
-        emoji: "<red>❤️"
+        emoji: "<red>❤<reset>"
   vip:
     priority: 1
     format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
@@ -355,14 +355,20 @@ groups:
     emojis:
       tableflip:
         emoticon: ":tableflip:"
-        emoji: "<red>(╯°□°）╯<white>︵<gray> ┻━┻"
+        emoji: "<red>(╯°□°）╯<white>︵<gray> ┻━┻<reset>"
       wave:
         emoticon: ["o/", ":wave:"]
-        emoji: "<green>( ﾟ◡ﾟ)/"
+        emoji: "<green>( ﾟ◡ﾟ)/<reset>"
       music:
         emoticon: ":music:"
         # ":music:" will be replaced by a random emoji from the list.
-        emoji: ["<red>♫", "<blue>♬", "<dark_aqua>♪", "<dark_purple>♩", "<green>♭", "<yellow>♪"]
+        emoji:
+          - "<red>♫<reset>"
+          - "<blue>♬<reset>"
+          - "<dark_aqua>♪<reset>"
+          - "<dark_purple>♩<reset>"
+          - "<green>♭<reset>"
+          - "<yellow>♪<reset>"
   staff:
     priority: 2
     format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
