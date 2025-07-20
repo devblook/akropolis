@@ -44,6 +44,10 @@ public class ChatGroup {
         return PlaceholderUtil.setPlaceholders(rawFormat, player);
     }
 
+    public String parseEmojis(String message) {
+        return emojis.parse(message);
+    }
+
     public int getCooldownTime() {
         return cooldownTime;
     }

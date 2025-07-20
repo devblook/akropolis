@@ -20,7 +20,9 @@
 package me.zetastormy.akropolis.module.modules.chat.groups;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -60,7 +62,7 @@ public class ChatGroups extends Module {
                 groupsSection.getString(groupName + ".format", "No format."),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
                 groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."),
-                new Emojis(groupsSection.getConfigurationSection("groupName" + ".emojis")))));
+                new Emojis(groupsSection.getConfigurationSection(groupName + ".emojis")))));
     }
 
     @Override
@@ -74,29 +76,37 @@ public class ChatGroups extends Module {
         if (event.isCancelled()) return;
 
         Player player = event.getPlayer();
-        ChatGroup currentGroup = null;
+        Set<ChatGroup> groups = new HashSet<>();
+        ChatGroup topGroup = null;
 
         for (String group : chatGroups.keySet()) {
             if (player.hasPermission("akropolis.chat.group." + group)) {
-                currentGroup = chatGroups.get(group);
+                groups.add(chatGroups.get(group));
+                topGroup = chatGroups.get(group);
             }
         }
 
-        if (currentGroup == null) return;
+        if (topGroup == null) return;
 
         event.setCancelled(true);
 
-        if (!tryCooldown(player.getUniqueId(), "chat", currentGroup.getCooldownTime())) {
-            player.sendMessage(TextUtil.replace(currentGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), "chat"))));
+        if (!tryCooldown(player.getUniqueId(), "chat", topGroup.getCooldownTime())) {
+            player.sendMessage(TextUtil.replace(topGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), "chat"))));
             return;
         }
 
         String rawMessage = TextUtil.raw(event.originalMessage());
+        String parsedMessageEmojis = rawMessage;
+
+        for (ChatGroup group : groups) {
+            parsedMessageEmojis = group.parseEmojis(parsedMessageEmojis);
+        }
+
         String parsedMessage = TextUtil.raw(LegacyComponentSerializer
                 .legacySection()
-                .deserialize(ChatColor.translateAlternateColorCodes('&', rawMessage)));
+                .deserialize(ChatColor.translateAlternateColorCodes('&', parsedMessageEmojis)));
 
-        getPlugin().getServer().sendMessage(TextUtil.replace(currentGroup.getFormat(player),
+        getPlugin().getServer().sendMessage(TextUtil.replace(topGroup.getFormat(player),
                 "message",
                 TextUtil.parse(parsedMessage)));
     }
