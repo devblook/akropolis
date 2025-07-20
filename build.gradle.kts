@@ -23,16 +23,16 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.7-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
 
     implementation("javax.inject:javax.inject:1")
 
-    implementation("net.megavex:scoreboard-library-api:2.3.3")
-    runtimeOnly("net.megavex:scoreboard-library-implementation:2.3.3")
-    runtimeOnly("net.megavex:scoreboard-library-modern:2.3.3:mojmap")
+    implementation("net.megavex:scoreboard-library-api:2.4.1")
+    runtimeOnly("net.megavex:scoreboard-library-implementation:2.4.1")
+    runtimeOnly("net.megavex:scoreboard-library-modern:2.4.1:mojmap")
 
-    compileOnly("net.kyori:adventure-text-minimessage:4.22.0")
-    compileOnly("net.kyori:adventure-api:4.22.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.23.0")
+    compileOnly("net.kyori:adventure-api:4.23.0")
 
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("me.clip:placeholderapi:2.11.6")
