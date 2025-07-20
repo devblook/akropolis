@@ -326,13 +326,16 @@ groups:
   enabled: false
 
   default:
+    priority: 0
     format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
     # Just in case you want to slow down your players a little.
     cooldown:
       time: 3 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+    # Add all the emojis you want here.
     emojis:
       smile:
+        # ":)" or ":smile:" will be replaced by "<yellow>😀".
         emoticon: [":)", ":smile:"]
         emoji: "<yellow>😀"
       sunglasses:
@@ -341,14 +344,14 @@ groups:
       heart:
         emoticon: ["<3", ":heart:"]
         emoji: "<red>❤️"
-  staff:
-    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
   vip:
+    priority: 1
     format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
     # You can use the cooldown feature everywhere you want!
     cooldown:
       time: 1 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+    # These emojis will only be available for the VIP group.
     emojis:
       tableflip:
         emoticon: ":tableflip:"
@@ -358,7 +361,11 @@ groups:
         emoji: "<green>( ﾟ◡ﾟ)/"
       music:
         emoticon: ":music:"
+        # ":music:" will be replaced by a random emoji from the list.
         emoji: ["<red>♫", "<blue>♬", "<dark_aqua>♪", "<dark_purple>♩", "<green>♭", "<yellow>♪"]
+  staff:
+    priority: 2
+    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
 
 command_block:
   # Should the command blocker feature be enabled?

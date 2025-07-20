@@ -27,13 +27,16 @@ import net.kyori.adventure.text.Component;
 
 public class ChatGroup {
     private final String rawFormat;
+    private final int priority;
     private final int cooldownTime;
     private final String cooldownMessage;
     private final Emojis emojis;
     private final String permission;
 
-    public ChatGroup(String groupName, String rawFormat, int cooldownTime, String cooldownMessage, Emojis emojis) {
+    public ChatGroup(String groupName, String rawFormat,
+        int priority, int cooldownTime, String cooldownMessage, Emojis emojis) {
         this.rawFormat = rawFormat;
+        this.priority = priority;
         this.cooldownTime = cooldownTime;
         this.cooldownMessage = cooldownMessage;
         this.emojis = emojis;
@@ -44,8 +47,8 @@ public class ChatGroup {
         return PlaceholderUtil.setPlaceholders(rawFormat, player);
     }
 
-    public String parseEmojis(String message) {
-        return emojis.parse(message);
+    public int getPriority() {
+        return priority;
     }
 
     public int getCooldownTime() {
@@ -54,6 +57,10 @@ public class ChatGroup {
 
     public Component getCooldownMessage() {
         return TextUtil.parse(cooldownMessage);
+    }
+
+    public String parseEmojis(String message) {
+        return emojis.parse(message);
     }
 
     public String getPermission() {

@@ -60,6 +60,7 @@ public class ChatGroups extends Module {
                 .filter(key -> !key.equals("enabled"))
                 .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
                 groupsSection.getString(groupName + ".format", "No format."),
+                groupsSection.getInt(groupName + ".priority", 0),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
                 groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."),
                 new Emojis(groupsSection.getConfigurationSection(groupName + ".emojis")))));
@@ -76,13 +77,16 @@ public class ChatGroups extends Module {
         if (event.isCancelled()) return;
 
         Player player = event.getPlayer();
-        Set<ChatGroup> groups = new HashSet<>();
+        Set<ChatGroup> playerGroups = new HashSet<>();
         ChatGroup topGroup = null;
 
         for (String group : chatGroups.keySet()) {
             if (player.hasPermission("akropolis.chat.group." + group)) {
-                groups.add(chatGroups.get(group));
-                topGroup = chatGroups.get(group);
+                playerGroups.add(chatGroups.get(group));
+
+                if (topGroup == null || chatGroups.get(group).getPriority() >= topGroup.getPriority()) {
+                    topGroup = chatGroups.get(group);
+                }
             }
         }
 
@@ -91,14 +95,17 @@ public class ChatGroups extends Module {
         event.setCancelled(true);
 
         if (!tryCooldown(player.getUniqueId(), "chat", topGroup.getCooldownTime())) {
-            player.sendMessage(TextUtil.replace(topGroup.getCooldownMessage(), "time", Component.text(getCooldown(player.getUniqueId(), "chat"))));
+            player.sendMessage(TextUtil.replace(topGroup.getCooldownMessage(),
+                "time",
+                Component.text(getCooldown(player.getUniqueId(), "chat"))));
+
             return;
         }
 
         String rawMessage = TextUtil.raw(event.originalMessage());
         String parsedMessageEmojis = rawMessage;
 
-        for (ChatGroup group : groups) {
+        for (ChatGroup group : playerGroups) {
             parsedMessageEmojis = group.parseEmojis(parsedMessageEmojis);
         }
 
