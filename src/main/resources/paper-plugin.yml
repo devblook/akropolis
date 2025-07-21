@@ -1,10 +1,10 @@
 name: Akropolis
-authors: [ ZetaStormy, ItsLewizzz ]
+authors: [ZetaStormy, ItsLewizzz]
 version: ${version}
 description: A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz.
 api-version: "1.21"
-main: team.devblook.akropolis.AkropolisPlugin
-loader: team.devblook.akropolis.AkropolisPluginLoader
+main: me.zetastormy.akropolis.AkropolisPlugin
+loader: me.zetastormy.akropolis.AkropolisPluginLoader
 
 dependencies:
   server:
@@ -21,6 +21,9 @@ dependencies:
       load: BEFORE
       required: false
     MiniPlaceholders:
+      load: BEFORE
+      required: false
+    NoteBlockAPI:
       load: BEFORE
       required: false
 
@@ -50,6 +53,7 @@ permissions:
       akropolis.command.fly.others: true
       akropolis.command.setlobby: true
       akropolis.command.vanish: true
+      akropolis.command.songplayer: true
   akropolis.bypass.*:
     description: Gives access to all bypass permissions
     children:

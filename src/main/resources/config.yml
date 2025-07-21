@@ -19,6 +19,7 @@
 #   <online_max> - Returns number of max player slots
 #   <world> - Returns player world name
 #   <ping> - Returns player ping
+#   <current_song> - Returns the current song title
 #
 #   Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
 #   PlaceholderAPI's placeholders use the following format: <papi:placeholder>
@@ -77,6 +78,37 @@ anti_wdl:
 
   # Should players with 'akropolis.antiwdl.alert' will be notified?
   notify_admins: true
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | SONG PLAYER                             |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
+# directory.
+song_player:
+  # Should we play music in the lobby?
+  enabled: false
+
+  # There are 2 types of song players:
+  # - RADIO: plays songs for all players no matter where they are.
+  # - POSITION: play songs for all added players in specified range from specified point.
+  type: "RADIO"
+
+  # Modify the range where a song is played while using POSITION song player.
+  # Use the "/akro sp setpos" command to set the position of the song player.
+  distance: 16
+
+  # Set the volume of the song player.
+  volume: 85
+
+  # Fade effect duration in ticks (20 ticks = 1 second).
+  fade:
+    in: 20
+    out: 20
+
+  # Actions to perform when a song starts playing.
+  actions:
+    - "[ACTIONBAR] <gray>Now playing<dark_gray>: <yellow><current_song>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
@@ -294,19 +326,52 @@ groups:
   enabled: false
 
   default:
+    priority: 0
     format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
     # Just in case you want to slow down your players a little.
     cooldown:
       time: 3 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
-  staff:
-    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
+    # Add all the emojis you want here.
+    emojis:
+      smile:
+        # ":)" or ":smile:" will be replaced by "<yellow>😀".
+        emoticon: [":)", ":smile:"]
+        emoji: "<yellow>😀<reset>"
+      sunglasses:
+        emoticon: ["B)", ":sunglasses:"]
+        emoji: "<yellow>😎<reset>"
+      heart:
+        emoticon: ["<3", ":heart:"]
+        emoji: "<red>❤<reset>"
   vip:
+    priority: 1
     format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
     # You can use the cooldown feature everywhere you want!
     cooldown:
       time: 1 # Time is in seconds.
       message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
+    # These emojis will only be available for the VIP group.
+    emojis:
+      tableflip:
+        emoticon: ":tableflip:"
+        emoji: "<red>(╯°□°）╯<white>︵<gray> ┻━┻<reset>"
+      wave:
+        emoticon: ["o/", ":wave:"]
+        emoji: "<green>( ﾟ◡ﾟ)/<reset>"
+      music:
+        emoticon: ":music:"
+        # ":music:" will be replaced by a random emoji from the list.
+        emoji:
+          - "<red>♫<reset>"
+          - "<blue>♬<reset>"
+          - "<dark_aqua>♪<reset>"
+          - "<dark_purple>♩<reset>"
+          - "<green>♭<reset>"
+          - "<yellow>♪<reset>"
+  staff:
+    priority: 2
+    format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
 
 command_block:
   # Should the command blocker feature be enabled?
@@ -342,13 +407,14 @@ anti_swear:
 
 world_settings:
   # Player
+  disable_inventory_drop: true # On death
   disable_hunger_loss: true
   disable_fall_damage: true
   disable_player_pvp: true
   disable_void_death: true
   disable_fire_damage: true
   disable_drowning: true
-  disable_off_hand_swap: true # Requires 1.9+
+  disable_off_hand_swap: true
 
   # Misc
   disable_weather_change: true
@@ -397,6 +463,8 @@ join_events:
   - "[EFFECT] SPEED;1"
 
 join_settings:
+  # Change the hotbar slot focused on join (must be a number between 0-9, -1 to disable)
+  focused_slot: 4
   # Decide whether players will be hidden on join or not
   players_hidden: false
   # Should we teleport the player to the spawn point (if set) on join?
@@ -435,7 +503,8 @@ custom_join_items:
       material: BOOK
       amount: 1
       slot: 0
-      # custom_model_data: 1234
+      # custom_model_data:
+      #   - test
       display_name: "<gold>Server Information <gray>(Right-Click)"
       lore:
         - "<dark_gray>» <gray>Right click to see information about the server!"
@@ -451,6 +520,7 @@ custom_join_items:
       material: NETHER_STAR
       amount: 1
       slot: 4
+      # tooltip_style: minecraft:rainbow
       # Should we limit how fast a user can use this item?
       cooldown: 3 # seconds
       display_name: "<aqua>Server Selector <gray>(Right-Click)"
@@ -458,6 +528,77 @@ custom_join_items:
         - "<dark_gray>» <gray>Right click to open the server selector!"
       actions:
         - "[MENU] serverselector"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | FIGHT MODE                               |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+fight_mode:
+  # Should the fight mode feature be enabled?
+  enabled: true
+  # Slot the item should be given to?
+  slot: 7
+  # Should we prevent them from moving/dropping the item?
+  disable_inventory_movement: true
+  # Delay in seconds before the fight mode gets toggled.
+  hold_delay:
+    # The sword should be held for this amount of time to activate the fight mode.
+    activate: 5
+    # Any other item that isn't the sword should be held for this amount of time to deactivate the fight mode.
+    deactivate: 5
+
+  # The item that will toggle the fight mode and also the sword used to fight.
+  item:
+    material: NETHERITE_SWORD
+    amount: 1
+    unbreakable: true
+    display_name: "<red>Fight Mode <gray>(Hold to toggle)"
+    lore:
+      - "<dark_gray>» <gray>Hold for 5 seconds to toggle the fight mode!"
+    enchantments:
+      - "sharpness:5" # enchantment:level
+    item_flags:
+      - "HIDE_UNBREAKABLE"
+      - "HIDE_ATTRIBUTES"
+      - "HIDE_ENCHANTS"
+
+  # The armor that will be given to the player when they enter fight mode.
+  armor:
+    helmet:
+      material: DIAMOND_HELMET
+      amount: 1
+      unbreakable: true
+      item_flags:
+        - "HIDE_UNBREAKABLE"
+    chestplate:
+      material: DIAMOND_CHESTPLATE
+      amount: 1
+      unbreakable: true
+      item_flags:
+        - "HIDE_UNBREAKABLE"
+    leggings:
+      material: DIAMOND_LEGGINGS
+      amount: 1
+      unbreakable: true
+      item_flags:
+        - "HIDE_UNBREAKABLE"
+    boots:
+      material: DIAMOND_BOOTS
+      amount: 1
+      unbreakable: true
+      item_flags:
+        - "HIDE_UNBREAKABLE"
+
+  # Actions to execute when the fight mode gets activated or deactivated.
+  actions:
+    countdown:
+      - "[SOUND] BLOCK_AMETHYST_BLOCK_PLACE"
+    activated:
+      - "[TITLE] <red><b>PvP activated!;<white>Try to survive!"
+      - "[SOUND] ENTITY_ENDER_DRAGON_GROWL"
+    deactivated:
+      - "[TITLE] <green><b>PvP deactivated;<white>You've survived, uh?"
+      - "[SOUND] ENTITY_SNIFFER_HAPPY"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | PLAYER HIDER                             |
