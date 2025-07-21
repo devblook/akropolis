@@ -63,7 +63,7 @@ public class SongPlayerManager extends Module {
 
     @Override
     public void onEnable() {
-        if (!getPlugin().getHookManager().isHookEnabled("NOTEBLOCKAPI")) {
+        if (!getPlugin().getHookManager().isHookEnabled("NOTEBLOCK_API")) {
             getPlugin().getLogger().warning("NoteBlockAPI is not enabled! The songs module won't be enabled.");
             return;
         }

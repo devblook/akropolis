@@ -103,7 +103,7 @@ public class ModuleManager {
         registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
         registerModule(new FightModeManager(plugin), "fight_mode.enabled");
 
-        if (plugin.getHookManager().isHookEnabled("NOTEBLOCKAPI"))
+        if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
             registerModule(new SongPlayerManager(plugin), "song_player.enabled");
 
         for (Module module : modules.values()) {

@@ -192,6 +192,8 @@ public class AkropolisCommand extends InjectableCommand {
                     + (plugin.getHookManager().isHookEnabled("HEAD_DATABASE") ? "<green>yes" : "<red>no")));
             sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>MiniPlaceholders hook<dark_gray>: "
                     + (plugin.getHookManager().isHookEnabled("MINIPLACEHOLDERS") ? "<green>yes" : "<red>no")));
+            sender.sendMessage(TextUtil.parse("<dark_gray>» <gray>NoteBlockAPI hook<dark_gray>: "
+                    + (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API") ? "<green>yes" : "<red>no")));
         }
 
         /*

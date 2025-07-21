@@ -58,7 +58,7 @@ public class HooksManager {
         }
 
         if (Bukkit.getPluginManager().isPluginEnabled("NoteBlockAPI")) {
-            hooks.put("NOTEBLOCKAPI", null);
+            hooks.put("NOTEBLOCK_API", null);
             plugin.getLogger().info("Hooked into NoteBlockAPI");
         }
 
