@@ -559,7 +559,7 @@ fight_mode:
       - "sharpness:5" # enchantment:level
     item_flags:
       - "HIDE_UNBREAKABLE"
-      - "HIDE_STORED_ENCHANTS"
+      - "HIDE_ENCHANTS"
 
   # The armor that will be given to the player when they enter fight mode.
   armor:
