@@ -19,13 +19,14 @@
 
 package me.zetastormy.akropolis.inventory;
 
-import me.zetastormy.akropolis.util.TextUtil;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.HashMap;
-import java.util.Map;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 
 public class InventoryBuilder implements InventoryHolder {
     private final Map<Integer, InventoryItem> icons;
@@ -53,7 +54,7 @@ public class InventoryBuilder implements InventoryHolder {
         else if (size < 9)
             size = 9;
 
-        Inventory inventory = Bukkit.createInventory(this, size, TextUtil.parse(title));
+        Inventory inventory = Bukkit.createInventory(this, size, PlaceholderUtil.setPlaceholders(title, null));
         for (Map.Entry<Integer, InventoryItem> entry : icons.entrySet()) {
             inventory.setItem(entry.getKey(), entry.getValue().getItemStack());
         }

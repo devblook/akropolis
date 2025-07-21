@@ -17,7 +17,7 @@
  * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.zetastormy.akropolis.util;
+package me.zetastormy.akropolis.util.text;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -41,49 +42,32 @@ public class PlaceholderUtil {
     }
 
     public static Component setPlaceholders(String rawText, Player player) {
-        Component text = TextUtil.parse(rawText);
+        String text = rawText;
 
-        if (rawText.contains("<player>") && player != null) {
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "player", player.name());
+        text = text.replace("<online>", String.valueOf(Bukkit.getOnlinePlayers().size()))
+                 .replace("<online_max>", String.valueOf(Bukkit.getMaxPlayers()))
+                 .replace("<current_song>", getCurrentSong());
+
+        if (player != null) {
+            text = text.replace("<player>", player.getName())
+                     .replace("<ping>", String.valueOf(player.getPing()))
+                     .replace("<world>", player.getWorld().getName())
+                     .replace("<location>", formatLocation(player.getLocation()));
+
+            if (papi) return TextUtil.parse(text, papiTag(player));
+            if (miniplaceholders) return TextUtil.parse(text, MiniPlaceholders.getAudienceGlobalPlaceholders(player));
         }
 
-        if (rawText.contains("<online>")) {
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "online", Component.text(Bukkit.getOnlinePlayers().size()));
-        }
+        return TextUtil.parse(text);
+    }
 
-        if (rawText.contains("<online_max>")) {
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "online_max", Component.text(Bukkit.getMaxPlayers()));
-        }
+    private static String formatLocation(Location loc) {
+        return loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
+    }
 
-        if (rawText.contains("<location>") && player != null) {
-            Location l = player.getLocation();
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "location", Component.text(l.getBlockX() + ", " + l.getBlockY() + ", " + l.getBlockZ()));
-        }
-
-        if (rawText.contains("<ping>") && player != null) {
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "ping", Component.text(player.getPing()));
-        }
-
-        if (rawText.contains("<world>") && player != null) {
-            text = TextUtil.parseAndReplace(TextUtil.raw(text), "world", Component.text(player.getWorld().getName()));
-        }
-
-        if (rawText.contains("<current_song>")) {
-            text = TextUtil.parseAndReplace(
-                TextUtil.raw(text),
-                "current_song",
-                Component.text(AkropolisPlugin.getInstance().getSongPlayerManager().getCurrentSong()));
-        }
-
-        if (papi && player != null) {
-            text = TextUtil.parse(TextUtil.raw(text), papiTag(player));
-        }
-
-        if (miniplaceholders && player != null) {
-            text = TextUtil.parse(TextUtil.raw(text), MiniPlaceholders.getAudienceGlobalPlaceholders(player));
-        }
-
-        return text;
+    private static String getCurrentSong() {
+        SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
+        return songPlayerManager != null ? songPlayerManager.getCurrentSong() : "None";
     }
 
     @SuppressWarnings("deprecation")

@@ -17,7 +17,7 @@
  * along with Akropolis. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.zetastormy.akropolis.util;
+package me.zetastormy.akropolis.util.text;
 
 import org.bukkit.Color;
 

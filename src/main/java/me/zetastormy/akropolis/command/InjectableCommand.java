@@ -19,13 +19,14 @@
 
 package me.zetastormy.akropolis.command;
 
-import me.zetastormy.akropolis.util.TextUtil;
+import java.util.List;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
 
-import java.util.List;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 @SuppressWarnings("NullableProblems")
 public abstract class InjectableCommand extends Command implements PluginIdentifiableCommand {

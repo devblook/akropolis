@@ -19,13 +19,14 @@
 
 package me.zetastormy.akropolis.module.modules.visual.nametag;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+
 import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.megavex.scoreboardlibrary.api.team.ScoreboardTeam;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 
 public class NametagUpdateTask implements Runnable {
     private final NametagHelper nametagHelper;

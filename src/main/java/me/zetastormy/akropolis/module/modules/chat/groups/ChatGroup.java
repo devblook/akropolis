@@ -21,8 +21,7 @@ package me.zetastormy.akropolis.module.modules.chat.groups;
 
 import org.bukkit.entity.Player;
 
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 
 public class ChatGroup {
@@ -56,7 +55,7 @@ public class ChatGroup {
     }
 
     public Component getCooldownMessage() {
-        return TextUtil.parse(cooldownMessage);
+        return PlaceholderUtil.setPlaceholders(cooldownMessage, null);
     }
 
     public String parseEmojis(String message) {

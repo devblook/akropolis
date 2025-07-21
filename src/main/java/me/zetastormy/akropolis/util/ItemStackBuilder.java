@@ -47,6 +47,8 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 
@@ -99,10 +101,7 @@ public class ItemStackBuilder {
         if (section.contains("display_name")) {
             Component displayName = TextUtil.parse(section.getString("display_name"));
 
-            if (player != null)
-                builder.withName(displayName, player);
-            else
-                builder.withName(displayName);
+            builder.withName(displayName, player);
         }
 
         if (section.contains("lore")) {
@@ -237,20 +236,6 @@ public class ItemStackBuilder {
         itemStack.setItemMeta(itemMeta);
     }
 
-    public void withName(Component name) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-
-        if (itemMeta == null) {
-            PLUGIN.getLogger().severe("Invalid item meta, could not apply item name!");
-            PLUGIN.getLogger().severe("Please check your config.yml!");
-            return;
-        }
-
-        name = name.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
-        itemMeta.displayName(name);
-        itemStack.setItemMeta(itemMeta);
-    }
-
     public void withName(Component name, Player player) {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
@@ -260,7 +245,8 @@ public class ItemStackBuilder {
             return;
         }
 
-        name = PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+        name = PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player)
+        .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }

@@ -19,11 +19,12 @@
 
 package me.zetastormy.akropolis.module.modules.visual.tablist;
 
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.text.Component;
+import java.util.Objects;
+
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import me.zetastormy.akropolis.util.text.TextUtil;
+import net.kyori.adventure.text.Component;
 
 public class TablistHelper {
 

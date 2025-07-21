@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 

@@ -32,7 +32,7 @@ import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.ConfigManager;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class FlyCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;

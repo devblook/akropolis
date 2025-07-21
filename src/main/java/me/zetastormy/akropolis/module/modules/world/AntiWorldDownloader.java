@@ -19,18 +19,20 @@
 
 package me.zetastormy.akropolis.module.modules.world;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.messaging.PluginMessageListener;
+
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class AntiWorldDownloader extends Module implements PluginMessageListener {
 

@@ -19,10 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.util.ItemStackBuilder;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import me.zetastormy.akropolis.util.TextUtil;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -34,7 +33,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerEditBookEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -42,8 +46,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.util.ItemStackBuilder;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public abstract class HotbarItem implements Listener {
     private final HotbarManager hotbarManager;

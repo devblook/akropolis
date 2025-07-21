@@ -28,7 +28,7 @@ import org.bukkit.Bukkit;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.BaseHead;
 import me.zetastormy.akropolis.hook.hooks.head.DatabaseHead;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 
 public class HooksManager {
     private final Map<String, PluginHook> hooks;

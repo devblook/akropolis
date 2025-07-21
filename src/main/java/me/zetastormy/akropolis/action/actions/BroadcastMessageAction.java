@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.action.Action;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 
 public class BroadcastMessageAction implements Action {

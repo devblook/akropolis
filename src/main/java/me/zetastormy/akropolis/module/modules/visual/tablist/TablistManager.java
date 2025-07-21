@@ -19,11 +19,10 @@
 
 package me.zetastormy.akropolis.module.modules.visual.tablist;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,9 +32,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 
 public class TablistManager extends Module {
     private List<UUID> players;

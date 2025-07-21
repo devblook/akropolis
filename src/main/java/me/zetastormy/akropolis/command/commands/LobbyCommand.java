@@ -19,17 +19,18 @@
 
 package me.zetastormy.akropolis.command.commands;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
-import me.zetastormy.akropolis.util.TextUtil;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.command.InjectableCommand;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class LobbyCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;

@@ -32,7 +32,7 @@ import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
 public class AntiSwear extends Module {

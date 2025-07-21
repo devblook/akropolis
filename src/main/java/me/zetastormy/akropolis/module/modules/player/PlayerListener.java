@@ -45,8 +45,8 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
 public class PlayerListener extends Module {

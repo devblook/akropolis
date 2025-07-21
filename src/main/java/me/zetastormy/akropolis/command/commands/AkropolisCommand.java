@@ -44,7 +44,7 @@ import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.module.modules.visual.scoreboard.ScoreboardManager;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
 public class AkropolisCommand extends InjectableCommand {
@@ -314,7 +314,7 @@ public class AkropolisCommand extends InjectableCommand {
                     return;
                 }
 
-                holo.setLine(line, text);
+                holo.setLine(line, TextUtil.parse(text));
                 Message.HOLOGRAMS_LINE_SET.sendWithReplacement(sender, "line", TextUtil.parse(String.valueOf(line)));
                 return;
             }

@@ -40,7 +40,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 
@@ -112,7 +112,7 @@ public class BossBarBroadcast extends Module implements Runnable {
 
         size = broadcasts.size();
         if (size > 0) {
-            Component firstBroadcast = TextUtil.parse(broadcasts.get(0));
+            Component firstBroadcast = PlaceholderUtil.setPlaceholders(broadcasts.get(0), null);
             this.broadcastBar = BossBar.bossBar(firstBroadcast, (float) overlayProgress,
                     BossBar.Color.BLUE, overlayType);
             count++;
@@ -150,7 +150,7 @@ public class BossBarBroadcast extends Module implements Runnable {
                 continue;
             }
 
-            Component parsedMessage = TextUtil.parse(broadcasts.get(count));
+            Component parsedMessage = PlaceholderUtil.setPlaceholders(broadcasts.get(count), null);
             broadcastBar.name(parsedMessage);
 
             if (sound != null) player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);

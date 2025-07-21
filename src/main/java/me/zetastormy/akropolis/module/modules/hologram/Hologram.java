@@ -19,16 +19,16 @@
 
 package me.zetastormy.akropolis.module.modules.hologram;
 
-import me.zetastormy.akropolis.util.TextUtil;
-import net.kyori.adventure.text.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import net.kyori.adventure.text.Component;
 
 public class Hologram {
     private final List<ArmorStand> stands;
@@ -63,10 +63,10 @@ public class Hologram {
         stands.add(stand);
     }
 
-    public void setLine(int line, String text) {
+    public void setLine(int line, Component text) {
         ArmorStand stand = stands.get(line - 1);
 
-        stand.customName(TextUtil.parse(text.trim()));
+        stand.customName(text);
     }
 
     public Hologram removeLine(int line) {

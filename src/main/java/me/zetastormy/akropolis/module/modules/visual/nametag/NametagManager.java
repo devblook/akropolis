@@ -34,7 +34,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 

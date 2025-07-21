@@ -19,17 +19,29 @@
 
 package me.zetastormy.akropolis.action;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.action.actions.*;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import me.zetastormy.akropolis.util.TextUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.bukkit.entity.Player;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.entity.Player;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.action.actions.ActionbarAction;
+import me.zetastormy.akropolis.action.actions.BroadcastMessageAction;
+import me.zetastormy.akropolis.action.actions.CloseInventoryAction;
+import me.zetastormy.akropolis.action.actions.CommandAction;
+import me.zetastormy.akropolis.action.actions.ConsoleCommandAction;
+import me.zetastormy.akropolis.action.actions.GamemodeAction;
+import me.zetastormy.akropolis.action.actions.MenuAction;
+import me.zetastormy.akropolis.action.actions.MessageAction;
+import me.zetastormy.akropolis.action.actions.PotionEffectAction;
+import me.zetastormy.akropolis.action.actions.ServerAction;
+import me.zetastormy.akropolis.action.actions.SoundAction;
+import me.zetastormy.akropolis.action.actions.TitleAction;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class ActionManager {
     private final AkropolisPlugin plugin;

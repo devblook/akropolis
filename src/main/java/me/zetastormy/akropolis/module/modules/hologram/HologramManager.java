@@ -24,7 +24,7 @@ import me.zetastormy.akropolis.config.ConfigHandler;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

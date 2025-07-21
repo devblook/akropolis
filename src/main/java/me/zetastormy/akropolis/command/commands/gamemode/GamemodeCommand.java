@@ -30,7 +30,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.Message;
-import me.zetastormy.akropolis.util.TextUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
 public class GamemodeCommand extends InjectableCommand {

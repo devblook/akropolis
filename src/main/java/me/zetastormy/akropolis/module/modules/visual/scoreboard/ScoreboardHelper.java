@@ -19,13 +19,14 @@
 
 package me.zetastormy.akropolis.module.modules.visual.scoreboard;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.util.PlaceholderUtil;
-import net.kyori.adventure.text.Component;
-import net.megavex.scoreboardlibrary.api.sidebar.Sidebar;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
-import java.util.List;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
+import net.megavex.scoreboardlibrary.api.sidebar.Sidebar;
 
 public class ScoreboardHelper {
     private final Sidebar sidebar;
