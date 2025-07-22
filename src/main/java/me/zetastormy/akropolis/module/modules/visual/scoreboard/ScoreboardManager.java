@@ -19,10 +19,12 @@
 
 package me.zetastormy.akropolis.module.modules.visual.scoreboard;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,7 +35,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.*;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
 
 public class ScoreboardManager extends Module {
     private int scoreTask;
@@ -93,7 +98,6 @@ public class ScoreboardManager extends Module {
         helper.addPlayer();
 
         return helper;
-
     }
 
     public void removeScoreboard(Player player) {
