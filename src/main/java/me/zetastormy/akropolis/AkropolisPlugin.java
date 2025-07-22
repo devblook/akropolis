@@ -86,6 +86,13 @@ public class AkropolisPlugin extends JavaPlugin {
         // Cooldown manager
         cooldownManager = new CooldownManager();
 
+        //Scoreboard library
+        try {
+            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
+        } catch (NoPacketAdapterAvailableException e) {
+            scoreboardLibrary = new NoopScoreboardLibrary();
+        }
+
         // Core plugin modules
         moduleManager = new ModuleManager();
         moduleManager.loadModules(this);
@@ -93,13 +100,6 @@ public class AkropolisPlugin extends JavaPlugin {
         // Inventory (GUI) manager
         inventoryManager = new InventoryManager();
         if (!hooksManager.isHookEnabled("HEAD_DATABASE")) inventoryManager.onEnable(this);
-
-        //Scoreboard library
-        try {
-            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
-        } catch (NoPacketAdapterAvailableException e) {
-            scoreboardLibrary = new NoopScoreboardLibrary();
-        }
 
         // Action system
         actionManager = new ActionManager(this);
