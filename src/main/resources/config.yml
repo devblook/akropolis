@@ -415,6 +415,7 @@ world_settings:
   disable_player_pvp: true
   disable_void_death: true
   disable_fire_damage: true
+  disable_contact_damage: true # Cactus, dripstone and others
   disable_drowning: true
   disable_off_hand_swap: true
 

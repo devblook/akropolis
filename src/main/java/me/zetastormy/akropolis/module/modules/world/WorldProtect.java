@@ -90,6 +90,7 @@ public class WorldProtect extends Module {
     private boolean playerPvP;
     private boolean playerDrowning;
     private boolean fireDamage;
+    private boolean contactDamage;
     private boolean inventoryDrop;
 
     private static final Set<Material> INTERACTABLE;
@@ -204,6 +205,7 @@ public class WorldProtect extends Module {
         leafDecay = config.getBoolean("world_settings.disable_block_leaf_decay");
         playerDrowning = config.getBoolean("world_settings.disable_drowning");
         fireDamage = config.getBoolean("world_settings.disable_fire_damage");
+        contactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
         inventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
     }
 
@@ -398,6 +400,8 @@ public class WorldProtect extends Module {
             return;
 
         if (fallDamage && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            event.setCancelled(true);
+        } else if (contactDamage && event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
             event.setCancelled(true);
         } else if (playerDrowning && event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
             event.setCancelled(true);
