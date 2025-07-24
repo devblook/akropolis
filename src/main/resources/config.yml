@@ -271,7 +271,9 @@ launchpad:
   launch_power: 3.0
   launch_power_y: 1.0
 
-  # Top and bottom block required to make a launchpad,
+  # Top and bottom block required to make a launchpad.
+  # For performance reasons, the top block must be an interactable block (pressure plate),
+  # otherwise the launchpad will not work.
   top_block: STONE_PRESSURE_PLATE
   bottom_block: REDSTONE_BLOCK
 
