@@ -73,25 +73,25 @@ import net.kyori.adventure.text.Component;
 
 @SuppressWarnings({"deprecation", "ConstantConditions"})
 public class WorldProtect extends Module {
-    private boolean hungerLoss;
-    private boolean fallDamage;
-    private boolean weatherChange;
-    private boolean deathMessage;
-    private boolean fireSpread;
-    private boolean leafDecay;
-    private boolean mobSpawning;
-    private boolean blockBurn;
-    private boolean voidDeath;
-    private boolean itemDrop;
-    private boolean itemPickup;
-    private boolean blockBreak;
-    private boolean blockPlace;
-    private boolean blockInteract;
-    private boolean playerPvP;
-    private boolean playerDrowning;
-    private boolean fireDamage;
-    private boolean contactDamage;
-    private boolean inventoryDrop;
+    private boolean disableHungerLoss;
+    private boolean disableFallDamage;
+    private boolean disableWeatherChange;
+    private boolean disableDeathMessage;
+    private boolean disableFireSpread;
+    private boolean disableLeafDecay;
+    private boolean disableMobSpawning;
+    private boolean disableBlockBurn;
+    private boolean disableVoidDeath;
+    private boolean disableItemDrop;
+    private boolean disableItemPickup;
+    private boolean disableBlockBreak;
+    private boolean disableBlockPlace;
+    private boolean disableBlockInteract;
+    private boolean disablePlayerPvP;
+    private boolean disableDrowning;
+    private boolean disableFireDamage;
+    private boolean disableContactDamage;
+    private boolean disableInventoryDrop;
 
     private static final Set<Material> INTERACTABLE;
 
@@ -188,25 +188,25 @@ public class WorldProtect extends Module {
     @Override
     public void onEnable() {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        hungerLoss = config.getBoolean("world_settings.disable_hunger_loss");
-        fallDamage = config.getBoolean("world_settings.disable_fall_damage");
-        playerPvP = config.getBoolean("world_settings.disable_player_pvp");
-        voidDeath = config.getBoolean("world_settings.disable_void_death");
-        weatherChange = config.getBoolean("world_settings.disable_weather_change");
-        deathMessage = config.getBoolean("world_settings.disable_death_message");
-        mobSpawning = config.getBoolean("world_settings.disable_mob_spawning");
-        itemDrop = config.getBoolean("world_settings.disable_item_drop");
-        itemPickup = config.getBoolean("world_settings.disable_item_pickup");
-        blockBreak = config.getBoolean("world_settings.disable_block_break");
-        blockPlace = config.getBoolean("world_settings.disable_block_place");
-        blockInteract = config.getBoolean("world_settings.disable_block_interact");
-        blockBurn = config.getBoolean("world_settings.disable_block_burn");
-        fireSpread = config.getBoolean("world_settings.disable_block_fire_spread");
-        leafDecay = config.getBoolean("world_settings.disable_block_leaf_decay");
-        playerDrowning = config.getBoolean("world_settings.disable_drowning");
-        fireDamage = config.getBoolean("world_settings.disable_fire_damage");
-        contactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
-        inventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
+        disableHungerLoss = config.getBoolean("world_settings.disable_hunger_loss");
+        disableFallDamage = config.getBoolean("world_settings.disable_fall_damage");
+        disablePlayerPvP = config.getBoolean("world_settings.disable_player_pvp");
+        disableVoidDeath = config.getBoolean("world_settings.disable_void_death");
+        disableWeatherChange = config.getBoolean("world_settings.disable_weather_change");
+        disableDeathMessage = config.getBoolean("world_settings.disable_death_message");
+        disableMobSpawning = config.getBoolean("world_settings.disable_mob_spawning");
+        disableItemDrop = config.getBoolean("world_settings.disable_item_drop");
+        disableItemPickup = config.getBoolean("world_settings.disable_item_pickup");
+        disableBlockBreak = config.getBoolean("world_settings.disable_block_break");
+        disableBlockPlace = config.getBoolean("world_settings.disable_block_place");
+        disableBlockInteract = config.getBoolean("world_settings.disable_block_interact");
+        disableBlockBurn = config.getBoolean("world_settings.disable_block_burn");
+        disableFireSpread = config.getBoolean("world_settings.disable_block_fire_spread");
+        disableLeafDecay = config.getBoolean("world_settings.disable_block_leaf_decay");
+        disableDrowning = config.getBoolean("world_settings.disable_drowning");
+        disableFireDamage = config.getBoolean("world_settings.disable_fire_damage");
+        disableContactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
+        disableInventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
     }
 
     @Override
@@ -228,7 +228,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!blockBreak || event.isCancelled())
+        if (!disableBlockBreak || event.isCancelled())
             return;
 
         Player player = event.getPlayer();
@@ -250,7 +250,7 @@ public class WorldProtect extends Module {
     public void onBlockPlace(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
-        if (!blockPlace || event.isCancelled())
+        if (!disableBlockPlace || event.isCancelled())
             return;
 
         Player player = event.getPlayer();
@@ -283,7 +283,7 @@ public class WorldProtect extends Module {
 
     @EventHandler
     public void onBlockBurn(BlockBurnEvent event) {
-        if (!blockBurn)
+        if (!disableBlockBurn)
             return;
 
         if (inDisabledWorld(event.getBlock().getLocation()))
@@ -295,7 +295,7 @@ public class WorldProtect extends Module {
     // Prevent destroying of item frame/paintings
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDestroy(HangingBreakByEntityEvent event) {
-        if (!blockBreak || inDisabledWorld(event.getEntity().getLocation()))
+        if (!disableBlockBreak || inDisabledWorld(event.getEntity().getLocation()))
             return;
 
         Entity entity = event.getEntity();
@@ -318,7 +318,7 @@ public class WorldProtect extends Module {
     // Prevent items being rotated in item frame
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (!blockInteract || inDisabledWorld(event.getRightClicked().getLocation()))
+        if (!disableBlockInteract || inDisabledWorld(event.getRightClicked().getLocation()))
             return;
 
         Entity entity = event.getRightClicked();
@@ -341,7 +341,7 @@ public class WorldProtect extends Module {
     // Prevent items being taken from item frames
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!blockInteract || inDisabledWorld(event.getEntity().getLocation()))
+        if (!disableBlockInteract || inDisabledWorld(event.getEntity().getLocation()))
             return;
 
         Entity entity = event.getEntity();
@@ -364,7 +364,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockInteract(PlayerInteractEvent event) {
-        if (!blockInteract || inDisabledWorld(event.getPlayer().getLocation()))
+        if (!disableBlockInteract || inDisabledWorld(event.getPlayer().getLocation()))
             return;
 
         Player player = event.getPlayer();
@@ -399,17 +399,17 @@ public class WorldProtect extends Module {
         if (inDisabledWorld(player.getLocation()))
             return;
 
-        if (fallDamage && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+        if (disableFallDamage && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             event.setCancelled(true);
-        } else if (contactDamage && event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
+        } else if (disableContactDamage && event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
             event.setCancelled(true);
-        } else if (playerDrowning && event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
+        } else if (disableDrowning && event.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
             event.setCancelled(true);
-        } else if (fireDamage && (event.getCause() == EntityDamageEvent.DamageCause.FIRE
+        } else if (disableFireDamage && (event.getCause() == EntityDamageEvent.DamageCause.FIRE
                 || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK
                 || event.getCause() == EntityDamageEvent.DamageCause.LAVA)) {
             event.setCancelled(true);
-        } else if (voidDeath && event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+        } else if (disableVoidDeath && event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             player.setFallDistance(0.0F);
 
             Location location = ((LobbySpawn) getPlugin().getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
@@ -424,7 +424,7 @@ public class WorldProtect extends Module {
 
     @EventHandler
     public void onFireSpread(BlockIgniteEvent event) {
-        if (!fireSpread)
+        if (!disableFireSpread)
             return;
 
         if (inDisabledWorld(event.getBlock().getLocation()))
@@ -436,7 +436,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onFoodChange(FoodLevelChangeEvent event) {
-        if (!hungerLoss)
+        if (!disableHungerLoss)
             return;
 
         if (!(event.getEntity() instanceof Player player))
@@ -450,7 +450,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDropEvent(PlayerDropItemEvent event) {
-        if (!itemDrop)
+        if (!disableItemDrop)
             return;
 
         Player player = event.getPlayer();
@@ -472,7 +472,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerPickupEvent(PlayerPickupItemEvent event) {
-        if (!itemPickup)
+        if (!disableItemPickup)
             return;
 
         Player player = event.getPlayer();
@@ -494,7 +494,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onLeafDecay(LeavesDecayEvent event) {
-        if (!leafDecay)
+        if (!disableLeafDecay)
             return;
 
         if (inDisabledWorld(event.getBlock().getLocation()))
@@ -505,7 +505,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (!mobSpawning)
+        if (!disableMobSpawning)
             return;
 
         if (inDisabledWorld(event.getEntity().getLocation()))
@@ -522,7 +522,7 @@ public class WorldProtect extends Module {
         if (inDisabledWorld(event.getWorld()))
             return;
 
-        if (!weatherChange)
+        if (!disableWeatherChange)
             return;
 
         event.setCancelled(event.toWeatherState());
@@ -533,10 +533,10 @@ public class WorldProtect extends Module {
         if (inDisabledWorld(event.getEntity().getLocation()))
             return;
 
-        if (deathMessage)
+        if (disableDeathMessage)
             event.setDeathMessage(null);
 
-        if (!inventoryDrop)
+        if (!disableInventoryDrop)
             return;
 
         event.getDrops().clear();
@@ -544,7 +544,7 @@ public class WorldProtect extends Module {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (!playerPvP)
+        if (!disablePlayerPvP)
             return;
 
         if (!(event.getEntity() instanceof Player player))
