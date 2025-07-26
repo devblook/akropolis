@@ -554,11 +554,14 @@ public class WorldProtect extends Module {
             return;
 
         FightModeManager fightModeManager = getPlugin().getFightModeManager();
-        boolean attackedInFightMode = fightModeManager.isInFightMode(player.getUniqueId());
-        boolean attackerInFightMode = fightModeManager.isInFightMode(event.getDamager().getUniqueId());
 
-        if (attackedInFightMode && attackerInFightMode) {
-            return;
+        if (fightModeManager != null) {
+            boolean attackedInFightMode = fightModeManager.isInFightMode(player.getUniqueId());
+            boolean attackerInFightMode = fightModeManager.isInFightMode(event.getDamager().getUniqueId());
+
+            if (attackedInFightMode && attackerInFightMode) {
+                return;
+            }
         }
 
         if (event.getDamager().hasPermission(Permissions.EVENT_PLAYER_PVP.getPermission()))
