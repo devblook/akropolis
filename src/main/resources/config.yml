@@ -282,6 +282,22 @@ launchpad:
     - "[SOUND] ENTITY_BAT_TAKEOFF"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# | PLAYER MOUNT                             |
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# Players with the akropolis.player.mount will be able to mount other players.
+player_mount:
+  # Should the player mount feature be enabled?
+  enabled: false
+
+  # Cooldown time in seconds (0 to disable).
+  cooldown: 5
+
+  # Actions executed upon mounting a player.
+  actions:
+    - "[SOUND] ENTITY_HORSE_SADDLE"
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | DOUBLE JUMP                              |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
