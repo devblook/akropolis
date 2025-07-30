@@ -3,9 +3,9 @@
 name: Build
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   # Builds Akropolis in recommended JDK version.
@@ -15,14 +15,14 @@ jobs:
     # For Minecraft 1.21, Java 21+ is needed/recommended.
     strategy:
       matrix:
-        java_version: [ 21 ]
+        java_version: [21]
 
     steps:
       - name: Checkout GitHub repository
         uses: actions/checkout@v4
 
       - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v3
+        uses: gradle/actions/wrapper-validation@v4
 
       - name: Cleanup old JARs
         run: rm -f build/libs/*.jar
