@@ -65,6 +65,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hologram.Hologram;
@@ -72,7 +73,7 @@ import me.zetastormy.akropolis.module.modules.player.FightModeManager;
 import net.kyori.adventure.text.Component;
 
 @SuppressWarnings({"deprecation", "ConstantConditions"})
-public class WorldProtect extends Module {
+public class WorldProtect extends Module implements LifeCycle {
     private boolean disableHungerLoss;
     private boolean disableFallDamage;
     private boolean disableWeatherChange;
@@ -207,11 +208,6 @@ public class WorldProtect extends Module {
         disableFireDamage = config.getBoolean("world_settings.disable_fire_damage");
         disableContactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
         disableInventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

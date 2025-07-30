@@ -19,20 +19,21 @@
 
 package me.zetastormy.akropolis.module;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.cooldown.CooldownManager;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.cooldown.CooldownManager;
 
-public abstract class Module implements Listener {
+public class Module implements Listener {
     private final AkropolisPlugin plugin;
     private final ModuleType moduleType;
     private List<String> disabledWorlds;
@@ -84,8 +85,4 @@ public abstract class Module implements Listener {
     public ModuleType getModuleType() {
         return moduleType;
     }
-
-    public abstract void onEnable();
-
-    public abstract void onDisable();
 }

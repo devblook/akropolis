@@ -19,18 +19,20 @@
 
 package me.zetastormy.akropolis.module.modules.chat;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 
-public class ChatLock extends Module {
+public class ChatLock extends Module implements LifeCycle {
     private boolean isChatLocked;
 
     public ChatLock(AkropolisPlugin plugin) {

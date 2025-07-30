@@ -37,12 +37,13 @@ import org.bukkit.persistence.PersistentDataType;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
 import net.kyori.adventure.text.Component;
 
-public class FightModeManager extends Module {
+public class FightModeManager extends Module implements LifeCycle {
     private final Map<UUID, Integer> holdTasks;
     private final Map<UUID, Integer> holdTimers;
     private final Set<UUID> fighters;

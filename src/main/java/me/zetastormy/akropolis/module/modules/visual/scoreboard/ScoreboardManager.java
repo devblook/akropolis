@@ -37,10 +37,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 
-public class ScoreboardManager extends Module {
+public class ScoreboardManager extends Module implements LifeCycle {
     private int scoreTask;
     private Map<UUID, ScoreboardHelper> players;
     private long joinDelay;

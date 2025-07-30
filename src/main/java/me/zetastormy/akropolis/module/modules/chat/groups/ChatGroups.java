@@ -33,13 +33,14 @@ import org.bukkit.event.EventHandler;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
-public class ChatGroups extends Module {
+public class ChatGroups extends Module implements LifeCycle {
     private final Map<String, ChatGroup> chatGroups = new HashMap<>();
 
     public ChatGroups(AkropolisPlugin plugin) {

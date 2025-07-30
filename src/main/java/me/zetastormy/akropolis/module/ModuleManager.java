@@ -111,7 +111,10 @@ public class ModuleManager {
         for (Module module : modules.values()) {
             try {
                 module.setDisabledWorlds(disabledWorlds);
-                module.onEnable();
+
+                if (module instanceof LifeCycle) {
+                    ((LifeCycle) module).onEnable();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 plugin.getLogger().severe("There was an error loading the " + module.getModuleType() + " module");
@@ -128,7 +131,10 @@ public class ModuleManager {
         for (Module module : modules.values()) {
             try {
                 HandlerList.unregisterAll(module);
-                module.onDisable();
+
+                if (module instanceof LifeCycle) {
+                    ((LifeCycle) module).onDisable();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 plugin.getLogger()

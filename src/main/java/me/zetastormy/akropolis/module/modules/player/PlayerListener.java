@@ -43,13 +43,14 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
-public class PlayerListener extends Module {
+public class PlayerListener extends Module implements LifeCycle {
     private ConfigurationSection playersSection;
     private boolean joinQuitMessagesEnabled;
     private String joinMessage;
@@ -74,7 +75,6 @@ public class PlayerListener extends Module {
 
     @Override
     public void onEnable() {
-        // Load config stuff
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         playersSection = getConfig(ConfigType.DATA).getConfigurationSection("players");
 
@@ -106,11 +106,6 @@ public class PlayerListener extends Module {
                     fireworkColors.add(color);
             });
         }
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

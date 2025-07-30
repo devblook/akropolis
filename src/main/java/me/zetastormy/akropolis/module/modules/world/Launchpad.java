@@ -19,11 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.world;
 
-import com.cryptomorin.xseries.XMaterial;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
+import java.util.List;
+import java.util.Objects;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,10 +30,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.List;
-import java.util.Objects;
+import com.cryptomorin.xseries.XMaterial;
 
-public class Launchpad extends Module {
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+
+public class Launchpad extends Module implements LifeCycle {
     private double launch;
     private double launchY;
     private List<String> actions;
@@ -75,11 +78,6 @@ public class Launchpad extends Module {
         } else {
             XMaterial.matchXMaterial(rawBottomBlock).ifPresent(m -> bottomBlock = m.get());
         }
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

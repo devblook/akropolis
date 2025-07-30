@@ -19,13 +19,11 @@
 
 package me.zetastormy.akropolis.module.modules.hologram;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigHandler;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.text.TextUtil;
-import net.kyori.adventure.text.Component;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,12 +31,16 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigHandler;
+import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.text.TextUtil;
+import net.kyori.adventure.text.Component;
 
-public class HologramManager extends Module {
+public class HologramManager extends Module implements LifeCycle {
     private Set<Hologram> holograms;
     private ConfigHandler dataConfig;
     private ConfigurationSection hologramsSection;

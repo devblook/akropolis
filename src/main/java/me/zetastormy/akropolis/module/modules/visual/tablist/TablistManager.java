@@ -34,11 +34,12 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 
-public class TablistManager extends Module {
+public class TablistManager extends Module implements LifeCycle{
     private List<UUID> players;
     private int tablistTask;
     private String header;

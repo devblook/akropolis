@@ -32,11 +32,12 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import net.kyori.adventure.text.Component;
 
-public class PlayerMount extends Module {
+public class PlayerMount extends Module implements LifeCycle {
     private List<String> actions;
     private long cooldownDelay;
 
@@ -49,11 +50,6 @@ public class PlayerMount extends Module {
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         actions = config.getStringList("player_mount.actions");
         cooldownDelay = config.getLong("player_mount.cooldown", 5);
-    }
-
-    @Override
-    public void onDisable() {
-
     }
 
     @EventHandler

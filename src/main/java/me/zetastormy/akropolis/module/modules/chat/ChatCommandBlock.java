@@ -29,10 +29,11 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 
-public class ChatCommandBlock extends Module {
+public class ChatCommandBlock extends Module implements LifeCycle {
     private List<String> blockedCommands;
 
     public ChatCommandBlock(AkropolisPlugin plugin) {
@@ -42,11 +43,6 @@ public class ChatCommandBlock extends Module {
     @Override
     public void onEnable() {
         blockedCommands = getConfig(ConfigType.SETTINGS).getStringList("command_block.blocked_commands");
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

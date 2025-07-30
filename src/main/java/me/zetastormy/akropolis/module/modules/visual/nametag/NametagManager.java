@@ -32,13 +32,14 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
-public class NametagManager extends Module {
+public class NametagManager extends Module implements LifeCycle {
     private ConfigurationSection format;
     private NametagHelper nametagHelper;
     private int nametagTask;

@@ -49,10 +49,11 @@ import com.xxmicloxx.NoteBlockAPI.utils.NBSDecoder;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigHandler;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 
-public class SongPlayerManager extends Module {
+public class SongPlayerManager extends Module implements LifeCycle {
     private SongPlayer songPlayer;
     private ConfigHandler dataConfig;
     private List<String> actions;

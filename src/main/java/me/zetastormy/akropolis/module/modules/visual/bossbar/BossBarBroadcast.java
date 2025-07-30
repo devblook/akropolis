@@ -38,13 +38,14 @@ import com.cryptomorin.xseries.XSound;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 
-public class BossBarBroadcast extends Module implements Runnable {
+public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
     private Map<Integer, String> broadcasts;
     private BossBar broadcastBar;
     private int broadcastTask = 0;

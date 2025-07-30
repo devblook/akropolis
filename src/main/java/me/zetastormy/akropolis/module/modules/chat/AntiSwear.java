@@ -30,12 +30,13 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
-public class AntiSwear extends Module {
+public class AntiSwear extends Module implements LifeCycle {
     private List<String> blockedWords;
 
     public AntiSwear(AkropolisPlugin plugin) {
@@ -45,11 +46,6 @@ public class AntiSwear extends Module {
     @Override
     public void onEnable() {
         blockedWords = getConfig(ConfigType.SETTINGS).getStringList("anti_swear.blocked_words");
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

@@ -30,11 +30,12 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
-public class AntiWorldDownloader extends Module implements PluginMessageListener {
+public class AntiWorldDownloader extends Module implements PluginMessageListener, LifeCycle {
 
     public AntiWorldDownloader(AkropolisPlugin plugin) {
         super(plugin, ModuleType.ANTI_WDL);

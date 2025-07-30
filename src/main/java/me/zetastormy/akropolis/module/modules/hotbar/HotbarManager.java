@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hotbar.items.CustomItem;
@@ -40,7 +41,7 @@ import me.zetastormy.akropolis.module.modules.hotbar.items.FightMode;
 import me.zetastormy.akropolis.module.modules.hotbar.items.PlayerHider;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
 
-public class HotbarManager extends Module {
+public class HotbarManager extends Module implements LifeCycle {
     private List<HotbarItem> hotbarItems;
     private Set<UUID> players;
 

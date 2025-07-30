@@ -37,11 +37,12 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import net.kyori.adventure.text.Component;
 
-public class DoubleJump extends Module {
+public class DoubleJump extends Module implements LifeCycle {
     private long cooldownDelay;
     private double launch;
     private double launchY;
@@ -63,11 +64,6 @@ public class DoubleJump extends Module {
             launch = 4.0;
         if (launchY > 4.0)
             launchY = 4.0;
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler

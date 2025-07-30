@@ -33,12 +33,13 @@ import com.cryptomorin.xseries.XSound;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 
-public class AutoBroadcast extends Module implements Runnable {
+public class AutoBroadcast extends Module implements Runnable, LifeCycle {
     private Map<Integer, List<String>> broadcasts;
     private int broadcastTask = 0;
     private int count = 0;

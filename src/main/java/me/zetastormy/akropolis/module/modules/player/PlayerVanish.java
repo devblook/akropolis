@@ -33,10 +33,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.Message;
+import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 
-public class PlayerVanish extends Module {
+public class PlayerVanish extends Module implements LifeCycle {
     private List<UUID> vanished;
 
     public PlayerVanish(AkropolisPlugin plugin) {

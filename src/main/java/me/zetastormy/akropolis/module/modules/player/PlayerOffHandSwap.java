@@ -19,27 +19,18 @@
 
 package me.zetastormy.akropolis.module.modules.player;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.module.Module;
-import me.zetastormy.akropolis.module.ModuleType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.module.Module;
+import me.zetastormy.akropolis.module.ModuleType;
 
 public class PlayerOffHandSwap extends Module {
 
     public PlayerOffHandSwap(AkropolisPlugin plugin) {
         super(plugin, ModuleType.PLAYER_OFFHAND_LISTENER);
-    }
-
-    @Override
-    public void onEnable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
-    }
-
-    @Override
-    public void onDisable() {
-        // TODO: Refactor to follow Liskov Substitution principle.
     }
 
     @EventHandler
