@@ -21,6 +21,7 @@ package me.zetastormy.akropolis.util.text;
 
 import org.bukkit.Color;
 
+import io.github.miniplaceholders.api.MiniPlaceholders;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -29,16 +30,24 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 public class TextUtil {
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
+    private static boolean MPSTATE = false;
+
     private TextUtil() {
         throw new UnsupportedOperationException();
     }
 
     public static Component parse(String message) {
-        return MINI_MESSAGE.deserialize(message);
+        if (MPSTATE)
+            return MINI_MESSAGE.deserialize(message, MiniPlaceholders.getGlobalPlaceholders());
+        else
+            return MINI_MESSAGE.deserialize(message);
     }
 
     public static Component parse(String message, TagResolver resolver) {
-        return MINI_MESSAGE.deserialize(message, resolver);
+        if (MPSTATE)
+            return MINI_MESSAGE.deserialize(message, resolver, MiniPlaceholders.getGlobalPlaceholders());
+        else
+            return MINI_MESSAGE.deserialize(message, resolver);
     }
 
     public static String raw(Component message) {
@@ -46,11 +55,11 @@ public class TextUtil {
     }
 
     public static Component parseAndReplace(String message, String pattern, Component replacement) {
-        return MINI_MESSAGE.deserialize(message, Placeholder.component(pattern, replacement));
+        return parse(message, Placeholder.component(pattern, replacement));
     }
 
     public static Component replace(Component message, String pattern, Component replacement) {
-        return MINI_MESSAGE.deserialize(raw(message), Placeholder.component(pattern, replacement));
+        return parse(raw(message), Placeholder.component(pattern, replacement));
     }
 
     public static String joinString(int index, String[] args) {
@@ -84,5 +93,9 @@ public class TextUtil {
             case "YELLOW" -> Color.YELLOW;
             default -> null;
         };
+    }
+
+    public static void setMPSTATE(boolean MPSTATE) {
+        TextUtil.MPSTATE = MPSTATE;
     }
 }
