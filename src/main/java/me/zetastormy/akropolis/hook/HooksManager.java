@@ -19,16 +19,17 @@
 
 package me.zetastormy.akropolis.hook;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.bukkit.Bukkit;
+
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.BaseHead;
 import me.zetastormy.akropolis.hook.hooks.head.DatabaseHead;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
-import org.bukkit.Bukkit;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class HooksManager {
     private final Map<String, PluginHook> hooks;

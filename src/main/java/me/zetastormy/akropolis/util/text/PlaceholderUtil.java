@@ -19,20 +19,21 @@
 
 package me.zetastormy.akropolis.util.text;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import java.util.Stack;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
