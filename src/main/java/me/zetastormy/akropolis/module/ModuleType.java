@@ -24,6 +24,7 @@ public enum ModuleType {
     CHAT_FORMAT,
     CHAT_LOCK,
     DOUBLE_JUMP,
+    PLAYER_MOUNT,
     LAUNCHPAD,
     NAMETAG,
     SCOREBOARD,

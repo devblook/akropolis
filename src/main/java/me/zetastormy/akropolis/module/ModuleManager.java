@@ -42,6 +42,7 @@ import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.module.modules.player.DoubleJump;
 import me.zetastormy.akropolis.module.modules.player.FightModeManager;
 import me.zetastormy.akropolis.module.modules.player.PlayerListener;
+import me.zetastormy.akropolis.module.modules.player.PlayerMount;
 import me.zetastormy.akropolis.module.modules.player.PlayerOffHandSwap;
 import me.zetastormy.akropolis.module.modules.player.PlayerVanish;
 import me.zetastormy.akropolis.module.modules.visual.bossbar.BossBarBroadcast;
@@ -84,6 +85,7 @@ public class ModuleManager {
 
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl.enabled");
         registerModule(new DoubleJump(plugin), "double_jump.enabled");
+        registerModule(new PlayerMount(plugin), "player_mount.enabled");
         registerModule(new Launchpad(plugin), "launchpad.enabled");
         registerModule(new BossBarBroadcast(plugin), "boss_bar_announcements.enabled");
         registerModule(new NametagManager(plugin), "nametag.enabled");
