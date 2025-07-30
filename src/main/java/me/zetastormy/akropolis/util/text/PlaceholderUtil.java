@@ -19,19 +19,20 @@
 
 package me.zetastormy.akropolis.util.text;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import java.util.Stack;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 
 public class PlaceholderUtil {
     private static boolean papi = false;
@@ -41,26 +42,6 @@ public class PlaceholderUtil {
         throw new UnsupportedOperationException();
     }
 
-    public static Component setPlaceholders(String rawText, Player player) {
-        String text = rawText;
-
-        text = text.replace("<online>", String.valueOf(Bukkit.getOnlinePlayers().size()))
-                 .replace("<online_max>", String.valueOf(Bukkit.getMaxPlayers()))
-                 .replace("<current_song>", getCurrentSong());
-
-        if (player != null) {
-            text = text.replace("<player>", player.getName())
-                     .replace("<ping>", String.valueOf(player.getPing()))
-                     .replace("<world>", player.getWorld().getName())
-                     .replace("<location>", formatLocation(player.getLocation()));
-
-            if (papi) return TextUtil.parse(text, papiTag(player));
-            if (miniplaceholders) return TextUtil.parse(text, MiniPlaceholders.getAudienceGlobalPlaceholders(player));
-        }
-
-        return TextUtil.parse(text);
-    }
-
     private static String formatLocation(Location loc) {
         return loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
     }
@@ -68,6 +49,43 @@ public class PlaceholderUtil {
     private static String getCurrentSong() {
         SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
         return songPlayerManager != null ? songPlayerManager.getCurrentSong() : "None";
+    }
+
+    /**
+     * Pushes a tag resolver onto the stack that inserts (self-closing) the given component for the given name.
+     * @param tagResolvers the mutable stack of tag resolvers
+     * @param name the name of the tag to resolve (e.g. "player", "ping", etc.)
+     * @param component the component to insert when the tag is resolved
+     */
+    private static void pushTagResolver(final Stack<TagResolver> tagResolvers, final String name, final Component component) {
+        tagResolvers.push(TagResolver.resolver(name, (argumentQueue, context)
+                -> Tag.selfClosingInserting(component)));
+    }
+
+    public static Component setPlaceholders(String rawText, Audience audience) {
+
+        final Stack<TagResolver> tagResolvers = new Stack<>();
+
+        pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
+        pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
+        pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));
+
+        if ((audience instanceof Player player)) {
+            pushTagResolver(tagResolvers, "player", Component.text(player.getName()));
+            pushTagResolver(tagResolvers, "ping", Component.text(player.getPing()));
+            pushTagResolver(tagResolvers, "world", Component.text(player.getWorld().getName()));
+            pushTagResolver(tagResolvers, "location", Component.text(formatLocation(player.getLocation())));
+
+            if (papi) {
+                tagResolvers.push(papiTag(player));
+            }
+        }
+
+        if (miniplaceholders && audience != null) {
+            tagResolvers.push(MiniPlaceholders.getAudienceGlobalPlaceholders(audience));
+        }
+
+        return TextUtil.parse(rawText, TagResolver.resolver(tagResolvers));
     }
 
     @SuppressWarnings("deprecation")
