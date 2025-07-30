@@ -44,7 +44,6 @@ public class NametagManager extends Module implements LifeCycle {
     private NametagHelper nametagHelper;
     private int nametagTask;
 
-    // TODO: make this work on reload
     public NametagManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.NAMETAG);
     }
