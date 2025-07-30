@@ -121,6 +121,9 @@ Messages:
   DOUBLE_JUMP:
     COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to double jump again!"
 
+  PLAYER_MOUNT:
+    COOLDOWN_ACTIVE: "<prefix> <red>You must wait <yellow><time>s <red>to mount a player again!"
+
   WORLD_EVENT_MODIFICATIONS:
     ITEM_DROP: "<prefix> <red>You are not allowed to drop items."
     ITEM_PICKUP: "<prefix> <red>You are not allowed to pickup items."
