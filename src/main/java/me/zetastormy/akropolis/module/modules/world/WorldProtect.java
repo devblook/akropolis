@@ -49,6 +49,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -93,6 +94,7 @@ public class WorldProtect extends Module implements LifeCycle {
     private boolean disableFireDamage;
     private boolean disableContactDamage;
     private boolean disableInventoryDrop;
+    private boolean disableInventoryMovement;
 
     private static final Set<Material> INTERACTABLE;
 
@@ -208,6 +210,7 @@ public class WorldProtect extends Module implements LifeCycle {
         disableFireDamage = config.getBoolean("world_settings.disable_fire_damage");
         disableContactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
         disableInventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
+        disableInventoryMovement = config.getBoolean("world_settings.disable_inventory_movement", true);
     }
 
     @EventHandler
@@ -522,6 +525,17 @@ public class WorldProtect extends Module implements LifeCycle {
             return;
 
         event.setCancelled(event.toWeatherState());
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!disableInventoryMovement) return;
+
+        Player player = (Player) event.getWhoClicked();
+
+        if (inDisabledWorld(player.getLocation())) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
