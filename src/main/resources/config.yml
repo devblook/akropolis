@@ -443,7 +443,7 @@ world_settings:
   # Item entities
   disable_item_drop: true
   disable_item_pickup: true
-  disable_inventory_movement: true # Disables inventory movement for ALL items
+  disable_inventory_movement: true # Disables inventory movement, overrides custom items setting
 
   # Blocks
   disable_block_break: true
@@ -515,7 +515,7 @@ join_settings:
 custom_join_items:
   # Should custom join items be enabled?
   enabled: true
-  # Should we prevent them from moving/dropping the items?
+  # Should we prevent them from moving/dropping the custom items?
   disable_inventory_movement: true
 
   items:
