@@ -443,6 +443,7 @@ world_settings:
   # Item entities
   disable_item_drop: true
   disable_item_pickup: true
+  disable_inventory_movement: true # Disables inventory movement for ALL items
 
   # Blocks
   disable_block_break: true
