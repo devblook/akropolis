@@ -74,7 +74,7 @@ public class HotbarManager extends Module implements LifeCycle {
             ItemStack item = ItemStackBuilder.getItemStack(fightModeSection.getConfigurationSection("item")).build();
             FightMode fightMode = new FightMode(this, item, fightModeSection.getInt("slot"), "FIGHT_MODE_ITEM");
 
-            fightMode.setAllowMovement(fightModeSection.getBoolean("disable_inventory_movement"));
+            fightMode.setDisableMovement(fightModeSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(fightMode);
         }
 
@@ -94,7 +94,7 @@ public class HotbarManager extends Module implements LifeCycle {
 
             PlayerHider playerHider = new PlayerHider(this, item, hiderSection.getInt("slot"), "PLAYER_HIDER");
 
-            playerHider.setAllowMovement(hiderSection.getBoolean("disable_inventory_movement"));
+            playerHider.setDisableMovement(hiderSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(playerHider);
         }
 
@@ -123,7 +123,7 @@ public class HotbarManager extends Module implements LifeCycle {
             }
 
             customItem.setConfigurationSection(itemsSection.getConfigurationSection(itemEntry));
-            customItem.setAllowMovement(customItemsSection.getBoolean("disable_inventory_movement"));
+            customItem.setDisableMovement(customItemsSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(customItem);
         }
     }

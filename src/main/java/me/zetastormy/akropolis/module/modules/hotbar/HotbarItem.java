@@ -58,7 +58,7 @@ public abstract class HotbarItem implements Listener {
     private final String keyValue;
     private String permission = null;
     private final int slot;
-    private boolean allowMovement;
+    private boolean disableMovement;
 
     protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
         this.hotbarManager = hotbarManager;
@@ -100,8 +100,8 @@ public abstract class HotbarItem implements Listener {
         this.permission = permission;
     }
 
-    public void setAllowMovement(boolean allowMovement) {
-        this.allowMovement = allowMovement;
+    public void setDisableMovement(boolean disableMovement) {
+        this.disableMovement = disableMovement;
     }
 
     public void setConfigurationSection(ConfigurationSection configurationSection) {
@@ -148,7 +148,7 @@ public abstract class HotbarItem implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!allowMovement) return;
+        if (!disableMovement) return;
 
         Player player = (Player) event.getWhoClicked();
 
