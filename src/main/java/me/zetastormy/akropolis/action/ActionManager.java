@@ -66,6 +66,7 @@ public class ActionManager {
 
     public void executeActions(Player player, List<String> actions) {
         actions.forEach(actionContent -> {
+            if (actionContent == null || actionContent.equals("")) return;
 
             String actionName = StringUtils.substringBetween(actionContent, "[", "]").toUpperCase();
             Action action = actionName.isEmpty() ? null : this.actions.get(actionName);
