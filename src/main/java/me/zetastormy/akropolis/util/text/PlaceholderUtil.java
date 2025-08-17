@@ -64,7 +64,6 @@ public class PlaceholderUtil {
     }
 
     public static Component setPlaceholders(String rawText, Audience audience) {
-
         final Stack<TagResolver> tagResolvers = new Stack<>();
 
         pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
