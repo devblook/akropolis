@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -46,6 +47,7 @@ public class DoubleJump extends Module implements LifeCycle {
     private long cooldownDelay;
     private double launch;
     private double launchY;
+    private boolean onGround;
     private List<String> actions;
 
     public DoubleJump(AkropolisPlugin plugin) {
@@ -58,6 +60,7 @@ public class DoubleJump extends Module implements LifeCycle {
         cooldownDelay = config.getLong("double_jump.cooldown", 0);
         launch = config.getDouble("double_jump.launch_power", 1.3);
         launchY = config.getDouble("double_jump.launch_power_y", 1.2);
+        onGround = config.getBoolean("double_jump.on_ground", true);
         actions = config.getStringList("double_jump.actions");
 
         if (launch > 4.0)
@@ -69,17 +72,18 @@ public class DoubleJump extends Module implements LifeCycle {
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
+        Location playerLocation = player.getLocation();
 
         // Perform checks
         if (player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission()) || player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission()))
             return;
-        else if (inDisabledWorld(player.getLocation()))
+        else if (inDisabledWorld(playerLocation))
             return;
         else if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)
             return;
         else if (!event.isFlying())
             return;
-        else if (player.getWorld().getBlockAt(player.getLocation().subtract(0, 2, 0)).getType() == Material.AIR) {
+        else if (onGround && player.getWorld().getBlockAt(playerLocation.subtract(0, 2, 0)).getType() == Material.AIR) {
             event.setCancelled(true);
             return;
         }
@@ -96,7 +100,7 @@ public class DoubleJump extends Module implements LifeCycle {
         }
 
         // Execute double jump
-        player.setVelocity(player.getLocation().getDirection().multiply(launch).setY(launchY));
+        player.setVelocity(playerLocation.getDirection().multiply(launch).setY(launchY));
         executeActions(player, actions);
     }
 
