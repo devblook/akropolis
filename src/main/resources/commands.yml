@@ -91,3 +91,7 @@ commands:
     enabled: true
     aliases:
       - v
+  songplayer:
+    enabled: true
+    aliases:
+      - sp
