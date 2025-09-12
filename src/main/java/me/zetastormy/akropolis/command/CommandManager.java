@@ -19,20 +19,32 @@
 
 package me.zetastormy.akropolis.command;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.command.commands.*;
-import me.zetastormy.akropolis.command.commands.gamemode.*;
-import me.zetastormy.akropolis.config.ConfigType;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.command.commands.AkropolisCommand;
+import me.zetastormy.akropolis.command.commands.ClearchatCommand;
+import me.zetastormy.akropolis.command.commands.FlyCommand;
+import me.zetastormy.akropolis.command.commands.LobbyCommand;
+import me.zetastormy.akropolis.command.commands.LockchatCommand;
+import me.zetastormy.akropolis.command.commands.SetLobbyCommand;
+import me.zetastormy.akropolis.command.commands.SongPlayerCommand;
+import me.zetastormy.akropolis.command.commands.VanishCommand;
+import me.zetastormy.akropolis.command.commands.gamemode.AdventureCommand;
+import me.zetastormy.akropolis.command.commands.gamemode.CreativeCommand;
+import me.zetastormy.akropolis.command.commands.gamemode.GamemodeCommand;
+import me.zetastormy.akropolis.command.commands.gamemode.SpectatorCommand;
+import me.zetastormy.akropolis.command.commands.gamemode.SurvivalCommand;
+import me.zetastormy.akropolis.config.ConfigType;
 
 public class CommandManager {
     private final AkropolisPlugin plugin;
@@ -119,6 +131,7 @@ public class CommandManager {
             case "SETLOBBY" -> registerCommand(new SetLobbyCommand(plugin, aliases));
             case "LOBBY" -> registerCommand(new LobbyCommand(plugin, aliases));
             case "VANISH" -> registerCommand(new VanishCommand(plugin, aliases));
+            case "SONGPLAYER" -> registerCommand(new SongPlayerCommand(plugin, aliases));
             default -> {
             }
         }
