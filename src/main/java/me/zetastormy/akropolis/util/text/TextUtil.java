@@ -19,6 +19,7 @@
 
 package me.zetastormy.akropolis.util.text;
 
+import net.kyori.adventure.pointer.Pointered;
 import org.bukkit.Color;
 
 import net.kyori.adventure.text.Component;
@@ -39,6 +40,10 @@ public class TextUtil {
 
     public static Component parse(String message, TagResolver resolver) {
         return MINI_MESSAGE.deserialize(message, resolver);
+    }
+
+    public static Component parse(String message, Pointered target, TagResolver... resolver) {
+      return MINI_MESSAGE.deserialize(message, target, resolver);
     }
 
     public static String raw(Component message) {
