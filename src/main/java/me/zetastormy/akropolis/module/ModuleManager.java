@@ -28,7 +28,11 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigType;
@@ -55,10 +59,12 @@ import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
 
-public class ModuleManager {
+public class ModuleManager implements Listener {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
     private AkropolisPlugin plugin;
     private List<String> disabledWorlds;
+    private List<String> configuredWorldsList;
+    private boolean invertWorldList;
 
     public void loadModules(AkropolisPlugin plugin) {
         this.plugin = plugin;
@@ -67,19 +73,20 @@ public class ModuleManager {
             unloadModules();
 
         FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
-        disabledWorlds = config.getStringList("disabled-worlds.worlds");
+        configuredWorldsList = new ArrayList<>(config.getStringList("disabled-worlds.worlds"));
+        invertWorldList = config.getBoolean("disabled-worlds.invert");
+        
+        // Recalculate disabled worlds based on current loaded worlds
+        updateDisabledWorldsList();
+        
+        // Register this listener to handle dynamic world loading
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
-        if (config.getBoolean("disabled-worlds.invert")) {
-            List<String> newDisabledWorlds = new ArrayList<>();
-
-            for (World world : Bukkit.getWorlds()) {
-                newDisabledWorlds.add(world.getName());
-            }
-
-            disabledWorlds = newDisabledWorlds;
-
-            for (String world : config.getStringList("disabled-worlds.worlds")) {
-                disabledWorlds.remove(world);
+        // Log enabled and disabled worlds
+        List<String> enabledWorlds = new ArrayList<>();
+        for (World world : Bukkit.getWorlds()) {
+            if (!disabledWorlds.contains(world.getName())) {
+                enabledWorlds.add(world.getName());
             }
         }
 
@@ -127,7 +134,60 @@ public class ModuleManager {
         plugin.getLogger().log(Level.INFO, "Loaded {0} plugin modules.", modules.size());
     }
 
+    private void updateDisabledWorldsList() {
+        List<String> newDisabledWorlds = new ArrayList<>();
+
+        if (invertWorldList) {
+            // Invert mode: whitelist (configured worlds are ENABLED, others are DISABLED)
+            for (World world : Bukkit.getWorlds()) {
+                String worldName = world.getName();
+                if (!configuredWorldsList.contains(worldName)) {
+                    newDisabledWorlds.add(worldName);
+                }
+            }
+        } else {
+            // Normal mode: blacklist (configured worlds are DISABLED)
+            newDisabledWorlds.addAll(configuredWorldsList);
+        }
+
+        disabledWorlds = newDisabledWorlds;
+    }
+
+    @EventHandler
+    public void onWorldLoad(WorldLoadEvent event) {
+        String worldName = event.getWorld().getName();
+        
+        if (invertWorldList) {
+            // In invert mode, new worlds should be disabled unless in config
+            if (!configuredWorldsList.contains(worldName)) {
+                disabledWorlds.add(worldName);
+            } else {
+                // Remove from disabled if it wasn't already (just to be safe)
+                disabledWorlds.remove(worldName);
+            }
+        } else {
+            // In normal mode, remove from disabled if it's not explicitly configured
+            if (!configuredWorldsList.contains(worldName)) {
+                disabledWorlds.remove(worldName);
+            }
+        }
+        
+        // Update all modules with the new disabled worlds list
+        for (Module module : modules.values()) {
+            module.setDisabledWorlds(disabledWorlds);
+        }
+    }
+
+    @EventHandler
+    public void onWorldUnload(WorldUnloadEvent event) {
+        String worldName = event.getWorld().getName();
+        disabledWorlds.remove(worldName);
+    }
+
     public void unloadModules() {
+        // Unregister this listener
+        HandlerList.unregisterAll((Listener) this);
+        
         for (Module module : modules.values()) {
             try {
                 HandlerList.unregisterAll(module);
