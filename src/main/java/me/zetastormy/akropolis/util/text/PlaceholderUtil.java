@@ -54,8 +54,12 @@ public class PlaceholderUtil {
                      .replace("<world>", player.getWorld().getName())
                      .replace("<location>", formatLocation(player.getLocation()));
 
-            if (papi) return TextUtil.parse(text, papiTag(player));
-            if (miniplaceholders) return TextUtil.parse(text, MiniPlaceholders.getAudienceGlobalPlaceholders(player));
+            return TextUtil.parse(
+                text,
+                player,
+                (papi) ? papiTag(player) : TagResolver.empty(),
+                (miniplaceholders) ? MiniPlaceholders.audienceGlobalPlaceholders() : TagResolver.empty()
+            );
         }
 
         return TextUtil.parse(text);
