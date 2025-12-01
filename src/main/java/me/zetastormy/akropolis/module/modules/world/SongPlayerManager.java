@@ -39,6 +39,8 @@ import com.xxmicloxx.NoteBlockAPI.event.SongNextEvent;
 import com.xxmicloxx.NoteBlockAPI.model.FadeType;
 import com.xxmicloxx.NoteBlockAPI.model.Playlist;
 import com.xxmicloxx.NoteBlockAPI.model.RepeatMode;
+import com.xxmicloxx.NoteBlockAPI.model.playmode.MonoStereoMode;
+import com.xxmicloxx.NoteBlockAPI.model.playmode.StereoMode;
 import com.xxmicloxx.NoteBlockAPI.model.Song;
 import com.xxmicloxx.NoteBlockAPI.songplayer.Fade;
 import com.xxmicloxx.NoteBlockAPI.songplayer.PositionSongPlayer;
@@ -140,9 +142,17 @@ public class SongPlayerManager extends Module implements LifeCycle {
         return new Playlist(songs.toArray(new Song[0]));
     }
 
+    private RadioSongPlayer createRadioSongPlayer(Playlist playlist) {
+      RadioSongPlayer radioSongPlayer = new RadioSongPlayer(playlist);
+      StereoMode stereoMode = new StereoMode();
+      stereoMode.setFallbackChannelMode(new MonoStereoMode());
+      radioSongPlayer.setChannelMode(stereoMode);
+      return radioSongPlayer;
+    }
+
     private SongPlayer createSongPlayer(Playlist playlist, String type, int distance) {
         if (type.equalsIgnoreCase("RADIO")) {
-            return new RadioSongPlayer(playlist);
+            return createRadioSongPlayer(playlist);
         }
 
         Location songLocation = dataConfig.get().getLocation("song_player.location");
@@ -150,7 +160,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
         if (songLocation == null) {
             getPlugin().getLogger().warning("Couldn't get song player location! Using radio song player instead.");
 
-            return new RadioSongPlayer(playlist);
+            return createRadioSongPlayer(playlist);
         }
 
         PositionSongPlayer songPlayer = new PositionSongPlayer(playlist);

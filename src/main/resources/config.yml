@@ -83,7 +83,7 @@ anti_wdl:
 # | SONG PLAYER                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
+# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/songs"
 # directory.
 song_player:
   # Should we play music in the lobby?
