@@ -36,7 +36,12 @@ dependencies {
 
     compileOnly("me.clip:placeholderapi:2.11.7")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
-    implementation("com.github.cryptomorin:XSeries:13.5.1")
+
+    // Dependency downloaded at runtime, also change
+    // the version in AkropolisPluginLoader.java
+    // when upgrading
+    compileOnly("com.github.cryptomorin:XSeries:13.5.1")
+
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
 }
@@ -61,7 +66,6 @@ tasks {
         }
 
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
-        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
     }
 
     withType<JavaCompile> {
