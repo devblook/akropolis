@@ -29,6 +29,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.hook.hooks.head.BaseHead;
 import me.zetastormy.akropolis.hook.hooks.head.DatabaseHead;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class HooksManager {
     private final Map<String, PluginHook> hooks;
@@ -54,6 +55,7 @@ public class HooksManager {
         if (Bukkit.getPluginManager().isPluginEnabled("MiniPlaceholders")) {
             hooks.put("MINIPLACEHOLDERS", null);
             PlaceholderUtil.setMPState(true);
+            TextUtil.setMPState(true);
             plugin.getLogger().info("Hooked into MiniPlaceholders");
         }
 
