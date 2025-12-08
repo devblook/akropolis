@@ -1,4 +1,6 @@
-![Akropolis banner](https://user-images.githubusercontent.com/56933557/188349705-b1f1eb56-8e4b-42d2-b99d-f21552ec84c2.png)
+![Akropolis banner](https://zetastormy.me/assets/akropolis_banner.png)
+
+---
 
 <p align="center">
     <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/devblook/akropolis/build.yml?style=for-the-badge&logo=github" href="">
