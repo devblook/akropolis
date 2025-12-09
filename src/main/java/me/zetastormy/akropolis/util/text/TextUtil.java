@@ -37,18 +37,19 @@ public class TextUtil {
         throw new UnsupportedOperationException();
     }
 
-    public static Component parse(String message) {
-        if (miniplaceholders)
-            return MINI_MESSAGE.deserialize(message, MiniPlaceholders.globalPlaceholders());
-        else
-            return MINI_MESSAGE.deserialize(message);
-    }
-
-    public static Component parse(String message, TagResolver resolver) {
+    public static Component parseWithPlaceholders(String message, TagResolver resolver) {
         if (miniplaceholders)
             return MINI_MESSAGE.deserialize(message, resolver, MiniPlaceholders.globalPlaceholders());
         else
             return MINI_MESSAGE.deserialize(message, resolver);
+    }
+
+    public static Component parse(String message) {
+        return MINI_MESSAGE.deserialize(message);
+    }
+
+    public static Component parse(String message, TagResolver resolver) {
+        return MINI_MESSAGE.deserialize(message, resolver);
     }
 
     public static Component parse(String message, Pointered target, TagResolver... resolver) {

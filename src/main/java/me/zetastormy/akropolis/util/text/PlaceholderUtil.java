@@ -64,31 +64,42 @@ public class PlaceholderUtil {
                 -> Tag.selfClosingInserting(component)));
     }
 
-    public static Component setPlaceholders(String rawText, Audience audience) {
+    private static Stack<TagResolver> globalTagResolver() {
         final Stack<TagResolver> tagResolvers = new Stack<>();
 
         pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
         pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
         pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));
 
-        if ((audience instanceof Player player)) {
-            pushTagResolver(tagResolvers, "player", Component.text(player.getName()));
-            pushTagResolver(tagResolvers, "ping", Component.text(player.getPing()));
-            pushTagResolver(tagResolvers, "world", Component.text(player.getWorld().getName()));
-            pushTagResolver(tagResolvers, "location", Component.text(formatLocation(player.getLocation())));
+        return tagResolvers;
+    }
 
-            if (papi) {
-                tagResolvers.push(papiTag(player));
-            }
+    public static Component setPlaceholders(String rawText) {
+        return TextUtil.parseWithPlaceholders(rawText, TagResolver.resolver(globalTagResolver()));
+    }
 
-            if (miniplaceholders) {
-                tagResolvers.push(MiniPlaceholders.audienceGlobalPlaceholders());
 
-                return TextUtil.parse(rawText, audience, TagResolver.resolver(tagResolvers));
-            }
+    public static Component setPlaceholders(String rawText, Audience audience) {
+        if (!(audience instanceof Player player)) {
+            return setPlaceholders(rawText);
         }
 
-        return TextUtil.parse(rawText, TagResolver.resolver(tagResolvers));
+        final Stack<TagResolver> tagResolvers = globalTagResolver();
+
+        pushTagResolver(tagResolvers, "player", Component.text(player.getName()));
+        pushTagResolver(tagResolvers, "ping", Component.text(player.getPing()));
+        pushTagResolver(tagResolvers, "world", Component.text(player.getWorld().getName()));
+        pushTagResolver(tagResolvers, "location", Component.text(formatLocation(player.getLocation())));
+
+        if (papi) {
+            tagResolvers.push(papiTag(player));
+        }
+
+        if (miniplaceholders) {
+            tagResolvers.push(MiniPlaceholders.audienceGlobalPlaceholders());
+        }
+
+        return TextUtil.parse(rawText, audience, TagResolver.resolver(tagResolvers));
     }
 
     @SuppressWarnings("deprecation")
