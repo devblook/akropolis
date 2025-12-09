@@ -113,7 +113,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
 
         size = broadcasts.size();
         if (size > 0) {
-            Component firstBroadcast = PlaceholderUtil.setPlaceholders(broadcasts.get(0), null);
+            Component firstBroadcast = PlaceholderUtil.setPlaceholders(broadcasts.get(0));
             this.broadcastBar = BossBar.bossBar(firstBroadcast, (float) overlayProgress,
                     BossBar.Color.BLUE, overlayType);
             count++;
@@ -151,7 +151,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
                 continue;
             }
 
-            Component parsedMessage = PlaceholderUtil.setPlaceholders(broadcasts.get(count), null);
+            Component parsedMessage = PlaceholderUtil.setPlaceholders(broadcasts.get(count));
             broadcastBar.name(parsedMessage);
 
             if (sound != null) player.playSound(player.getLocation(), sound, (float) volume, (float) pitch);

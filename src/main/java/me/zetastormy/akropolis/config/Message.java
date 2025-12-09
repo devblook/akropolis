@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -150,12 +151,7 @@ public enum Message {
             return Component.empty();
         }
 
-        String rawPrefix = config.getString("Messages." + PREFIX.getPath());
-        Component prefix = TextUtil.parse(
-            rawPrefix != null && !rawPrefix.isEmpty() ? rawPrefix : ""
-        );
-
-        return TextUtil.parseAndReplace(message, "prefix", prefix);
+        return PlaceholderUtil.setPlaceholders(message);
     }
 
     public List<Component> toComponentList() {
@@ -167,18 +163,15 @@ public enum Message {
             return componentMessage;
         }
 
-        String rawPrefix = config.getString("Messages." + PREFIX.getPath());
-        Component prefix = TextUtil.parse(
-            rawPrefix != null && !rawPrefix.isEmpty() ? rawPrefix : ""
-        );
-
-        message.forEach(m ->
-            componentMessage.add(TextUtil.parseAndReplace(m, "prefix", prefix))
-        );
+        message.forEach(m -> componentMessage.add(PlaceholderUtil.setPlaceholders(m)));
         return componentMessage;
     }
 
     public String getPath() {
         return this.path;
+    }
+
+    public String raw() {
+        return config.getString("Messages." + this.path);
     }
 }

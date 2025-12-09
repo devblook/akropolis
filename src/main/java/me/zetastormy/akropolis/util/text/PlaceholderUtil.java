@@ -29,6 +29,7 @@ import org.bukkit.entity.Player;
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -67,6 +68,7 @@ public class PlaceholderUtil {
     private static Stack<TagResolver> globalTagResolver() {
         final Stack<TagResolver> tagResolvers = new Stack<>();
 
+        pushTagResolver(tagResolvers, "prefix", TextUtil.parse(Message.PREFIX.raw()));
         pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
         pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
         pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));

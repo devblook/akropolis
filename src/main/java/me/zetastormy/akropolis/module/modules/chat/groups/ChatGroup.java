@@ -55,7 +55,7 @@ public class ChatGroup {
     }
 
     public Component getCooldownMessage() {
-        return PlaceholderUtil.setPlaceholders(cooldownMessage, null);
+        return PlaceholderUtil.setPlaceholders(cooldownMessage);
     }
 
     public String parseEmojis(String message) {
