@@ -107,6 +107,8 @@ public class ModuleManager {
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
             registerModule(new SongPlayerManager(plugin), "song_player.enabled");
+        else
+          plugin.getLogger().warning("NoteBlockAPI is not installed and enabled! The songs module won't be enabled.");
 
         for (Module module : modules.values()) {
             try {

@@ -83,7 +83,7 @@ anti_wdl:
 # | SONG PLAYER                             |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/music"
+# Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/songs"
 # directory.
 song_player:
   # Should we play music in the lobby?
@@ -308,6 +308,10 @@ double_jump:
   # Launch power for double jump (max 4.0).
   launch_power: 1.0
   launch_power_y: 0.9
+
+  # Toggles wheter the player has to be on the ground or not to use the double jump feature.
+  # If you disable this option, players will be able to fly by repeatedly using the double jump option.
+  on_ground: true
 
   # Cooldown time in seconds (0 to disable).
   cooldown: 3

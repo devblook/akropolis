@@ -60,10 +60,16 @@ public class ChatGroups extends Module implements LifeCycle {
         groupsSection.getKeys(false).stream()
                 .filter(key -> !key.equals("enabled"))
                 .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
-                groupsSection.getString(groupName + ".format", "No format."),
+                groupsSection.getString(
+                        groupName + ".format",
+                        String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no format, check the configuration.", groupName)
+                ),
                 groupsSection.getInt(groupName + ".priority", 0),
                 groupsSection.getInt(groupName + ".cooldown.time", 0),
-                groupsSection.getString(groupName + ".cooldown.message", "No cooldown message."),
+                groupsSection.getString(
+                        groupName + ".cooldown.message",
+                        String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no cooldown message, check the configuration.", groupName)
+                ),
                 new Emojis(groupsSection.getConfigurationSection(groupName + ".emojis")))));
     }
 

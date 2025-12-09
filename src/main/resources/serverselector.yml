@@ -29,7 +29,7 @@
 #--------
 # ITEM FLAGS:
 #
-#   You can add flags to the item (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/inventory/ItemFlag.html)
+#   You can add flags to the item (https://jd.papermc.io/paper/1.21.8/org/bukkit/inventory/ItemFlag.html)
 #   Example:
 #     item_flags:
 #       - HIDE_ATTRIBUTES

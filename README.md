@@ -1,55 +1,71 @@
-![Akropolis banner](https://user-images.githubusercontent.com/56933557/188349705-b1f1eb56-8e4b-42d2-b99d-f21552ec84c2.png)
+![Akropolis banner](https://zetastormy.me/assets/akropolis_banner.png)
 
-Akropolis is a modern Minecraft hub server solution that is based on DeluxeHub by ItsLewizzz.
-It contains almost all of its features and configuration files are almost the same, so you can just
-drop your configuration into the plugin's directory, make a few modifications and use it.
+---
 
-The main difference between Akropolis and DeluxeHub is that Akropolis uses more modern technologies, like MiniMessage,
-the Paper API and updated Java versions. While this give us some performance and usability benefits, it also means
-that we won't be giving support to older versions of Minecraft and other Minecraft server software that isn't derivated
-from Paper, which is not the case of DeluxeHub.
-Simply use what you feel meets your needs.
+<p align="center">
+    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/devblook/akropolis/build.yml?style=for-the-badge&logo=github" href="">
+    <a href="https://modrinth.com/plugin/akropolis">
+        <img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/akropolis?style=for-the-badge&logo=modrinth">
+    </a>
+    <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/devblook/akropolis/total?style=for-the-badge&logo=github">
+      <a href="https://discord.gg/w438z8TKej">
+        <img alt="Discord" src="https://img.shields.io/discord/1004083586326077512?style=for-the-badge&logo=discord&label=discord&color=%235865F2&link=https%3A%2F%2Fdiscord.gg%2Fw438z8TKej">
+    </a>
+</p>
 
-## How to
+**Akropolis** is the **modern Minecraft lobby** server **core plugin** your network deserves. It is built to leverage the proven functionality of its predecessor, DeluxeHub, while focusing entirely on modernization and performance.
 
-### Install
+#### 💎 Why you **should use Akropolis**?
 
-To use this plugin just a grab a binary from the [releases page](https://github.com/devblook/akropolis/releases)
-or [compile it](#compile) yourself and drop it into your `plugins/` directory. Take in mind that you will need to be
-running Paper 1.21+ so Akropolis can run properly. You can download Paper from [here](https://papermc.io/downloads).
+The key **distinction** (and our strength!) lies in the **cutting-edge technologies** that **Akropolis** exclusively supports:
 
-### Compile
+- ✨ **MiniMessage:** For beautiful, advanced chat styling and vibrant color palettes.
+- 🚀 **Paper API:** Leveraging high-performance features for maximum speed and stability.
+- 💻 **Updated Java Versions:** Ensures you are running on the latest, fastest JVM.
 
-Compiling Akropolis is pretty simple, just one command, and you're ready to go:
+This commitment to modernity provides **significant performance and usability benefits**. However, please note that we exclusively support **Paper 1.21+** (and modern server software derived from Paper). If you require support for older Minecraft versions, DeluxeHub may be a better fit. **Choose wisely!**
 
-**Linux (and other UNIX derivatives):**
+## ⚙️ How To
+
+### 💾 Install
+
+To begin using **Akropolis**, simply download the compiled plugin right here or [compile it yourself](https://github.com/devblook/akropolis/tree/stable#compile).
+
+**Important:** Akropolis requires you to be running **Paper 1.21+** to function correctly. You can easily download the latest Paper build from [here](https://papermc.io/downloads/paper).
+
+### 🔨 Compile
+
+Compiling Akropolis is straightforward and requires just one command:
+
+**🐧 Linux (and other UNIX derivatives):**
 
 ```bash
-./gradlew shadowJar
+  ./gradlew shadowJar
 ```
 
-**Windows:**
+**🪟 Windows:**
 
 ```batch
-gradlew.bat shadowJar
+  gradlew.bat shadowJar
 ```
 
-Then you will find the binary under the `build/libs/` directory.
+The resulting binary will be located in the `build/libs/` directory.
 
-### Report bugs or request features
+### 📩 Report Bugs or Request Features
 
-Reporting a bug or requesting a feature can be useful for further development of the plugin. To do that you just need
-to fill one of the issue templates we made for you:
-[Click here to report a bug](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=bug&template=bug_report.yml&title=A+brief+description+of+your+report)
-or [click here to request a feature](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request).
+Your feedback is invaluable for the continued development of Akropolis. To report issues or suggest enhancements, please use one of our dedicated templates:
 
-### Contribute
+* [Click here to report a bug](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=bug&template=bug_report.yml&title=A+brief+description+of+your+report)
+* [Click here to request a feature](https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request)
 
-At the moment we don't have a lot of requirements to contribute, just make sure to clarify
-the features or fixes that you introduce in your pull request and try to follow the
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+### 🤝 Contribute
 
-## License
+We encourage contributions! While we maintain minimal requirements, please ensure:
+
+1. You clarify the features or fixes you introduce in your pull request.
+2. You attempt to follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+
+## 📄 License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for
 details.
