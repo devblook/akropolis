@@ -60,10 +60,6 @@ public class TextUtil {
         return MINI_MESSAGE.serialize(message).replaceAll("\\\\<", "<");
     }
 
-    public static Component parseAndReplace(String message, String pattern, Component replacement) {
-        return parse(message, Placeholder.component(pattern, replacement));
-    }
-
     public static Component replace(Component message, String pattern, Component replacement) {
         return parse(raw(message), Placeholder.component(pattern, replacement));
     }
