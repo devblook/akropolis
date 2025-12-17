@@ -348,7 +348,27 @@ public class ItemStackBuilder {
 
         CustomModelDataComponent modelDataComponent = itemMeta.getCustomModelDataComponent();
 
-        modelDataComponent.setStrings(data);
+        List<Float> floats = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
+
+        for (String value : data) {
+            try {
+                float floatValue = Float.parseFloat(value);
+                floats.add(floatValue);
+                continue;
+            } catch (Exception ignored) {}
+
+            // TODO: add colors
+
+            strings.add(value);
+        }
+
+        floats.addAll(modelDataComponent.getFloats());
+        strings.addAll(modelDataComponent.getStrings());
+
+        modelDataComponent.setFloats(floats);
+        modelDataComponent.setStrings(strings);
+
         itemMeta.setCustomModelDataComponent(modelDataComponent);
         itemStack.setItemMeta(itemMeta);
     }
