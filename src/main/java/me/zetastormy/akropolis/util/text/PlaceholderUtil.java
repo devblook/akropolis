@@ -51,7 +51,7 @@ public class PlaceholderUtil {
 
     private static String getCurrentSong() {
         SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
-        return songPlayerManager != null ? songPlayerManager.getCurrentSong() : "None";
+        return songPlayerManager != null ? songPlayerManager.getCurrentSong() : "No song playing";
     }
 
     /**

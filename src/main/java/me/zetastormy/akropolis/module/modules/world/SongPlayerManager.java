@@ -39,9 +39,9 @@ import com.xxmicloxx.NoteBlockAPI.event.SongNextEvent;
 import com.xxmicloxx.NoteBlockAPI.model.FadeType;
 import com.xxmicloxx.NoteBlockAPI.model.Playlist;
 import com.xxmicloxx.NoteBlockAPI.model.RepeatMode;
+import com.xxmicloxx.NoteBlockAPI.model.Song;
 import com.xxmicloxx.NoteBlockAPI.model.playmode.MonoStereoMode;
 import com.xxmicloxx.NoteBlockAPI.model.playmode.StereoMode;
-import com.xxmicloxx.NoteBlockAPI.model.Song;
 import com.xxmicloxx.NoteBlockAPI.songplayer.Fade;
 import com.xxmicloxx.NoteBlockAPI.songplayer.PositionSongPlayer;
 import com.xxmicloxx.NoteBlockAPI.songplayer.RadioSongPlayer;
@@ -87,14 +87,14 @@ public class SongPlayerManager extends Module implements LifeCycle {
 
         int fadeInDuration = config.getInt("song_player.fade.in", 20);
         int fadeOutDuration = config.getInt("song_player.fade.out", 20);
-        byte volume = (byte)config.getInt("song_player.volume", 85);
+        byte volume = (byte) config.getInt("song_player.volume", 85);
 
         songPlayer = createSongPlayer(playlist, type, distance);
 
         Bukkit.getScheduler()
-            .runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
-                                                            .filter(player -> !inDisabledWorld(player.getLocation()))
-                                                            .forEach(songPlayer::addPlayer), 20L);
+                .runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
+                        .filter(player -> !inDisabledWorld(player.getLocation()))
+                        .forEach(songPlayer::addPlayer), 20L);
 
         Fade fadeIn = songPlayer.getFadeIn();
         Fade fadeOut = songPlayer.getFadeOut();
@@ -112,7 +112,8 @@ public class SongPlayerManager extends Module implements LifeCycle {
 
     @Override
     public void onDisable() {
-        if (songPlayer != null) songPlayer.destroy();
+        if (songPlayer != null)
+            songPlayer.destroy();
     }
 
     private Playlist loadSongs() {
@@ -128,8 +129,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
         }
 
         File[] nbsFiles = new File(getPlugin().getDataFolder().getAbsolutePath() + File.separator + "songs").listFiles(
-            (dir, name) -> name.toLowerCase().endsWith(".nbs")
-        );
+                (dir, name) -> name.toLowerCase().endsWith(".nbs"));
 
         Set<Song> songs = new HashSet<>();
 
@@ -137,17 +137,18 @@ public class SongPlayerManager extends Module implements LifeCycle {
             songs.add(NBSDecoder.parse(song));
         }
 
-        if (songs.isEmpty()) return null;
+        if (songs.isEmpty())
+            return null;
 
         return new Playlist(songs.toArray(new Song[0]));
     }
 
     private RadioSongPlayer createRadioSongPlayer(Playlist playlist) {
-      RadioSongPlayer radioSongPlayer = new RadioSongPlayer(playlist);
-      StereoMode stereoMode = new StereoMode();
-      stereoMode.setFallbackChannelMode(new MonoStereoMode());
-      radioSongPlayer.setChannelMode(stereoMode);
-      return radioSongPlayer;
+        RadioSongPlayer radioSongPlayer = new RadioSongPlayer(playlist);
+        StereoMode stereoMode = new StereoMode();
+        stereoMode.setFallbackChannelMode(new MonoStereoMode());
+        radioSongPlayer.setChannelMode(stereoMode);
+        return radioSongPlayer;
     }
 
     private SongPlayer createSongPlayer(Playlist playlist, String type, int distance) {
@@ -173,14 +174,16 @@ public class SongPlayerManager extends Module implements LifeCycle {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (songPlayer == null || inDisabledWorld(event.getPlayer().getLocation())) return;
+        if (songPlayer == null || inDisabledWorld(event.getPlayer().getLocation()))
+            return;
 
         songPlayer.addPlayer(event.getPlayer());
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (songPlayer == null) return;
+        if (songPlayer == null)
+            return;
 
         songPlayer.removePlayer(event.getPlayer());
     }
@@ -191,8 +194,10 @@ public class SongPlayerManager extends Module implements LifeCycle {
         World fromWorld = event.getFrom().getWorld();
         World toWorld = event.getTo().getWorld();
 
-        if (toWorld == null) return;
-        if (fromWorld == toWorld) return;
+        if (toWorld == null)
+            return;
+        if (fromWorld == toWorld)
+            return;
 
         if (inDisabledWorld(toWorld)) {
             songPlayer.removePlayer(player);
@@ -203,7 +208,8 @@ public class SongPlayerManager extends Module implements LifeCycle {
 
     @EventHandler
     public void onSongNext(SongNextEvent event) {
-        if (songPlayer == null) return;
+        if (songPlayer == null)
+            return;
 
         songPlayer.getPlayerUUIDs().forEach(uuid -> executeActions(getPlugin().getServer().getPlayer(uuid), actions));
     }
@@ -214,15 +220,24 @@ public class SongPlayerManager extends Module implements LifeCycle {
     }
 
     public void skip() {
-        if (songPlayer == null) return;
+        if (songPlayer == null)
+            return;
 
         songPlayer.playNextSong();
     }
 
     public String getCurrentSong() {
-        if (songPlayer == null) return "";
+        if (songPlayer == null) {
+            return "No song playing";
+        }
 
-        return songPlayer.getSong().getTitle();
+        String songTitle = songPlayer.getSong().getTitle().trim();
+
+        if (songTitle.equals("")) {
+            songTitle = songPlayer.getSong().getPath().getName().replace(".nbs", "");
+        }
+
+        return songTitle;
     }
 
     public SongPlayer getSongPlayer() {
