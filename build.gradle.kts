@@ -4,7 +4,7 @@ plugins {
     id("io.papermc.paperweight.userdev") version ("2.0.0-beta.19")
 }
 
-group = "team.devblook"
+group = "me.zetastormy"
 version = property("projectVersion") as String
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
 
