@@ -309,7 +309,7 @@ double_jump:
   launch_power: 1.0
   launch_power_y: 0.9
 
-  # Toggles wheter the player has to be on the ground or not to use the double jump feature.
+  # Toggles whether the player has to be on the ground or not to use the double jump feature.
   # If you disable this option, players will be able to fly by repeatedly using the double jump option.
   on_ground: true
 
@@ -452,7 +452,7 @@ world_settings:
   # Blocks
   disable_block_break: true
   disable_block_place: true
-  disable_block_interact: true # Chest, furnace, crop tample, etc
+  disable_block_interact: true # Chest, furnace, crop trample, etc
   disable_block_burn: true
   disable_block_fire_spread: true
   disable_block_leaf_decay: true

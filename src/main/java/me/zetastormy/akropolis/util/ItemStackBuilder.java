@@ -139,6 +139,11 @@ public class ItemStackBuilder {
             builder.withCustomModelData(data);
         }
 
+        if (section.contains("custom_item_model")) {
+            String data = section.getString("custom_item_model");
+            builder.withCustomItemModel(data);
+        }
+
         if (section.contains("enchantments")) {
             List<String> rawEnchantments = section.getStringList("enchantments");
             Map<Enchantment, Integer> enchantments = new HashMap<>();
@@ -370,6 +375,14 @@ public class ItemStackBuilder {
         modelDataComponent.setStrings(strings);
 
         itemMeta.setCustomModelDataComponent(modelDataComponent);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    public void withCustomItemModel(String data) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        itemMeta.setItemModel(NamespacedKey.fromString(data));
+
         itemStack.setItemMeta(itemMeta);
     }
 
