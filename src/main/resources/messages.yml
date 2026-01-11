@@ -63,8 +63,13 @@ Messages:
       - "<dark_gray>/<gold>akropolis holo removeline <id> <line> <dark_gray>- <gray>Remove a line from a hologram"
     SONG_PLAYER:
       - "<prefix> <gray>The following song player commands are available<dark_gray>:"
-      - "<dark_gray>/<gold>akropolis sp setpos <dark_gray>- <gray>Set the position of the song player"
-      - "<dark_gray>/<gold>akropolis sp skip <dark_gray>- <gray>Skip a song"
+      - "<dark_gray>/<gold>akropolis sp status <dark_gray>- <gray>Get information about the status of the song player"
+      - "<dark_gray>/<gold>akropolis sp skip <dark_gray>- <gray>Skip to the next song"
+      - "<dark_gray>/<gold>akropolis sp loop <dark_gray>- <gray>Play the current song in a loop"
+      - "<dark_gray>/<gold>akropolis sp play <index> <dark_gray>- <gray>Play a specific song from the queue"
+      - "<dark_gray>/<gold>akropolis sp queue <dark_gray>- <gray>See the current queue"
+      - "<dark_gray>/<gold>akropolis sp setvol <volume> <dark_gray>- <gray>Set the volume of the song player"
+      - "<dark_gray>/<gold>akropolis sp setpos <dark_gray>- <gray>Set the position of the positional song player"
 
   GAMEMODE:
     GAMEMODE_CHANGE: "<prefix> <gray>You have changed gamemode to <green><gamemode>."
@@ -89,8 +94,26 @@ Messages:
     SET_LOBBY: "<prefix> <green>You have successfully set the lobby spawn point."
 
   SONG_PLAYER:
+    STATUS:
+      - "<prefix> <gray>Current status of the song player<dark_gray>:"
+      - "<dark_gray>- <gray>Currently playing<dark_gray>: <yellow><current_song>"
+      - "<dark_gray>- <gray>Next song<dark_gray>: <yellow><next_song>"
+      - "<dark_gray>- <gray>Volume<dark_gray>: <yellow><song_volume>"
+      - "<dark_gray>- <gray>Loop<dark_gray>: <loop_song>"
+    SKIPPED: "<prefix> <green>Song skipped. Now playing <yellow><current_song><green>."
+    LOOP:
+      ENABLE: "<prefix> <green>The song <yellow><current_song> <green>will be played on a loop from now!"
+      DISABLE: "<prefix> <red>The song <yellow><current_song> <red>is no long playing on a loop."
+      STATUS_ENABLED: "<green>Yes"
+      STATUS_DISABLED: "<red>No"
+    PLAY: "<prefix> <green>Now playing <yellow><current_song><green>."
+    QUEUE:
+      HEADER: "<prefix> <gray>The current queue is:"
+      FORMAT:
+        CURRENT: "<yellow><index>. <green><song>"
+        OTHERS: "<yellow><index>. <gray><song>"
+    SET_VOLUME: "<prefix> <gray>Volume set to <yellow><song_volume><gray>."
     SET_LOCATION: "<prefix> <green>You have successfully set the song player location."
-    SKIPPED: "<prefix> <green>Song skipped. Now playing <current_song>."
     NOT_LOADED: "<prefix> <red>The song player isn't loaded."
 
   FIGHT_MODE:
