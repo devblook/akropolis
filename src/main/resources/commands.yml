@@ -4,13 +4,13 @@
 #  / ___ \|   <| | | (_) | |_) | (_) | | \__ \
 # /_/   \_\_|\_\_|  \___/| .__/ \___/|_|_|___/
 #                        |_|
-#--------
+# --------
 # COMMANDS CUSTOMIZATION:
 #
 #   In this file you can enable or disable commands of the plugin as you like, and even create
 #   your own custom commands. ATTENTION: You will need to restart your server in order to apply
 #   changes made to this file!
-#--------
+# --------
 # ACTIONS:
 #
 #   [MESSAGE] <message> - Send a message to the player
@@ -25,7 +25,7 @@
 #   [EFFECT] <effect;level>- Give a potion effect
 #   [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
 #   [CLOSE] - Close an open inventory
-#--------
+# --------
 # MESSAGE FORMATTING:
 #
 #   The plugin uses MiniMessage to format the chat,
@@ -39,29 +39,41 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CUSTOM COMMANDS                          |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
+#
+# The name of each section is the command name.
+# You can create your own commands here and delete the ones you don't want.
+# If you don't want any custom command set to 'custom_commands: {}'
 custom_commands:
-  # Command name, this will be used as the main command
   website:
+
     # List any aliases for the command here
     aliases:
       - web
+
     # Actions to be executed
     actions:
       - "[MESSAGE] <dark_gray>| <click:open_url:'https://www.example.com/'><hover:show_text:'<yellow>Click here to navigate!'><gray>Click here to visit <aqua>www.example.com<gray>!</hover></click>"
   clearinventory:
+
     # Players will require this permission to execute this command.
     permission: akropolis.clearinventory
+
+    # List any aliases for the command here
     aliases:
       - ci
+
+    # Actions to be executed
     actions:
       - "[CONSOLE] minecraft:clear <player>"
       - "[MESSAGE] <dark_gray>| <yellow>Your inventory has been cleared!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# | PLUGIN COMMANDS                          |
+# | AKROPOLIS BUILT-IN COMMANDS              |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
+#
+# The name of each section is the command name.
+# Do NOT delete any command section from here.
+# You can delete the aliases list or set to 'aliases: []'
 commands:
   gamemode:
     enabled: true

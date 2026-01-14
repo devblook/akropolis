@@ -9,6 +9,7 @@ version = property("projectVersion") as String
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
 
 val scoreboardLibraryVersion = "2.4.4"
+var configurateVersion = "4.2.0-GeyserMC-SNAPSHOT"
 
 val libsPackage = property("libsPackage") as String
 
@@ -22,12 +23,19 @@ repositories {
     maven("https://repo.codemc.org/repository/maven-public")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://jitpack.io")
+
+    // GeyserMC's Configurate fork
+    maven("https://repo.opencollab.dev/maven-snapshots")
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
 
     implementation("javax.inject:javax.inject:1")
+    implementation("org.spongepowered:configurate-yaml:$configurateVersion")
+    // Interfaces support
+    //implementation("org.spongepowered:configurate-extra-interface:$configurateVersion")
+    //implementation("org.spongepowered:configurate-extra-interface-ap:$configurateVersion")
 
     implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
     runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
