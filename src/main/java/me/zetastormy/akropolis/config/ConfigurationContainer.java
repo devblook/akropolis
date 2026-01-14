@@ -10,6 +10,7 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 public class ConfigurationContainer<C> {
@@ -49,10 +50,10 @@ public class ConfigurationContainer<C> {
                 .defaultNamingScheme(namingScheme).build();
 
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder().defaultOptions(
-                options -> options.header(header).shouldCopyDefaults(true)
+                options -> options.header(header).shouldCopyDefaults(false)
                         .serializers(build -> build.registerAnnotatedObjects(customFactory)
                                 .registerAll(typeSerializerCollection))
-        ).path(filePath).build();
+        ).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK).build();
 
         try {
             CommentedConfigurationNode rootNode = loader.load();
