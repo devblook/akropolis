@@ -22,11 +22,13 @@ package me.zetastormy.akropolis.module.modules.player;
 import java.util.List;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -36,8 +38,6 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -56,12 +56,12 @@ public class DoubleJump extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        cooldownDelay = config.getLong("double_jump.cooldown", 0);
-        launch = config.getDouble("double_jump.launch_power", 1.3);
-        launchY = config.getDouble("double_jump.launch_power_y", 1.2);
-        onGround = config.getBoolean("double_jump.on_ground", true);
-        actions = config.getStringList("double_jump.actions");
+        Settings.DoubleJump config = getConfig(Settings.class).doubleJump();
+        cooldownDelay = config.cooldown();
+        launch = config.launchPower();
+        launchY = config.launchPowerY();
+        onGround = config.onGround();
+        actions = config.actions();
 
         if (launch > 4.0)
             launch = 4.0;
@@ -71,6 +71,8 @@ public class DoubleJump extends Module implements LifeCycle {
 
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         Player player = event.getPlayer();
         Location playerLocation = player.getLocation();
 
@@ -95,7 +97,12 @@ public class DoubleJump extends Module implements LifeCycle {
         UUID uuid = player.getUniqueId();
 
         if (!tryCooldown(uuid, "double_jump", cooldownDelay)) {
-            Message.DOUBLE_JUMP_COOLDOWN.sendWithReplacement(player, "time", Component.text(getCooldown(uuid, "double_jump")));
+            MessagingUtil.sendWithReplacement(
+                    messages.doubleJump().cooldownActive(),
+                    player,
+                    "time",
+                    Component.text(getCooldown(uuid, "double_jump"))
+            );
             return;
         }
 

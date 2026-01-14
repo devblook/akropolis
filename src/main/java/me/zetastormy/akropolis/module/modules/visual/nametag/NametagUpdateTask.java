@@ -19,10 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.visual.nametag;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -37,11 +36,11 @@ public class NametagUpdateTask implements Runnable {
     public NametagUpdateTask(NametagManager nametagManager, NametagHelper nametagHelper) {
         this.nametagHelper = nametagHelper;
 
-        ConfigurationSection format = nametagManager.getConfig(ConfigType.SETTINGS).getConfigurationSection("nametag.format");
+        Settings.Nametag.Format format = nametagManager.getConfig(Settings.class).nametag().format();
 
-        this.prefix = format == null ? "" : format.getString("prefix");
-        this.color = TextColor.fromHexString(format == null ? "#FFFFFF" : format.getString("name_color", "#FFFFFF"));
-        this.suffix = format == null ? "" : format.getString("suffix");
+        this.prefix = format.prefix();
+        this.color = TextColor.fromHexString(format.nameColor());
+        this.suffix = format.suffix();
     }
 
     @Override

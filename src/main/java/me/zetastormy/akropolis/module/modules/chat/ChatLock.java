@@ -19,6 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.chat;
 
+import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,8 +29,6 @@ import org.bukkit.event.EventPriority;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -41,23 +42,24 @@ public class ChatLock extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        isChatLocked = getPlugin().getConfigManager().getFile(ConfigType.DATA).get().getBoolean("chat_locked");
+        isChatLocked = getPlugin().getConfigManager().getFile(Data.class).getConfig().isChatLocked();
     }
 
     @Override
     public void onDisable() {
-        getPlugin().getConfigManager().getFile(ConfigType.DATA).get().set("chat_locked", isChatLocked);
+        getPlugin().getConfigManager().getFile(Data.class).getConfig().setChatLocked(isChatLocked);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncChatEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
 
         if (!isChatLocked || player.hasPermission(Permissions.LOCK_CHAT_BYPASS.getPermission()))
             return;
 
         event.setCancelled(true);
-        Message.CHAT_LOCKED.send(player);
+        MessagingUtil.send(messages.chat().locked(), player);
     }
 
     public boolean isChatLocked() {

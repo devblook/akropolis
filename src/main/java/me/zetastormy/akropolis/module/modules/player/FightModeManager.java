@@ -26,17 +26,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -56,9 +57,12 @@ public class FightModeManager extends Module implements LifeCycle {
     private List<String> countdownActions;
     private List<String> activatedActions;
     private List<String> deactivatedActions;
+    private final ConfigurationContainer<Messages> messagesConfig;
 
     public FightModeManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.FIGHT_MODE);
+
+        this.messagesConfig = plugin.getConfigManager().getFile(Messages.class);
 
         this.holdTasks = new HashMap<>();
         this.holdTimers = new HashMap<>();
@@ -67,17 +71,22 @@ public class FightModeManager extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        ConfigurationSection conf = getConfig(ConfigType.SETTINGS).getConfigurationSection("fight_mode");
+        Settings.FightMode conf = getConfig(Settings.class).fightMode();
 
-        ItemStack helmet = ItemStackBuilder.getItemStack(conf.getConfigurationSection("armor.helmet")).build();
-        ItemStack chestplate = ItemStackBuilder.getItemStack(conf.getConfigurationSection("armor.chestplate")).build();
-        ItemStack leggings = ItemStackBuilder.getItemStack(conf.getConfigurationSection("armor.leggings")).build();
-        ItemStack boots = ItemStackBuilder.getItemStack(conf.getConfigurationSection("armor.boots")).build();
-        int activateDelay = conf.getInt("hold_delay.activate");
-        int deactivateDelay = conf.getInt("hold_delay.deactivate");
-        List<String> countdownActions = conf.getStringList("actions.countdown");
-        List<String> activatedActions = conf.getStringList("actions.activated");
-        List<String> deactivatedActions = conf.getStringList("actions.deactivated");
+        Settings.FightMode.Armor armorConfig = conf.armor();
+        ItemStack helmet = ItemStackBuilder.getItemStack(armorConfig.helmet()).build();
+        ItemStack chestplate = ItemStackBuilder.getItemStack(armorConfig.chestplate()).build();
+        ItemStack leggings = ItemStackBuilder.getItemStack(armorConfig.leggings()).build();
+        ItemStack boots = ItemStackBuilder.getItemStack(armorConfig.boots()).build();
+
+        Settings.FightMode.HoldDelay holdDelay = conf.holdDelay();
+        int activateDelay = holdDelay.activate();
+        int deactivateDelay = holdDelay.deactivate();
+
+        Settings.FightMode.Actions actionsConfig = conf.actions();
+        List<String> countdownActions = actionsConfig.countdown();
+        List<String> activatedActions = actionsConfig.activated();
+        List<String> deactivatedActions = actionsConfig.deactivated();
 
         this.helmet = helmet;
         this.chestplate = chestplate;
@@ -119,7 +128,15 @@ public class FightModeManager extends Module implements LifeCycle {
             Component timeLeft = Component.text(activateDelay - time);
 
             executeActions(player, countdownActions);
-            Message.FIGHT_MODE_ACTIVATE_DELAY.sendWithReplacement(player, "seconds", timeLeft);
+
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.sendWithReplacement(
+                    messages.fightMode().activateDelay(),
+                    player,
+                    "seconds",
+                    timeLeft
+            );
+
             holdTimers.put(playerUuid, time + 1);
         }, 0L, 20L);
 
@@ -149,7 +166,15 @@ public class FightModeManager extends Module implements LifeCycle {
             Component timeLeft = Component.text(deactivateDelay - time);
 
             executeActions(player, countdownActions);
-            Message.FIGHT_MODE_DEACTIVATE_DELAY.sendWithReplacement(player, "seconds", timeLeft);
+
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.sendWithReplacement(
+                    messages.fightMode().deactivateDelay(),
+                    player,
+                    "seconds",
+                    timeLeft
+            );
+
             holdTimers.put(playerUuid, time + 1);
         }, 0L, 20L);
 

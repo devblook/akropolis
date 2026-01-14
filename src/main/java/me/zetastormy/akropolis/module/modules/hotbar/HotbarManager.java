@@ -19,20 +19,14 @@
 
 package me.zetastormy.akropolis.module.modules.hotbar;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -54,47 +48,39 @@ public class HotbarManager extends Module implements LifeCycle {
         hotbarItems = new ArrayList<>();
         players = new HashSet<>();
 
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        ConfigurationSection customItemsSections = config.getConfigurationSection("custom_join_items");
+        Settings config = getConfig(Settings.class);
+        Settings.CustomJoinItems customItemsSections = config.customJoinItems();
 
-        if (customItemsSections == null) {
-            getPlugin().getLogger().severe("Custom join items configuration section is missing!");
-            return;
-        }
-
-        if (customItemsSections.getBoolean("enabled")) {
+        if (customItemsSections.enabled()) {
             registerCustomItems(customItemsSections);
         }
 
-        ConfigurationSection fightModeSection = config.getConfigurationSection("fight_mode");
+        Settings.FightMode fightModeSection = config.fightMode();
 
-        if (fightModeSection == null) {
-            getPlugin().getLogger().severe("Fight mode item configuration section is missing!");
-        } else if (fightModeSection.getBoolean("enabled")) {
-            ItemStack item = ItemStackBuilder.getItemStack(fightModeSection.getConfigurationSection("item")).build();
-            FightMode fightMode = new FightMode(this, item, fightModeSection.getInt("slot"), "FIGHT_MODE_ITEM");
+        if (fightModeSection.enabled()) {
+            ItemStack item = ItemStackBuilder.getItemStack(fightModeSection.item()).build();
+            FightMode fightMode = new FightMode(this, item, fightModeSection.slot(), "FIGHT_MODE_ITEM");
 
-            fightMode.setDisableMovement(fightModeSection.getBoolean("disable_inventory_movement"));
+            fightMode.setDisableMovement(fightModeSection.disableInventoryMovement());
             registerHotbarItem(fightMode);
         }
 
-        ConfigurationSection hiderSection = config.getConfigurationSection("player_hider");
+        Settings.PlayerHider hiderSection = config.playerHider();
+        Settings.JoinSettings joinSettings = config.joinSettings();
 
-        if (hiderSection == null) {
-            getPlugin().getLogger().severe("Player hider item configuration section is missing!");
-        } else if (hiderSection.getBoolean("enabled")) {
-            boolean playersHidden = config.getBoolean("join_settings.players_hidden", false);
+        if (hiderSection.enabled()) {
+            boolean playersHidden = joinSettings.playersHidden();
             ItemStack item;
 
             if (playersHidden) {
-                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("hidden")).build();
+                item = ItemStackBuilder.getItemStack(hiderSection.hidden()).build();
             } else {
-                item = ItemStackBuilder.getItemStack(hiderSection.getConfigurationSection("not_hidden")).build();
+                item = ItemStackBuilder.getItemStack(hiderSection.notHidden()).build();
             }
 
-            PlayerHider playerHider = new PlayerHider(this, item, hiderSection.getInt("slot"), "PLAYER_HIDER");
+            PlayerHider playerHider = new PlayerHider(this, item, hiderSection.slot(), "PLAYER_HIDER");
 
-            playerHider.setDisableMovement(hiderSection.getBoolean("disable_inventory_movement"));
+            playerHider.setDisableMovement(hiderSection.disableInventoryMovement());
             registerHotbarItem(playerHider);
         }
 
@@ -106,26 +92,21 @@ public class HotbarManager extends Module implements LifeCycle {
         removeItems();
     }
 
-    private void registerCustomItems(ConfigurationSection customItemsSection) {
-        ConfigurationSection itemsSection = customItemsSection.getConfigurationSection("items");
+    private void registerCustomItems(Settings.CustomJoinItems customItemsSection) {
+        Map<String, Settings.ItemRecord> itemsSection = customItemsSection.items();
 
-        if (itemsSection == null) {
-            getPlugin().getLogger().severe("Items of custom join items configuration section is missing!");
-            return;
-        }
+        itemsSection.forEach((itemKey, itemRecord) -> {
+            ItemStack item = ItemStackBuilder.getItemStack(itemRecord).build();
+            CustomItem customItem = new CustomItem(this, item, itemRecord.slot(), itemKey);
 
-        for (String itemEntry : itemsSection.getKeys(false)) {
-            ItemStack item = ItemStackBuilder.getItemStack(itemsSection.getConfigurationSection(itemEntry)).build();
-            CustomItem customItem = new CustomItem(this, item, itemsSection.getInt(itemEntry + ".slot"), itemEntry);
-
-            if (itemsSection.contains(itemEntry + ".permission")) {
-                customItem.setPermission(itemsSection.getString(itemEntry + ".permission"));
+            if (itemRecord.permission() != null) {
+                customItem.setPermission(itemRecord.permission());
             }
 
-            customItem.setConfigurationSection(itemsSection.getConfigurationSection(itemEntry));
-            customItem.setDisableMovement(customItemsSection.getBoolean("disable_inventory_movement"));
+            customItem.setConfigurationSection(itemRecord);
+            customItem.setDisableMovement(customItemsSection.disableInventoryMovement());
             registerHotbarItem(customItem);
-        }
+        });
     }
 
     public void registerHotbarItem(HotbarItem hotbarItem) {

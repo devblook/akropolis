@@ -23,11 +23,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,7 +36,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import com.cryptomorin.xseries.XSound;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -61,18 +59,13 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        Settings config = getConfig(Settings.class);
 
         broadcasts = new HashMap<>();
         int announcementsCount = 0;
-        ConfigurationSection bossBarSettings = config.getConfigurationSection("boss_bar_announcements");
+        Settings.BossBarAnnouncements bossBarSettings = config.bossBarAnnouncements();
 
-        if (bossBarSettings == null) {
-            getPlugin().getLogger().info("Skipping boss bar broadcast, configuration section is missing!");
-            return;
-        }
-
-        List<String> announcements = bossBarSettings.getStringList("announcements");
+        List<String> announcements = bossBarSettings.announcements();
 
         if (announcements.isEmpty()) {
             getPlugin().getLogger().severe("Boss bar announcements are missing in the configuration!");
@@ -84,26 +77,27 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
             announcementsCount++;
         }
 
-        if (bossBarSettings.getBoolean("sound.enabled")) {
-            String soundValue = bossBarSettings.getString("sound.value");
+        Settings.Sound soundSettings = bossBarSettings.sound();
+        if (soundSettings.enabled()) {
+            String soundValue = soundSettings.value();
 
             if (soundValue != null) {
                 XSound.of(soundValue).ifPresent(s -> sound = s.get());
-                volume = bossBarSettings.getDouble("sound.volume");
-                pitch = bossBarSettings.getDouble("sound.pitch");
+                volume = soundSettings.volume();
+                pitch = soundSettings.pitch();
             }
         }
 
         BossBar.Overlay overlayType = BossBar.Overlay.PROGRESS;
 
         try {
-            overlayType = BossBar.Overlay.valueOf(bossBarSettings.getString("overlay.type", "PROGRESS"));
+            overlayType = bossBarSettings.overlay().type();
         } catch (IllegalArgumentException e) {
             getPlugin().getLogger().warning("An invalid overlay type has been found in the boss bar module, " +
                     "the default type 'PROGRESS' will be used!");
         }
 
-        double overlayProgress = bossBarSettings.getDouble("overlay.progress", BossBar.MAX_PROGRESS);
+        double overlayProgress = bossBarSettings.overlay().progress();
 
         if (overlayProgress > 1 || overlayProgress < 0) {
             getPlugin().getLogger().warning("An invalid overlay progress has been found in the boss bar module, " +
@@ -125,7 +119,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
             });
 
             broadcastTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), this,
-                    60L, bossBarSettings.getLong("delay") * 20);
+                    60L, bossBarSettings.delay() * 20L);
         }
     }
 

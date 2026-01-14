@@ -19,9 +19,10 @@
 
 package me.zetastormy.akropolis.module.modules.world;
 
+import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,7 +30,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -45,17 +45,17 @@ public class LobbySpawn extends Module implements LifeCycle {
     @Override
     public void onEnable() {
         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
-            FileConfiguration config = getConfig(ConfigType.DATA);
-            if (config.contains("spawn"))
-                location = (Location) config.get("spawn");
+            final Data dataConfig = getConfig(Data.class);
+            if (dataConfig.getSpawn() != null)
+                this.location = dataConfig.getSpawn();
         });
 
-        spawnJoin = getConfig(ConfigType.SETTINGS).getBoolean("join_settings.spawn_join", false);
+        this.spawnJoin = getConfig(Settings.class).joinSettings().spawnJoin();
     }
 
     @Override
     public void onDisable() {
-        getConfig(ConfigType.DATA).set("spawn", location);
+        getConfig(Data.class).setSpawn(this.location);
     }
 
     public Location getLocation() {

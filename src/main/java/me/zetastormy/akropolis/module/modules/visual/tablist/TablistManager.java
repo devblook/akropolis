@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -33,7 +33,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -53,14 +52,14 @@ public class TablistManager extends Module implements LifeCycle{
     public void onEnable() {
         players = new ArrayList<>();
 
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        Settings.Tablist tablistSettings = getConfig(Settings.class).tablist();
 
-        header = String.join("\n", config.getStringList("tablist.header"));
-        footer = String.join("\n", config.getStringList("tablist.footer"));
+        header = String.join("\n", tablistSettings.header());
+        footer = String.join("\n", tablistSettings.footer());
 
-        if (config.getBoolean("tablist.refresh.enabled")) {
+        if (tablistSettings.refresh().enabled()) {
             tablistTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new TablistUpdateTask(this), 0L,
-                    config.getLong("tablist.refresh.rate"));
+                    tablistSettings.refresh().rate());
         }
 
         getPlugin().getServer().getScheduler()

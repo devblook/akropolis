@@ -21,7 +21,11 @@ package me.zetastormy.akropolis.module.modules.player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -29,8 +33,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,7 +44,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -51,7 +52,7 @@ import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
 public class PlayerListener extends Module implements LifeCycle {
-    private ConfigurationSection playersSection;
+    private Map<UUID, Data.PlayerData> playersSection;
     private boolean joinQuitMessagesEnabled;
     private String joinMessage;
     private String quitMessage;
@@ -75,32 +76,37 @@ public class PlayerListener extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        playersSection = getConfig(ConfigType.DATA).getConfigurationSection("players");
+        Settings config = getConfig(Settings.class);
+        Settings.JoinLeaveMessages joinLeaveMessagesConfig = config.joinLeaveMessages();
+        Settings.JoinSettings joinSettings = config.joinSettings();
+        Settings.JoinSettings.Firework fireworkSettings = joinSettings.firework();
+        Settings.Fly flySettings = config.fly();
 
-        joinQuitMessagesEnabled = config.getBoolean("join_leave_messages.enabled");
-        joinMessage = config.getString("join_leave_messages.join_message");
-        quitMessage = config.getString("join_leave_messages.quit_message");
+        this.playersSection = getConfig(Data.class).getPlayers();
 
-        joinActions = config.getStringList("join_events");
+        this.joinQuitMessagesEnabled = joinLeaveMessagesConfig.enabled();
+        this.joinMessage = joinLeaveMessagesConfig.joinMessage();
+        this.quitMessage = joinLeaveMessagesConfig.quitMessage();
 
-        focusedSlot = config.getInt("join_settings.focused_slot", 0);
-        spawnHeal = config.getBoolean("join_settings.heal", false);
-        extinguish = config.getBoolean("join_settings.extinguish", false);
-        clearInventory = config.getBoolean("join_settings.clear_inventory", false);
+        this.joinActions = config.joinEvents();
 
-        forceJoinFly = config.getBoolean("fly.force_on_join", false);
+        this.focusedSlot = joinSettings.focusedSlot();
+        this.spawnHeal = joinSettings.heal();
+        this.extinguish = joinSettings.extinguish();
+        this.clearInventory = joinSettings.clearInventory();
 
-        fireworkEnabled = config.getBoolean("join_settings.firework.enabled", true);
-        if (fireworkEnabled) {
-            fireworkFirstJoin = config.getBoolean("join_settings.firework.first_join_only", true);
-            fireworkType = config.getString("join_settings.firework.type", "BALL_LARGE");
-            fireworkPower = config.getInt("join_settings.firework.power", 1);
-            fireworkFlicker = config.getBoolean("join_settings.firework.flicker", true);
-            fireworkTrail = config.getBoolean("join_settings.firework.power", true);
+        this.forceJoinFly = flySettings.forceOnJoin();
 
-            fireworkColors = new ArrayList<>();
-            config.getStringList("join_settings.firework.colors").forEach(c -> {
+        this.fireworkEnabled = fireworkSettings.enabled();
+        if (this.fireworkEnabled) {
+            this.fireworkFirstJoin = fireworkSettings.firstJoinOnly();
+            this.fireworkType = fireworkSettings.type();
+            this.fireworkPower = fireworkSettings.power();
+            this.fireworkFlicker = fireworkSettings.flicker();
+            this.fireworkTrail = fireworkSettings.trail();
+
+            this.fireworkColors = new ArrayList<>();
+            fireworkSettings.colors().forEach(c -> {
                 Color color = TextUtil.getColor(c);
                 if (color != null)
                     fireworkColors.add(color);
@@ -152,8 +158,8 @@ public class PlayerListener extends Module implements LifeCycle {
             // Join events
             executeActions(player, joinActions);
 
-            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
-                boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+            if (playersSection != null && playersSection.containsKey(player.getUniqueId())) {
+                boolean hasFly = playersSection.get(player.getUniqueId()).getFly();
 
                 player.setAllowFlight(hasFly);
                 player.setFlying(hasFly);

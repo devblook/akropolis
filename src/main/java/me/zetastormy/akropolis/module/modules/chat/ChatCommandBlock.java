@@ -21,14 +21,15 @@ package me.zetastormy.akropolis.module.modules.chat;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -42,12 +43,13 @@ public class ChatCommandBlock extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        blockedCommands = getConfig(ConfigType.SETTINGS).getStringList("command_block.blocked_commands");
+        blockedCommands = getConfig(Settings.class).commandBlock().blockedCommands();
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
 
         if (inDisabledWorld(player.getLocation())
                 || player.hasPermission(Permissions.BLOCKED_COMMANDS_BYPASS.getPermission()))
@@ -55,7 +57,7 @@ public class ChatCommandBlock extends Module implements LifeCycle {
 
         if (blockedCommands.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);
-            Message.COMMAND_BLOCKED.send(player);
+            MessagingUtil.send(messages.chat().commandBlocked(), player);
         }
     }
 }

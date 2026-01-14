@@ -22,12 +22,12 @@ package me.zetastormy.akropolis.module.modules.hotbar.items;
 import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.configuration.ConfigurationSection;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import net.kyori.adventure.text.Component;
@@ -41,23 +41,30 @@ public class CustomItem extends HotbarItem {
         super(hotbarManager, item, slot, key);
         this.key = key;
 
-        ConfigurationSection itemSettings = getPlugin().getConfigManager().getFile(ConfigType.SETTINGS).get()
-                .getConfigurationSection("custom_join_items.items." + key);
+        Settings.ItemRecord itemRecord = getPlugin().getConfigManager().getFile(Settings.class)
+                .getConfig().customJoinItems().items().get(key);
 
-        if (itemSettings == null) {
+        if (itemRecord == null) {
             cooldown = 0;
             actions = Collections.emptyList();
             return;
         }
 
-        cooldown = itemSettings.getInt("cooldown", 0);
-        actions = itemSettings.getStringList("actions");
+        cooldown = itemRecord.cooldown();
+        actions = itemRecord.actions();
     }
 
     @Override
     protected void onInteract(Player player) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), key, cooldown)) {
-            Message.COOLDOWN_ACTIVE.sendWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), key)));
+            MessagingUtil.sendWithReplacement(
+                    messages.general().cooldownActive(),
+                    player,
+                    "time",
+                    Component.text(getHotbarManager().getCooldown(player.getUniqueId(), key))
+            );
             return;
         }
 

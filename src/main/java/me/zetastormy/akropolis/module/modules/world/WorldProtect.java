@@ -25,12 +25,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -64,14 +67,11 @@ import com.cryptomorin.xseries.XMaterial;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.hologram.Hologram;
 import me.zetastormy.akropolis.module.modules.player.FightModeManager;
-import net.kyori.adventure.text.Component;
 
 @SuppressWarnings({"deprecation", "ConstantConditions"})
 public class WorldProtect extends Module implements LifeCycle {
@@ -95,6 +95,8 @@ public class WorldProtect extends Module implements LifeCycle {
     private boolean disableContactDamage;
     private boolean disableInventoryDrop;
     private boolean disableInventoryMovement;
+
+    private final ConfigurationContainer<Messages> messagesConfig;
 
     private static final Set<Material> INTERACTABLE;
 
@@ -225,31 +227,32 @@ public class WorldProtect extends Module implements LifeCycle {
 
     public WorldProtect(AkropolisPlugin plugin) {
         super(plugin, ModuleType.WORLD_PROTECT);
+        this.messagesConfig = this.getPlugin().getConfigManager().getFile(Messages.class);
     }
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        disableHungerLoss = config.getBoolean("world_settings.disable_hunger_loss");
-        disableFallDamage = config.getBoolean("world_settings.disable_fall_damage");
-        disablePlayerPvP = config.getBoolean("world_settings.disable_player_pvp");
-        disableVoidDeath = config.getBoolean("world_settings.disable_void_death");
-        disableWeatherChange = config.getBoolean("world_settings.disable_weather_change");
-        disableDeathMessage = config.getBoolean("world_settings.disable_death_message");
-        disableMobSpawning = config.getBoolean("world_settings.disable_mob_spawning");
-        disableItemDrop = config.getBoolean("world_settings.disable_item_drop");
-        disableItemPickup = config.getBoolean("world_settings.disable_item_pickup");
-        disableBlockBreak = config.getBoolean("world_settings.disable_block_break");
-        disableBlockPlace = config.getBoolean("world_settings.disable_block_place");
-        disableBlockInteract = config.getBoolean("world_settings.disable_block_interact");
-        disableBlockBurn = config.getBoolean("world_settings.disable_block_burn");
-        disableFireSpread = config.getBoolean("world_settings.disable_block_fire_spread");
-        disableLeafDecay = config.getBoolean("world_settings.disable_block_leaf_decay");
-        disableDrowning = config.getBoolean("world_settings.disable_drowning");
-        disableFireDamage = config.getBoolean("world_settings.disable_fire_damage");
-        disableContactDamage = config.getBoolean("world_settings.disable_contact_damage", true);
-        disableInventoryDrop = config.getBoolean("world_settings.disable_inventory_drop", true);
-        disableInventoryMovement = config.getBoolean("world_settings.disable_inventory_movement", true);
+        Settings.WorldSettings config = getConfig(Settings.class).worldSettings();
+        this.disableHungerLoss = config.disableHungerLoss();
+        this.disableFallDamage = config.disableFallDamage();
+        this.disablePlayerPvP = config.disablePlayerPvp();
+        this.disableVoidDeath = config.disableVoidDeath();
+        this.disableWeatherChange = config.disableWeatherChange();
+        this.disableDeathMessage = config.disableDeathMessage();
+        this.disableMobSpawning = config.disableMobSpawning();
+        this.disableItemDrop = config.disableItemDrop();
+        this.disableItemPickup = config.disableItemPickup();
+        this.disableBlockBreak = config.disableBlockBreak();
+        this.disableBlockPlace = config.disableBlockPlace();
+        this.disableBlockInteract = config.disableBlockInteract();
+        this.disableBlockBurn = config.disableBlockBurn();
+        this.disableFireSpread = config.disableBlockFireSpread();
+        this.disableLeafDecay = config.disableBlockLeafDecay();
+        this.disableDrowning = config.disableDrowning();
+        this.disableFireDamage = config.disableFireDamage();
+        this.disableContactDamage = config.disableContactDamage();
+        this.disableInventoryDrop = config.disableInventoryDrop();
+        this.disableInventoryMovement = config.disableInventoryMovement();
     }
 
     @EventHandler
@@ -278,9 +281,8 @@ public class WorldProtect extends Module implements LifeCycle {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), "block_break", 3)) {
-            Component message = Message.EVENT_BLOCK_BREAK.toComponent();
-
-            if (message != Component.empty()) player.sendMessage(message);
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.send(messages.worldEventModifications().blockBreak(), player);
         }
     }
 
@@ -313,9 +315,8 @@ public class WorldProtect extends Module implements LifeCycle {
         event.setCancelled(true);
 
         if (tryCooldown(event.getPlayer().getUniqueId(), "block_place", 3)) {
-            Component message = Message.EVENT_BLOCK_PLACE.toComponent();
-
-            if (message != Component.empty()) player.sendMessage(message);
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.send(messages.worldEventModifications().blockPlace(), player);
         }
     }
 
@@ -346,9 +347,8 @@ public class WorldProtect extends Module implements LifeCycle {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), "block_break", 3)) {
-                Component message = Message.EVENT_BLOCK_BREAK.toComponent();
-
-                if (message != Component.empty()) player.sendMessage(message);
+                final Messages messages = this.messagesConfig.getConfig();
+                MessagingUtil.send(messages.worldEventModifications().blockBreak(), player);
             }
         }
     }
@@ -369,9 +369,8 @@ public class WorldProtect extends Module implements LifeCycle {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), "block_interact", 3)) {
-                Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
-
-                if (message != Component.empty()) player.sendMessage(message);
+                final Messages messages = this.messagesConfig.getConfig();
+                MessagingUtil.send(messages.worldEventModifications().blockInteract(), player);
             }
         }
     }
@@ -393,9 +392,8 @@ public class WorldProtect extends Module implements LifeCycle {
             event.setCancelled(true);
 
             if (tryCooldown(player.getUniqueId(), "block_interact", 3)) {
-                Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
-
-                if (message != Component.empty()) player.sendMessage(message);
+                final Messages messages = this.messagesConfig.getConfig();
+                MessagingUtil.send(messages.worldEventModifications().blockInteract(), player);
             }
         }
     }
@@ -420,8 +418,8 @@ public class WorldProtect extends Module implements LifeCycle {
                 event.setCancelled(true);
 
                 if (tryCooldown(player.getUniqueId(), "block_interact", 3)) {
-                    Component message = Message.EVENT_BLOCK_INTERACT.toComponent();
-                    if (message != Component.empty()) player.sendMessage(message);
+                    final Messages messages = this.messagesConfig.getConfig();
+                    MessagingUtil.send(messages.worldEventModifications().blockInteract(), player);
                 }
             }
         } else if (event.getAction() == Action.PHYSICAL && block.getType() == XMaterial.FARMLAND.get()) {
@@ -502,9 +500,8 @@ public class WorldProtect extends Module implements LifeCycle {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), "item_drop", 3)) {
-            Component message = Message.EVENT_ITEM_DROP.toComponent();
-
-            if (message != Component.empty()) player.sendMessage(message);
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.send(messages.worldEventModifications().itemDrop(), player);
         }
     }
 
@@ -524,9 +521,8 @@ public class WorldProtect extends Module implements LifeCycle {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), "item_pickup", 3)) {
-            Component message = Message.EVENT_ITEM_PICKUP.toComponent();
-
-            if (message != Component.empty()) player.sendMessage(message);
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.send(messages.worldEventModifications().itemPickup(), player);
         }
     }
 
@@ -619,9 +615,8 @@ public class WorldProtect extends Module implements LifeCycle {
         event.setCancelled(true);
 
         if (tryCooldown(player.getUniqueId(), "player_pvp", 3)) {
-            Component message = Message.EVENT_PLAYER_PVP.toComponent();
-
-            if (message != Component.empty()) event.getDamager().sendMessage(message);
+            final Messages messages = this.messagesConfig.getConfig();
+            MessagingUtil.send(messages.worldEventModifications().playerPvp(), event.getDamager());
         }
     }
 }

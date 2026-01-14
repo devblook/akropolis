@@ -23,16 +23,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import com.cryptomorin.xseries.XSound;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -55,45 +53,36 @@ public class AutoBroadcast extends Module implements Runnable, LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        Settings config = getConfig(Settings.class);
 
         broadcasts = new HashMap<>();
         int announcementsCount = 0;
-        ConfigurationSection announcementsSettings = config.getConfigurationSection("announcements");
+        Settings.Announcements announcementsSettings = config.announcements();
 
-        if (announcementsSettings == null) {
-            getPlugin().getLogger().severe("Announcement settings configuration section is missing!");
-            return;
-        }
+        Map<String, List<String>> announcements = announcementsSettings.announcements();
 
-        ConfigurationSection announcements = announcementsSettings.getConfigurationSection("announcements");
-
-        if (announcements == null) {
-            getPlugin().getLogger().severe("Announcements are missing in the configuration!");
-            return;
-        }
-
-        for (String key : announcements.getKeys(false)) {
-            broadcasts.put(announcementsCount, announcements.getStringList(key));
+        for (String key : announcements.keySet()) {
+            broadcasts.put(announcementsCount, announcements.get(key));
             announcementsCount++;
         }
 
-        if (announcementsSettings.getBoolean("sound.enabled")) {
-            String soundValue = announcementsSettings.getString("sound.value");
+        Settings.Sound soundSettings = announcementsSettings.sound();
+        if (announcementsSettings.sound().enabled()) {
+            String soundValue = soundSettings.value();
 
             if (soundValue != null) {
                 XSound.of(soundValue).ifPresent(s -> sound = s.get());
-                volume = announcementsSettings.getDouble("sound.volume");
-                pitch = announcementsSettings.getDouble("sound.pitch");
+                volume = soundSettings.volume();
+                pitch = soundSettings.pitch();
             }
         }
 
-        requiredPlayers = announcementsSettings.getInt("required_players", 0);
+        requiredPlayers = announcementsSettings.requiredPlayers();
 
         size = broadcasts.size();
         if (size > 0) {
             broadcastTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), this, 60L,
-                    announcementsSettings.getLong("delay") * 20);
+                    announcementsSettings.delay() * 20L);
         }
     }
 

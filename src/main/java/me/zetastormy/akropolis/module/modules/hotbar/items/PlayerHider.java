@@ -23,9 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,8 +40,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarItem;
 import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
@@ -56,10 +56,11 @@ public class PlayerHider extends HotbarItem {
         super(hotbarManager, item, slot, keyValue);
         hidden = new ArrayList<>();
 
-        FileConfiguration config = getHotbarManager().getConfig(ConfigType.SETTINGS);
+        Settings.PlayerHider playerHiderConfig = getHotbarManager().getConfig(Settings.class).playerHider();
+        Settings.JoinSettings joinSettingsConfig = getHotbarManager().getConfig(Settings.class).joinSettings();
 
-        ItemStack hiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.hidden")).build();
-        ItemStack notHiddenItem = ItemStackBuilder.getItemStack(config.getConfigurationSection("player_hider.not_hidden")).build();
+        ItemStack hiddenItem = ItemStackBuilder.getItemStack(playerHiderConfig.hidden()).build();
+        ItemStack notHiddenItem = ItemStackBuilder.getItemStack(playerHiderConfig.notHidden()).build();
 
         ItemMeta hiddenMeta = hiddenItem.getItemMeta();
         PersistentDataContainer hiddenContainer = hiddenMeta.getPersistentDataContainer();
@@ -74,15 +75,22 @@ public class PlayerHider extends HotbarItem {
 
         this.hiddenItem = hiddenItem;
         this.notHiddenItem = notHiddenItem;
-        playersHidden = config.getBoolean("join_settings.players_hidden");
-        cooldown = config.getInt("player_hider.cooldown");
+        playersHidden = joinSettingsConfig.playersHidden();
+        cooldown = playerHiderConfig.cooldown();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onInteract(Player player) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (!getHotbarManager().tryCooldown(player.getUniqueId(), "player_hider", cooldown)) {
-            Message.COOLDOWN_ACTIVE.sendWithReplacement(player, "time", Component.text(getHotbarManager().getCooldown(player.getUniqueId(), "player_hider")));
+            MessagingUtil.sendWithReplacement(
+                    messages.general().cooldownActive(),
+                    player,
+                    "time",
+                    Component.text(getHotbarManager().getCooldown(player.getUniqueId(), "player_hider"))
+            );
             return;
         }
 
@@ -92,7 +100,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.add(player.getUniqueId());
-            Message.PLAYER_HIDER_HIDDEN.send(player);
+            MessagingUtil.send(messages.playerHider().hidden(), player);
 
             player.getInventory().setItem(getSlot(), hiddenItem);
         } else {
@@ -101,7 +109,7 @@ public class PlayerHider extends HotbarItem {
             }
 
             hidden.remove(player.getUniqueId());
-            Message.PLAYER_HIDER_SHOWN.send(player);
+            MessagingUtil.send(messages.playerHider().shown(), player);
 
             player.getInventory().setItem(getSlot(), notHiddenItem);
         }

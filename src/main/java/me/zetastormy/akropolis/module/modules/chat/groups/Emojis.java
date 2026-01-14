@@ -29,14 +29,14 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.bukkit.configuration.ConfigurationSection;
+import me.zetastormy.akropolis.config.type.Settings;
 
 public class Emojis {
     private final Map<String, Set<String>> emoticonToEmojis;
     private final Pattern emojiPattern;
 
-    public Emojis(ConfigurationSection emojiSection) {
-        if (emojiSection == null) {
+    public Emojis(Map<String, Settings.ChatManagement.ChatGroup.Emoji> emojis) {
+        if (emojis.isEmpty()) {
             this.emoticonToEmojis = Map.of();
             this.emojiPattern = Pattern.compile("");
             return;
@@ -44,21 +44,12 @@ public class Emojis {
 
         this.emoticonToEmojis = new HashMap<>();
 
-        emojiSection.getKeys(false).forEach(key -> {
-            Set<String> emoji = new HashSet<>(emojiSection.getStringList(key + ".emoji"));
+        emojis.forEach((key, emoji) -> {
+            Set<String> emojiSet = new HashSet<>(emoji.emoji());
+            List<String> emoticonList = emoji.emoticon();
 
-            if (emoji.isEmpty()) {
-                emoji = Set.of(emojiSection.getString(key + ".emoji"));
-            }
-
-            List<String> emoticons = emojiSection.getStringList(key + ".emoticon");
-
-            if (emoticons.isEmpty()) {
-                emoticons = List.of(emojiSection.getString(key + ".emoticon"));
-            }
-
-            for (String emoticon : emoticons) {
-                emoticonToEmojis.put(emoticon, emoji);
+            for (String emoticon : emoticonList) {
+                emoticonToEmojis.put(emoticon, emojiSet);
             }
         });
 

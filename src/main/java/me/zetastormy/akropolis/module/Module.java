@@ -23,14 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.ConfigurationContainer;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.cooldown.CooldownManager;
 
 public class Module implements Listener {
@@ -74,8 +73,12 @@ public class Module implements Listener {
         return (cooldownManager.getCooldown(uuid, type) / 1000);
     }
 
-    public FileConfiguration getConfig(ConfigType type) {
-        return getPlugin().getConfigManager().getFile(type).get();
+    public <T> T getConfig(Class<T> type) {
+        return getPlugin().getConfigManager().getFile(type).getConfig();
+    }
+
+    public <T> ConfigurationContainer<T> getConfigFile(Class<T> type) {
+        return getPlugin().getFightModeManager().getConfigFile(type);
     }
 
     public void executeActions(Player player, List<String> actions) {

@@ -24,15 +24,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -49,28 +47,26 @@ public class ChatGroups extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        ConfigurationSection groupsSection = config.getConfigurationSection("groups");
+        Settings config = getConfig(Settings.class);
+        Settings.ChatManagement chatManagement = config.chatManagement();
+        Map<String, Settings.ChatManagement.ChatGroup> groups = chatManagement.groups();
 
-        if (groupsSection == null) {
-            getPlugin().getLogger().info("Skipping chat groups creation, configuration section is missing!");
-            return;
-        }
-
-        groupsSection.getKeys(false).stream()
-                .filter(key -> !key.equals("enabled"))
-                .forEach(groupName -> chatGroups.put(groupName, new ChatGroup(groupName,
-                groupsSection.getString(
-                        groupName + ".format",
-                        String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no format, check the configuration.", groupName)
-                ),
-                groupsSection.getInt(groupName + ".priority", 0),
-                groupsSection.getInt(groupName + ".cooldown.time", 0),
-                groupsSection.getString(
-                        groupName + ".cooldown.message",
-                        String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no cooldown message, check the configuration.", groupName)
-                ),
-                new Emojis(groupsSection.getConfigurationSection(groupName + ".emojis")))));
+        groups.keySet().forEach(
+                groupName -> {
+                    Settings.ChatManagement.ChatGroup group = groups.get(groupName);
+                    chatGroups.put(
+                            groupName,
+                            new ChatGroup(
+                                    groupName,
+                                    group.format(groupName),
+                                    group.priority(),
+                                    group.cooldown().time(),
+                                    group.cooldown().message(),
+                                    new Emojis(group.emojis())
+                            )
+                    );
+                }
+        );
     }
 
     @Override

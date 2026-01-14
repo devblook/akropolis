@@ -25,9 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,7 +36,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -56,17 +55,17 @@ public class ScoreboardManager extends Module implements LifeCycle {
     @Override
     public void onEnable() {
         players = new HashMap<>();
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        Settings.Scoreboard scoreboardSettings = getConfig(Settings.class).scoreboard();
 
-        title = config.getString("scoreboard.title");
-        lines = config.getStringList("scoreboard.lines");
+        title = scoreboardSettings.title();
+        lines = scoreboardSettings.lines();
 
-        joinDelay = config.getLong("scoreboard.display_delay.server_enter", 0L);
-        worldDelay = config.getLong("scoreboard.display_delay.world_change", 0L);
+        joinDelay = scoreboardSettings.displayDelay().serverEnter();
+        worldDelay = scoreboardSettings.displayDelay().worldChange();
 
-        if (config.getBoolean("scoreboard.refresh.enabled")) {
+        if (scoreboardSettings.refresh().enabled()) {
             scoreTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new ScoreboardUpdateTask(this), 0L,
-                    config.getLong("scoreboard.refresh.rate"));
+                    scoreboardSettings.refresh().rate());
         }
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()

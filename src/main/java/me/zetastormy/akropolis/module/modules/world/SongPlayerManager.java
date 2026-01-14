@@ -24,10 +24,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,15 +51,14 @@ import com.xxmicloxx.NoteBlockAPI.songplayer.SongPlayer;
 import com.xxmicloxx.NoteBlockAPI.utils.NBSDecoder;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigHandler;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
 
 public class SongPlayerManager extends Module implements LifeCycle {
     private SongPlayer songPlayer;
-    private ConfigHandler dataConfig;
+    private ConfigurationContainer<Settings> config;
+    private ConfigurationContainer<Data> dataConfig;
     private List<String> actions;
 
     public SongPlayerManager(AkropolisPlugin plugin) {
@@ -78,16 +79,17 @@ public class SongPlayerManager extends Module implements LifeCycle {
             return;
         }
 
-        dataConfig = getPlugin().getConfigManager().getFile(ConfigType.DATA);
+        this.dataConfig = getPlugin().getConfigManager().getFile(Data.class);
+        this.config = getConfigFile(Settings.class);
 
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        String type = config.getString("song_player.type", "RADIO");
-        int distance = config.getInt("song_player.distance", 16);
-        actions = config.getStringList("song_player.actions");
+        Settings.SongPlayer songPlayerSettings = this.config.getConfig().songPlayer();
+        String type = songPlayerSettings.type().toString();
+        int distance = songPlayerSettings.distance();
+        actions = songPlayerSettings.actions();
 
-        int fadeInDuration = config.getInt("song_player.fade.in", 20);
-        int fadeOutDuration = config.getInt("song_player.fade.out", 20);
-        byte volume = (byte)config.getInt("song_player.volume", 85);
+        int fadeInDuration = songPlayerSettings.fade().in();
+        int fadeOutDuration = songPlayerSettings.fade().out();
+        byte volume = (byte) songPlayerSettings.volume();
 
         songPlayer = createSongPlayer(playlist, type, distance);
 
@@ -155,7 +157,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
             return createRadioSongPlayer(playlist);
         }
 
-        Location songLocation = dataConfig.get().getLocation("song_player.location");
+        Location songLocation = dataConfig.getConfig().getSongPlayer().getLocation();
 
         if (songLocation == null) {
             getPlugin().getLogger().warning("Couldn't get song player location! Using radio song player instead.");
@@ -209,7 +211,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
     }
 
     public void setLocation(Location location) {
-        dataConfig.get().set("song_player.location", location);
+        dataConfig.getConfig().getSongPlayer().setLocation(location);
         dataConfig.save();
     }
 

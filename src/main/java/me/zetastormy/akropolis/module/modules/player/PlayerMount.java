@@ -22,7 +22,9 @@ package me.zetastormy.akropolis.module.modules.player;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.configuration.file.FileConfiguration;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,8 +32,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -47,9 +47,9 @@ public class PlayerMount extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        actions = config.getStringList("player_mount.actions");
-        cooldownDelay = config.getLong("player_mount.cooldown", 5);
+        Settings.PlayerMount config = getConfig(Settings.class).playerMount();
+        actions = config.actions();
+        cooldownDelay = config.cooldown();
     }
 
     @EventHandler
@@ -65,7 +65,13 @@ public class PlayerMount extends Module implements LifeCycle {
             UUID uuid = player.getUniqueId();
 
             if (!tryCooldown(uuid, "player_mount", cooldownDelay)) {
-                Message.PLAYER_MOUNT_COOLDOWN.sendWithReplacement(player, "time", Component.text(getCooldown(uuid, "player_mount")));
+                final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+                MessagingUtil.sendWithReplacement(
+                        messages.playerMount().cooldownActive(),
+                        player,
+                        "time",
+                        Component.text(getCooldown(uuid, "player_mount"))
+                );
                 return;
             }
 

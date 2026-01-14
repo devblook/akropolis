@@ -21,6 +21,9 @@ package me.zetastormy.akropolis.module.modules.chat;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,8 +31,6 @@ import org.bukkit.event.EventHandler;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -45,11 +46,13 @@ public class AntiSwear extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        blockedWords = getConfig(ConfigType.SETTINGS).getStringList("anti_swear.blocked_words");
+        blockedWords = getConfig(Settings.class).antiSwear().blockedWords();
     }
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         Player player = event.getPlayer();
 
         if (player.hasPermission(Permissions.ANTI_SWEAR_BYPASS.getPermission()))
@@ -60,10 +63,16 @@ public class AntiSwear extends Module implements LifeCycle {
         for (String word : blockedWords) {
             if (TextUtil.raw(message).contains(word.toLowerCase())) {
                 event.setCancelled(true);
-                Message.ANTI_SWEAR_WORD_BLOCKED.send(player);
+                MessagingUtil.send(messages.chat().antiSwearWordBlocked(), player);
 
                 Bukkit.getOnlinePlayers().stream()
-                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission())).forEach(p -> p.sendMessage(TextUtil.replace(TextUtil.replace(Message.ANTI_SWEAR_ADMIN_NOTIFY.toComponent(), "player", player.name()), "word", message)));
+                        .filter(p -> p.hasPermission(Permissions.ANTI_SWEAR_NOTIFY.getPermission()))
+                        .forEach(p -> MessagingUtil.sendWithReplacement(
+                                messages.chat().antiSwearAdminNotify(),
+                                p,
+                                "player", player.name(),
+                                "word", message
+                        ));
 
                 return;
             }

@@ -22,11 +22,11 @@ package me.zetastormy.akropolis.module.modules.hotbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,7 +54,7 @@ import me.zetastormy.akropolis.util.text.TextUtil;
 public abstract class HotbarItem implements Listener {
     private final HotbarManager hotbarManager;
     private final ItemStack item;
-    private ConfigurationSection configurationSection;
+    private Settings.ItemRecord configurationSection;
     private final String keyValue;
     private String permission = null;
     private final int slot;
@@ -104,11 +104,11 @@ public abstract class HotbarItem implements Listener {
         this.disableMovement = disableMovement;
     }
 
-    public void setConfigurationSection(ConfigurationSection configurationSection) {
+    public void setConfigurationSection(Settings.ItemRecord configurationSection) {
         this.configurationSection = configurationSection;
     }
 
-    public ConfigurationSection getConfigurationSection() {
+    public Settings.ItemRecord getConfigurationSection() {
         return configurationSection;
     }
 
@@ -118,9 +118,9 @@ public abstract class HotbarItem implements Listener {
 
         ItemStack newItem = item.clone();
 
-        if (getConfigurationSection() != null && getConfigurationSection().contains("username")) {
+        if (getConfigurationSection() != null && getConfigurationSection().username() != null) {
             String skullName = TextUtil.raw(PlaceholderUtil
-                    .setPlaceholders(getConfigurationSection().getString("username", player.getName()), player));
+                    .setPlaceholders(getConfigurationSection().username(player.getName()), player));
             OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(skullName);
 
             newItem = new ItemStackBuilder(newItem).setSkullOwner(skullPlayer).build();

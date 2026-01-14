@@ -19,10 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.visual.nametag;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,7 +30,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -40,7 +38,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
 public class NametagManager extends Module implements LifeCycle {
-    private ConfigurationSection format;
+    private Settings.Nametag.Format format;
     private NametagHelper nametagHelper;
     private int nametagTask;
 
@@ -50,21 +48,21 @@ public class NametagManager extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
+        Settings.Nametag nametagSettings = getConfig(Settings.class).nametag();
 
-        format = config.getConfigurationSection("nametag.format");
+        format = nametagSettings.format();
         nametagHelper = new NametagHelper();
 
-        if (config.getBoolean("nametag.refresh.enabled")) {
+        if (nametagSettings.refresh().enabled()) {
             nametagTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new NametagUpdateTask(this, nametagHelper), 0L,
-                    config.getLong("nametag.refresh.rate"));
+                    nametagSettings.refresh().rate());
         }
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () ->
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
-                    TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
-                    Component suffix = PlaceholderUtil.setPlaceholders(format.getString("suffix"), player);
+                    Component prefix = PlaceholderUtil.setPlaceholders(format.prefix(), player);
+                    TextColor color = TextColor.fromHexString(format.nameColor());
+                    Component suffix = PlaceholderUtil.setPlaceholders(format.suffix(), player);
 
                     nametagHelper.createFormat(prefix, color, suffix, player);
                 }), 20L);
@@ -82,9 +80,9 @@ public class NametagManager extends Module implements LifeCycle {
 
         if (inDisabledWorld(player.getWorld())) return;
 
-        Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
-        TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
-        Component suffix = PlaceholderUtil.setPlaceholders(format.getString("suffix"), player);
+        Component prefix = PlaceholderUtil.setPlaceholders(format.prefix(), player);
+        TextColor color = TextColor.fromHexString(format.nameColor());
+        Component suffix = PlaceholderUtil.setPlaceholders(format.suffix(), player);
 
         nametagHelper.createFormat(prefix, color, suffix, player);
     }
@@ -108,9 +106,9 @@ public class NametagManager extends Module implements LifeCycle {
         if (inDisabledWorld(toWorld)) {
             nametagHelper.deleteFormat(player);
         } else {
-            Component prefix = PlaceholderUtil.setPlaceholders(format.getString("prefix"), player);
-            TextColor color = TextColor.fromHexString(format.getString("name_color", "#FFFFFF"));
-            Component suffix = PlaceholderUtil.setPlaceholders(format.getString("suffix"), player);
+            Component prefix = PlaceholderUtil.setPlaceholders(format.prefix(), player);
+            TextColor color = TextColor.fromHexString(format.nameColor());
+            Component suffix = PlaceholderUtil.setPlaceholders(format.suffix(), player);
 
             nametagHelper.createFormat(prefix, color, suffix, player);
         }

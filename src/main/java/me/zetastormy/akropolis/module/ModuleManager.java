@@ -25,13 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.modules.chat.AntiSwear;
 import me.zetastormy.akropolis.module.modules.chat.AutoBroadcast;
 import me.zetastormy.akropolis.module.modules.chat.ChatCommandBlock;
@@ -66,10 +65,10 @@ public class ModuleManager {
         if (!modules.isEmpty())
             unloadModules();
 
-        FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
-        disabledWorlds = config.getStringList("disabled-worlds.worlds");
+        Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
+        disabledWorlds = config.disabledWorlds().worlds();
 
-        if (config.getBoolean("disabled-worlds.invert")) {
+        if (config.disabledWorlds().invert()) {
             List<String> newDisabledWorlds = new ArrayList<>();
 
             for (World world : Bukkit.getWorlds()) {
@@ -78,23 +77,23 @@ public class ModuleManager {
 
             disabledWorlds = newDisabledWorlds;
 
-            for (String world : config.getStringList("disabled-worlds.worlds")) {
+            for (String world : config.disabledWorlds().worlds()) {
                 disabledWorlds.remove(world);
             }
         }
 
-        registerModule(new AntiWorldDownloader(plugin), "anti_wdl.enabled");
-        registerModule(new DoubleJump(plugin), "double_jump.enabled");
-        registerModule(new PlayerMount(plugin), "player_mount.enabled");
-        registerModule(new Launchpad(plugin), "launchpad.enabled");
-        registerModule(new BossBarBroadcast(plugin), "boss_bar_announcements.enabled");
-        registerModule(new NametagManager(plugin), "nametag.enabled");
-        registerModule(new ScoreboardManager(plugin), "scoreboard.enabled");
-        registerModule(new TablistManager(plugin), "tablist.enabled");
-        registerModule(new AutoBroadcast(plugin), "announcements.enabled");
-        registerModule(new AntiSwear(plugin), "anti_swear.enabled");
-        registerModule(new ChatCommandBlock(plugin), "command_block.enabled");
-        registerModule(new ChatGroups(plugin), "groups.enabled");
+        registerModule(new AntiWorldDownloader(plugin), "anti_wdl", "enabled");
+        registerModule(new DoubleJump(plugin), "double_jump", "enabled");
+        registerModule(new PlayerMount(plugin), "player_mount", "enabled");
+        registerModule(new Launchpad(plugin), "launchpad", "enabled");
+        registerModule(new BossBarBroadcast(plugin), "boss_bar_announcements", "enabled");
+        registerModule(new NametagManager(plugin), "nametag", "enabled");
+        registerModule(new ScoreboardManager(plugin), "scoreboard", "enabled");
+        registerModule(new TablistManager(plugin), "tablist", "enabled");
+        registerModule(new AutoBroadcast(plugin), "announcements", "enabled");
+        registerModule(new AntiSwear(plugin), "anti_swear", "enabled");
+        registerModule(new ChatCommandBlock(plugin), "command_block", "enabled");
+        registerModule(new ChatGroups(plugin), "groups", "enabled");
         registerModule(new ChatLock(plugin));
         registerModule(new PlayerListener(plugin));
         registerModule(new HotbarManager(plugin));
@@ -102,11 +101,11 @@ public class ModuleManager {
         registerModule(new LobbySpawn(plugin));
         registerModule(new PlayerVanish(plugin));
         registerModule(new HologramManager(plugin));
-        registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
-        registerModule(new FightModeManager(plugin), "fight_mode.enabled");
+        registerModule(new PlayerOffHandSwap(plugin), "world_settings", "disable_off_hand_swap");
+        registerModule(new FightModeManager(plugin), "fight_mode", "enabled");
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
-            registerModule(new SongPlayerManager(plugin), "song_player.enabled");
+            registerModule(new SongPlayerManager(plugin), "song_player", "enabled");
         else
           plugin.getLogger().warning("NoteBlockAPI is not installed and enabled! The songs module won't be enabled.");
 
@@ -152,12 +151,12 @@ public class ModuleManager {
     }
 
     public void registerModule(Module module) {
-        registerModule(module, null);
+        registerModule(module, (String[]) null);
     }
 
-    public void registerModule(Module module, String isEnabledPath) {
+    public void registerModule(Module module, String... isEnabledPath) {
         if (isEnabledPath != null
-                && !plugin.getConfigManager().getFile(ConfigType.SETTINGS).get().getBoolean(isEnabledPath, false))
+                && !plugin.getConfigManager().getFile(Settings.class).getBoolean(isEnabledPath))
             return;
 
         plugin.getServer().getPluginManager().registerEvents(module, plugin);

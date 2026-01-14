@@ -19,6 +19,9 @@
 
 package me.zetastormy.akropolis.module.modules.world;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -28,12 +31,9 @@ import com.google.common.io.ByteStreams;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
-import me.zetastormy.akropolis.config.ConfigType;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
-import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class AntiWorldDownloader extends Module implements PluginMessageListener, LifeCycle {
 
@@ -66,13 +66,20 @@ public class AntiWorldDownloader extends Module implements PluginMessageListener
 
         player.sendPluginMessage(getPlugin(), "wdl:control", out.toByteArray());
 
-        if (!getPlugin().getConfigManager().getFile(ConfigType.SETTINGS).get()
-                .getBoolean("anti_wdl.admin_notify"))
+        if (!getPlugin().getConfigManager().getFile(Settings.class).getConfig()
+                .antiWdl().notifyAdmins())
             return;
+
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.ANTI_WDL_NOTIFY.getPermission())) {
-                p.sendMessage(TextUtil.replace(Message.WORLD_DOWNLOAD_NOTIFY.toComponent(), "player", player.name()));
+                MessagingUtil.sendWithReplacement(
+                        messages.antiWorldDownloader().adminNotify(),
+                        p,
+                        "player",
+                        player.name()
+                );
             }
         }
     }

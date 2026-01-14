@@ -22,9 +22,9 @@ package me.zetastormy.akropolis.module.modules.world;
 import java.util.List;
 import java.util.Objects;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -33,7 +33,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.cryptomorin.xseries.XMaterial;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -51,10 +50,10 @@ public class Launchpad extends Module implements LifeCycle {
 
     @Override
     public void onEnable() {
-        FileConfiguration config = getConfig(ConfigType.SETTINGS);
-        launch = config.getDouble("launchpad.launch_power", 1.3);
-        launchY = config.getDouble("launchpad.launch_power_y", 1.2);
-        actions = config.getStringList("launchpad.actions");
+        Settings.Launchpad launchpadSettings = getConfig(Settings.class).launchpad();
+        launch = launchpadSettings.launchPower();
+        launchY = launchpadSettings.launchPowerY();
+        actions = launchpadSettings.actions();
 
         if (launch > 4.0)
             launch = 4.0;
@@ -62,8 +61,8 @@ public class Launchpad extends Module implements LifeCycle {
             launchY = 4.0;
 
 
-        String rawTopBlock = config.getString("launchpad.top_block");
-        String rawBottomBlock = config.getString("launchpad.bottom_block");
+        String rawTopBlock = launchpadSettings.topBlock();
+        String rawBottomBlock = launchpadSettings.bottomBlock();
 
         if (rawTopBlock == null) {
             getPlugin().getLogger().severe("Launchpad' top block is missing, using air item!");
