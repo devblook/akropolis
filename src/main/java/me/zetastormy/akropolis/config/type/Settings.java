@@ -309,6 +309,7 @@ public class Settings {
         public double pitch() { return this.pitch; }
     }
 
+    @ConfigSerializable
     public record ItemRecord(
             String material,
             Integer amount,
@@ -421,7 +422,6 @@ public class Settings {
         public List<String> actions() { return this.actions; }
 
 
-        @ConfigSerializable
         public enum Type {
             RADIO, POSITION
         }
