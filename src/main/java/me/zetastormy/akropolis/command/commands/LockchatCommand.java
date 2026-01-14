@@ -21,12 +21,13 @@ package me.zetastormy.akropolis.command.commands;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.command.CommandSender;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.chat.ChatLock;
 import me.zetastormy.akropolis.util.text.TextUtil;
@@ -41,21 +42,28 @@ public class LockchatCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.plugin.getConfigManager().getFile(Messages.class).getConfig();
+
         if (!sender.hasPermission(Permissions.COMMAND_LOCKCHAT.getPermission())) {
-            Message.NO_PERMISSION.send(sender);
+            MessagingUtil.send(messages.general().noPermission(), sender);
             return;
         }
 
         ChatLock chatLockModule = (ChatLock) plugin.getModuleManager().getModule(ModuleType.CHAT_LOCK);
 
         if (chatLockModule.isChatLocked()) {
-            plugin.getServer().broadcast(
-                    TextUtil.replace(Message.CHAT_UNLOCKED_BROADCAST.toComponent(), "player", sender.name()));
+            plugin.getServer().broadcast(TextUtil.replace(
+                            MessagingUtil.toComponent(messages.chat().unlockedBroadcast()),
+                            "player",
+                            sender.name()
+                    ));
             chatLockModule.setChatLocked(false);
         } else {
-            plugin.getServer()
-                    .broadcast(
-                            TextUtil.replace(Message.CHAT_LOCKED_BROADCAST.toComponent(), "player", sender.name()));
+            plugin.getServer().broadcast(TextUtil.replace(
+                    MessagingUtil.toComponent(messages.chat().lockedBroadcast()),
+                    "player",
+                    sender.name()
+            ));
             chatLockModule.setChatLocked(true);
         }
 

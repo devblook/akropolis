@@ -21,23 +21,23 @@ package me.zetastormy.akropolis.command;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.AkropolisPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
-import org.bukkit.plugin.Plugin;
 
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 @SuppressWarnings("NullableProblems")
 public abstract class InjectableCommand extends Command implements PluginIdentifiableCommand {
-    private final Plugin plugin;
+    private final AkropolisPlugin plugin;
 
-    protected InjectableCommand(Plugin plugin, String name, String description, List<String> aliases) {
+    protected InjectableCommand(AkropolisPlugin plugin, String name, String description, List<String> aliases) {
         super(name, description, "/" + name, aliases);
         this.plugin = plugin;
     }
 
-    protected InjectableCommand(Plugin plugin, String name, String description, String usageMessage, List<String> aliases) {
+    protected InjectableCommand(AkropolisPlugin plugin, String name, String description, String usageMessage, List<String> aliases) {
         super(name, description, usageMessage, aliases);
         this.plugin = plugin;
     }
@@ -58,7 +58,7 @@ public abstract class InjectableCommand extends Command implements PluginIdentif
     protected abstract void onCommand(CommandSender sender, String label, String[] args);
 
     @Override
-    public Plugin getPlugin() {
+    public AkropolisPlugin getPlugin() {
         return this.plugin;
     }
 }

@@ -21,6 +21,9 @@ package me.zetastormy.akropolis.command.commands.gamemode;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -29,7 +32,6 @@ import org.bukkit.entity.Player;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class CreativeCommand extends InjectableCommand {
@@ -40,40 +42,62 @@ public class CreativeCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                Message.CONSOLE_NOT_ALLOWED.send(sender);
+                MessagingUtil.send(messages.general().consoleNotAllowed(), sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                Message.NO_PERMISSION.send(player);
+                MessagingUtil.send(messages.general().noPermission(), player);
                 return;
             }
 
-            Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
+            MessagingUtil.sendWithReplacement(
+                    messages.gamemode().gamemodeChange(),
+                    player,
+                    "gamemode", TextUtil.parse("CREATIVE")
+            );
             player.setGameMode(GameMode.CREATIVE);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                Message.NO_PERMISSION.send(sender);
+                MessagingUtil.send(messages.general().noPermission(), sender);
                 return;
             }
 
-            Player player = Bukkit.getPlayer(args[0]);
+            final Player target = Bukkit.getPlayer(args[0]);
 
-            if (player == null) {
-                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
+            if (target == null) {
+                MessagingUtil.sendWithReplacement(
+                        messages.general().invalidPlayer(),
+                        sender,
+                        "player",
+                        TextUtil.parse(args[0])
+                );
                 return;
             }
 
-            if (sender.getName().equals(player.getName())) {
-                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
+            final Component gamemodeChangeMessage = TextUtil.replace(
+                    MessagingUtil.toComponent(messages.gamemode().gamemodeChange()),
+                    "gamemode",
+                    TextUtil.parse("CREATIVE")
+            );
+
+            if (sender.getName().equals(target.getName())) {
+                MessagingUtil.send(gamemodeChangeMessage, sender);
             } else {
-                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("CREATIVE"));
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Message.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", TextUtil.parse("CREATIVE")));
+                MessagingUtil.send(gamemodeChangeMessage, target);
+                MessagingUtil.sendWithReplacement(
+                        messages.gamemode().gamemodeChangeOther(),
+                        sender,
+                        "gamemode", TextUtil.parse("CREATIVE"),
+                        "player", target.name()
+                );
             }
 
-            player.setGameMode(GameMode.CREATIVE);
+            target.setGameMode(GameMode.CREATIVE);
         }
 
     }

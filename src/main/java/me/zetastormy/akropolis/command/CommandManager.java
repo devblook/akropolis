@@ -22,24 +22,19 @@ package me.zetastormy.akropolis.command;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.command.commands.*;
 import me.zetastormy.akropolis.command.commands.gamemode.*;
-import me.zetastormy.akropolis.config.ConfigType;
+import me.zetastormy.akropolis.config.type.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CommandManager {
     private final AkropolisPlugin plugin;
     private final Set<InjectableCommand> commands;
     private final List<CustomCommand> customCommands;
     private final CommandMap commandMap;
-    private FileConfiguration config;
+    private Commands config;
 
     public CommandManager(AkropolisPlugin plugin) {
         this.plugin = plugin;
@@ -49,27 +44,20 @@ public class CommandManager {
     }
 
     public void reload() {
-        config = plugin.getConfigManager().getFile(ConfigType.COMMANDS).get();
+        this.config = plugin.getConfigManager().getFile(Commands.class).getConfig();
 
         commands.forEach(this::unregisterCommand);
         if (!commands.isEmpty()) commands.clear();
 
-        registerCommand(new AkropolisCommand(plugin));
+        this.registerCommand(new AkropolisCommand(plugin));
 
-        ConfigurationSection commandsSection = config.getConfigurationSection("commands");
+        final Map<String, Commands.BuiltinCommand> commandsSection = config.commands();
 
-        if (commandsSection == null) {
-            plugin.getLogger().severe("Commands settings configuration section is missing!");
-            return;
-        }
-
-        for (String command : commandsSection.getKeys(false)) {
-            if (!config.getBoolean("commands." + command + ".enabled")) {
-                continue;
+        commandsSection.forEach((key, builtinCommand) -> {
+            if (builtinCommand.enabled()) {
+                registerCommand(key, builtinCommand.aliases());
             }
-
-            registerCommand(command, commandsSection.getStringList(command + ".aliases"));
-        }
+        });
 
         reloadCustomCommands();
         Bukkit.getOnlinePlayers().forEach(Player::updateCommands);
@@ -79,31 +67,21 @@ public class CommandManager {
         customCommands.forEach(this::unregisterCommand);
         if (!customCommands.isEmpty()) customCommands.clear();
 
-        if (!config.isSet("custom_commands")) return;
+        final Map<String, Commands.CustomCommand> customCommandsSection = config.customCommands();
 
-        ConfigurationSection customCommandsSection = config.getConfigurationSection("custom_commands");
+        customCommandsSection.forEach((key, customCommand) -> {
+            final List<String> actions = Objects.requireNonNullElse(customCommand.actions(), new ArrayList<>());
+            final List<String> aliases = Objects.requireNonNullElse(customCommand.aliases(), new ArrayList<>());
 
-        if (customCommandsSection == null) {
-            plugin.getLogger().info("Skipping custom commands registration, configuration section is missing!");
-            return;
-        }
+            final CustomCommand command = new CustomCommand(this.plugin, key, aliases, actions);
 
-        for (String entry : customCommandsSection.getKeys(false)) {
-            List<String> actions = customCommandsSection.getStringList(entry + ".actions");
-            List<String> aliases = new ArrayList<>();
-
-            if (customCommandsSection.contains(entry + ".aliases")) {
-                aliases = config.getStringList("custom_commands." + entry + ".aliases");
+            final String permission = customCommand.permission();
+            if (permission != null) {
+                command.setPermission(permission);
             }
 
-            CustomCommand customCommand = new CustomCommand(plugin, entry, aliases, actions);
-
-            if (customCommandsSection.contains(entry + ".permission")) {
-                customCommand.setPermission(config.getString("custom_commands." + entry + ".permission"));
-            }
-
-            registerCommand(customCommand);
-        }
+            this.registerCommand(command);
+        });
     }
 
     private void registerCommand(String cmd, List<String> aliases) {

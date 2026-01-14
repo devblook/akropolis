@@ -33,11 +33,9 @@ import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class LobbyCommand extends InjectableCommand {
-    private final AkropolisPlugin plugin;
 
     public LobbyCommand(AkropolisPlugin plugin, List<String> aliases) {
         super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
-        this.plugin = plugin;
     }
 
     @Override
@@ -47,6 +45,7 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
+        final var plugin = this.getPlugin();
         Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
             sender.sendMessage(TextUtil.parse("<red>The spawn location has not been set <gray>(/setlobby)<red>."));

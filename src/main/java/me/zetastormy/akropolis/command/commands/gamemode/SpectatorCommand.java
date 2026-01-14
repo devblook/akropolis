@@ -21,6 +21,8 @@ package me.zetastormy.akropolis.command.commands.gamemode;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
@@ -29,7 +31,6 @@ import org.bukkit.entity.Player;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
@@ -41,40 +42,62 @@ public class SpectatorCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (args.length == 0) {
             if (!(sender instanceof Player player)) {
-                Message.CONSOLE_NOT_ALLOWED.send(sender);
+                MessagingUtil.send(messages.general().consoleNotAllowed(), sender);
                 return;
             }
 
             if (!player.hasPermission(Permissions.COMMAND_GAMEMODE.getPermission())) {
-                Message.NO_PERMISSION.send(sender);
+                MessagingUtil.send(messages.general().noPermission(), sender);
                 return;
             }
 
-            Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", TextUtil.parse("SPECTATOR"));
+            MessagingUtil.sendWithReplacement(
+                    messages.gamemode().gamemodeChange(),
+                    player,
+                    "gamemode",
+                    TextUtil.parse("SPECTATOR")
+            );
             player.setGameMode(GameMode.SPECTATOR);
         } else if (args.length == 1) {
             if (!sender.hasPermission(Permissions.COMMAND_GAMEMODE_OTHERS.getPermission())) {
-                Message.NO_PERMISSION.send(sender);
+                MessagingUtil.send(messages.general().noPermission(), sender);
                 return;
             }
 
-            Player player = Bukkit.getPlayer(args[0]);
+            final Player target = Bukkit.getPlayer(args[0]);
 
-            if (player == null) {
-                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", Component.text(args[0]));
+            if (target == null) {
+                MessagingUtil.sendWithReplacement(
+                        messages.general().invalidPlayer(),
+                        sender,
+                        "player", Component.text(args[0])
+                );
                 return;
             }
 
-            if (sender.getName().equals(player.getName())) {
-                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", Component.text("SPECTATOR"));
+            final Component gamemodeChangeMessage = TextUtil.replace(
+                    MessagingUtil.toComponent(messages.gamemode().gamemodeChange()),
+                    "gamemode",
+                    Component.text("SPECTATOR")
+            );
+
+            if (sender.getName().equals(target.getName())) {
+                MessagingUtil.send(gamemodeChangeMessage, sender);
             } else {
-                Message.GAMEMODE_CHANGE.sendWithReplacement(player, "gamemode", Component.text("SPECTATOR"));
-                sender.sendMessage(TextUtil.replace(TextUtil.replace(Message.GAMEMODE_CHANGE_OTHER.toComponent(), "player", player.name()), "gamemode", Component.text("SPECTATOR")));
+                MessagingUtil.send(gamemodeChangeMessage, target);
+                MessagingUtil.sendWithReplacement(
+                        messages.gamemode().gamemodeChangeOther(),
+                        sender,
+                        "gamemode", Component.text("SPECTATOR"),
+                        "player", target.name()
+                );
             }
 
-            player.setGameMode(GameMode.SPECTATOR);
+            target.setGameMode(GameMode.SPECTATOR);
         }
 
     }

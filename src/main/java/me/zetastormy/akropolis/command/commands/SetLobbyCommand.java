@@ -21,13 +21,14 @@ package me.zetastormy.akropolis.command.commands;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
@@ -42,8 +43,10 @@ public class SetLobbyCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.plugin.getConfigManager().getFile(Messages.class).getConfig();
+
         if (!sender.hasPermission(Permissions.COMMAND_SET_LOBBY.getPermission())) {
-            Message.NO_PERMISSION.send(sender);
+            MessagingUtil.send(messages.general().noPermission(), sender);
             return;
         }
 
@@ -59,7 +62,7 @@ public class SetLobbyCommand extends InjectableCommand {
 
         LobbySpawn lobbyModule = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY));
         lobbyModule.setLocation(player.getLocation());
-        Message.SET_LOBBY.send(sender);
+        MessagingUtil.send(messages.lobby().setLobby(), sender);
 
     }
 }

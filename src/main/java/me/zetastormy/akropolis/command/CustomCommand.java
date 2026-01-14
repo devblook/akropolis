@@ -21,46 +21,55 @@ package me.zetastormy.akropolis.command;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.Message;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomCommand extends InjectableCommand {
     private String permission;
-    private final List<String> actions;
+    private final @NotNull List<String> actions;
 
-    public CustomCommand(Plugin plugin, String name, List<String> aliases, List<String> actions) {
+    public CustomCommand(
+            @NotNull AkropolisPlugin plugin,
+            @NotNull String name,
+            @NotNull List<String> aliases,
+            @NotNull List<String> actions
+    ) {
         super(plugin, name, "A custom Akropolis command", aliases);
         this.actions = actions;
     }
 
     @Override
     protected void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (!(sender instanceof Player player)) {
-            Message.CONSOLE_NOT_ALLOWED.send(sender);
+            MessagingUtil.send(messages.general().consoleNotAllowed(), sender);
             return;
         }
 
         if (permission != null && !sender.hasPermission(permission)) {
-            Message.CUSTOM_COMMAND_NO_PERMISSION.send(sender);
+            MessagingUtil.send(messages.general().customCommandNoPermission(), sender);
             return;
         }
 
         AkropolisPlugin.getInstance().getActionManager().executeActions(player, actions);
     }
 
-    public void setPermission(String permission) {
+    public void setPermission(final @NotNull String permission) {
         this.permission = permission;
     }
 
-    public String getPermission() {
+    public @Nullable String getPermission() {
         return permission;
     }
 
-    public List<String> getActions() {
+    public @NotNull List<String> getActions() {
         return actions;
     }
 }

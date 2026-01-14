@@ -21,6 +21,8 @@ package me.zetastormy.akropolis.command.commands;
 
 import java.util.List;
 
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,7 +30,6 @@ import org.bukkit.entity.Player;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class ClearchatCommand extends InjectableCommand {
@@ -39,8 +40,10 @@ public class ClearchatCommand extends InjectableCommand {
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
+        final Messages messages = this.getPlugin().getConfigManager().getFile(Messages.class).getConfig();
+
         if (!(sender.hasPermission(Permissions.COMMAND_CLEARCHAT.getPermission()))) {
-            Message.NO_PERMISSION.send(sender);
+            MessagingUtil.send(messages.general().noPermission(), sender);
             return;
         }
 
@@ -50,14 +53,22 @@ public class ClearchatCommand extends InjectableCommand {
                     player.sendMessage("");
                 }
 
-                Message.CLEARCHAT.sendWithReplacement(player, "player", sender.name());
+                MessagingUtil.sendWithReplacement(
+                        messages.chat().clearChat(),
+                        player,
+                        "player", sender.name()
+                );
             }
         } else if (args.length == 1) {
 
             Player player = Bukkit.getPlayer(args[0]);
 
             if (player == null) {
-                Message.INVALID_PLAYER.sendWithReplacement(sender, "player", TextUtil.parse(args[0]));
+                MessagingUtil.sendWithReplacement(
+                        messages.general().invalidPlayer(),
+                        sender,
+                        "player", TextUtil.parse(args[0])
+                );
                 return;
             }
 
@@ -65,7 +76,11 @@ public class ClearchatCommand extends InjectableCommand {
                 player.sendMessage("");
             }
 
-            Message.CLEARCHAT_PLAYER.sendWithReplacement(sender, "player", sender.name());
+            MessagingUtil.sendWithReplacement(
+                    messages.chat().clearChatPlayer(),
+                    sender,
+                    "player", sender.name()
+            );
         }
 
     }
