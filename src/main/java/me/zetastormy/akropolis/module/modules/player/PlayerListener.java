@@ -105,6 +105,16 @@ public class PlayerListener extends Module implements LifeCycle {
             this.fireworkFlicker = fireworkSettings.flicker();
             this.fireworkTrail = fireworkSettings.trail();
 
+            if (this.fireworkPower > 255) {
+                this.getPlugin().getLogger()
+                        .warning("Configured firework power is greater than 255, check your configuration.");
+                this.fireworkPower = 255;
+            } else if (this.fireworkPower < 0) {
+                this.getPlugin().getLogger()
+                        .warning("Configured firework power is lower than 0, check your configuration.");
+                this.fireworkPower = 0;
+            }
+
             this.fireworkColors = new ArrayList<>();
             fireworkSettings.colors().forEach(c -> {
                 Color color = TextUtil.getColor(c);

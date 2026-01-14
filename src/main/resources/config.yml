@@ -617,7 +617,8 @@ join_settings:
     # Available types: BALL, BALL_LARGE, STAR, BURST, CREEPER
     type: BALL_LARGE
 
-    # The greater the power, the longer the fireworks will fly
+    # The greater the power, the longer the firework will fly.
+    # Must be a number in the interval [0, 255].
     power: 1
 
     # You can watch examples of the effects here: https://minecraft.wiki/w/Firework_Star#Additional_effects

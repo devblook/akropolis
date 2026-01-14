@@ -1086,7 +1086,10 @@ public class Settings {
                     """)
             private String type = "BALL_LARGE";
 
-            @Comment("The greater the power, the longer the fireworks will fly")
+            @Comment("""
+                    The greater the power, the longer the firework will fly.
+                    Must be a number in the interval [0, 255].\
+                    """)
             private int power = 1;
 
             @Comment("You can watch examples of the effects here: https://minecraft.wiki/w/Firework_Star#Additional_effects")
