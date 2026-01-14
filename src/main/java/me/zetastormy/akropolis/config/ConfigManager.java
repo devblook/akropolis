@@ -47,7 +47,7 @@ public class ConfigManager {
             registerFile(Settings.class, ConfigurationContainer.load(
                     Settings.class,
                     plugin.getSLF4JLogger(),
-                    Path.of("config.yml"),
+                    plugin.getDataPath().resolve("config.yml"),
                     Settings.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection
@@ -56,7 +56,7 @@ public class ConfigManager {
             registerFile(Messages.class, ConfigurationContainer.load(
                     Messages.class,
                     plugin.getSLF4JLogger(),
-                    Path.of("messages.yml"),
+                    plugin.getDataPath().resolve("messages.yml"),
                     Messages.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection
@@ -65,7 +65,7 @@ public class ConfigManager {
             registerFile(Data.class, ConfigurationContainer.load(
                     Data.class,
                     plugin.getSLF4JLogger(),
-                    Path.of("data.yml"),
+                    plugin.getDataPath().resolve("data.yml"),
                     Data.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection
@@ -74,7 +74,7 @@ public class ConfigManager {
             registerFile(Commands.class, ConfigurationContainer.load(
                     Commands.class,
                     plugin.getSLF4JLogger(),
-                    Path.of("commands.yml"),
+                    plugin.getDataPath().resolve("commands.yml"),
                     Commands.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection
