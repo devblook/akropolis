@@ -21,6 +21,7 @@ package me.zetastormy.akropolis.util.text;
 
 import java.util.Stack;
 
+import me.zetastormy.akropolis.config.type.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -29,7 +30,6 @@ import org.bukkit.entity.Player;
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.config.Message;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -67,8 +67,9 @@ public class PlaceholderUtil {
 
     private static Stack<TagResolver> globalTagResolver() {
         final Stack<TagResolver> tagResolvers = new Stack<>();
+        final Messages messages = AkropolisPlugin.getInstance().getConfigManager().getFile(Messages.class).getConfig();
 
-        pushTagResolver(tagResolvers, "prefix", TextUtil.parse(Message.PREFIX.raw()));
+        pushTagResolver(tagResolvers, "prefix", TextUtil.parse(messages.general().prefix()));
         pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
         pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
         pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));

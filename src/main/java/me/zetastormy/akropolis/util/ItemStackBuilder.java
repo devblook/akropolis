@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -69,6 +70,109 @@ public class ItemStackBuilder {
 
     public ItemStackBuilder(ItemStack item) {
         this.itemStack = item;
+    }
+
+    public static ItemStackBuilder getItemStack(Settings.ItemRecord itemRecord, Player player) {
+        ItemStack item = parseMaterial(itemRecord);
+        ItemStackBuilder builder = new ItemStackBuilder(item);
+
+        if (itemRecord.amount() != null) {
+            builder.withAmount(itemRecord.amount());
+        }
+
+        if (itemRecord.unbreakable() != null) {
+            builder.setUnbreakable(itemRecord.unbreakable());
+        }
+
+        String username = itemRecord.username();
+
+        if (username != null) {
+            if (player != null) {
+                String playerName = TextUtil.raw(PlaceholderUtil.setPlaceholders(username, player));
+                OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(playerName);
+
+                builder.setSkullOwner(skullPlayer);
+            } else if (username.equals("<player>")) {
+                builder.withKey("player-head", PersistentDataType.BOOLEAN, true);
+            } else {
+                builder.setSkullOwner(Bukkit.getOfflinePlayer(username));
+            }
+        }
+
+        if (itemRecord.displayName() != null) {
+            Component displayName = TextUtil.parse(itemRecord.displayName());
+
+            builder.withName(displayName, player);
+        }
+
+        if (itemRecord.lore() != null) {
+            List<Component> lore = new ArrayList<>();
+
+            for (String line : itemRecord.lore()) {
+                lore.add(TextUtil.parse(line));
+            }
+
+            if (player != null)
+                builder.withLore(lore, player);
+            else
+                builder.withLore(lore);
+        }
+
+        if (itemRecord.glow() != null && itemRecord.glow()) {
+            builder.withGlow();
+        }
+
+        if (itemRecord.itemFlags() != null) {
+            List<ItemFlag> flags = new ArrayList<>();
+            itemRecord.itemFlags().forEach(text -> {
+                try {
+                    ItemFlag flag = ItemFlag.valueOf(text);
+                    flags.add(flag);
+                } catch (IllegalArgumentException ignored) {
+                    // Ignored.
+                }
+            });
+            builder.withFlags(flags.toArray(new ItemFlag[0]));
+        }
+
+        if (itemRecord.customModelData() != null) {
+            List<String> data = itemRecord.customModelData();
+            builder.withCustomModelData(data);
+        }
+
+        if (itemRecord.customItemModel() != null) {
+            String data = itemRecord.customItemModel();
+            builder.withCustomItemModel(data);
+        }
+
+        if (itemRecord.enchantments() != null) {
+            List<String> rawEnchantments = itemRecord.enchantments();
+            Map<Enchantment, Integer> enchantments = new HashMap<>();
+
+            for (String enchantment : rawEnchantments) {
+                String[] parts = enchantment.split(":");
+                Enchantment enchant = RegistryAccess
+                        .registryAccess()
+                        .getRegistry(RegistryKey.ENCHANTMENT)
+                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
+                int level = Integer.parseInt(parts[1]);
+
+                enchantments.put(enchant, level);
+            }
+
+            builder.withEnchantments(enchantments);
+        }
+
+        if (itemRecord.tooltipStyle() != null) {
+            String data = itemRecord.tooltipStyle();
+            builder.withCustomTooltipStyle(data);
+        }
+
+        return builder;
+    }
+
+    public static ItemStackBuilder getItemStack(Settings.ItemRecord itemRecord) {
+        return getItemStack(itemRecord, null);
     }
 
     public static ItemStackBuilder getItemStack(ConfigurationSection section, Player player) {
@@ -172,6 +276,37 @@ public class ItemStackBuilder {
 
     public static ItemStackBuilder getItemStack(ConfigurationSection section) {
         return getItemStack(section, null);
+    }
+
+    public static ItemStack parseMaterial(Settings.ItemRecord itemRecord) {
+        String rawMaterial = itemRecord.material();
+
+        if (rawMaterial == null) {
+            PLUGIN.getLogger().severe("Could not get material from configuration section!");
+            return MALFORMED_ITEM;
+        }
+
+        Optional<XMaterial> xmaterial = XMaterial.matchXMaterial(rawMaterial);
+
+        if (xmaterial.isEmpty()) {
+            PLUGIN.getLogger().severe("Could not parse material '" + rawMaterial + "'.");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return MALFORMED_ITEM;
+        }
+
+        ItemStack item = xmaterial.get().parseItem();
+
+        if (item != null && item.getType() == XMaterial.PLAYER_HEAD.get()) {
+            if (itemRecord.base64() != null) {
+                item = ((HeadHook) PLUGIN.getHookManager().getPluginHook("BASE64"))
+                        .getHead(itemRecord.base64());
+            } else if (itemRecord.hdb() != null && PLUGIN.getHookManager().isHookEnabled("HEAD_DATABASE")) {
+                item = ((HeadHook) PLUGIN.getHookManager().getPluginHook("HEAD_DATABASE"))
+                        .getHead(itemRecord.hdb());
+            }
+        }
+
+        return item;
     }
 
     public static ItemStack parseMaterial(ConfigurationSection section) {
