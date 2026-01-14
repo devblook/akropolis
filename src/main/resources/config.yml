@@ -53,14 +53,17 @@
 #   More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
 #   There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
 
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | GENERAL SETTINGS                         |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #
 # List your worlds you don't want Akropolis to manage.
 disabled_worlds:
+
   # Should we invert the list making it a whitelist rather than a blacklist?
   invert: false
+
   # List your worlds here, set "worlds: []" to disable.
   worlds:
     - world_nether
@@ -71,6 +74,9 @@ disabled_worlds:
 #
 # Prevent users downloading your world via the world downloader mod.
 # There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download.
+# Note: this only blocks the official World Downloader mod which allows blocking by the server, there is no way of
+# blocking stealth world downloading mods since the world chunks are downloaded by the player to be able to see the
+# world.
 anti_wdl:
 
   # Should AntiWDL be enabled?
@@ -185,6 +191,7 @@ tablist:
   # Should we refresh the tablist (update placeholders)?
   refresh:
     enabled: true
+
     # In ticks (20 ticks = 1 second).
     rate: 400
 
@@ -420,14 +427,14 @@ chat_management:
       priority: 1
       format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
 
-      # You can use the cooldown feature everywhere you want!
+      # Just in case you want to slow down your players a little.
       cooldown:
 
         # Time is in seconds.
         time: 1
         message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
 
-      # These emojis will only be available for the VIP group.
+      # Add all the emojis you want here. These emojis will only be available for this group.
       emojis:
         tableflip:
 
