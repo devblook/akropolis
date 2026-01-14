@@ -86,7 +86,7 @@ public class AkropolisPlugin extends JavaPlugin {
         // Cooldown manager
         cooldownManager = new CooldownManager();
 
-        //Scoreboard library
+        // Scoreboard library
         try {
             scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(plugin);
         } catch (NoPacketAdapterAvailableException e) {
