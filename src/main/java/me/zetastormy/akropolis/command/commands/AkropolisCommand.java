@@ -47,10 +47,11 @@ import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class AkropolisCommand extends InjectableCommand {
 
-    public AkropolisCommand(AkropolisPlugin plugin) {
+    public AkropolisCommand(final @NotNull AkropolisPlugin plugin) {
         super(plugin, "akropolis", "View plugin information and additional commands", Collections.singletonList("akro"));
     }
 

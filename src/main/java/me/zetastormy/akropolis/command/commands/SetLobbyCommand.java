@@ -32,11 +32,12 @@ import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class SetLobbyCommand extends InjectableCommand {
-    private final AkropolisPlugin plugin;
+    private final @NotNull AkropolisPlugin plugin;
 
-    public SetLobbyCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public SetLobbyCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "setlobby", "Set the lobby location", aliases);
         this.plugin = plugin;
     }

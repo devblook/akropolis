@@ -33,10 +33,11 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class CreativeCommand extends InjectableCommand {
 
-    public CreativeCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public CreativeCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "gmc", "Change to creative mode", "/gmc [player]", aliases);
     }
 

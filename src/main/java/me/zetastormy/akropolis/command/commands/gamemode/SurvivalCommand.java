@@ -33,10 +33,11 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class SurvivalCommand extends InjectableCommand {
 
-    public SurvivalCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public SurvivalCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "gms", "Change to survival mode", "/gms [player]", aliases);
     }
 

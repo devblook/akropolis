@@ -35,10 +35,10 @@ public class CustomCommand extends InjectableCommand {
     private final @NotNull List<String> actions;
 
     public CustomCommand(
-            @NotNull AkropolisPlugin plugin,
-            @NotNull String name,
-            @NotNull List<String> aliases,
-            @NotNull List<String> actions
+            final @NotNull AkropolisPlugin plugin,
+            final @NotNull String name,
+            final @NotNull List<String> aliases,
+            final @NotNull List<String> actions
     ) {
         super(plugin, name, "A custom Akropolis command", aliases);
         this.actions = actions;

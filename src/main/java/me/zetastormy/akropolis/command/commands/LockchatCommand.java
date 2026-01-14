@@ -31,11 +31,12 @@ import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.chat.ChatLock;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class LockchatCommand extends InjectableCommand {
-    private final AkropolisPlugin plugin;
+    private final @NotNull AkropolisPlugin plugin;
 
-    public LockchatCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public LockchatCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "lockchat", "Locks global chat", aliases);
         this.plugin = plugin;
     }

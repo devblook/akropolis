@@ -31,10 +31,11 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class ClearchatCommand extends InjectableCommand {
 
-    public ClearchatCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public ClearchatCommand(final @NotNull AkropolisPlugin plugin, @NotNull List<String> aliases) {
         super(plugin, "clearchat", "Clear global or a player's chat", "/clearchat [player]", aliases);
     }
 

@@ -33,10 +33,11 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class AdventureCommand extends InjectableCommand {
 
-    public AdventureCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public AdventureCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "gma", "Change to adventure mode", "/gma [player]", aliases);
     }
 

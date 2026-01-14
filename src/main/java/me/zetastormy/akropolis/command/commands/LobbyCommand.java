@@ -31,10 +31,11 @@ import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class LobbyCommand extends InjectableCommand {
 
-    public LobbyCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public LobbyCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
     }
 

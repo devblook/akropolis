@@ -26,6 +26,7 @@ import me.zetastormy.akropolis.config.type.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class CommandManager {
 
         commandsSection.forEach((key, builtinCommand) -> {
             if (builtinCommand.enabled()) {
-                registerCommand(key, builtinCommand.aliases());
+                registerCommand(key, Objects.requireNonNullElse(builtinCommand.aliases(), new ArrayList<>()));
             }
         });
 
@@ -84,7 +85,7 @@ public class CommandManager {
         });
     }
 
-    private void registerCommand(String cmd, List<String> aliases) {
+    private void registerCommand(@NotNull String cmd, @NotNull List<String> aliases) {
         switch (cmd.toUpperCase()) {
             case "GAMEMODE" -> registerCommand(new GamemodeCommand(plugin, aliases));
             case "GMS" -> registerCommand(new SurvivalCommand(plugin, aliases));

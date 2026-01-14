@@ -31,11 +31,12 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.player.PlayerVanish;
+import org.jetbrains.annotations.NotNull;
 
 public class VanishCommand extends InjectableCommand {
-    private final AkropolisPlugin plugin;
+    private final @NotNull AkropolisPlugin plugin;
 
-    public VanishCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public VanishCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "vanish", "Disappear into thin air!", aliases);
         this.plugin = plugin;
     }

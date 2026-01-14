@@ -27,17 +27,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("NullableProblems")
 public abstract class InjectableCommand extends Command implements PluginIdentifiableCommand {
     private final AkropolisPlugin plugin;
 
-    protected InjectableCommand(AkropolisPlugin plugin, String name, String description, List<String> aliases) {
+    protected InjectableCommand(AkropolisPlugin plugin, String name, String description, @NotNull List<String> aliases) {
         super(name, description, "/" + name, aliases);
         this.plugin = plugin;
     }
 
-    protected InjectableCommand(AkropolisPlugin plugin, String name, String description, String usageMessage, List<String> aliases) {
+    protected InjectableCommand(
+            @NotNull AkropolisPlugin plugin,
+            @NotNull String name,
+            @NotNull String description,
+            @NotNull String usageMessage,
+            @NotNull List<String> aliases
+    ) {
         super(name, description, usageMessage, aliases);
         this.plugin = plugin;
     }

@@ -33,10 +33,11 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class GamemodeCommand extends InjectableCommand {
 
-    public GamemodeCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public GamemodeCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "gamemode", "Allows you to change gamemode", "/gamemode <gamemode> [player]", aliases);
     }
 

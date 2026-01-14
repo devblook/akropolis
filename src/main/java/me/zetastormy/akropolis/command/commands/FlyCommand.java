@@ -35,12 +35,13 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.ConfigManager;
 import me.zetastormy.akropolis.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class FlyCommand extends InjectableCommand {
-    private final ConfigurationContainer<Data> dataConfig;
+    private final @NotNull ConfigurationContainer<Data> dataConfig;
     private final boolean saveState;
 
-    public FlyCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public FlyCommand(@NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "fly", "Toggle flight mode", "/fly [player]", aliases);
 
         ConfigManager configManager = plugin.getConfigManager();

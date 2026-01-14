@@ -33,10 +33,11 @@ import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class SpectatorCommand extends InjectableCommand {
 
-    public SpectatorCommand(AkropolisPlugin plugin, List<String> aliases) {
+    public SpectatorCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "gmsp", "Change to spectator mode", "/gmsp [player]", aliases);
     }
 
