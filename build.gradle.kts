@@ -76,7 +76,10 @@ tasks {
             exclude(dependency("net.megavex:.*:.*"))
         }
 
-        relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
+        relocate("net.megavex.scoreboardlibrary", "${libsPackage}.net.megavex.scoreboardlibrary")
+
+        relocate("org.spongepowered.configurate", "${libsPackage}.org.spongepowered.configurate")
+        relocate("io.leangen.geantyref", "${libsPackage}.io.leangen.geantyref")
     }
 
     withType<JavaCompile> {
