@@ -63,7 +63,9 @@ public class ConfigurationContainer<C> {
                 rootNode.set(config);
                 loader.save(rootNode);
             }
-            return new ConfigurationContainer<>(config, clazz, loader, rootNode, logger, filePath);
+            var instance = new ConfigurationContainer<>(config, clazz, loader, rootNode, logger, filePath);
+            logger.info("Configuration file {} loaded successfully!", filePath);
+            return instance;
         } catch (final ConfigurateException exception) {
             logger.error("An exception occurred while loading configuration named {}",
                     filePath.getFileName(), exception);
