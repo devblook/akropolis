@@ -404,7 +404,7 @@ chat_management:
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
-          emoji: "<yellow>😎<reset>"]
+          emoji: "<yellow>😎<reset>"
         heart:
 
           # Players have to type this to use the emoji.
