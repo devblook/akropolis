@@ -1,5 +1,6 @@
 package me.zetastormy.akropolis.config.type;
 
+import me.zetastormy.akropolis.util.MapUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -60,7 +61,7 @@ public class Commands {
             You can create your own commands here and delete the ones you don't want.
             If you don't want any custom command set to 'custom_commands: {}'\
             """)
-    private Map<String, CustomCommand> customCommands = Map.ofEntries(
+    private Map<String, CustomCommand> customCommands = MapUtils.linkedHashMapOfEntries(
             Map.entry("website", new CustomCommand(
                     null,
                     List.of("web"),
@@ -85,7 +86,7 @@ public class Commands {
             Do NOT delete any command section from here.
             You can delete the aliases list or set to 'aliases: []'\
             """)
-    private Map<String, BuiltinCommand> commands = Map.ofEntries(
+    private Map<String, BuiltinCommand> commands = MapUtils.linkedHashMapOfEntries(
             Map.entry("gamemode", new BuiltinCommand(true, List.of("gm"))),
             Map.entry("gms", new BuiltinCommand(true)),
             Map.entry("gmc", new BuiltinCommand(true)),

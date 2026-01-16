@@ -1,5 +1,6 @@
 package me.zetastormy.akropolis.config.type;
 
+import me.zetastormy.akropolis.util.MapUtils;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -574,7 +575,7 @@ public class Settings {
         private Sound sound = new Sound(true, "BLOCK_NOTE_BLOCK_PLING", 1.0, 1.0);
 
         @Comment("Announcement list.")
-        private Map<String, List<String>> announcements = Map.ofEntries(
+        private Map<String, List<String>> announcements = MapUtils.linkedHashMapOfEntries(
                 Map.entry("test1", List.of(
                         "<reset>",
                         "<blue><b>INFORMATION</b> <dark_gray>- Akropolis announcements",
@@ -772,7 +773,7 @@ public class Settings {
                 To use any of these formats, the player must have the permission
                 akropolis.chat.group.<group name>\
                 """)
-        private Map<String, ChatGroup> groups = Map.ofEntries(
+        private Map<String, ChatGroup> groups = MapUtils.linkedHashMapOfEntries(
                 Map.entry(
                         "default", new ChatGroup(
                                 0,
@@ -781,7 +782,7 @@ public class Settings {
                                         3,
                                         "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
                                 ),
-                                Map.ofEntries(
+                                MapUtils.linkedHashMapOfEntries(
                                         Map.entry("smile", new ChatGroup.Emoji(
                                                 List.of(":)", ":smile:"),
                                                 List.of("<yellow>😀<reset>")
@@ -805,7 +806,7 @@ public class Settings {
                                         1,
                                         "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
                                 ),
-                                Map.ofEntries(
+                                MapUtils.linkedHashMapOfEntries(
                                         Map.entry("tableflip", new ChatGroup.Emoji(
                                                 List.of(":tableflip:"),
                                                 List.of("<red>(╯°□°）╯<white>︵<gray> ┻━┻<reset>")
@@ -1127,7 +1128,7 @@ public class Settings {
         private boolean disableInventoryMovement = true;
 
         @Comment("Add any items you want following the same format, more info in the wiki.")
-        private Map<String, ItemRecord> items = Map.ofEntries(
+        private Map<String, ItemRecord> items = MapUtils.linkedHashMapOfEntries(
                 Map.entry("infobook", new ItemRecord(
                         "BOOK",
                         1,
