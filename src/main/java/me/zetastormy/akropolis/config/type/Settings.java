@@ -84,7 +84,10 @@ public class Settings {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             
             Prevent users downloading your world via the world downloader mod.
-            There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download.\
+            There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download.
+            Note: this only blocks the official World Downloader mod which allows blocking by the server, there is no way of
+            blocking stealth world downloading mods since the world chunks are downloaded by the player to be able to see the
+            world.\
             """)
     private AntiWDL antiWdl = new AntiWDL();
 
