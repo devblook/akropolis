@@ -21,6 +21,7 @@ package me.zetastormy.akropolis.module.modules.hotbar.items;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import me.zetastormy.akropolis.config.type.Messages;
 import me.zetastormy.akropolis.config.type.Settings;
@@ -50,7 +51,7 @@ public class CustomItem extends HotbarItem {
             return;
         }
 
-        cooldown = itemRecord.cooldown();
+        cooldown = Objects.requireNonNullElse(itemRecord.cooldown(), 0);
         actions = itemRecord.actions();
     }
 

@@ -311,26 +311,26 @@ public class Settings {
 
     @ConfigSerializable
     public record ItemRecord(
-            String material,
-            Integer amount,
-            Integer slot,
-            Boolean unbreakable,
-            String username,
-            String displayName,
-            List<String> lore,
+            @Nullable String material,
+            @Nullable Integer amount,
+            @Nullable Integer slot,
+            @Nullable Boolean unbreakable,
+            @Nullable String username,
+            @Nullable String displayName,
+            @Nullable List<String> lore,
             @Nullable Boolean glow,
-            List<String> itemFlags,
-            List<String> customModelData,
-            String customItemModel,
+            @Nullable List<String> itemFlags,
+            @Nullable List<String> customModelData,
+            @Nullable String customItemModel,
             @Comment("enchantment:level")
-            List<String> enchantments,
-            String tooltipStyle,
-            List<String> actions,
+            @Nullable List<String> enchantments,
+            @Nullable String tooltipStyle,
+            @Nullable List<String> actions,
             @Comment("Should we limit how fast a user can use this item? Cooldown is in seconds")
-            Integer cooldown,
-            String base64,
-            String hdb,
-            String permission
+            @Nullable Integer cooldown,
+            @Nullable String base64,
+            @Nullable String hdb,
+            @Nullable String permission
     ) {
         public String username(String def) {
             return Objects.requireNonNullElse(this.username, def);
