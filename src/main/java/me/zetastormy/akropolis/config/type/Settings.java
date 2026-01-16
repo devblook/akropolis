@@ -645,12 +645,9 @@ public class Settings {
             @Comment("The amount of boss bar that's filled up. A number in the interval [0, 1].")
             private double progress = 1.0;
 
-            private Sound sound = new Sound(false, "BLOCK_NOTE_BLOCK_PLING", 1.0, 1.0);
-
 
             public BossBar.Overlay type() { return this.type; }
             public double progress() { return this.progress; }
-            public Sound sound() { return this.sound; }
         }
 
         public boolean enabled() { return this.enabled; }
