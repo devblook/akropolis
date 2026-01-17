@@ -14,60 +14,60 @@ import java.util.Objects;
 @ConfigSerializable
 public class Settings {
     public static String HEADER = """
-                _    _                          _ _
-               / \\  | | ___ __ ___  _ __   ___ | (_)___
-              / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
-             / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
-            /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
-                                   |_|
+            |      _    _                          _ _
+            |     / \\  | | ___ __ ___  _ __   ___ | (_)___
+            |    / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
+            |   / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
+            |  /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
+            |                         |_|
             --------
             CUSTOM MENUS:
-            
-              You can add more menus to the "Akropolis/menus" directory,
-              copy and paste the default, server selector, menu and edit the file.
-              Use the name of the file as the action ID.
+            |
+            |  You can add more menus to the "Akropolis/menus" directory,
+            |  copy and paste the default, server selector, menu and edit the file.
+            |  Use the name of the file as the action ID.
             --------
             BUILT IN PLUGIN PLACEHOLDERS:
-            
-              <player> - Returns player name
-              <location> - Returns player location
-              <online> - Returns number of players online
-              <online_max> - Returns number of max player slots
-              <world> - Returns player world name
-              <ping> - Returns player ping
-              <current_song> - Returns the current song title
-            
-              Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
-              PlaceholderAPI's placeholders use the following format: <papi:placeholder>
-              Example: <papi:luckperms_prefix>
-            
-              If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
-              by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
-              For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
+            |
+            |  <player> - Returns player name
+            |  <location> - Returns player location
+            |  <online> - Returns number of players online
+            |  <online_max> - Returns number of max player slots
+            |  <world> - Returns player world name
+            |  <ping> - Returns player ping
+            |  <current_song> - Returns the current song title
+            |
+            |  Use PlaceholderAPI to get more: https://www.spigotmc.org/resources/placeholderapi.6245/
+            |  PlaceholderAPI's placeholders use the following format: <papi:placeholder>
+            |  Example: <papi:luckperms_prefix>
+            |
+            |  If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
+            |  by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
+            |  For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
             --------
             ACTIONS:
-            
-              [MESSAGE] <message> - Send a message to the player
-              [BROADCAST] <message> - Broadcast a message to everyone
-              [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
-              [ACTIONBAR] <message> - Send an action bar message
-              [SOUND] <sound> - Send the player a sound
-              [COMMAND] <command> - Execute a command as the player
-              [CONSOLE] <command> - Execute a command as console
-              [GAMEMODE] <gamemode> - Change a players' gamemode
-              [SERVER] <server> - Send a player to a server
-              [EFFECT] <effect;level>- Give a potion effect
-              [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
-              [CLOSE] - Close an open inventory
+            |
+            |  [MESSAGE] <message> - Send a message to the player
+            |  [BROADCAST] <message> - Broadcast a message to everyone
+            |  [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
+            |  [ACTIONBAR] <message> - Send an action bar message
+            |  [SOUND] <sound> - Send the player a sound
+            |  [COMMAND] <command> - Execute a command as the player
+            |  [CONSOLE] <command> - Execute a command as console
+            |  [GAMEMODE] <gamemode> - Change a players' gamemode
+            |  [SERVER] <server> - Send a player to a server
+            |  [EFFECT] <effect;level> - Give a potion effect
+            |  [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+            |  [CLOSE] - Close an open inventory
             --------
             MESSAGE FORMATTING:
-            
-              The plugin uses MiniMessage to format the chat,
-              so you can use tags to color messages, like this: <red> Red colored message!
-              You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
-            
-              More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
-              There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
+            |
+            |  The plugin uses MiniMessage to format the chat,
+            |  so you can use tags to color messages, like this: <red> Red colored message!
+            |  You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+            |
+            |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+            |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
             """;
 
     @Comment("""
@@ -154,7 +154,8 @@ public class Settings {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | PLAYER MOUNT                             |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            \
+            
+            Players with the akropolis.player.mount will be able to mount other players.\
             """)
     private PlayerMount playerMount = new PlayerMount();
 
@@ -470,7 +471,7 @@ public class Settings {
                     the nearest Minecraft named color will be used.\
                     """)
             private String nameColor = "#FFFFFF";
-            private String suffix = "<yellow><ping>";
+            private String suffix = " <yellow><ping>";
 
 
             public String prefix() { return this.prefix; }
@@ -491,8 +492,7 @@ public class Settings {
         private DisplayDelay displayDelay = new DisplayDelay();
 
         @Comment("""
-                Should we delay showing the scoreboard?
-                Value in ticks (20 ticks = 1 second), 0 to disable.
+                Should we refresh the scoreboard (update placeholders)?
                 """)
         private RefreshWithRate refresh = new RefreshWithRate(200);
 
@@ -578,31 +578,31 @@ public class Settings {
         private Map<String, List<String>> announcements = MapUtils.linkedHashMapOfEntries(
                 Map.entry("test1", List.of(
                         "<reset>",
-                        "<blue><b>INFORMATION</b> <dark_gray>- Akropolis announcements",
+                        "<blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements",
                         "<click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>",
                         "<reset>"
                 )),
                 Map.entry("test2", List.of(
                         "<reset>",
-                        "<gold><b>ANNOUNCEMENT</b> <dark_gray>- Akropolis announcements",
+                        "<gold><b>ANNOUNCEMENT</b> <dark_gray>- Akropolis default announcements",
                         "<click:open_url:'https://github.com/zetastormy/'><hover:show_text:'<yellow>Click here to navigate to my GitHub!'><dark_gray>» <gray>This plugin was forked by <yellow>ZetaStormy<gray>.</hover></click>",
                         "<reset>"
                 )),
                 Map.entry("test3", List.of(
                         "<reset>",
-                        "<yellow><b>TIP</b> <dark_gray>- Akropolis announcements",
+                        "<yellow><b>TIP</b> <dark_gray>- Akropolis default announcements",
                         "<dark_gray>» <gray>Configure these messages in the <aqua>config.yml<gray>.",
                         "<reset>"
                 )),
                 Map.entry("test4", List.of(
                         "<reset>",
-                        "<blue><b>INFORMATION</b> <dark_gray>- Akropolis announcements",
+                        "<blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements",
                         "<click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>",
                         "<reset>"
                 )),
                 Map.entry("test5", List.of(
                         "<reset>",
-                        "<yellow><b>TIP</b> <dark_gray>- Akropolis announcements",
+                        "<yellow><b>TIP</b> <dark_gray>- Akropolis default announcements",
                         "<click:open_url:'https://discord.gg/w438z8TKej'><hover:show_text:'<yellow>Click here to join our Discord server!'><dark_gray>» <gray>Click here to join <color:#1e2f45>Dev<white>Blook <gray>Team's Discord server to get support and update announcements of all our projects.</hover></click>",
                         "<reset>"
                 ))
@@ -952,7 +952,10 @@ public class Settings {
 
     @ConfigSerializable
     public static class AntiSwear {
+        @Comment("Should the anti-swear feature be enabled?")
         private boolean enabled = true;
+
+        @Comment("List of words that will be blocked.")
         private List<String> blockedWords = List.of(
                 "fuck",
                 "shit",
@@ -967,7 +970,6 @@ public class Settings {
     public static class WorldSettings {
         @Comment("""
                 Player related
-                
                 Inventory drop is on death\
                 """)
         private boolean disableInventoryDrop = true;
@@ -1156,8 +1158,8 @@ public class Settings {
                         null,
                         null
                 )),
-                // TODO: Should we use snake case here?
-                Map.entry("serverSelector", new ItemRecord(
+                // Should we use snake case here? Yes
+                Map.entry("server_selector", new ItemRecord(
                         "NETHER_STAR",
                         1,
                         4,
