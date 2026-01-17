@@ -78,7 +78,7 @@ public class Module implements Listener {
     }
 
     public <T> ConfigurationContainer<T> getConfigFile(Class<T> type) {
-        return getPlugin().getFightModeManager().getConfigFile(type);
+        return getPlugin().getConfigManager().getFile(type);
     }
 
     public void executeActions(Player player, List<String> actions) {
