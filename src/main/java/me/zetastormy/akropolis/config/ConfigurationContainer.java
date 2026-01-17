@@ -49,7 +49,8 @@ public class ConfigurationContainer<C> {
         final ObjectMapper.Factory customFactory = ObjectMapper.factoryBuilder()
                 .defaultNamingScheme(namingScheme).build();
 
-        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder().defaultOptions(
+        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder().commentsEnabled(true)
+                .defaultOptions(
                 options -> options.header(header).shouldCopyDefaults(false)
                         .serializers(build -> build.registerAnnotatedObjects(customFactory)
                                 .registerAll(typeSerializerCollection))

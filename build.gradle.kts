@@ -61,6 +61,12 @@ configurations.implementation {
     exclude("org.bukkit", "bukkit")
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
+    }
+}
+
 tasks {
     processResources {
         filesMatching("paper-plugin.yml") {
