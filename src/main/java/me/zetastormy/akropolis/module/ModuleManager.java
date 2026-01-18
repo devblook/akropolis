@@ -82,6 +82,7 @@ public class ModuleManager {
             }
         }
 
+        // TODO: Stop using node paths to avoid inexistent paths
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl", "enabled");
         registerModule(new DoubleJump(plugin), "double_jump", "enabled");
         registerModule(new PlayerMount(plugin), "player_mount", "enabled");
@@ -93,7 +94,7 @@ public class ModuleManager {
         registerModule(new AutoBroadcast(plugin), "announcements", "enabled");
         registerModule(new AntiSwear(plugin), "anti_swear", "enabled");
         registerModule(new ChatCommandBlock(plugin), "command_block", "enabled");
-        registerModule(new ChatGroups(plugin), "groups", "enabled");
+        registerModule(new ChatGroups(plugin), "chat_management", "enabled");
         registerModule(new ChatLock(plugin));
         registerModule(new PlayerListener(plugin));
         registerModule(new HotbarManager(plugin));

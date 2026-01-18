@@ -110,7 +110,11 @@ public class ConfigurationContainer<C> {
     }
 
     public boolean getBoolean(String... path) {
-        return this.root.node((Object[]) path).getBoolean();
+        var node = this.root.node((Object[]) path);
+        if (node.virtual()) {
+            this.logger.error("Node path {} not found in configuration file {}", path, this.filePath);
+        }
+        return node.getBoolean();
     }
 
 }
