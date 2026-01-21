@@ -27,7 +27,6 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,7 +101,7 @@ public class ConfigManager {
     }
 
     public void saveData() {
-        getFile(Data.class).save();
+        getFile(Data.class).save().join();
     }
 
     public <T> void registerFile(Class<T> type, ConfigurationContainer<T> config) {

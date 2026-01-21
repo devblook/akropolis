@@ -21,7 +21,6 @@ package me.zetastormy.akropolis.module.modules.hologram;
 
 import java.util.*;
 
-import me.zetastormy.akropolis.config.ConfigurationContainer;
 import me.zetastormy.akropolis.config.type.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -38,7 +37,6 @@ import net.kyori.adventure.text.Component;
 
 public class HologramManager extends Module implements LifeCycle {
     private Set<Hologram> holograms;
-    private ConfigurationContainer<Data> dataConfig;
     private Map<String, Data.Hologram> hologramsSection;
 
     public HologramManager(AkropolisPlugin plugin) {
@@ -48,7 +46,6 @@ public class HologramManager extends Module implements LifeCycle {
     @Override
     public void onEnable() {
         holograms = new HashSet<>();
-        dataConfig = getPlugin().getConfigManager().getFile(Data.class);
         hologramsSection = getConfig(Data.class).getHolograms();
 
         if (hologramsSection.isEmpty()) {
@@ -86,8 +83,6 @@ public class HologramManager extends Module implements LifeCycle {
             Data.Hologram storedHologram = new Data.Hologram(this.getLines(hologram), hologram.getLocation());
             hologramsSection.put(hologram.getName(), storedHologram);
         });
-
-        dataConfig.save();
         removeAllHolograms();
     }
 
