@@ -64,6 +64,7 @@ public class LobbySpawn extends Module implements LifeCycle {
 
     public void setLocation(Location location) {
         this.location = location;
+        this.getConfigFile(Data.class).save(this.getConfigurationExecutorService());
     }
 
     @EventHandler(priority = EventPriority.HIGH)

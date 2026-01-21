@@ -23,19 +23,28 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.serializer.LocationSerializer;
 import me.zetastormy.akropolis.config.type.*;
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ConfigManager {
 
     private final Map<Class<?>, ConfigurationContainer<?>> configurations;
+    private final Logger logger;
+    private final ExecutorService configExecutor = Executors.newSingleThreadExecutor();
 
-    public ConfigManager() {
+    public ConfigManager(final Logger logger) {
         this.configurations = new HashMap<>();
+        this.logger = logger;
     }
 
     public void loadFiles(AkropolisPlugin plugin) {
@@ -79,14 +88,19 @@ public class ConfigManager {
                     typeSerializerCollection
             ));
         } catch (final ConfigurateException exception) {
-            plugin.getLogger().severe("There was an error loading the configuration.");
-            plugin.getLogger().severe("Please check for any obvious configuration mistakes");
-            plugin.getLogger().severe("such as using tabs for spaces or forgetting to end quotes");
-            plugin.getLogger().severe("before reporting to the developer. The plugin will now disable.");
-            plugin.getLogger().severe("You can paste each configuration file in https://yamllint.com");
-            plugin.getLogger().severe("and click 'Go' to automatically check for YAML format mistakes.");
-            plugin.getLogger().severe("If you need further help you can join our Discord server:");
-            plugin.getLogger().severe("https://discord.gg/w438z8TKej");
+            this.logger.error("There was an error loading the configuration.");
+            this.logger.error("The plugin will now disable.");
+            this.logger.error("");
+            this.logger.error("Please check for any common configuration mistakes such as:");
+            this.logger.error("- Not using quotes at all on strings with special characters");
+            this.logger.error("- Forgetting to end quotes");
+            this.logger.error("- Using different open and close quotes in a string");
+            this.logger.error("- Using tabs instead of spaces");
+            this.logger.error("");
+            this.logger.error("You can paste each configuration file in https://yamllint.com");
+            this.logger.error("and click 'Go' to automatically check for YAML format mistakes.");
+            this.logger.error("If you need further help you can join our Discord server:");
+            this.logger.error("https://discord.gg/w438z8TKej");
             plugin.getServer().getPluginManager().disablePlugin(plugin);
         }
     }
@@ -101,11 +115,32 @@ public class ConfigManager {
     }
 
     public void saveData() {
-        getFile(Data.class).save().join();
+        final @Nullable ConfigurationContainer<Data> dataConfig = this.getFile(Data.class);
+        if (dataConfig == null) {
+            this.logger.error("Could not save data because it was not loaded.");
+        } else {
+            this.getFile(Data.class).save(this.configExecutor);
+        }
+
+        try {
+            this.logger.info("Awaiting configuration executor shutdown...");
+            this.configExecutor.shutdown();
+            if (!this.configExecutor.awaitTermination(30, TimeUnit.SECONDS)) {
+                this.logger.error("Timed out while awaiting configuration executor shutdown, data may not have saved.");
+            } else {
+                this.logger.info("Configuration executor has shut down successfully!");
+            }
+        } catch (InterruptedException e) {
+            this.logger.error("Interrupted while awaiting configuration executor shutdown, data may not have saved.");
+        }
     }
 
     public <T> void registerFile(Class<T> type, ConfigurationContainer<T> config) {
         configurations.put(type, config);
+    }
+
+    public @NotNull ExecutorService getConfigurationExecutorService() {
+        return this.configExecutor;
     }
 
 }

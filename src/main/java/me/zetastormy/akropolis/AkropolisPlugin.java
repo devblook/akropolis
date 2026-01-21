@@ -73,7 +73,7 @@ public class AkropolisPlugin extends JavaPlugin {
         hooksManager = new HooksManager(this);
 
         // Load config files
-        configManager = new ConfigManager();
+        configManager = new ConfigManager(this.getSLF4JLogger());
         configManager.loadFiles(this);
 
         // If there were any configuration errors we should not continue

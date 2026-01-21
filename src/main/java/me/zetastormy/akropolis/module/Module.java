@@ -22,6 +22,7 @@ package me.zetastormy.akropolis.module;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 import me.zetastormy.akropolis.config.ConfigurationContainer;
 import org.bukkit.Location;
@@ -31,6 +32,7 @@ import org.bukkit.event.Listener;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.cooldown.CooldownManager;
+import org.jetbrains.annotations.NotNull;
 
 public class Module implements Listener {
     private final AkropolisPlugin plugin;
@@ -79,6 +81,10 @@ public class Module implements Listener {
 
     public <T> ConfigurationContainer<T> getConfigFile(Class<T> type) {
         return getPlugin().getConfigManager().getFile(type);
+    }
+
+    public @NotNull ExecutorService getConfigurationExecutorService() {
+        return this.getPlugin().getConfigManager().getConfigurationExecutorService();
     }
 
     public void executeActions(Player player, List<String> actions) {

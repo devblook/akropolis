@@ -212,7 +212,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
 
     public void setLocation(Location location) {
         dataConfig.getConfig().getSongPlayer().setLocation(location);
-        dataConfig.save();
+        dataConfig.save(this.getConfigurationExecutorService());
     }
 
     public void skip() {

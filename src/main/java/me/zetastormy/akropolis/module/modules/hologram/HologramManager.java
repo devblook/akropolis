@@ -129,7 +129,7 @@ public class HologramManager extends Module implements LifeCycle {
 
         if (hologramsSection != null && hologramsSection.get(name) != null) {
             hologramsSection.put(name, null);
-            getPlugin().getConfigManager().getFile(Data.class).save();
+            getPlugin().getConfigManager().getFile(Data.class).save(this.getConfigurationExecutorService());
         }
     }
 

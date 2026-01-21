@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -132,7 +133,7 @@ public class ConfigurationContainer<C> {
         });
     }
 
-    public CompletableFuture<Boolean> save() {
+    public CompletableFuture<Boolean> save(final Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 this.loader.save(this.root.set(this.clazz, this.config.get()));
@@ -143,7 +144,7 @@ public class ConfigurationContainer<C> {
                         this.filePath.getFileName(), exception);
                 return false;
             }
-        });
+        }, executor);
     }
 
     public C getConfig() {
