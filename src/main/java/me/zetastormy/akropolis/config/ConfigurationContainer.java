@@ -2,8 +2,13 @@ package me.zetastormy.akropolis.config;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
@@ -39,12 +44,13 @@ public class ConfigurationContainer<C> {
     }
 
     public static <C> ConfigurationContainer<C> load(
-            final Class<C> clazz,
-            final Logger logger,
-            final Path filePath,
-            final String header,
-            final NamingSchemes namingScheme,
-            final TypeSerializerCollection typeSerializerCollection
+            final @NotNull Class<C> clazz,
+            final @NotNull Logger logger,
+            final @NotNull Path filePath,
+            final @NotNull String header,
+            final @NotNull NamingSchemes namingScheme,
+            final @Nullable TypeSerializerCollection typeSerializerCollection,
+            final @Nullable Supplier<C> defaultObjectSupplier
     ) throws ConfigurateException {
         final ObjectMapper.Factory customFactory = ObjectMapper.factoryBuilder()
                 .defaultNamingScheme(namingScheme).build();
@@ -53,14 +59,19 @@ public class ConfigurationContainer<C> {
                 .defaultOptions(
                 options -> options.header(header).shouldCopyDefaults(false)
                         .serializers(build -> build.registerAnnotatedObjects(customFactory)
-                                .registerAll(typeSerializerCollection))
+                                .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
+                                    return TypeSerializerCollection.builder().build();
+                                })))
         ).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK).build();
 
         try {
             CommentedConfigurationNode rootNode = loader.load();
             C config = rootNode.get(clazz);
             if (Files.notExists(filePath)) {
-                logger.info("Path {} does not exist, saving...", filePath);
+                logger.info("Path {} does not exist, saving default values...", filePath);
+                if (defaultObjectSupplier != null) {
+                    config = defaultObjectSupplier.get();
+                }
                 rootNode.set(config);
                 loader.save(rootNode);
             }
@@ -72,6 +83,17 @@ public class ConfigurationContainer<C> {
                     filePath.getFileName(), exception);
             throw exception;
         }
+    }
+
+    public static <C> ConfigurationContainer<C> load(
+            final @NotNull Class<C> clazz,
+            final @NotNull Logger logger,
+            final @NotNull Path filePath,
+            final @NotNull String header,
+            final @NotNull NamingSchemes namingScheme,
+            final @Nullable TypeSerializerCollection typeSerializerCollection
+    ) throws ConfigurateException {
+        return load(clazz, logger, filePath, header, namingScheme, typeSerializerCollection, null);
     }
 
     public CompletableFuture<Boolean> reload() {

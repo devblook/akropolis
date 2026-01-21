@@ -27,13 +27,25 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
 
 public class InventoryBuilder implements InventoryHolder {
+    private final Logger logger;
+    private final String inventoryName;
     private final Map<Integer, InventoryItem> icons;
     private int size;
     private final String title;
 
-    public InventoryBuilder(int size, String title) {
+    public InventoryBuilder(
+            final @NotNull Logger logger,
+            final @NotNull String inventoryName,
+            final int size,
+            final @NotNull String title
+    ) {
+        this.logger = logger;
+        this.inventoryName = inventoryName;
         this.icons = new HashMap<>();
         this.size = size;
         this.title = title;
@@ -47,12 +59,33 @@ public class InventoryBuilder implements InventoryHolder {
         return icons.get(slot);
     }
 
-    @SuppressWarnings("NullableProblems")
-    public Inventory getInventory() {
-        if (size > 54)
-            size = 54;
-        else if (size < 9)
-            size = 9;
+
+    public @NonNull Inventory getInventory() {
+        if (this.size > 54) {
+            logger.warn(
+                    "Configured inventory size '{}' for menu '{}' is greater than 54, using closest value 54",
+                    this.size,
+                    this.inventoryName
+            );
+            this.size = 54;
+        }
+        else if (this.size < 9) {
+            logger.warn(
+                    "Configured inventory size '{}' for menu '{}' is lower than 9, using closest value 9",
+                    this.size,
+                    this.inventoryName
+            );
+            this.size = 9;
+        } else if (this.size % 9 != 0) {
+            int newSize = 9 * Math.toIntExact(Math.round(this.size / 9.0));
+            logger.warn(
+                    "Configured inventory size '{}' for menu '{}' is not a multiple of 9, using closest value '{}'",
+                    this.size,
+                    this.inventoryName,
+                    newSize
+            );
+            this.size = newSize;
+        }
 
         Inventory inventory = Bukkit.createInventory(this, size, PlaceholderUtil.setPlaceholders(title));
         for (Map.Entry<Integer, InventoryItem> entry : icons.entrySet()) {

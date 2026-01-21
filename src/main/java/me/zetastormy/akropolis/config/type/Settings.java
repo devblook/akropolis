@@ -284,6 +284,10 @@ public class Settings {
         @SuppressWarnings("unused")
         public RefreshWithRate() {}
 
+        public RefreshWithRate(boolean enabled, int defaultRate) {
+            this.enabled = enabled;
+            this.rate = defaultRate;
+        }
         public RefreshWithRate(int defaultRate) { this.rate = defaultRate; }
 
         public boolean enabled() { return this.enabled; }

@@ -20,98 +20,114 @@
 package me.zetastormy.akropolis.inventory;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.type.CustomInventory;
 import me.zetastormy.akropolis.inventory.inventories.CustomGUI;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.util.NamingSchemes;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
+import java.util.function.Supplier;
 
 public class InventoryManager {
     private AkropolisPlugin plugin;
     private final Map<String, AbstractInventory> inventories;
+    private final Map<String, ConfigurationContainer<CustomInventory>> configurations;
+    private static final String DIRECTORY_NAME = "menus";
+    private static final String CONFIGURATION_FORMAT_EXTENSION = ".yml";
+    private static final String DEFAULT_INVENTORY_NAME = "serverselector";
 
     public InventoryManager() {
-        inventories = new HashMap<>();
+        this.inventories = new HashMap<>();
+        this.configurations = new HashMap<>();
     }
 
-    public void onEnable(AkropolisPlugin plugin) {
+    public void onEnable(final AkropolisPlugin plugin) {
         this.plugin = plugin;
 
-        loadCustomMenus();
-        inventories.values().forEach(AbstractInventory::onEnable);
+        this.loadCustomMenus();
+        this.inventories.values().forEach(AbstractInventory::onEnable);
 
         plugin.getServer().getPluginManager().registerEvents(new InventoryListener(), plugin);
     }
 
     private void loadCustomMenus() {
-        File directory = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "menus");
+        final File directory = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + DIRECTORY_NAME);
 
         if (!directory.exists()) {
             if (!directory.mkdir()) {
-                plugin.getLogger().severe("Could not create menus' directory!");
-                plugin.getLogger().severe("The plugin will now disable.");
+                this.plugin.getSLF4JLogger().error("Could not create menus' directory!");
+                this.plugin.getSLF4JLogger().error("The plugin will now disable.");
                 Bukkit.getPluginManager().disablePlugin(plugin);
                 return;
             }
 
-            File file = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "menus",
-                    "serverselector.yml");
-
-            try (InputStream inputStream = this.plugin.getResource("serverselector.yml");
-                 OutputStream outputStream = new FileOutputStream(file)) {
-                if (inputStream == null) {
-                    plugin.getLogger().severe("Resource serverselector.yml not available in plugin's JAR!");
-                    plugin.getLogger().severe("The plugin will now disable.");
-                    Bukkit.getPluginManager().disablePlugin(plugin);
-                    return;
-                }
-
-                byte[] buffer = new byte[inputStream.available()];
-
-                if (inputStream.read(buffer) != 0) {
-                    plugin.getLogger().info("Resource file serverselector.yml written sucessfully!");
-                }
-
-                outputStream.write(buffer);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
+            this.registerMenu(DEFAULT_INVENTORY_NAME, CustomInventory::defaultServerSelector);
         }
 
         // Load all menu files
-        File[] yamlFiles = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "menus")
-                .listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
+        final File[] menuFiles = directory.listFiles(
+                (file) -> file.isFile() && file.getName().toLowerCase().endsWith(CONFIGURATION_FORMAT_EXTENSION)
+                && !(this.configurations.containsKey(DEFAULT_INVENTORY_NAME)
+                        && file.getName()
+                        .equalsIgnoreCase(DEFAULT_INVENTORY_NAME + CONFIGURATION_FORMAT_EXTENSION))
+        );
 
-        if (yamlFiles == null)
+        if (menuFiles == null) {
+            plugin.getSLF4JLogger().error("Could not list menu directory files");
             return;
-
-        for (File file : yamlFiles) {
-            String name = file.getName().replace(".yml", "");
-
-            if (inventories.containsKey(name)) {
-                plugin.getLogger()
-                        .warning("Inventory with name '" + file.getName() + "' already exists, skipping duplicate..");
-                continue;
-            }
-
-            CustomGUI customGUI;
-            try {
-                customGUI = new CustomGUI(plugin, YamlConfiguration.loadConfiguration(file));
-            } catch (Exception e) {
-                plugin.getLogger().severe("Could not load file '" + name + "' (YAML error).");
-                e.printStackTrace();
-                continue;
-            }
-
-            inventories.put(name, customGUI);
-            plugin.getLogger().log(Level.INFO, "Loaded custom menu {0}.", name);
         }
+
+        for (final File file : menuFiles) {
+            final String name = file.getName().replace(CONFIGURATION_FORMAT_EXTENSION, "");
+            this.registerMenu(directory, name);
+        }
+    }
+
+    private void registerMenu(
+            final @NotNull String name,
+            final @Nullable Supplier<CustomInventory> defaultObjectSupplier
+    ) {
+        final String fileName = name + CONFIGURATION_FORMAT_EXTENSION;
+
+        if (this.configurations.containsKey(name)) {
+            this.plugin.getSLF4JLogger()
+                    .warn("Skipping file '{}' duplicate of already loaded inventory '{}'", fileName, name);
+            return;
+        }
+
+        try {
+            final @NotNull Path dataPath = plugin.getDataPath();
+            ConfigurationContainer<CustomInventory> configContainer = ConfigurationContainer.load(
+                    CustomInventory.class,
+                    this.plugin.getSLF4JLogger(),
+                    dataPath.resolve(DIRECTORY_NAME).resolve(name + CONFIGURATION_FORMAT_EXTENSION),
+                    CustomInventory.HEADER,
+                    NamingSchemes.SNAKE_CASE,
+                    null,
+                    defaultObjectSupplier
+            );
+            this.configurations.put(name, configContainer);
+
+            final CustomGUI inventory = new CustomGUI(this.plugin, name, configContainer);
+            this.inventories.put(name, inventory);
+
+            this.plugin.getSLF4JLogger().info("Custom menu '{}' loaded successfully!", name);
+        } catch (final ConfigurateException exception) {
+            this.plugin.getSLF4JLogger().error("Failed to load custom menu file '{}'", fileName, exception);
+        }
+    }
+
+    private void registerMenu(final @NotNull File directory, final @NotNull String name) {
+        this.registerMenu(name, null);
     }
 
     public Map<String, AbstractInventory> getInventories() {
@@ -134,6 +150,7 @@ public class InventoryManager {
             abstractInventory.getOpenInventories().clear();
         });
 
-        inventories.clear();
+        this.inventories.clear();
+        this.configurations.clear();
     }
 }

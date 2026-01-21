@@ -20,74 +20,108 @@
 package me.zetastormy.akropolis.inventory.inventories;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.type.CustomInventory;
 import me.zetastormy.akropolis.inventory.AbstractInventory;
 import me.zetastormy.akropolis.inventory.InventoryBuilder;
 import me.zetastormy.akropolis.inventory.InventoryItem;
 import me.zetastormy.akropolis.util.ItemStackBuilder;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 public class CustomGUI extends AbstractInventory {
-    private final FileConfiguration config;
-    private final ConfigurationSection itemsSection;
+    private final @NotNull ConfigurationContainer<CustomInventory> configContainer;
+    private final @NotNull String inventoryName;
     private InventoryBuilder inventory;
 
-    public CustomGUI(AkropolisPlugin plugin, FileConfiguration config) {
+    public CustomGUI(
+            final @NotNull AkropolisPlugin plugin,
+            final @NotNull String inventoryName,
+            final @NotNull ConfigurationContainer<CustomInventory> configContainer
+    ) {
         super(plugin);
-        this.config = config;
-        this.itemsSection = config.getConfigurationSection("items");
+        this.inventoryName = inventoryName;
+        this.configContainer = configContainer;
     }
 
     @Override
     public void onEnable() {
-        InventoryBuilder inventoryBuilder = new InventoryBuilder(config.getInt("slots"),
-                config.getString("title"));
+        final CustomInventory config = this.configContainer.getConfig();
 
-        if (config.contains("refresh") && config.getBoolean("refresh.enabled")) {
-            setInventoryRefresh(config.getLong("refresh.rate"));
+        final InventoryBuilder inventoryBuilder = new InventoryBuilder(
+                getPlugin().getSLF4JLogger(),
+                this.inventoryName,
+                config.slots(),
+                config.title()
+        );
+
+        if (config.refresh().enabled()) {
+            this.setInventoryRefresh(config.refresh().rate());
         }
 
-        if (itemsSection == null) {
-            getPlugin().getLogger().severe("Items configuration section is missing!");
+        if (config.items().isEmpty()) {
+            getPlugin().getSLF4JLogger()
+                    .error("Items configuration section for menu '{}' is empty!", this.inventoryName);
             return;
         }
 
-        for (String item : itemsSection.getKeys(false)) {
+        config.items().forEach((key, item) -> {
             try {
-                InventoryItem inventoryItem = build(item);
-                setFiller(inventoryBuilder, item, inventoryItem);
-            } catch (Exception e) {
-                e.printStackTrace();
-                getPlugin().getLogger().warning("There was an error loading GUI item ID '" + item + "', skipping..");
+                final InventoryItem inventoryItem = build(item);
+                if (!selectAndFillSlots(inventoryBuilder, item, inventoryItem)) {
+                    getPlugin().getSLF4JLogger().warn(
+                            "Could not find any slot for item '{}' on menu '{}', please check your configuration.",
+                            key,
+                            this.inventoryName
+                    );
+                }
+            } catch (Exception exception) {
+                getPlugin().getSLF4JLogger().warn(
+                        "There was an error loading GUI item ID '{}' on menu '{}', skipping...",
+                        key,
+                        this.inventoryName,
+                        exception
+                );
             }
-        }
+        });
 
         inventory = inventoryBuilder;
     }
 
-    private InventoryItem build(String item) {
-        ItemStackBuilder itemStackBuilder = ItemStackBuilder
-                .getItemStack(itemsSection.getConfigurationSection(item));
+    private @NotNull InventoryItem build(final @NotNull CustomInventory.ItemRecord itemConfig) {
+        final ItemStackBuilder itemStackBuilder = ItemStackBuilder
+                .getItemStack(itemConfig);
+
         InventoryItem inventoryItem;
 
-        if (!itemsSection.contains(item + ".actions")) {
+        if (itemConfig.actions() == null || itemConfig.actions().isEmpty()) {
             inventoryItem = new InventoryItem(itemStackBuilder.build());
         } else {
             inventoryItem = new InventoryItem(itemStackBuilder.build()).addClickAction(p -> getPlugin()
-                    .getActionManager().executeActions(p, itemsSection.getStringList(item + ".actions")));
+                    .getActionManager().executeActions(p, itemConfig.actions()));
         }
 
         return inventoryItem;
     }
 
-    private void setFiller(InventoryBuilder inventoryBuilder, String item, InventoryItem inventoryItem) {
-        if (itemsSection.contains(item + ".slots")) {
-            for (String slot : itemsSection.getStringList(item + ".slots")) {
-                inventoryBuilder.setItem(Integer.parseInt(slot), inventoryItem);
+    /**
+     * Selects the slots that the item will fill based on the
+     * configuration and sets the slots to the item.
+     *
+     * @return whether the item was set to at least one slot
+     */
+    private boolean selectAndFillSlots(
+            final @NotNull InventoryBuilder inventoryBuilder,
+            final @NotNull CustomInventory.ItemRecord itemConfig,
+            final @NotNull InventoryItem inventoryItem
+    ) {
+        if (itemConfig.slots() != null && !itemConfig.slots().isEmpty()) {
+            for (int slot : itemConfig.slots()) {
+                inventoryBuilder.setItem(slot, inventoryItem);
             }
-        } else if (itemsSection.contains(item + ".slot")) {
-            int slot = itemsSection.getInt(item + ".slot");
+            return true;
+        } else if (itemConfig.slot() != null) {
+            int slot = itemConfig.slot();
 
             if (slot == -1) {
                 while (inventoryBuilder.getInventory().firstEmpty() != -1) {
@@ -96,7 +130,9 @@ public class CustomGUI extends AbstractInventory {
             } else {
                 inventoryBuilder.setItem(slot, inventoryItem);
             }
+            return true;
         }
+        return false;
     }
 
     @Override

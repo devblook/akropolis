@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import me.zetastormy.akropolis.config.type.CustomInventory;
 import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -172,6 +173,33 @@ public class ItemStackBuilder {
     }
 
     public static ItemStackBuilder getItemStack(Settings.ItemRecord itemRecord) {
+        return getItemStack(itemRecord, null);
+    }
+
+    public static ItemStackBuilder getItemStack(CustomInventory.ItemRecord itemRecord, Player player) {
+        return getItemStack(new Settings.ItemRecord(
+                itemRecord.material(),
+                itemRecord.amount(),
+                itemRecord.slot(),
+                itemRecord.unbreakable(),
+                itemRecord.username(),
+                itemRecord.displayName(),
+                itemRecord.lore(),
+                itemRecord.glow(),
+                itemRecord.itemFlags(),
+                itemRecord.customModelData(),
+                itemRecord.customItemModel(),
+                itemRecord.enchantments(),
+                itemRecord.tooltipStyle(),
+                itemRecord.actions(),
+                itemRecord.cooldown(),
+                itemRecord.base64(),
+                itemRecord.hdb(),
+                itemRecord.permission()
+        ), null);
+    }
+
+    public static ItemStackBuilder getItemStack(CustomInventory.ItemRecord itemRecord) {
         return getItemStack(itemRecord, null);
     }
 
