@@ -19,11 +19,14 @@
 
 package me.zetastormy.akropolis.config.type;
 
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
+import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
 import me.zetastormy.akropolis.util.MapUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
 import java.util.Map;
@@ -32,44 +35,47 @@ import java.util.Map;
 @ConfigSerializable
 public class Commands {
     public static String HEADER = """
-                _    _                          _ _
-               / \\  | | ___ __ ___  _ __   ___ | (_)___
-              / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
-             / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
-            /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
-                                   |_|
+            |      _    _                          _ _
+            |     / \\  | | ___ __ ___  _ __   ___ | (_)___
+            |    / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
+            |   / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
+            |  /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
+            |                       |_|
             --------
             COMMANDS CUSTOMIZATION:
-            
-              In this file you can enable or disable commands of the plugin as you like, and even create
-              your own custom commands. ATTENTION: You will need to restart your server in order to apply
-              changes made to this file!
+            |
+            |  In this file you can enable or disable commands of the plugin as you like, and even create
+            |  your own custom commands. ATTENTION: You will need to restart your server in order to apply
+            |  changes made to this file!
             --------
             ACTIONS:
-            
-              [MESSAGE] <message> - Send a message to the player
-              [BROADCAST] <message> - Broadcast a message to everyone
-              [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
-              [ACTIONBAR] <message> - Send an action bar message
-              [SOUND] <sound> - Send the player a sound
-              [COMMAND] <command> - Execute a command as the player
-              [CONSOLE] <command> - Execute a command as console
-              [GAMEMODE] <gamemode> - Change a players' gamemode
-              [SERVER] <server> - Send a player to a server
-              [EFFECT] <effect;level>- Give a potion effect
-              [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
-              [CLOSE] - Close an open inventory
+            |
+            |  [MESSAGE] <message> - Send a message to the player
+            |  [BROADCAST] <message> - Broadcast a message to everyone
+            |  [TITLE] <title;subtitle>[;fade-in][;stay][;fade-out] - Send the player a title message
+            |  [ACTIONBAR] <message> - Send an action bar message
+            |  [SOUND] <sound> - Send the player a sound
+            |  [COMMAND] <command> - Execute a command as the player
+            |  [CONSOLE] <command> - Execute a command as console
+            |  [GAMEMODE] <gamemode> - Change a players' gamemode
+            |  [SERVER] <server> - Send a player to a server
+            |  [EFFECT] <effect;level> - Give a potion effect
+            |  [MENU] <menu> - Open a menu from (plugins/Akropolis/menus)
+            |  [CLOSE] - Close an open inventory
             --------
             MESSAGE FORMATTING:
-            
-              The plugin uses MiniMessage to format the chat,
-              so you can use tags to color messages, like this: <red> Red colored message!
-              You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
-            
-              More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
-              There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
-            \
+            |
+            |  The plugin uses MiniMessage to format the chat,
+            |  so you can use tags to color messages, like this: <red> Red colored message!
+            |  You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+            |
+            |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+            |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
             """;
+
+    @Comment(AbstractTransformation.VERSION_COMMENT)
+    @Setting(value = AbstractTransformation.VERSION_KEY)
+    private Integer configVersion = CommandsTransformations.LATEST_VERSION;
 
     @Comment("""
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -119,7 +125,7 @@ public class Commands {
             Map.entry("vanish", new BuiltinCommand(true, List.of("v")))
     );
 
-
+    public int configVersion() { return this.configVersion; }
     public Map<String, CustomCommand> customCommands() { return this.customCommands; }
     public @NotNull Map<String, BuiltinCommand> commands() { return this.commands; }
 

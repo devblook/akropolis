@@ -21,6 +21,7 @@ package me.zetastormy.akropolis.config;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.serializer.LocationSerializer;
+import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
 import me.zetastormy.akropolis.config.type.*;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +59,8 @@ public class ConfigManager {
                     plugin.getDataPath().resolve("config.yml"),
                     Settings.HEADER,
                     NamingSchemes.SNAKE_CASE,
-                    typeSerializerCollection
+                    typeSerializerCollection,
+                    null
             ));
 
             registerFile(Messages.class, ConfigurationContainer.load(
@@ -67,7 +69,8 @@ public class ConfigManager {
                     plugin.getDataPath().resolve("messages.yml"),
                     Messages.HEADER,
                     NamingSchemes.SNAKE_CASE,
-                    typeSerializerCollection
+                    typeSerializerCollection,
+                    null
             ));
 
             registerFile(Data.class, ConfigurationContainer.load(
@@ -76,7 +79,8 @@ public class ConfigManager {
                     plugin.getDataPath().resolve("data.yml"),
                     Data.HEADER,
                     NamingSchemes.SNAKE_CASE,
-                    typeSerializerCollection
+                    typeSerializerCollection,
+                    null
             ));
 
             registerFile(Commands.class, ConfigurationContainer.load(
@@ -85,7 +89,8 @@ public class ConfigManager {
                     plugin.getDataPath().resolve("commands.yml"),
                     Commands.HEADER,
                     NamingSchemes.SNAKE_CASE,
-                    typeSerializerCollection
+                    typeSerializerCollection,
+                    new CommandsTransformations(plugin.getSLF4JLogger())
             ));
         } catch (final ConfigurateException exception) {
             this.logger.error("There was an error loading the configuration.");

@@ -113,7 +113,8 @@ public class InventoryManager {
                     CustomInventory.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     null,
-                    defaultObjectSupplier
+                    defaultObjectSupplier,
+                    null
             );
             this.configurations.put(name, configContainer);
 

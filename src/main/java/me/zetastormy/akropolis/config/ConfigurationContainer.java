@@ -27,11 +27,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.ConfigurationOptions;
+import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
@@ -70,24 +73,27 @@ public class ConfigurationContainer<C> {
             final @NotNull String header,
             final @NotNull NamingSchemes namingScheme,
             final @Nullable TypeSerializerCollection typeSerializerCollection,
-            final @Nullable Supplier<C> defaultObjectSupplier
-    ) throws ConfigurateException {
+            final @Nullable Supplier<C> defaultObjectSupplier,
+            final @Nullable AbstractTransformation transformation
+            ) throws ConfigurateException {
         final ObjectMapper.Factory customFactory = ObjectMapper.factoryBuilder()
                 .defaultNamingScheme(namingScheme).build();
 
+        final ConfigurationOptions options = YamlConfigurationLoader.builder().defaultOptions()
+                .header(header).shouldCopyDefaults(false)
+                    .serializers(build -> build.registerAnnotatedObjects(customFactory)
+                            .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
+                                return TypeSerializerCollection.builder().build();
+                            })));
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder().commentsEnabled(true)
-                .defaultOptions(
-                options -> options.header(header).shouldCopyDefaults(false)
-                        .serializers(build -> build.registerAnnotatedObjects(customFactory)
-                                .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
-                                    return TypeSerializerCollection.builder().build();
-                                })))
-        ).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK).build();
+                .defaultOptions(options).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK)
+                .headerMode(HeaderMode.PRESET).build();
 
         try {
             CommentedConfigurationNode rootNode = loader.load();
             C config = rootNode.get(clazz);
-            if (Files.notExists(filePath)) {
+            boolean fileAlreadyExisted = Files.exists(filePath);
+            if (!fileAlreadyExisted) {
                 logger.info("Path {} does not exist, saving default values...", filePath);
                 if (defaultObjectSupplier != null) {
                     config = defaultObjectSupplier.get();
@@ -95,8 +101,34 @@ public class ConfigurationContainer<C> {
                 rootNode.set(config);
                 loader.save(rootNode);
             }
+
+            if (transformation != null) {
+                int oldVersion = transformation.version(rootNode);
+                transformation.updateNode(rootNode);
+                int newVersion = transformation.version(rootNode);
+
+                if (oldVersion != newVersion) {
+                    // Save in new node to preserve default order
+                    config = rootNode.get(clazz);
+                    rootNode = CommentedConfigurationNode.root(options).set(config);
+
+                    loader.save(rootNode);
+                    if (fileAlreadyExisted) {
+                        logger.info(
+                                "Upgraded configuration file {} from version {} to version {} successfully!",
+                                filePath,
+                                oldVersion,
+                                newVersion
+                        );
+                    }
+                }
+            }
             var instance = new ConfigurationContainer<>(config, clazz, loader, rootNode, logger, filePath);
-            logger.info("Configuration file {} loaded successfully!", filePath);
+            logger.info(
+                    "Configuration file {} {} successfully!",
+                    filePath,
+                    (fileAlreadyExisted) ? "loaded" : "created"
+            );
             return instance;
         } catch (final ConfigurateException exception) {
             logger.error("An exception occurred while loading configuration named {}",
@@ -111,9 +143,19 @@ public class ConfigurationContainer<C> {
             final @NotNull Path filePath,
             final @NotNull String header,
             final @NotNull NamingSchemes namingScheme,
-            final @Nullable TypeSerializerCollection typeSerializerCollection
+            final @Nullable TypeSerializerCollection typeSerializerCollection,
+            final @Nullable AbstractTransformation transformation
     ) throws ConfigurateException {
-        return load(clazz, logger, filePath, header, namingScheme, typeSerializerCollection, null);
+        return load(
+                clazz,
+                logger,
+                filePath,
+                header,
+                namingScheme,
+                typeSerializerCollection,
+                null,
+                transformation
+        );
     }
 
     public CompletableFuture<Boolean> reload() {
