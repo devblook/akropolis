@@ -220,14 +220,12 @@ announcements:
     test1:
       - <reset>
       - <blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source
-        code of the plugin is available on <white>GitHub<gray>.</hover></click>
+      - <click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>
       - <reset>
     test2:
       - <reset>
       - <gold><b>ANNOUNCEMENT</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/zetastormy/'><hover:show_text:'<yellow>Click here to navigate to my GitHub!'><dark_gray>» <gray>This plugin
-        was forked by <yellow>ZetaStormy<gray>.</hover></click>
+      - <click:open_url:'https://github.com/zetastormy/'><hover:show_text:'<yellow>Click here to navigate to my GitHub!'><dark_gray>» <gray>This plugin was forked by <yellow>ZetaStormy<gray>.</hover></click>
       - <reset>
     test3:
       - <reset>
@@ -237,14 +235,12 @@ announcements:
     test4:
       - <reset>
       - <blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is
-        maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>
+      - <click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>
       - <reset>
     test5:
       - <reset>
       - <yellow><b>TIP</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://discord.gg/w438z8TKej'><hover:show_text:'<yellow>Click here to join our Discord server!'><dark_gray>» <gray>Click here
-        to join <color:#1e2f45>Dev<white>Blook <gray>Team's Discord server to get support and update announcements of all our projects.</hover></click>
+      - <click:open_url:'https://discord.gg/w438z8TKej'><hover:show_text:'<yellow>Click here to join our Discord server!'><dark_gray>» <gray>Click here to join <color:#1e2f45>Dev<white>Blook <gray>Team's Discord server to get support and update announcements of all our projects.</hover></click>
       - <reset>
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

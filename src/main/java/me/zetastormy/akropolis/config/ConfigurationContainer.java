@@ -85,9 +85,14 @@ public class ConfigurationContainer<C> {
                             .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
                                 return TypeSerializerCollection.builder().build();
                             })));
-        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder().commentsEnabled(true)
+        final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .defaultOptions(options).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK)
-                .headerMode(HeaderMode.PRESET).build();
+                // Explicitly enable comment processing
+                .commentsEnabled(true)
+                // Workaround, ideally we should disable line splitting, but it isn't exposed
+                .lineLength(1000)
+                .headerMode(HeaderMode.PRESERVE)
+                .build();
 
         try {
             CommentedConfigurationNode rootNode = loader.load();

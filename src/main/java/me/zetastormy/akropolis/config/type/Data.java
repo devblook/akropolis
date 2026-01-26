@@ -31,7 +31,14 @@ import java.util.UUID;
 @ConfigSerializable
 public class Data {
     public static String HEADER = """
-            Akropolis data file, DO NOT EDIT if you don't know what you are doing.\
+            |      _    _                          _ _
+            |     / \\  | | ___ __ ___  _ __   ___ | (_)___
+            |    / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
+            |   / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
+            |  /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
+            |                         |_|
+            --------
+            | Akropolis data file, DO NOT EDIT if you don't know what you are doing.\
             """;
 
     private boolean chatLocked = false;

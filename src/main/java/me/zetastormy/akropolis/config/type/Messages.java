@@ -27,29 +27,28 @@ import java.util.List;
 @ConfigSerializable
 public class Messages {
     public static String HEADER = """
-                _    _                          _ _
-               / \\  | | ___ __ ___  _ __   ___ | (_)___
-              / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
-             / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
-            /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
-                                   |_|
+            |      _    _                          _ _
+            |     / \\  | | ___ __ ___  _ __   ___ | (_)___
+            |    / _ \\ | |/ / '__/ _ \\| '_ \\ / _ \\| | / __|
+            |   / ___ \\|   <| | | (_) | |_) | (_) | | \\__ \\
+            |  /_/   \\_\\_|\\_\\_|  \\___/| .__/ \\___/|_|_|___/
+            |                         |_|
             --------
             MESSAGES CUSTOMIZATION:
-            
-              Edit the messages of the plugin as you like. You can change the language, colors and almost everything
-              you imagine! If there's a message you want to translate, and it isn't here, you can request it to be
-              translatable by opening a feature request here:
-              https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request
+            |
+            |  Edit the messages of the plugin as you like. You can change the language, colors and almost everything
+            |  you imagine! If there's a message you want to translate, and it isn't here, you can request it to be
+            |  translatable by opening a feature request here:
+            |  https://github.com/devblook/akropolis/issues/new?assignees=zetastormy&labels=enhancement&template=feature_request.yml&title=A+brief+description+of+your+request
             --------
             MESSAGE FORMATTING:
-            
-              The plugin uses MiniMessage to format the chat,
-              so you can use tags to color messages, like this: <red> Red colored message!
-              You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
-            
-              More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
-              There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
-            \
+            |
+            |  The plugin uses MiniMessage to format the chat,
+            |  so you can use tags to color messages, like this: <red> Red colored message!
+            |  You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
+            |
+            |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
+            |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
             """;
 
     private General general = new General();
