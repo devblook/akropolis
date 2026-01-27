@@ -58,7 +58,7 @@ public class ChatGroups extends Module implements LifeCycle {
                             groupName,
                             new ChatGroup(
                                     groupName,
-                                    group.format(groupName),
+                                    group.formatWithFallback(),
                                     group.priority(),
                                     group.cooldown().time(),
                                     group.cooldown().message(),

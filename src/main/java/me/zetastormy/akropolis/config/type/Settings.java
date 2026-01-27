@@ -24,6 +24,7 @@ import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.NodeKey;
 
 import java.util.List;
 import java.util.Map;
@@ -864,6 +865,9 @@ public class Settings {
 
         @ConfigSerializable
         public static class ChatGroup {
+            @NodeKey
+            private String groupKey = null;
+
             @Comment("""
                     This is used to determine which group is used when a player has multiple groups' permissions.
                     Groups with higher priority take precedence.\
@@ -889,11 +893,12 @@ public class Settings {
             }
 
             public int priority() { return this.priority; }
-            public String format(String groupName) {
-                return Objects.requireNonNullElse(
-                        this.format,
-                        String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no format, check the configuration.", groupName)
-                );
+            public String formatWithFallback() {
+                if (this.format == null || this.format.isBlank()) {
+                    return String.format("<red><bold>[Akropolis]</bold> Chat group <yellow>%s</yellow> has no format, check the configuration.", this.groupKey);
+                } else {
+                    return this.format;
+                }
             }
             public Cooldown cooldown() { return this.cooldown; }
             public Map<String, Emoji> emojis() { return this.emojis; }
