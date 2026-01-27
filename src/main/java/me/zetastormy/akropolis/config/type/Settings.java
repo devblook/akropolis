@@ -869,7 +869,7 @@ public class Settings {
                     Groups with higher priority take precedence.\
                     """)
             private int priority = 0;
-            private String format = null;
+            private String format = "";
 
             @Comment("Just in case you want to slow down your players a little.")
             private Cooldown cooldown = new Cooldown();

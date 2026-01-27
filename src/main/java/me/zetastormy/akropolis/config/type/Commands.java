@@ -135,18 +135,18 @@ public class Commands {
         private @Nullable String permission = null;
 
         @Comment("List any aliases for the command here")
-        private @Nullable List<String> aliases = null;
+        private @NotNull List<String> aliases = List.of();
 
         @Comment("Actions to be executed")
-        private @Nullable List<String> actions = null;
+        private @NotNull List<String> actions = List.of();
 
         // Required by Configurate to load data
         public CustomCommand() {}
 
         public CustomCommand(
                 @Nullable String permission,
-                @Nullable List<String> aliases,
-                @Nullable List<String> actions
+                @NotNull List<String> aliases,
+                @NotNull List<String> actions
         ) {
             this.permission = permission;
             this.aliases = aliases;
@@ -154,29 +154,29 @@ public class Commands {
         }
 
         public @Nullable String permission() { return this.permission; }
-        public @Nullable List<String> aliases() { return this.aliases; }
-        public @Nullable List<String> actions() { return this.actions; }
+        public @NotNull List<String> aliases() { return this.aliases; }
+        public @NotNull List<String> actions() { return this.actions; }
     }
 
     @ConfigSerializable
     public static class BuiltinCommand {
         private boolean enabled = false;
         @Comment("List any aliases for the command here")
-        private @Nullable List<String> aliases = null;
+        private @NotNull List<String> aliases = List.of();
 
         // Required by Configurate to load data
         public BuiltinCommand() {}
 
-        public BuiltinCommand(boolean enabled, @Nullable List<String> aliases) {
+        public BuiltinCommand(boolean enabled, @NotNull List<String> aliases) {
             this.enabled = enabled;
             this.aliases = aliases;
         }
 
         public BuiltinCommand(boolean enabled) {
-            this(enabled, null);
+            this.enabled = enabled;
         }
 
         public boolean enabled() { return this.enabled; }
-        public @Nullable List<String> aliases() { return this.aliases; }
+        public @NotNull List<String> aliases() { return this.aliases; }
     }
 }

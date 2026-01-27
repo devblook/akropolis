@@ -27,7 +27,6 @@ import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 
@@ -92,7 +91,7 @@ public class ConfigManager {
                     typeSerializerCollection,
                     new CommandsTransformations(plugin.getSLF4JLogger())
             ));
-        } catch (final ConfigurateException exception) {
+        } catch (final Exception exception) {
             this.logger.error("There was an error loading the configuration.");
             this.logger.error("The plugin will now disable.");
             this.logger.error("");

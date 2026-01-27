@@ -122,7 +122,7 @@ public class InventoryManager {
             this.inventories.put(name, inventory);
 
             this.plugin.getSLF4JLogger().info("Custom menu '{}' loaded successfully!", name);
-        } catch (final ConfigurateException exception) {
+        } catch (final Exception exception) {
             this.plugin.getSLF4JLogger().error("Failed to load custom menu file '{}'", fileName, exception);
         }
     }

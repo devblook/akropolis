@@ -19,8 +19,11 @@
 
 package me.zetastormy.akropolis.config;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.RecordComponent;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -41,6 +44,12 @@ import org.spongepowered.configurate.util.NamingSchemes;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+/**
+ *
+ * @param <C> type representing the configuration, can be a class or a record but inner section classes should be of the
+ *          same class kind to keep consistent implicit initialization behavior. If using implicit initialization the
+ *           fields' default values should not be null for types with non-null implicit empty values (like collections)
+ */
 public class ConfigurationContainer<C> {
 
     private final AtomicReference<C> config;
@@ -66,6 +75,32 @@ public class ConfigurationContainer<C> {
         this.filePath = filePath;
     }
 
+    private static <R extends Record> Constructor<R> getRecordConstructor(Class<R> clazz) throws
+            ReflectiveOperationException {
+        Class<?>[] types = Arrays.stream(clazz.getRecordComponents())
+                .map(RecordComponent::getType).toArray(Class<?>[]::new);
+
+        return clazz.getDeclaredConstructor(types);
+    }
+
+    private static <T> Constructor<T> getDefaultConstructor(Class<T> clazz) throws ReflectiveOperationException {
+        if (Record.class.isAssignableFrom(clazz)) {
+            Class<? extends Record> recordClass = (Class<? extends Record>) clazz;
+            return (Constructor<T>) getRecordConstructor(recordClass);
+        } else {
+            return clazz.getDeclaredConstructor();
+        }
+    }
+
+    private static <T> T getImplicitRoot(Class<T> clazz) throws ReflectiveOperationException {
+        Constructor<T> constructor = getDefaultConstructor(clazz);
+        if (Record.class.isAssignableFrom(clazz)) {
+            return constructor.newInstance(Arrays.stream(constructor.getParameterTypes()).map(element -> null).toArray());
+        } else {
+            return constructor.newInstance();
+        }
+    }
+
     public static <C> ConfigurationContainer<C> load(
             final @NotNull Class<C> clazz,
             final @NotNull Logger logger,
@@ -75,16 +110,21 @@ public class ConfigurationContainer<C> {
             final @Nullable TypeSerializerCollection typeSerializerCollection,
             final @Nullable Supplier<C> defaultObjectSupplier,
             final @Nullable AbstractTransformation transformation
-            ) throws ConfigurateException {
+            ) throws ConfigurateException, ReflectiveOperationException {
         final ObjectMapper.Factory customFactory = ObjectMapper.factoryBuilder()
                 .defaultNamingScheme(namingScheme).build();
 
         final ConfigurationOptions options = YamlConfigurationLoader.builder().defaultOptions()
-                .header(header).shouldCopyDefaults(false)
-                    .serializers(build -> build.registerAnnotatedObjects(customFactory)
-                            .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
-                                return TypeSerializerCollection.builder().build();
-                            })));
+                .header(header)
+                // Disable implicit initialization for record classes configurations (allows setting defaults)
+                .implicitInitialization(!clazz.isRecord())
+                // We should copy default values so implicit initialization values are saved
+                .shouldCopyDefaults(true)
+                .serializers(build -> build.registerAnnotatedObjects(customFactory)
+                        .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
+                            return TypeSerializerCollection.builder().build();
+                        })));
+
         final YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .defaultOptions(options).path(filePath).indent(2).nodeStyle(NodeStyle.BLOCK)
                 // Explicitly enable comment processing
@@ -96,15 +136,41 @@ public class ConfigurationContainer<C> {
 
         try {
             CommentedConfigurationNode rootNode = loader.load();
-            C config = rootNode.get(clazz);
+            C config = null;
+
             boolean fileAlreadyExisted = Files.exists(filePath);
             if (!fileAlreadyExisted) {
                 logger.info("Path {} does not exist, saving default values...", filePath);
                 if (defaultObjectSupplier != null) {
-                    config = defaultObjectSupplier.get();
+                    config = Objects.requireNonNull(
+                            defaultObjectSupplier.get(),
+                            "Default object returned by the supplier is null"
+                    );
+                    rootNode.set(config);
+                } else if (options.implicitInitialization()) {
+                    // Implicit initialization is enabled so we can safely get the instance
+                    config = rootNode.get(clazz);
+
+                    // Save object data to the node and get a new instance from it
+                    // so the implicit initialization can work on all classes,
+                    // for example classes instances as map entry values.
+                    rootNode.set(config);
+                    config = rootNode.get(clazz);
+                } else {
+                    // Handle creating config with implicit initialization disabled
+                    config = getImplicitRoot(clazz);
+                    rootNode.set(config);
                 }
-                rootNode.set(config);
+
                 loader.save(rootNode);
+            } else {
+                // We can try to get the instance because the file already existed
+                config = rootNode.get(clazz);
+
+                // Handle loading null config with implicit initialization disabled
+                if (!options.implicitInitialization() && config == null) {
+                    config = getImplicitRoot(clazz);
+                }
             }
 
             if (transformation != null) {
@@ -135,7 +201,7 @@ public class ConfigurationContainer<C> {
                     (fileAlreadyExisted) ? "loaded" : "created"
             );
             return instance;
-        } catch (final ConfigurateException exception) {
+        } catch (final ConfigurateException | ReflectiveOperationException exception) {
             logger.error("An exception occurred while loading configuration named {}",
                     filePath.getFileName(), exception);
             throw exception;
@@ -150,7 +216,7 @@ public class ConfigurationContainer<C> {
             final @NotNull NamingSchemes namingScheme,
             final @Nullable TypeSerializerCollection typeSerializerCollection,
             final @Nullable AbstractTransformation transformation
-    ) throws ConfigurateException {
+    ) throws ConfigurateException, ReflectiveOperationException {
         return load(
                 clazz,
                 logger,
@@ -169,10 +235,14 @@ public class ConfigurationContainer<C> {
                 CommentedConfigurationNode rootNode = this.loader.load();
                 this.root = rootNode;
                 C newConfig = rootNode.get(this.clazz);
+                // Handle loading null config with implicit initialization disabled
+                if (!rootNode.options().implicitInitialization() && newConfig == null) {
+                    newConfig = getImplicitRoot(this.clazz);
+                }
                 this.config.set(newConfig);
                 this.logger.info("Configuration file {} reloaded successfully!", this.filePath.getFileName());
                 return true;
-            } catch (ConfigurateException exception) {
+            } catch (ConfigurateException | ReflectiveOperationException exception) {
                 logger.error("An exception occurred while reloading the configuration named {}",
                         this.filePath.getFileName(), exception);
                 return false;
