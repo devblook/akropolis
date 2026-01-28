@@ -35,11 +35,19 @@ public class PlayerOffHandSwap extends Module {
 
     @EventHandler
     public void onPlayerSwapItem(PlayerSwapHandItemsEvent event) {
+        if (inDisabledWorld(event.getPlayer().getLocation())) {
+            return;
+        }
+
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        if (inDisabledWorld(event.getWhoClicked().getLocation())) {
+            return;
+        }
+
         if (event.getRawSlot() != event.getSlot() && event.getSlot() == 40) {
             event.setCancelled(true);
         }
