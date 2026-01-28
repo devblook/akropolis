@@ -20,6 +20,8 @@
 package me.zetastormy.akropolis.inventory;
 
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,12 @@ import java.util.List;
 public class InventoryItem {
     public final ItemStack itemStack;
     public final List<ClickAction> clickActions;
+    public final @Nullable String permission;
 
-    public InventoryItem(ItemStack itemStack) {
+    public InventoryItem(@NotNull ItemStack itemStack, @Nullable String permission) {
         this.clickActions = new ArrayList<>();
         this.itemStack = itemStack;
+        this.permission = permission;
     }
 
     public InventoryItem addClickAction(ClickAction clickAction) {
@@ -44,5 +48,9 @@ public class InventoryItem {
 
     public ItemStack getItemStack() {
         return this.itemStack;
+    }
+
+    public @Nullable String getPermission() {
+        return this.permission;
     }
 }

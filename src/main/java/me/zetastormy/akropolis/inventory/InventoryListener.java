@@ -19,6 +19,7 @@
 
 package me.zetastormy.akropolis.inventory;
 
+import me.zetastormy.akropolis.config.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,6 +46,11 @@ public class InventoryListener implements Listener {
 
                 if (item == null)
                     return;
+
+                if (item.getPermission() != null && !player.hasPermission(item.getPermission())) {
+                    Message.NO_PERMISSION.send(player);
+                    return;
+                }
 
                 for (final ClickAction clickAction : item.getClickActions()) {
                     clickAction.execute(player);
