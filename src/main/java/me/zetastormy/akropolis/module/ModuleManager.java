@@ -55,10 +55,11 @@ import me.zetastormy.akropolis.module.modules.world.Launchpad;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
+import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
-public class ModuleManager {
+public class ModuleManager implements Listener {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
     private AkropolisPlugin plugin;
     private List<String> disabledWorlds;
@@ -141,6 +142,7 @@ public class ModuleManager {
         registerModule(new FightModeManager(plugin), "fight_mode.enabled");
 
         this.createDisabledWorlds();
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
             registerModule(new SongPlayerManager(plugin), "song_player.enabled");
@@ -181,6 +183,7 @@ public class ModuleManager {
             }
         }
 
+        HandlerList.unregisterAll(this);
         modules.clear();
     }
 
