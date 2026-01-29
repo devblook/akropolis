@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
@@ -54,20 +55,18 @@ import me.zetastormy.akropolis.module.modules.world.Launchpad;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
-public class ModuleManager {
+public class ModuleManager implements Listener {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
     private AkropolisPlugin plugin;
     private List<String> disabledWorlds;
 
-    public void loadModules(AkropolisPlugin plugin) {
-        this.plugin = plugin;
-
-        if (!modules.isEmpty())
-            unloadModules();
-
+    public void createDisabledWorlds() {
         FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
-        disabledWorlds = config.getStringList("disabled-worlds.worlds");
+        this.disabledWorlds = config.getStringList("disabled-worlds.worlds");
 
         if (config.getBoolean("disabled-worlds.invert")) {
             List<String> newDisabledWorlds = new ArrayList<>();
@@ -76,12 +75,49 @@ public class ModuleManager {
                 newDisabledWorlds.add(world.getName());
             }
 
-            disabledWorlds = newDisabledWorlds;
+            this.disabledWorlds = newDisabledWorlds;
 
             for (String world : config.getStringList("disabled-worlds.worlds")) {
                 disabledWorlds.remove(world);
             }
         }
+
+        for (final Module module : this.modules.values()) {
+            module.setDisabledWorlds(this.disabledWorlds);
+        }
+    }
+
+    @EventHandler
+    public void onWorldLoad(final WorldLoadEvent event) {
+        FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
+        List<String> configuredWorlds = config.getStringList("disabled-worlds.worlds");
+        String worldName = event.getWorld().getName();
+
+        if (config.getBoolean("disabled-worlds.invert")) {
+            // If the world is not in the whitelist we should disable it
+            if (!configuredWorlds.contains(worldName)) {
+                this.disabledWorlds.add(worldName);
+            }
+        } else {
+            // If the world is in the blacklist we should disable it
+            if (configuredWorlds.contains(worldName)) {
+                this.disabledWorlds.add(worldName);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWorldUnload(final WorldUnloadEvent event) {
+        // Remove world since it does not exist anymore
+        this.disabledWorlds.remove(event.getEventName());
+    }
+
+
+    public void loadModules(AkropolisPlugin plugin) {
+        this.plugin = plugin;
+
+        if (!modules.isEmpty())
+            unloadModules();
 
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl.enabled");
         registerModule(new DoubleJump(plugin), "double_jump.enabled");
@@ -104,6 +140,9 @@ public class ModuleManager {
         registerModule(new HologramManager(plugin));
         registerModule(new PlayerOffHandSwap(plugin), "world_settings.disable_off_hand_swap");
         registerModule(new FightModeManager(plugin), "fight_mode.enabled");
+
+        this.createDisabledWorlds();
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
             registerModule(new SongPlayerManager(plugin), "song_player.enabled");
@@ -144,6 +183,7 @@ public class ModuleManager {
             }
         }
 
+        HandlerList.unregisterAll(this);
         modules.clear();
     }
 

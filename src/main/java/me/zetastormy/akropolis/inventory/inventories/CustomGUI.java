@@ -27,6 +27,9 @@ import me.zetastormy.akropolis.util.ItemStackBuilder;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class CustomGUI extends AbstractInventory {
     private final FileConfiguration config;
@@ -66,16 +69,19 @@ public class CustomGUI extends AbstractInventory {
         inventory = inventoryBuilder;
     }
 
-    private InventoryItem build(String item) {
+    private InventoryItem build(final @NotNull String itemKey) {
+        // if the key exists then the section should exist too
+        final ConfigurationSection itemConfig = Objects.requireNonNull(itemsSection.getConfigurationSection(itemKey));
         ItemStackBuilder itemStackBuilder = ItemStackBuilder
-                .getItemStack(itemsSection.getConfigurationSection(item));
+                .getItemStack(itemConfig);
         InventoryItem inventoryItem;
 
-        if (!itemsSection.contains(item + ".actions")) {
-            inventoryItem = new InventoryItem(itemStackBuilder.build());
+        if (!itemsSection.contains(itemKey + ".actions")) {
+            inventoryItem = new InventoryItem(itemStackBuilder.build(), itemConfig.getString("permission"));
         } else {
-            inventoryItem = new InventoryItem(itemStackBuilder.build()).addClickAction(p -> getPlugin()
-                    .getActionManager().executeActions(p, itemsSection.getStringList(item + ".actions")));
+            inventoryItem = new InventoryItem(itemStackBuilder.build(), itemConfig.getString("permission"))
+                    .addClickAction(p -> getPlugin().getActionManager()
+                            .executeActions(p, itemsSection.getStringList(itemKey + ".actions")));
         }
 
         return inventoryItem;
