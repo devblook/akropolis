@@ -26,6 +26,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.xxmicloxx.NoteBlockAPI.model.Playlist;
+
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zetastormy.akropolis.AkropolisPlugin;
@@ -54,6 +56,34 @@ public class PlaceholderUtil {
         return songPlayerManager != null ? songPlayerManager.getCurrentSong() : "No song playing";
     }
 
+    private static String getNextSong() {
+        SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
+
+        if (songPlayerManager != null) {
+            int currentSongIndex = songPlayerManager.getSongPlayer().getPlayedSongIndex();
+            Playlist playlist = songPlayerManager.getSongPlayer().getPlaylist();
+
+            if (currentSongIndex == playlist.getCount()) {
+                return playlist.get(0).getTitle();
+            }
+
+            return playlist.get(currentSongIndex +  1).getTitle();
+        }
+
+        return "No song playing";
+    }
+
+    private static String getSongVolume() {
+        SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
+        return songPlayerManager != null ? String.valueOf(songPlayerManager.getSongPlayer().getVolume()) : "Undefined";
+    }
+
+    private static String getSongLoopStatus() {
+        SongPlayerManager songPlayerManager = AkropolisPlugin.getInstance().getSongPlayerManager();
+
+
+    }
+
     /**
      * Pushes a tag resolver onto the stack that inserts (self-closing) the given component for the given name.
      * @param tagResolvers the mutable stack of tag resolvers
@@ -72,6 +102,9 @@ public class PlaceholderUtil {
         pushTagResolver(tagResolvers, "online", Component.text(Bukkit.getOnlinePlayers().size()));
         pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
         pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));
+        pushTagResolver(tagResolvers, "next_song", Component.text(getNextSong()));
+        pushTagResolver(tagResolvers, "song_volume", Component.text(getSongVolume()));
+        pushTagResolver(tagResolvers, "loop_song", Component.text(getNextSong()));
 
         return tagResolvers;
     }
