@@ -1,0 +1,4 @@
+[submodule "Configurate"]
+	path = configurate
+	url = https://github.com/devblook/Configurate
+	branch = master

@@ -24,8 +24,8 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://jitpack.io")
 
-    // GeyserMC's Configurate fork
-    maven("https://repo.opencollab.dev/maven-snapshots")
+    // GeyserMC's Configurate fork (disabled because of local fork)
+    //maven("https://repo.opencollab.dev/maven-snapshots")
 }
 
 dependencies {
