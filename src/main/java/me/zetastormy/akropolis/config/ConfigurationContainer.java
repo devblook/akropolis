@@ -37,11 +37,13 @@ import org.slf4j.Logger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationOptions;
+import org.spongepowered.configurate.RepresentationHint;
 import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.ScalarStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 /**
@@ -136,6 +138,7 @@ public class ConfigurationContainer<C> {
 
         try {
             CommentedConfigurationNode rootNode = loader.load();
+            rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
             C config = null;
 
             boolean fileAlreadyExisted = Files.exists(filePath);
@@ -182,6 +185,7 @@ public class ConfigurationContainer<C> {
                     // Save in new node to preserve default order
                     config = rootNode.get(clazz);
                     rootNode = CommentedConfigurationNode.root(options).set(config);
+                    rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
 
                     loader.save(rootNode);
                     if (fileAlreadyExisted) {
@@ -233,6 +237,7 @@ public class ConfigurationContainer<C> {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 CommentedConfigurationNode rootNode = this.loader.load();
+                rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
                 this.root = rootNode;
                 C newConfig = rootNode.get(this.clazz);
                 // Handle loading null config with implicit initialization disabled
