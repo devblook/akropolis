@@ -85,6 +85,7 @@ public class ConfigurationContainer<C> {
         return clazz.getDeclaredConstructor(types);
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> Constructor<T> getDefaultConstructor(Class<T> clazz) throws ReflectiveOperationException {
         if (Record.class.isAssignableFrom(clazz)) {
             Class<? extends Record> recordClass = (Class<? extends Record>) clazz;
@@ -101,6 +102,14 @@ public class ConfigurationContainer<C> {
         } else {
             return constructor.newInstance();
         }
+    }
+
+    private static Integer getVersion(final CommentedConfigurationNode node) throws ConfigurateException {
+        return node.node(AbstractTransformation.VERSION_KEY).get(Integer.class);
+    }
+
+    private static void setVersion(final CommentedConfigurationNode node, final Integer value) throws ConfigurateException {
+        node.node(AbstractTransformation.VERSION_KEY).set(value);
     }
 
     public static <C> ConfigurationContainer<C> load(
@@ -120,8 +129,9 @@ public class ConfigurationContainer<C> {
                 .header(header)
                 // Disable implicit initialization for record classes configurations (allows setting defaults)
                 .implicitInitialization(!clazz.isRecord())
-                // We should copy default values so implicit initialization values are saved
-                .shouldCopyDefaults(true)
+                // We don't want to copy defaults (for example default config version value)
+                // There is a workaround implemented but just to be safe we won't use it
+                .shouldCopyDefaults(false)
                 .serializers(build -> build.registerAnnotatedObjects(customFactory)
                         .registerAll(Objects.requireNonNullElseGet(typeSerializerCollection, () -> {
                             return TypeSerializerCollection.builder().build();
@@ -157,8 +167,14 @@ public class ConfigurationContainer<C> {
                     // Save object data to the node and get a new instance from it
                     // so the implicit initialization can work on all classes,
                     // for example classes instances as map entry values.
+                    // Finally set the object back to the node so the values
+                    // are saved, this last step is only necessary when
+                    // shouldCopyDefaults is disabled.
                     rootNode.set(config);
                     config = rootNode.get(clazz);
+                    if (!options.shouldCopyDefaults()) {
+                        rootNode.set(config);
+                    }
                 } else {
                     // Handle creating config with implicit initialization disabled
                     config = getImplicitRoot(clazz);
@@ -167,12 +183,38 @@ public class ConfigurationContainer<C> {
 
                 loader.save(rootNode);
             } else {
+                @Nullable Integer originalVersion = null;
+                if (options.shouldCopyDefaults()) {
+                    originalVersion = getVersion(rootNode);
+                }
+
                 // We can try to get the instance because the file already existed
                 config = rootNode.get(clazz);
 
                 // Handle loading null config with implicit initialization disabled
                 if (!options.implicitInitialization() && config == null) {
                     config = getImplicitRoot(clazz);
+                }
+
+                if (options.shouldCopyDefaults()) {
+                    @Nullable Integer defaultCopiedVersion = getVersion(rootNode);
+                    if (transformation == null && originalVersion == null && defaultCopiedVersion != null) {
+                        logger.error(
+                            "Using shouldCopyDefaults workaround for {} null version key in file {} but there is no transformation, the value will be set to {} in object",
+                            AbstractTransformation.VERSION_KEY,
+                            filePath,
+                            defaultCopiedVersion
+                        );
+                        logger.error("This should not affect the saved file but it's recommended to add a transformation to avoid this inconsistency");
+                    } else if (originalVersion != null) {
+                        logger.info(
+                            "Using shouldCopyDefaults workaround for {} version key in file {}, setting to {}",
+                            AbstractTransformation.VERSION_KEY,
+                            filePath,
+                            originalVersion
+                        );
+                    }
+                    setVersion(rootNode, originalVersion);
                 }
             }
 
@@ -258,7 +300,22 @@ public class ConfigurationContainer<C> {
     public CompletableFuture<Boolean> save(final Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                this.loader.save(this.root.set(this.clazz, this.config.get()));
+                @Nullable Integer originalVersion = getVersion(this.root);
+                this.root.set(this.clazz, this.config.get());
+                @Nullable Integer saveVersion = getVersion(this.root);
+                // We have to fix the inconsistency when the original version was null, there was no transformation
+                // and the object's version is now the default version which is not what we want to save
+                if (this.root.options().shouldCopyDefaults() && originalVersion == null && saveVersion != null) {
+                    this.logger.info(
+                        "Using shouldCopyDefaults workaround in file {} with version key {}, replacing object's version {} with original {}",
+                        filePath,
+                        AbstractTransformation.VERSION_KEY,
+                        saveVersion,
+                        originalVersion
+                    );
+                    setVersion(this.root, originalVersion);
+                }
+                this.loader.save(this.root);
                 this.logger.info("Configuration file {} written successfully!", this.filePath.getFileName());
                 return true;
             } catch (ConfigurateException exception) {
