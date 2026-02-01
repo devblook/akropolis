@@ -22,106 +22,106 @@
 # |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
 
 general:
-  prefix: <gold><b>Akropolis <reset><dark_gray>||
-  usage: '<dark_gray>» <gray>Usage<dark_gray>: <gold>/<command>'
-  no_permission: <prefix> <red>You are forbidden to use this.
-  console_not_allowed: <prefix> <red>Console cannot do that.
-  custom_command_no_permission: <prefix> <red>You are not allowed to execute this command.
-  invalid_player: <prefix> <yellow><player> <red>is not online!
-  config_reload: <prefix> <gray>All configuration files have been reloaded in <green><time>ms<gray>.
-  cooldown_active: <prefix> <red>You must wait <yellow><time>s <red>before doing this again!
+  prefix: "<gold><b>Akropolis <reset><dark_gray>||"
+  usage: "<dark_gray>» <gray>Usage<dark_gray>: <gold>/<command>"
+  no_permission: "<prefix> <red>You are forbidden to use this."
+  console_not_allowed: "<prefix> <red>Console cannot do that."
+  custom_command_no_permission: "<prefix> <red>You are not allowed to execute this command."
+  invalid_player: "<prefix> <yellow><player> <red>is not online!"
+  config_reload: "<prefix> <gray>All configuration files have been reloaded in <green><time>ms<gray>."
+  cooldown_active: "<prefix> <red>You must wait <yellow><time>s <red>before doing this again!"
 help:
   plugin:
-    - '<prefix> <gray>The following commands are available<dark_gray>:'
-    - <dark_gray>/<gold>akropolis info <dark_gray>- <gray>Displays information about the current config
-    - <dark_gray>/<gold>akropolis scoreboard <dark_gray>- <gray>Toggle the scoreboard
-    - <dark_gray>/<gold>akropolis hotbar <dark_gray>- <gray>Toggle the hotbar
-    - <dark_gray>/<gold>akropolis holo [option] <dark_gray>- <gray>Displays hologram commands
-    - <dark_gray>/<gold>akropolis open <menu> <dark_gray>- <gray>Opens a custom menu
-    - <dark_gray>/<gold>vanish <dark_gray>- <gray>Toggle vanish mode
-    - <dark_gray>/<gold>fly [player] <dark_gray>- <gray>Toggle flight mode
-    - <dark_gray>/<gold>setlobby <dark_gray>- <gray>Set the spawn location
-    - <dark_gray>/<gold>lobby <dark_gray>- <gray>Teleport to the spawn location
-    - <dark_gray>/<gold>gamemode <gamemode> [player] <dark_gray>- <gray>Set your gamemode
-    - <dark_gray>/<gold>gmc [player] <dark_gray>- <gray>Go into creative mode
-    - <dark_gray>/<gold>gms [player] <dark_gray>- <gray>Go into survival mode
-    - <dark_gray>/<gold>gma [player] <dark_gray>- <gray>Go into adventure mode
-    - <dark_gray>/<gold>gmsp [player] <dark_gray>- <gray>Go into spectator mode
-    - <dark_gray>/<gold>clearchat <dark_gray>- <gray>Clear global chat
-    - <dark_gray>/<gold>lockchat <dark_gray>- <gray>Lock/unlock global chat
+    - "<prefix> <gray>The following commands are available<dark_gray>:"
+    - "<dark_gray>/<gold>akropolis info <dark_gray>- <gray>Displays information about the current config"
+    - "<dark_gray>/<gold>akropolis scoreboard <dark_gray>- <gray>Toggle the scoreboard"
+    - "<dark_gray>/<gold>akropolis hotbar <dark_gray>- <gray>Toggle the hotbar"
+    - "<dark_gray>/<gold>akropolis holo [option] <dark_gray>- <gray>Displays hologram commands"
+    - "<dark_gray>/<gold>akropolis open <menu> <dark_gray>- <gray>Opens a custom menu"
+    - "<dark_gray>/<gold>vanish <dark_gray>- <gray>Toggle vanish mode"
+    - "<dark_gray>/<gold>fly [player] <dark_gray>- <gray>Toggle flight mode"
+    - "<dark_gray>/<gold>setlobby <dark_gray>- <gray>Set the spawn location"
+    - "<dark_gray>/<gold>lobby <dark_gray>- <gray>Teleport to the spawn location"
+    - "<dark_gray>/<gold>gamemode <gamemode> [player] <dark_gray>- <gray>Set your gamemode"
+    - "<dark_gray>/<gold>gmc [player] <dark_gray>- <gray>Go into creative mode"
+    - "<dark_gray>/<gold>gms [player] <dark_gray>- <gray>Go into survival mode"
+    - "<dark_gray>/<gold>gma [player] <dark_gray>- <gray>Go into adventure mode"
+    - "<dark_gray>/<gold>gmsp [player] <dark_gray>- <gray>Go into spectator mode"
+    - "<dark_gray>/<gold>clearchat <dark_gray>- <gray>Clear global chat"
+    - "<dark_gray>/<gold>lockchat <dark_gray>- <gray>Lock/unlock global chat"
   hologram:
-    - '<prefix> <gray>The following hologram commands are available<dark_gray>:'
-    - <dark_gray>/<gold>akropolis holo list <dark_gray>- <gray>List all created holograms
-    - <dark_gray>/<gold>akropolis holo create <id> <dark_gray>- <gray>Create a new hologram
-    - <dark_gray>/<gold>akropolis holo remove <id> <dark_gray>- <gray>Delete an existing hologram
-    - <dark_gray>/<gold>akropolis holo move <id> <dark_gray>- <gray>Move the location of a hologram
-    - <dark_gray>/<gold>akropolis holo setline <id> <line> <text> <dark_gray>- <gray>Set the line of a specific hologram
-    - <dark_gray>/<gold>akropolis holo addline <id> <text> <dark_gray>- <gray>Add a new line to a hologram
-    - <dark_gray>/<gold>akropolis holo removeline <id> <line> <dark_gray>- <gray>Remove a line from a hologram
+    - "<prefix> <gray>The following hologram commands are available<dark_gray>:"
+    - "<dark_gray>/<gold>akropolis holo list <dark_gray>- <gray>List all created holograms"
+    - "<dark_gray>/<gold>akropolis holo create <id> <dark_gray>- <gray>Create a new hologram"
+    - "<dark_gray>/<gold>akropolis holo remove <id> <dark_gray>- <gray>Delete an existing hologram"
+    - "<dark_gray>/<gold>akropolis holo move <id> <dark_gray>- <gray>Move the location of a hologram"
+    - "<dark_gray>/<gold>akropolis holo setline <id> <line> <text> <dark_gray>- <gray>Set the line of a specific hologram"
+    - "<dark_gray>/<gold>akropolis holo addline <id> <text> <dark_gray>- <gray>Add a new line to a hologram"
+    - "<dark_gray>/<gold>akropolis holo removeline <id> <line> <dark_gray>- <gray>Remove a line from a hologram"
   song_player:
-    - '<prefix> <gray>The following song player commands are available<dark_gray>:'
-    - <dark_gray>/<gold>akropolis sp setpos <dark_gray>- <gray>Set the position of the song player
-    - <dark_gray>/<gold>akropolis sp skip <dark_gray>- <gray>Skip a song
+    - "<prefix> <gray>The following song player commands are available<dark_gray>:"
+    - "<dark_gray>/<gold>akropolis sp setpos <dark_gray>- <gray>Set the position of the song player"
+    - "<dark_gray>/<gold>akropolis sp skip <dark_gray>- <gray>Skip a song"
 gamemode:
-  gamemode_change: <prefix> <gray>You have changed gamemode to <green><gamemode>.
-  gamemode_change_other: <prefix> <gray>You have changed gamemode to <green><gamemode> <gray>for <yellow><player><gray>.
-  gamemode_invalid: <prefix> <green><gamemode> <red>is not a valid gamemode.
+  gamemode_change: "<prefix> <gray>You have changed gamemode to <green><gamemode>."
+  gamemode_change_other: "<prefix> <gray>You have changed gamemode to <green><gamemode> <gray>for <yellow><player><gray>."
+  gamemode_invalid: "<prefix> <green><gamemode> <red>is not a valid gamemode."
 vanish:
-  enable: <prefix> <green>You have now vanished.
-  disable: <prefix> <red>You have now unvanished.
+  enable: "<prefix> <green>You have now vanished."
+  disable: "<prefix> <red>You have now unvanished."
 flight:
-  enable: <prefix> <green>You have enabled flight.
-  disable: <prefix> <red>You have disabled flight.
-  enable_other: <prefix> <red>You have enabled flight for <yellow><player>.
-  disable_other: <prefix> <red>You have disabled flight for <yellow><player>.
+  enable: "<prefix> <green>You have enabled flight."
+  disable: "<prefix> <red>You have disabled flight."
+  enable_other: "<prefix> <red>You have enabled flight for <yellow><player>."
+  disable_other: "<prefix> <red>You have disabled flight for <yellow><player>."
 player_hider:
-  hidden: <prefix> <red>Player visibility disabled.
-  shown: <prefix> <green>Player visibility enabled.
+  hidden: "<prefix> <red>Player visibility disabled."
+  shown: "<prefix> <green>Player visibility enabled."
 lobby:
-  set_lobby: <prefix> <green>You have successfully set the lobby spawn point.
+  set_lobby: "<prefix> <green>You have successfully set the lobby spawn point."
 song_player:
-  set_location: <prefix> <green>You have successfully set the song player location.
-  skipped: <prefix> <green>Song skipped. Now playing <current_song>.
-  not_loaded: <prefix> <red>The song player isn't loaded.
+  set_location: "<prefix> <green>You have successfully set the song player location."
+  skipped: "<prefix> <green>Song skipped. Now playing <current_song>."
+  not_loaded: "<prefix> <red>The song player isn't loaded."
 fight_mode:
-  activate_delay: <prefix> <gray>Activating fight mode in <red><seconds> second(s).
-  deactivate_delay: <prefix> <gray>Deactivating fight mode in <green><seconds> second(s).
+  activate_delay: "<prefix> <gray>Activating fight mode in <red><seconds> second(s)."
+  deactivate_delay: "<prefix> <gray>Deactivating fight mode in <green><seconds> second(s)."
 chat:
-  clear_chat: <dark_gray>| <white>Chat has been cleared by <yellow><player><white>!
-  clear_chat_player: prefix> <red>Your chat has been cleared by an administrator.
-  locked: <prefix> <red>Chat is currently locked.
-  locked_broadcast: <prefix> <yellow><player> <red>has locked global chat.
-  unlocked_broadcast: <prefix> <yellow><player> <green>has unlocked global chat.
-  anti_swear_word_blocked: <prefix> <red>Message removed by anti-swear systems.
-  anti_swear_admin_notify: '<prefix> <yellow><player> <red>attempted to say<dark_gray>: <aqua><word>.'
-  command_blocked: <prefix> <red>This command has been restricted.
+  clear_chat: "<dark_gray>| <white>Chat has been cleared by <yellow><player><white>!"
+  clear_chat_player: "prefix> <red>Your chat has been cleared by an administrator."
+  locked: "<prefix> <red>Chat is currently locked."
+  locked_broadcast: "<prefix> <yellow><player> <red>has locked global chat."
+  unlocked_broadcast: "<prefix> <yellow><player> <green>has unlocked global chat."
+  anti_swear_word_blocked: "<prefix> <red>Message removed by anti-swear systems."
+  anti_swear_admin_notify: "<prefix> <yellow><player> <red>attempted to say<dark_gray>: <aqua><word>."
+  command_blocked: "<prefix> <red>This command has been restricted."
 scoreboard:
-  enable: <prefix> <gray>You have <yellow>enabled <gray>the scoreboard.
-  disable: <prefix> <gray>You have <yellow>disabled <gray>the scoreboard.
+  enable: "<prefix> <gray>You have <yellow>enabled <gray>the scoreboard."
+  disable: "<prefix> <gray>You have <yellow>disabled <gray>the scoreboard."
 hotbar:
-  enable: <prefix> <gray>You have <yellow>enabled <gray>the hotbar items.
-  disable: <prefix> <gray>You have <yellow>disabled <gray>the hotbar items.
+  enable: "<prefix> <gray>You have <yellow>enabled <gray>the hotbar items."
+  disable: "<prefix> <gray>You have <yellow>disabled <gray>the hotbar items."
 double_jump:
-  cooldown_active: <prefix> <red>You must wait <yellow><time>s <red>to double jump again!
+  cooldown_active: "<prefix> <red>You must wait <yellow><time>s <red>to double jump again!"
 player_mount:
-  cooldown_active: <prefix> <red>You must wait <yellow><time>s <red>to mount a player again!
+  cooldown_active: "<prefix> <red>You must wait <yellow><time>s <red>to mount a player again!"
 world_event_modifications:
-  item_drop: <prefix> <red>You are not allowed to drop items.
-  item_pickup: <prefix> <red>You are not allowed to pickup items.
-  block_place: <prefix> <red>You are not allowed to place blocks.
-  block_break: <prefix> <red>You are not allowed to break blocks.
-  block_interact: <prefix> <red>You are not allowed to use this.
-  player_pvp: <prefix> <red>You are not allowed to pvp here.
+  item_drop: "<prefix> <red>You are not allowed to drop items."
+  item_pickup: "<prefix> <red>You are not allowed to pickup items."
+  block_place: "<prefix> <red>You are not allowed to place blocks."
+  block_break: "<prefix> <red>You are not allowed to break blocks."
+  block_interact: "<prefix> <red>You are not allowed to use this."
+  player_pvp: "<prefix> <red>You are not allowed to pvp here."
 holograms:
-  empty: <prefix> <red>Could not find any holograms.
-  already_exists: <prefix> <red>There is a hologram with this name already <yellow>(<name>)<red>.
-  invalid_hologram: <prefix> <red>There is no hologram with this name <yellow>(<name>)<red>.
-  invalid_line: <prefix> <red>Could not find hologram line.
-  spawned: <prefix> <gray>Created new hologram with name <yellow><name><gray>.
-  despawned: <prefix> <gray>Removed hologram with name <yellow><name><gray>.
-  moved: <prefix> <gray>Moved hologram <yellow><name><gray>.
-  line_set: <prefix> <gray>Set line <yellow><line><gray>.
-  added_line: <prefix> <gray>Added new line.
-  removed_line: <prefix> <gray>Removed line <yellow><line><gray>.
+  empty: "<prefix> <red>Could not find any holograms."
+  already_exists: "<prefix> <red>There is a hologram with this name already <yellow>(<name>)<red>."
+  invalid_hologram: "<prefix> <red>There is no hologram with this name <yellow>(<name>)<red>."
+  invalid_line: "<prefix> <red>Could not find hologram line."
+  spawned: "<prefix> <gray>Created new hologram with name <yellow><name><gray>."
+  despawned: "<prefix> <gray>Removed hologram with name <yellow><name><gray>."
+  moved: "<prefix> <gray>Moved hologram <yellow><name><gray>."
+  line_set: "<prefix> <gray>Set line <yellow><line><gray>."
+  added_line: "<prefix> <gray>Added new line."
+  removed_line: "<prefix> <gray>Removed line <yellow><line><gray>."
 anti_world_downloader:
-  admin_notify: <prefix> <white><player> <red>has joined with the World Downloader mod, their ability to use it has been restricted.
+  admin_notify: "<prefix> <white><player> <red>has joined with the World Downloader mod, their ability to use it has been restricted."

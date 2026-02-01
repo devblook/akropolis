@@ -71,7 +71,7 @@
 slots: 27
 
 # Title of the GUI.
-title: Server Selector
+title: "Server Selector"
 
 # Automatically update open inventories.
 # This can be used to update placeholders in the GUI.
@@ -84,36 +84,36 @@ refresh:
 # The items inside the GUI can be listed here.
 items:
   filler:
-    material: GRAY_STAINED_GLASS_PANE
+    material: "GRAY_STAINED_GLASS_PANE"
     amount: 1
 
     # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
     slot: -1
   factions:
-    material: TNT
+    material: "TNT"
     amount: 1
 
     # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
     slot: 11
-    display_name: <yellow><b>Factions
+    display_name: "<yellow><b>Factions"
     lore:
-      - <dark_gray>» <gray>Join now to our coolest server!
+      - "<dark_gray>» <gray>Join now to our coolest server!"
     glow: true
     actions:
-      - '[CLOSE]'
-      - '[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions'
-      - '[SERVER] factions'
+      - "[CLOSE]"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions"
+      - "[SERVER] factions"
   survival:
-    material: GRASS_BLOCK
+    material: "GRASS_BLOCK"
     amount: 1
 
     # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
     slot: 15
-    display_name: <green><b>Survival
+    display_name: "<green><b>Survival"
     lore:
-      - <dark_gray>» <gray>Never gonna give you up!
+      - "<dark_gray>» <gray>Never gonna give you up!"
     glow: false
     actions:
-      - '[CLOSE]'
-      - '[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival'
-      - '[SERVER] survival'
+      - "[CLOSE]"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival"
+      - "[SERVER] survival"

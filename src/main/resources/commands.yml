@@ -49,23 +49,23 @@ custom_commands:
   website:
     # List any aliases for the command here
     aliases:
-      - web
+      - "web"
 
     # Actions to be executed
     actions:
-      - '[MESSAGE] <dark_gray>| <click:open_url:''https://www.example.com/''><hover:show_text:''<yellow>Click here to navigate!''><gray>Click here to visit <aqua>www.example.com<gray>!</hover></click>'
+      - "[MESSAGE] <dark_gray>| <click:open_url:'https://www.example.com/'><hover:show_text:'<yellow>Click here to navigate!'><gray>Click here to visit <aqua>www.example.com<gray>!</hover></click>"
   clearinventory:
     # Players will require this permission to execute this command.
-    permission: akropolis.clearinventory
+    permission: "akropolis.clearinventory"
 
     # List any aliases for the command here
     aliases:
-      - ci
+      - "ci"
 
     # Actions to be executed
     actions:
-      - '[CONSOLE] minecraft:clear <player>'
-      - '[MESSAGE] <dark_gray>| <yellow>Your inventory has been cleared!'
+      - "[CONSOLE] minecraft:clear <player>"
+      - "[MESSAGE] <dark_gray>| <yellow>Your inventory has been cleared!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | AKROPOLIS BUILT-IN COMMANDS              |
@@ -80,32 +80,56 @@ commands:
 
     # List any aliases for the command here
     aliases:
-      - gm
+      - "gm"
   gms:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   gmc:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   gma:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   gmsp:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   clearchat:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   fly:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   lockchat:
     enabled: true
 
     # List any aliases for the command here
     aliases:
-      - lc
+      - "lc"
   setlobby:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   lobby:
     enabled: true
+
+    # List any aliases for the command here
+    aliases: []
   vanish:
     enabled: true
 
     # List any aliases for the command here
     aliases:
-      - v
+      - "v"

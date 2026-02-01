@@ -64,7 +64,7 @@ disabled_worlds:
 
   # List your worlds here, set "worlds: []" to disable.
   worlds:
-    - world_nether
+    - "world_nether"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | ANTI-WORLD DOWNLOADER                    |
@@ -95,7 +95,7 @@ song_player:
   # There are 2 types of song players:
   # - RADIO: plays songs for all players no matter where they are.
   # - POSITION: play songs for all added players in specified range from specified point.
-  type: RADIO
+  type: "RADIO"
 
   # Modify the range where a song is played while using POSITION song player.
   # Use the "/akro sp setpos" command to set the position of the song player.
@@ -111,7 +111,7 @@ song_player:
 
   # Actions to perform when a song starts playing.
   actions:
-    - '[ACTIONBAR] <gray>Now playing<dark_gray>: <yellow><current_song>'
+    - "[ACTIONBAR] <gray>Now playing<dark_gray>: <yellow><current_song>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | NAMETAG                                  |
@@ -131,12 +131,12 @@ nametag:
   # For more complex use cases it is encouraged to use
   # another plugin that is merely dedicated to this kind of features.
   format:
-    prefix: '<papi:luckperms_prefix> '
+    prefix: "<papi:luckperms_prefix> "
 
     # Use the HEX color of your preference,
     # the nearest Minecraft named color will be used.
-    name_color: '#FFFFFF'
-    suffix: ' <yellow><ping>'
+    name_color: "#FFFFFF"
+    suffix: " <yellow><ping>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | SCOREBOARD                               |
@@ -162,13 +162,13 @@ scoreboard:
     rate: 200
 
   # Scoreboard title. There is no character limit since Minecraft 1.18.
-  title: <gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>)
+  title: "<gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>)"
   lines:
-    - ''
-    - '<dark_gray>» <gray>Player<dark_gray>: <yellow><player>'
-    - '<dark_gray>» <gray>Ping<dark_gray>: <yellow><ping>ms'
-    - ''
-    - '    <yellow>play.example.com'
+    - ""
+    - "<dark_gray>» <gray>Player<dark_gray>: <yellow><player>"
+    - "<dark_gray>» <gray>Ping<dark_gray>: <yellow><ping>ms"
+    - ""
+    - "    <yellow>play.example.com"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # |TABLIST                                   |
@@ -186,16 +186,16 @@ tablist:
 
   # Modify the header of the tablist.
   header:
-    - ''
-    - <dark_gray>» <gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>) <dark_gray>«
-    - ''
+    - ""
+    - "<dark_gray>» <gold><b>Akropolis <reset><dark_gray>(<yellow><online><dark_gray>/<yellow><online_max><dark_gray>) <dark_gray>«"
+    - ""
 
   # Modify the footer of the tablist.
   footer:
-    - ''
-    - '    <gray>Website <dark_gray>| <yellow>www.example.com    '
-    - '    <gray>Store <dark_gray>| <yellow>store.example.com    '
-    - ''
+    - ""
+    - "    <gray>Website <dark_gray>| <yellow>www.example.com    "
+    - "    <gray>Store <dark_gray>| <yellow>store.example.com    "
+    - ""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | AUTO BROADCAST                           |
@@ -211,37 +211,37 @@ announcements:
   required_players: 1
   sound:
     enabled: true
-    value: BLOCK_NOTE_BLOCK_PLING
+    value: "BLOCK_NOTE_BLOCK_PLING"
     volume: 1.0
     pitch: 1.0
 
   # Announcement list.
   announcements:
     test1:
-      - <reset>
-      - <blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>
-      - <reset>
+      - "<reset>"
+      - "<blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements"
+      - "<click:open_url:'https://github.com/devblook/akropolis/'><hover:show_text:'<yellow>Click here to see the source code!'><dark_gray>» <gray>The source code of the plugin is available on <white>GitHub<gray>.</hover></click>"
+      - "<reset>"
     test2:
-      - <reset>
-      - <gold><b>ANNOUNCEMENT</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/zetastormy/'><hover:show_text:'<yellow>Click here to navigate to my GitHub!'><dark_gray>» <gray>This plugin was forked by <yellow>ZetaStormy<gray>.</hover></click>
-      - <reset>
+      - "<reset>"
+      - "<gold><b>ANNOUNCEMENT</b> <dark_gray>- Akropolis default announcements"
+      - "<click:open_url:'https://github.com/zetastormy/'><hover:show_text:'<yellow>Click here to navigate to my GitHub!'><dark_gray>» <gray>This plugin was forked by <yellow>ZetaStormy<gray>.</hover></click>"
+      - "<reset>"
     test3:
-      - <reset>
-      - <yellow><b>TIP</b> <dark_gray>- Akropolis default announcements
-      - <dark_gray>» <gray>Configure these messages in the <aqua>config.yml<gray>.
-      - <reset>
+      - "<reset>"
+      - "<yellow><b>TIP</b> <dark_gray>- Akropolis default announcements"
+      - "<dark_gray>» <gray>Configure these messages in the <aqua>config.yml<gray>."
+      - "<reset>"
     test4:
-      - <reset>
-      - <blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>
-      - <reset>
+      - "<reset>"
+      - "<blue><b>INFORMATION</b> <dark_gray>- Akropolis default announcements"
+      - "<click:open_url:'https://github.com/devblook/'><hover:show_text:'<yellow>Click here to navigate to our GitHub!'><dark_gray>» <gray>This plugin is maintained by <color:#1e2f45>Dev<white>Blook <gray>Team.</hover></click>"
+      - "<reset>"
     test5:
-      - <reset>
-      - <yellow><b>TIP</b> <dark_gray>- Akropolis default announcements
-      - <click:open_url:'https://discord.gg/w438z8TKej'><hover:show_text:'<yellow>Click here to join our Discord server!'><dark_gray>» <gray>Click here to join <color:#1e2f45>Dev<white>Blook <gray>Team's Discord server to get support and update announcements of all our projects.</hover></click>
-      - <reset>
+      - "<reset>"
+      - "<yellow><b>TIP</b> <dark_gray>- Akropolis default announcements"
+      - "<click:open_url:'https://discord.gg/w438z8TKej'><hover:show_text:'<yellow>Click here to join our Discord server!'><dark_gray>» <gray>Click here to join <color:#1e2f45>Dev<white>Blook <gray>Team's Discord server to get support and update announcements of all our projects.</hover></click>"
+      - "<reset>"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | BOSS BAR AUTO BROADCAST                  |
@@ -257,19 +257,19 @@ boss_bar_announcements:
   overlay:
     # Decide if the boss bar is continuous or split into segments.
     # Valid options: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
-    type: PROGRESS
+    type: "PROGRESS"
 
     # The amount of boss bar that's filled up. A number in the interval [0, 1].
     progress: 1.0
   sound:
     enabled: false
-    value: BLOCK_NOTE_BLOCK_PLING
+    value: "BLOCK_NOTE_BLOCK_PLING"
     volume: 1.0
     pitch: 1.0
   announcements:
-    - <blue><b>THIS SERVER USES AKROPOLIS
-    - <gold><b>NOW WITH BOSS BAR ANNOUNCEMENTS!
-    - <gradient:green:blue><b>MINIMESSAGE SUPPORT!
+    - "<blue><b>THIS SERVER USES AKROPOLIS"
+    - "<gold><b>NOW WITH BOSS BAR ANNOUNCEMENTS!"
+    - "<gradient:green:blue><b>MINIMESSAGE SUPPORT!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | LAUNCHPAD                                |
@@ -285,12 +285,12 @@ launchpad:
   # Top and bottom block required to make a launchpad.
   # For performance reasons, the top block must be an interactable block (pressure plate),
   # otherwise the launchpad will not work.
-  top_block: STONE_PRESSURE_PLATE
-  bottom_block: REDSTONE_BLOCK
+  top_block: "STONE_PRESSURE_PLATE"
+  bottom_block: "REDSTONE_BLOCK"
 
   # Actions executed upon use of a launchpad.
   actions:
-    - '[SOUND] ENTITY_BAT_TAKEOFF'
+    - "[SOUND] ENTITY_BAT_TAKEOFF"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | PLAYER MOUNT                             |
@@ -306,7 +306,7 @@ player_mount:
 
   # Actions executed upon mounting a player.
   actions:
-    - '[SOUND] ENTITY_HORSE_SADDLE'
+    - "[SOUND] ENTITY_HORSE_SADDLE"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | DOUBLE JUMP                              |
@@ -328,7 +328,7 @@ double_jump:
 
   # Actions executed upon use of double jump.
   actions:
-    - '[SOUND] ENTITY_BAT_TAKEOFF'
+    - "[SOUND] ENTITY_BAT_TAKEOFF"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | FLY                                      |
@@ -359,98 +359,98 @@ chat_management:
       # This is used to determine which group is used when a player has multiple groups' permissions.
       # Groups with higher priority take precedence.
       priority: 0
-      format: <hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>
+      format: "<hover:show_text:'<rainbow>You can also use hover here!'><papi:luckperms_prefix></hover> <gray><player> <dark_gray>» <gray><message>"
 
       # Just in case you want to slow down your players a little.
       cooldown:
         # Time is in seconds.
         time: 3
-        message: <gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!
+        message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
 
       # Add all the emojis you want here. These emojis will only be available for this group.
       emojis:
         smile:
           # Players have to type this to use the emoji.
           emoticon:
-            - :)
-            - ':smile:'
+            - ":)"
+            - ":smile:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <yellow>😀<reset>
+            - "<yellow>😀<reset>"
         sunglasses:
           # Players have to type this to use the emoji.
           emoticon:
-            - B)
-            - ':sunglasses:'
+            - "B)"
+            - ":sunglasses:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <yellow>😎<reset>
+            - "<yellow>😎<reset>"
         heart:
           # Players have to type this to use the emoji.
           emoticon:
-            - <3
-            - ':heart:'
+            - "<3"
+            - ":heart:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <red>❤<reset>
+            - "<red>❤<reset>"
     vip:
       # This is used to determine which group is used when a player has multiple groups' permissions.
       # Groups with higher priority take precedence.
       priority: 1
-      format: <papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>
+      format: "<papi:luckperms_prefix> <green><player> <dark_gray>» <white><message>"
 
       # Just in case you want to slow down your players a little.
       cooldown:
         # Time is in seconds.
         time: 1
-        message: <gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!
+        message: "<gold><b>Akropolis <reset><dark_gray>|| <red>Please wait <yellow><time>s <red>before talking again!"
 
       # Add all the emojis you want here. These emojis will only be available for this group.
       emojis:
         tableflip:
           # Players have to type this to use the emoji.
           emoticon:
-            - ':tableflip:'
+            - ":tableflip:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <red>(╯°□°）╯<white>︵<gray> ┻━┻<reset>
+            - "<red>(╯°□°）╯<white>︵<gray> ┻━┻<reset>"
         wave:
           # Players have to type this to use the emoji.
           emoticon:
-            - o/
-            - ':wave:'
+            - "o/"
+            - ":wave:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <green>( ﾟ◡ﾟ)/<reset>
+            - "<green>( ﾟ◡ﾟ)/<reset>"
         music:
           # Players have to type this to use the emoji.
           emoticon:
-            - ':music:'
+            - ":music:"
 
           # The emoticon will be replaced by a random emoji of the list below.
           # If you don't want multiple random emojis just set one so it will always use it.
           emoji:
-            - <red>♫<reset>
-            - <blue>♬<reset>
-            - <dark_aqua>♪<reset>
-            - <dark_purple>♩<reset>
-            - <green>♭<reset>
-            - <yellow>♪<reset>
+            - "<red>♫<reset>"
+            - "<blue>♬<reset>"
+            - "<dark_aqua>♪<reset>"
+            - "<dark_purple>♩<reset>"
+            - "<green>♭<reset>"
+            - "<yellow>♪<reset>"
     staff:
       # This is used to determine which group is used when a player has multiple groups' permissions.
       # Groups with higher priority take precedence.
       priority: 2
-      format: <papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>
+      format: "<papi:luckperms_prefix> <red><player> <dark_gray>» <white><message>"
 
       # Just in case you want to slow down your players a little.
       cooldown:
@@ -469,17 +469,17 @@ command_block:
 
   # List of commands that will be blocked.
   blocked_commands:
-    - /pl
-    - /plugins
-    - /?
-    - /bukkit:?
-    - /bukkit:plugins
-    - /bukkit:pl
-    - /bukkit:help
-    - /ver
-    - /version
-    - /bukkit:version
-    - /bukkit:ver
+    - "/pl"
+    - "/plugins"
+    - "/?"
+    - "/bukkit:?"
+    - "/bukkit:plugins"
+    - "/bukkit:pl"
+    - "/bukkit:help"
+    - "/ver"
+    - "/version"
+    - "/bukkit:version"
+    - "/bukkit:ver"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | ANTI SWEAR                               |
@@ -490,9 +490,9 @@ anti_swear:
 
   # List of words that will be blocked.
   blocked_words:
-    - fuck
-    - shit
-    - bitch
+    - "fuck"
+    - "shit"
+    - "bitch"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | WORLD EVENT SETTINGS                     |
@@ -542,27 +542,27 @@ join_leave_messages:
   enabled: true
 
   # Set to '' if you want silent join/quit messages.
-  join_message: <dark_gray>[<dark_green>+<dark_gray>] <yellow><player> <gray>connected!
-  quit_message: <dark_gray>[<dark_red>-<dark_gray>] <yellow><player> <gray>disconnected!
+  join_message: "<dark_gray>[<dark_green>+<dark_gray>] <yellow><player> <gray>connected!"
+  quit_message: "<dark_gray>[<dark_red>-<dark_gray>] <yellow><player> <gray>disconnected!"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | ACTIONS EXECUTED UPON JOIN               |
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 join_events:
-  - '[MESSAGE] <dark_gray><st>+---------------***---------------+'
-  - '[MESSAGE] <reset>'
-  - '[MESSAGE] <dark_gray>| <gray>Welcome, <gold><b><player><reset> <gray>to the server!'
-  - '[MESSAGE] <reset>'
-  - '[MESSAGE] <dark_gray>» <gray>Website<dark_gray>: <yellow>www.example.com'
-  - '[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>store.example.com'
-  - '[MESSAGE] <dark_gray>» <gray>Discord<dark_gray>: <yellow>discord.example.com'
-  - '[MESSAGE] <reset>'
-  - '[MESSAGE]             <gray><i>Powered by Akropolis'
-  - '[MESSAGE] <dark_gray><st>+---------------***---------------+'
-  - '[TITLE] <yellow><b>WELCOME;<white><player>;1;2;1'
-  - '[SOUND] ENTITY_PLAYER_LEVELUP'
-  - '[GAMEMODE] survival'
-  - '[EFFECT] SPEED;1'
+  - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE] <dark_gray>| <gray>Welcome, <gold><b><player><reset> <gray>to the server!"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE] <dark_gray>» <gray>Website<dark_gray>: <yellow>www.example.com"
+  - "[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>store.example.com"
+  - "[MESSAGE] <dark_gray>» <gray>Discord<dark_gray>: <yellow>discord.example.com"
+  - "[MESSAGE] <reset>"
+  - "[MESSAGE]             <gray><i>Powered by Akropolis"
+  - "[MESSAGE] <dark_gray><st>+---------------***---------------+"
+  - "[TITLE] <yellow><b>WELCOME;<white><player>;1;2;1"
+  - "[SOUND] ENTITY_PLAYER_LEVELUP"
+  - "[GAMEMODE] survival"
+  - "[EFFECT] SPEED;1"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | JOIN SETTINGS                            |
@@ -596,7 +596,7 @@ join_settings:
 
     # You can watch examples of the types here: https://minecraft.wiki/w/Firework_Star#Shape_effects
     # Available types: BALL, BALL_LARGE, STAR, BURST, CREEPER
-    type: BALL_LARGE
+    type: "BALL_LARGE"
 
     # The greater the power, the longer the firework will fly.
     # Must be a number in the interval [0, 255].
@@ -608,10 +608,10 @@ join_settings:
 
     # You can find all available colors here: https://jd.papermc.io/paper/1.21.11/org/bukkit/Color.html#field-summary
     colors:
-      - AQUA
-      - RED
-      - TEAL
-      - WHITE
+      - "AQUA"
+      - "RED"
+      - "TEAL"
+      - "WHITE"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | CUSTOM JOIN ITEMS                        |
@@ -626,32 +626,42 @@ custom_join_items:
   # Add any items you want following the same format, more info in the wiki.
   items:
     infobook:
-      material: BOOK
+      material: "BOOK"
       amount: 1
       slot: 0
-      display_name: <gold>Server Information <gray>(Right-Click)
+      display_name: "<gold>Server Information <gray>(Right-Click)"
       lore:
-        - <dark_gray>» <gray>Right click to see information about the server!
+        - "<dark_gray>» <gray>Right click to see information about the server!"
       actions:
-        - '[MESSAGE] <reset>'
-        - '[MESSAGE] <dark_gray>| <gold><b>Server Information'
-        - '[MESSAGE] <reset>'
-        - '[MESSAGE] <dark_gray>» <gray>Website<dark_gray>: <yellow>www.example.com'
-        - '[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>buy.example.com'
-        - '[MESSAGE] <dark_gray>» <gray>Discord<dark_gray>: <yellow>discord.example.com'
-        - '[MESSAGE] <reset>'
+        - "[MESSAGE] <reset>"
+        - "[MESSAGE] <dark_gray>| <gold><b>Server Information"
+        - "[MESSAGE] <reset>"
+        - "[MESSAGE] <dark_gray>» <gray>Website<dark_gray>: <yellow>www.example.com"
+        - "[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>buy.example.com"
+        - "[MESSAGE] <dark_gray>» <gray>Discord<dark_gray>: <yellow>discord.example.com"
+        - "[MESSAGE] <reset>"
+      item_flags: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
     server_selector:
-      material: NETHER_STAR
+      material: "NETHER_STAR"
       amount: 1
       slot: 4
-      display_name: <aqua>Server Selector <gray>(Right-Click)
+      display_name: "<aqua>Server Selector <gray>(Right-Click)"
       lore:
-        - <dark_gray>» <gray>Right click to open the server selector!
+        - "<dark_gray>» <gray>Right click to open the server selector!"
       actions:
-        - '[MENU] serverselector'
+        - "[MENU] serverselector"
 
       # Should we limit how fast a user can use this item? Cooldown is in seconds
       cooldown: 3
+      item_flags: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | FIGHT MODE                               |
@@ -676,58 +686,84 @@ fight_mode:
 
   # The item that will toggle the fight mode and also the sword used to fight.
   item:
-    material: NETHERITE_SWORD
+    material: "NETHERITE_SWORD"
     amount: 1
     unbreakable: true
-    display_name: <red>Fight Mode <gray>(Hold to toggle)
+    display_name: "<red>Fight Mode <gray>(Hold to toggle)"
     lore:
-      - <dark_gray>» <gray>Hold for 5 seconds to toggle the fight mode!
+      - "<dark_gray>» <gray>Hold for 5 seconds to toggle the fight mode!"
     item_flags:
-      - HIDE_UNBREAKABLE
-      - HIDE_ATTRIBUTES
-      - HIDE_ENCHANTS
+      - "HIDE_UNBREAKABLE"
+      - "HIDE_ATTRIBUTES"
+      - "HIDE_ENCHANTS"
 
     # enchantment:level
     enchantments:
-      - sharpness:5
+      - "sharpness:5"
+    custom_model_data: []
+    actions: []
 
   # The armor that will be given to the player when they enter fight mode.
   armor:
     helmet:
-      material: DIAMOND_HELMET
+      material: "DIAMOND_HELMET"
       amount: 1
       unbreakable: true
       item_flags:
-        - HIDE_UNBREAKABLE
+        - "HIDE_UNBREAKABLE"
+      lore: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
+      actions: []
     chestplate:
-      material: DIAMOND_CHESTPLATE
+      material: "DIAMOND_CHESTPLATE"
       amount: 1
       unbreakable: true
       item_flags:
-        - HIDE_UNBREAKABLE
+        - "HIDE_UNBREAKABLE"
+      lore: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
+      actions: []
     leggings:
-      material: DIAMOND_LEGGINGS
+      material: "DIAMOND_LEGGINGS"
       amount: 1
       unbreakable: true
       item_flags:
-        - HIDE_UNBREAKABLE
+        - "HIDE_UNBREAKABLE"
+      lore: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
+      actions: []
     boots:
-      material: DIAMOND_BOOTS
+      material: "DIAMOND_BOOTS"
       amount: 1
       unbreakable: true
       item_flags:
-        - HIDE_UNBREAKABLE
+        - "HIDE_UNBREAKABLE"
+      lore: []
+      custom_model_data: []
+
+      # enchantment:level
+      enchantments: []
+      actions: []
 
   # Actions to execute when the fight mode gets activated or deactivated.
   actions:
     countdown:
-      - '[SOUND] BLOCK_AMETHYST_BLOCK_PLACE'
+      - "[SOUND] BLOCK_AMETHYST_BLOCK_PLACE"
     activated:
-      - '[TITLE] <red><b>PvP activated!;<white>Try to survive!'
-      - '[SOUND] ENTITY_ENDER_DRAGON_GROWL'
+      - "[TITLE] <red><b>PvP activated!;<white>Try to survive!"
+      - "[SOUND] ENTITY_ENDER_DRAGON_GROWL"
     deactivated:
-      - '[TITLE] <green><b>PvP deactivated;<white>You''ve survived, uh?'
-      - '[SOUND] ENTITY_SNIFFER_HAPPY'
+      - "[TITLE] <green><b>PvP deactivated;<white>You've survived, uh?"
+      - "[SOUND] ENTITY_SNIFFER_HAPPY"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # | PLAYER HIDER                             |
@@ -746,14 +782,26 @@ player_hider:
   # Set to 0 to disable
   cooldown: 3
   not_hidden:
-    material: LIME_DYE
+    material: "LIME_DYE"
     amount: 1
-    display_name: '<gray>Players<dark_gray>: <green>Shown <gray>(Right-Click)'
+    display_name: "<gray>Players<dark_gray>: <green>Shown <gray>(Right-Click)"
     lore:
-      - <dark_gray>» <gray>Click to hide all players!
+      - "<dark_gray>» <gray>Click to hide all players!"
+    item_flags: []
+    custom_model_data: []
+
+    # enchantment:level
+    enchantments: []
+    actions: []
   hidden:
-    material: GRAY_DYE
+    material: "GRAY_DYE"
     amount: 1
-    display_name: '<gray>Players<dark_gray>: <red>Hidden <gray>(Right-Click)'
+    display_name: "<gray>Players<dark_gray>: <red>Hidden <gray>(Right-Click)"
     lore:
-      - <dark_gray>» <gray>Click to show all players!
+      - "<dark_gray>» <gray>Click to show all players!"
+    item_flags: []
+    custom_model_data: []
+
+    # enchantment:level
+    enchantments: []
+    actions: []
