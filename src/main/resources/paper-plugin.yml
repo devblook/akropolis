@@ -8,16 +8,10 @@ loader: me.zetastormy.akropolis.AkropolisPluginLoader
 
 dependencies:
   server:
-    Essentials:
-      load: AFTER
-      required: false
     PlaceholderAPI:
       load: BEFORE
       required: false
     HeadDatabase:
-      load: BEFORE
-      required: false
-    Multiverse-Core:
       load: BEFORE
       required: false
     MiniPlaceholders:

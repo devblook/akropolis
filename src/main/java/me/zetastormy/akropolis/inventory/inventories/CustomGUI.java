@@ -95,9 +95,9 @@ public class CustomGUI extends AbstractInventory {
         InventoryItem inventoryItem;
 
         if (itemConfig.actions() == null || itemConfig.actions().isEmpty()) {
-            inventoryItem = new InventoryItem(itemStackBuilder.build());
+            inventoryItem = new InventoryItem(itemStackBuilder.build(), itemConfig.permission());
         } else {
-            inventoryItem = new InventoryItem(itemStackBuilder.build()).addClickAction(p -> getPlugin()
+            inventoryItem = new InventoryItem(itemStackBuilder.build(), itemConfig.permission()).addClickAction(p -> getPlugin()
                     .getActionManager().executeActions(p, itemConfig.actions()));
         }
 

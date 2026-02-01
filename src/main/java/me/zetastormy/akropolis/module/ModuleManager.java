@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
@@ -53,34 +54,70 @@ import me.zetastormy.akropolis.module.modules.world.Launchpad;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
 import me.zetastormy.akropolis.module.modules.world.WorldProtect;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 
-public class ModuleManager {
+public class ModuleManager implements Listener {
     private final Map<ModuleType, Module> modules = new EnumMap<>(ModuleType.class);
     private AkropolisPlugin plugin;
     private List<String> disabledWorlds;
+
+    public void createDisabledWorlds() {
+        final Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
+        this.disabledWorlds = config.disabledWorlds().worlds();
+
+        if (config.disabledWorlds().invert()) {
+            final List<String> newDisabledWorlds = new ArrayList<>();
+
+            for (World world : Bukkit.getWorlds()) {
+                newDisabledWorlds.add(world.getName());
+            }
+
+            this.disabledWorlds = newDisabledWorlds;
+
+            for (String world : config.disabledWorlds().worlds()) {
+                disabledWorlds.remove(world);
+            }
+        }
+
+        for (final Module module : this.modules.values()) {
+            module.setDisabledWorlds(this.disabledWorlds);
+        }
+    }
+
+
+    @EventHandler
+    public void onWorldLoad(final WorldLoadEvent event) {
+        final Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
+        final List<String> configuredWorlds = config.disabledWorlds().worlds();
+        final String worldName = event.getWorld().getName();
+
+        if (config.disabledWorlds().invert()) {
+            // If the world is not in the whitelist we should disable it
+            if (!configuredWorlds.contains(worldName)) {
+                this.disabledWorlds.add(worldName);
+            }
+        } else {
+            // If the world is in the blacklist we should disable it
+            if (configuredWorlds.contains(worldName)) {
+                this.disabledWorlds.add(worldName);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWorldUnload(final WorldUnloadEvent event) {
+        // Remove world since it does not exist anymore
+        this.disabledWorlds.remove(event.getEventName());
+    }
+
 
     public void loadModules(AkropolisPlugin plugin) {
         this.plugin = plugin;
 
         if (!modules.isEmpty())
             unloadModules();
-
-        Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
-        disabledWorlds = config.disabledWorlds().worlds();
-
-        if (config.disabledWorlds().invert()) {
-            List<String> newDisabledWorlds = new ArrayList<>();
-
-            for (World world : Bukkit.getWorlds()) {
-                newDisabledWorlds.add(world.getName());
-            }
-
-            disabledWorlds = newDisabledWorlds;
-
-            for (String world : config.disabledWorlds().worlds()) {
-                disabledWorlds.remove(world);
-            }
-        }
 
         // TODO: Stop using node paths to avoid inexistent paths
         registerModule(new AntiWorldDownloader(plugin), "anti_wdl", "enabled");
@@ -104,6 +141,9 @@ public class ModuleManager {
         registerModule(new HologramManager(plugin));
         registerModule(new PlayerOffHandSwap(plugin), "world_settings", "disable_off_hand_swap");
         registerModule(new FightModeManager(plugin), "fight_mode", "enabled");
+
+        this.createDisabledWorlds();
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         if (plugin.getHookManager().isHookEnabled("NOTEBLOCK_API"))
             registerModule(new SongPlayerManager(plugin), "song_player", "enabled");
@@ -144,6 +184,7 @@ public class ModuleManager {
             }
         }
 
+        HandlerList.unregisterAll(this);
         modules.clear();
     }
 

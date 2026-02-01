@@ -56,7 +56,7 @@ public class InventoryManager {
         this.loadCustomMenus();
         this.inventories.values().forEach(AbstractInventory::onEnable);
 
-        plugin.getServer().getPluginManager().registerEvents(new InventoryListener(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new InventoryListener(plugin.getConfigManager()), plugin);
     }
 
     private void loadCustomMenus() {

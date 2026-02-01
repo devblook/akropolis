@@ -19,6 +19,10 @@
 
 package me.zetastormy.akropolis.inventory;
 
+import me.zetastormy.akropolis.config.ConfigManager;
+import me.zetastormy.akropolis.config.type.Messages;
+import me.zetastormy.akropolis.util.MessagingUtil;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +31,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class InventoryListener implements Listener {
+
+    private final ConfigManager configManager;
+
+    public InventoryListener(final ConfigManager configManager) {
+        this.configManager = configManager;
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -45,6 +55,12 @@ public class InventoryListener implements Listener {
 
                 if (item == null)
                     return;
+
+                if (item.getPermission() != null && !player.hasPermission(item.getPermission())) {
+                    final Messages messages = this.configManager.getFile(Messages.class).getConfig();
+                    MessagingUtil.send(messages.general().noPermission(), player);
+                    return;
+                }
 
                 for (final ClickAction clickAction : item.getClickActions()) {
                     clickAction.execute(player);
