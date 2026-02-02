@@ -159,11 +159,15 @@ public class ConfigurationContainer<C> {
                             defaultObjectSupplier.get(),
                             "Default object returned by the supplier is null"
                     );
-                    rootNode.set(config);
                 } else if (options.implicitInitialization()) {
                     // Implicit initialization is enabled so we can safely get the instance
                     config = rootNode.get(clazz);
+                } else {
+                    // Handle creating config with implicit initialization disabled
+                    config = getImplicitRoot(clazz);
+                }
 
+                if (options.implicitInitialization()) {
                     // Save object data to the node and get a new instance from it
                     // so the implicit initialization can work on all classes,
                     // for example classes instances as map entry values.
@@ -176,8 +180,6 @@ public class ConfigurationContainer<C> {
                         rootNode.set(config);
                     }
                 } else {
-                    // Handle creating config with implicit initialization disabled
-                    config = getImplicitRoot(clazz);
                     rootNode.set(config);
                 }
 
