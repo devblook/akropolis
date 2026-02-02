@@ -225,7 +225,11 @@ public class CustomInventory {
     public record ItemRecord(
             @Nullable String material,
             @Nullable Integer amount,
-            @Comment("Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'")
+            @Comment("""
+                    Setting the slot to -1 will fill every empty slot, you can otherwise use 'slots: [0, 1, 2]'
+                    to fill specific slots in the list.
+                    If both 'slot' number and 'slots' list exist then the list takes precedence.
+                    """)
             @Nullable Integer slot,
             @Nullable List<Integer> slots,
             @Nullable Boolean unbreakable,

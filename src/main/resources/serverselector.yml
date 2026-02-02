@@ -87,13 +87,25 @@ items:
     material: "GRAY_STAINED_GLASS_PANE"
     amount: 1
 
-    # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
+    # Setting the slot to -1 will fill every empty slot, you can otherwise use 'slots: [0, 1, 2]'
+    # to fill specific slots in the list.
+    # If both 'slot' number and 'slots' list exist then the list takes precedence.
     slot: -1
+    slots: []
+    lore: []
+    item_flags: []
+    custom_model_data: []
+
+    # enchantment:level
+    enchantments: []
+    actions: []
   factions:
     material: "TNT"
     amount: 1
 
-    # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
+    # Setting the slot to -1 will fill every empty slot, you can otherwise use 'slots: [0, 1, 2]'
+    # to fill specific slots in the list.
+    # If both 'slot' number and 'slots' list exist then the list takes precedence.
     slot: 11
     display_name: "<yellow><b>Factions"
     lore:
@@ -103,11 +115,19 @@ items:
       - "[CLOSE]"
       - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions"
       - "[SERVER] factions"
+    slots: []
+    item_flags: []
+    custom_model_data: []
+
+    # enchantment:level
+    enchantments: []
   survival:
     material: "GRASS_BLOCK"
     amount: 1
 
-    # Setting the slot to -1 will fill every empty slot, you can also do 'slots: [0, 1, 2]'
+    # Setting the slot to -1 will fill every empty slot, you can otherwise use 'slots: [0, 1, 2]'
+    # to fill specific slots in the list.
+    # If both 'slot' number and 'slots' list exist then the list takes precedence.
     slot: 15
     display_name: "<green><b>Survival"
     lore:
@@ -117,3 +137,9 @@ items:
       - "[CLOSE]"
       - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival"
       - "[SERVER] survival"
+    slots: []
+    item_flags: []
+    custom_model_data: []
+
+    # enchantment:level
+    enchantments: []
