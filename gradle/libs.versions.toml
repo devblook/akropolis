@@ -1,0 +1,37 @@
+[versions]
+
+# Also change in build.gradle.kts
+# resolutionStrategy when upgrading
+configurate = "4.2.0-GeyserMC-SNAPSHOT"
+
+scoreboard-library = "2.4.4"
+scoreboard-library-modern = "2.4.4"
+adventure = "4.25.0"
+placeholderapi = "2.11.7"
+head-database-api = "1.3.2"
+
+# Dependency downloaded at runtime, also change
+# the version in AkropolisPluginLoader.java
+# when upgrading
+xseries = "13.6.0"
+
+miniplaceholders = "3.1.0"
+noteblockapi = "1.6.3"
+
+[libraries]
+configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
+scoreboard-library-api = { module = "net.megavex:scoreboard-library-api", version.ref = "scoreboard-library" }
+scoreboard-library-implementation = { module = "net.megavex:scoreboard-library-implementation", version.ref = "scoreboard-library" }
+scoreboard-library-modern = { module = "net.megavex:scoreboard-library-modern", version.ref = "scoreboard-library-modern" }
+adventure-bom = { module = "net.kyori:adventure-bom", version.ref = "adventure" }
+adventure-api = { module = "net.kyori:adventure-api" }
+adventure-text-minimessage = { module = "net.kyori:adventure-text-minimessage" }
+placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+head-database-api = { module = "com.arcaniax:HeadDatabase-API", version.ref = "head-database-api" }
+xseries = { module = "com.github.cryptomorin:XSeries", version.ref = "xseries" }
+miniplaceholders-api = { module = "io.github.miniplaceholders:miniplaceholders-api", version.ref = "miniplaceholders" }
+noteblockapi  = { module = "com.github.koca2000:NoteBlockAPI", version.ref = "noteblockapi" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version = "9.3.0" }
+paperweight-userdev = { id = "io.papermc.paperweight.userdev", version = "2.0.0-beta.19" }

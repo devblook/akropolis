@@ -1,15 +1,12 @@
 plugins {
-    java
-    id("com.gradleup.shadow") version ("9.3.0")
-    id("io.papermc.paperweight.userdev") version ("2.0.0-beta.19")
+    id("java")
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.paperweight.userdev)
 }
 
 group = "me.zetastormy"
 version = property("projectVersion") as String
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
-
-val scoreboardLibraryVersion = "2.4.4"
-var configurateVersion = "4.2.0-GeyserMC-SNAPSHOT"
 
 val libsPackage = property("libsPackage") as String
 
@@ -18,43 +15,65 @@ java {
 }
 
 repositories {
-    maven("https://oss.sonatype.org/content/groups/public/")
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://repo.codemc.org/repository/maven-public")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://jitpack.io")
+    exclusiveContent {
+        forRepository {
+            mavenCentral()
+        }
+        filter {
+            includeGroup("net.kyori")
+            includeGroup("net.megavex")
+            includeGroup("com.arcaniax")
+            includeGroup("com.github.cryptomorin")
+            includeGroup("io.github.miniplaceholders")
+        }
+    }
 
-    // GeyserMC's Configurate fork (disabled because of local fork)
-    //maven("https://repo.opencollab.dev/maven-snapshots")
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+            }
+        }
+        filter {
+            includeGroup("me.clip")
+        }
+    }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = uri("https://jitpack.io")
+            }
+        }
+        filter {
+            includeGroup("com.github.koca2000")
+        }
+    }
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
 
-    implementation("javax.inject:javax.inject:1")
-    implementation("org.spongepowered:configurate-yaml:$configurateVersion")
+    implementation(libs.configurate.yaml)
     // Interfaces support
     //implementation("org.spongepowered:configurate-extra-interface:$configurateVersion")
     //implementation("org.spongepowered:configurate-extra-interface-ap:$configurateVersion")
 
-    implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
-    runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
-    runtimeOnly("net.megavex:scoreboard-library-modern:$scoreboardLibraryVersion:mojmap")
+    implementation(libs.scoreboard.library.api)
+    runtimeOnly(libs.scoreboard.library.implementation)
+    runtimeOnly(variantOf(libs.scoreboard.library.modern) { classifier("mojmap") })
 
-    compileOnly(platform("net.kyori:adventure-bom:4.25.0"))
-    compileOnly("net.kyori:adventure-text-minimessage")
-    compileOnly("net.kyori:adventure-api")
+    compileOnly(platform(libs.adventure.bom))
+    compileOnly(libs.adventure.text.minimessage)
+    compileOnly(libs.adventure.api)
 
-    compileOnly("me.clip:placeholderapi:2.11.7")
-    compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
+    compileOnly(libs.placeholderapi)
+    compileOnly(libs.head.database.api)
 
-    // Dependency downloaded at runtime, also change
-    // the version in AkropolisPluginLoader.java
-    // when upgrading
-    compileOnly("com.github.cryptomorin:XSeries:13.6.0")
+    compileOnly(libs.xseries)
 
-    compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly(libs.miniplaceholders.api)
+    compileOnly(libs.noteblockapi)
 }
 
 configurations.implementation {
