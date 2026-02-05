@@ -190,14 +190,50 @@ public class ConfigurationContainer<C> {
                     originalVersion = getVersion(rootNode);
                 }
 
-                // We can try to get the instance because the file already existed
-                config = rootNode.get(clazz);
+                // If the node is virtual or empty it does not make sense
+                // to attempt any transformation, instead we should
+                // recreate the default configuration.
+                if (transformation != null && !rootNode.virtual() && !rootNode.empty()) {
+                    int oldVersion = transformation.version(rootNode);
+                    transformation.updateNode(rootNode);
+                    int newVersion = transformation.version(rootNode);
 
-                // Handle loading null config with implicit initialization disabled
-                if (!options.implicitInitialization() && config == null) {
-                    config = getImplicitRoot(clazz);
+                    if (oldVersion != newVersion) {
+                        // We don't need implicit initialization fallback because
+                        // the node was not empty and the transformations should
+                        // not make it empty.
+                        config = rootNode.get(clazz);
+
+                        // Save in new node to preserve default order, delete unknown
+                        // nodes and replace comments with the default comments
+                        rootNode = CommentedConfigurationNode.root(options).set(config);
+                        rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
+
+                        loader.save(rootNode);
+                        if (fileAlreadyExisted) {
+                            logger.info(
+                                    "Upgraded configuration file {} from version {} to version {} successfully!",
+                                    filePath,
+                                    oldVersion,
+                                    newVersion
+                            );
+                        }
+                    }
                 }
 
+                // If the transformation was not executed, the config will be null
+                if (config == null) {
+                    // We can try to get the instance because the file already existed
+                    config = rootNode.get(clazz);
+
+                    // Handle loading null config with implicit initialization disabled
+                    if (!options.implicitInitialization() && config == null) {
+                        config = getImplicitRoot(clazz);
+                    }
+                }
+
+                // shouldCopyDefaults workaround to avoid version key default value
+                // being copied when it didn't exist
                 if (options.shouldCopyDefaults()) {
                     @Nullable Integer defaultCopiedVersion = getVersion(rootNode);
                     if (transformation == null && originalVersion == null && defaultCopiedVersion != null) {
@@ -220,28 +256,6 @@ public class ConfigurationContainer<C> {
                 }
             }
 
-            if (transformation != null) {
-                int oldVersion = transformation.version(rootNode);
-                transformation.updateNode(rootNode);
-                int newVersion = transformation.version(rootNode);
-
-                if (oldVersion != newVersion) {
-                    // Save in new node to preserve default order
-                    config = rootNode.get(clazz);
-                    rootNode = CommentedConfigurationNode.root(options).set(config);
-                    rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
-
-                    loader.save(rootNode);
-                    if (fileAlreadyExisted) {
-                        logger.info(
-                                "Upgraded configuration file {} from version {} to version {} successfully!",
-                                filePath,
-                                oldVersion,
-                                newVersion
-                        );
-                    }
-                }
-            }
             var instance = new ConfigurationContainer<>(config, clazz, loader, rootNode, logger, filePath);
             logger.info(
                     "Configuration file {} {} successfully!",
