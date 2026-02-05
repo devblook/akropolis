@@ -38,6 +38,7 @@ import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationOptions;
 import org.spongepowered.configurate.RepresentationHint;
+import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.objectmapping.ObjectMapper;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -112,6 +113,12 @@ public class ConfigurationContainer<C> {
         node.node(AbstractTransformation.VERSION_KEY).set(value);
     }
 
+    private static <C> CommentedConfigurationNode newNode(final ConfigurationLoader<CommentedConfigurationNode> loader, final C config) throws ConfigurateException {
+        final CommentedConfigurationNode node = loader.createNode().set(config);
+        node.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
+        return node;
+    }
+
     public static <C> ConfigurationContainer<C> load(
             final @NotNull Class<C> clazz,
             final @NotNull Logger logger,
@@ -171,14 +178,13 @@ public class ConfigurationContainer<C> {
                     // Save object data to the node and get a new instance from it
                     // so the implicit initialization can work on all classes,
                     // for example classes instances as map entry values.
-                    // Finally set the object back to the node so the values
-                    // are saved, this last step is only necessary when
-                    // shouldCopyDefaults is disabled.
+                    // Finally, create a new node to preserve the default
+                    // order, because using the existing node would cause
+                    // the keys that were just implicitly initialized
+                    // to be added at the end instead.
                     rootNode.set(config);
                     config = rootNode.get(clazz);
-                    if (!options.shouldCopyDefaults()) {
-                        rootNode.set(config);
-                    }
+                    rootNode = newNode(loader, config);
                 } else {
                     rootNode.set(config);
                 }
@@ -206,8 +212,7 @@ public class ConfigurationContainer<C> {
 
                         // Save in new node to preserve default order, delete unknown
                         // nodes and replace comments with the default comments
-                        rootNode = CommentedConfigurationNode.root(options).set(config);
-                        rootNode.hint(RepresentationHint.of("configurate:yaml/scalarstyle", ScalarStyle.class), ScalarStyle.DOUBLE_QUOTED);
+                        rootNode = newNode(loader, config);
 
                         loader.save(rootNode);
                         if (fileAlreadyExisted) {
