@@ -20,6 +20,11 @@
 package me.zetastormy.akropolis.config.type;
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
+
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
+import me.zetastormy.akropolis.config.transformation.MessagesTransformations;
 
 import java.util.List;
 
@@ -50,6 +55,10 @@ public class Messages {
             |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
             |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
             """;
+
+    @Comment(AbstractTransformation.VERSION_COMMENT)
+    @Setting(value = AbstractTransformation.VERSION_KEY)
+    private Integer configVersion = MessagesTransformations.LATEST_VERSION;
 
     private General general = new General();
     private Help help = new Help();
