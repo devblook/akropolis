@@ -106,7 +106,12 @@ public class ConfigurationContainer<C> {
     }
 
     private static Integer getVersion(final CommentedConfigurationNode node) throws ConfigurateException {
-        return node.node(AbstractTransformation.VERSION_KEY).get(Integer.class);
+        final var configVersionNode = node.node(AbstractTransformation.VERSION_KEY);
+        if (configVersionNode.virtual()) {
+            return null;
+        } else {
+            return node.node(AbstractTransformation.VERSION_KEY).get(Integer.class);
+        }
     }
 
     private static void setVersion(final CommentedConfigurationNode node, final Integer value) throws ConfigurateException {
@@ -191,15 +196,17 @@ public class ConfigurationContainer<C> {
 
                 loader.save(rootNode);
             } else {
+                final boolean isLoadedRootVirtualOrEmpty = rootNode.virtual() || rootNode.empty();
+
                 @Nullable Integer originalVersion = null;
-                if (options.shouldCopyDefaults()) {
+                if (options.shouldCopyDefaults() && !isLoadedRootVirtualOrEmpty) {
                     originalVersion = getVersion(rootNode);
                 }
 
                 // If the node is virtual or empty it does not make sense
                 // to attempt any transformation, instead we should
                 // recreate the default configuration.
-                if (transformation != null && !rootNode.virtual() && !rootNode.empty()) {
+                if (transformation != null && !isLoadedRootVirtualOrEmpty) {
                     int oldVersion = transformation.version(rootNode);
                     transformation.updateNode(rootNode);
                     int newVersion = transformation.version(rootNode);
@@ -238,26 +245,31 @@ public class ConfigurationContainer<C> {
                 }
 
                 // shouldCopyDefaults workaround to avoid version key default value
-                // being copied when it didn't exist
-                if (options.shouldCopyDefaults()) {
-                    @Nullable Integer defaultCopiedVersion = getVersion(rootNode);
-                    if (transformation == null && originalVersion == null && defaultCopiedVersion != null) {
-                        logger.error(
-                            "Using shouldCopyDefaults workaround for {} null version key in file {} but there is no transformation, the value will be set to {} in object",
-                            AbstractTransformation.VERSION_KEY,
-                            filePath,
-                            defaultCopiedVersion
-                        );
-                        logger.error("This should not affect the saved file but it's recommended to add a transformation to avoid this inconsistency");
-                    } else if (originalVersion != null) {
-                        logger.info(
-                            "Using shouldCopyDefaults workaround for {} version key in file {}, setting to {}",
-                            AbstractTransformation.VERSION_KEY,
-                            filePath,
-                            originalVersion
-                        );
-                    }
+                // being copied to an existing configuration when it didn't exist.
+                // This should not happen in production because every configuration
+                // with a version node should have transformations.
+                @Nullable Integer currentVersion = getVersion(rootNode);
+                if (
+                    options.shouldCopyDefaults()
+                    && originalVersion == null && currentVersion != null
+                    && transformation == null
+                    && !isLoadedRootVirtualOrEmpty
+                ) {
+                    logger.error(
+                        "Using shouldCopyDefaults workaround for {} null version key in file {}, the value will be set to {} in object",
+                        AbstractTransformation.VERSION_KEY,
+                        filePath,
+                        currentVersion
+                    );
+                    logger.error("This should not affect the saved file but you must add a transformation to avoid this inconsistency");
                     setVersion(rootNode, originalVersion);
+                } else if (currentVersion != null && transformation == null) {
+                    logger.warn(
+                        "Configuration file {} has version {} in key {} but it does not have a transformation!",
+                        filePath,
+                        currentVersion,
+                        AbstractTransformation.VERSION_KEY
+                    );
                 }
             }
 
