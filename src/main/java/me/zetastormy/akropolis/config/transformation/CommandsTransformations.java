@@ -19,20 +19,14 @@
 
 package me.zetastormy.akropolis.config.transformation;
 
-import org.slf4j.Logger;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 public class CommandsTransformations extends AbstractTransformation {
 
     public static final int LATEST_VERSION = 0;
 
-    private final Logger logger;
-
-    public CommandsTransformations(
-        final Logger logger
-    ) {
+    public CommandsTransformations() {
         super();
-        this.logger = logger;
     }
 
     protected ConfigurationTransformation.Versioned create() {
@@ -42,7 +36,7 @@ public class CommandsTransformations extends AbstractTransformation {
     }
 
     private static ConfigurationTransformation initialTransform() {
-        return ConfigurationTransformation.builder().build();
+        return ConfigurationTransformation.empty();
     }
 
 }

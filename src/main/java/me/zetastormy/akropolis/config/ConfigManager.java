@@ -90,7 +90,7 @@ public class ConfigManager {
                     Commands.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new CommandsTransformations(plugin.getSLF4JLogger())
+                    new CommandsTransformations()
             ));
         } catch (final Exception exception) {
             this.logger.error("There was an error loading the configuration.");

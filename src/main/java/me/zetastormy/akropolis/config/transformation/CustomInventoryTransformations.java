@@ -32,6 +32,6 @@ public class CustomInventoryTransformations extends AbstractTransformation {
     }
 
     private static ConfigurationTransformation initialTransform() {
-        return ConfigurationTransformation.builder().build();
+        return ConfigurationTransformation.empty();
     }
 }
