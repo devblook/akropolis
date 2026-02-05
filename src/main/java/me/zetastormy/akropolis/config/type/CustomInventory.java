@@ -19,10 +19,13 @@
 
 package me.zetastormy.akropolis.config.type;
 
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
+import me.zetastormy.akropolis.config.transformation.CustomInventoryTransformations;
 import me.zetastormy.akropolis.util.MapUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
 import java.util.Map;
@@ -115,6 +118,10 @@ public class CustomInventory {
         this.refresh = refresh;
         this.items = items;
     }
+
+    @Comment(AbstractTransformation.VERSION_COMMENT)
+    @Setting(value = AbstractTransformation.VERSION_KEY)
+    private Integer configVersion = CustomInventoryTransformations.LATEST_VERSION;
 
     @Comment("Number of slots in the GUI. Must be a multiple of 9.")
     private int slots = 27;

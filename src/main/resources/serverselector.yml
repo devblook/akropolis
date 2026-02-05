@@ -67,6 +67,9 @@
 # |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
 # |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/
 
+# DO NOT EDIT THIS VALUE or your configuration will break and you will lose data!
+config_version: 0
+
 # Number of slots in the GUI. Must be a multiple of 9.
 slots: 27
 
@@ -107,20 +110,20 @@ items:
     # to fill specific slots in the list.
     # If both 'slot' number and 'slots' list exist then the list takes precedence.
     slot: 11
+    slots: []
     display_name: "<yellow><b>Factions"
     lore:
       - "<dark_gray>» <gray>Join now to our coolest server!"
     glow: true
-    actions:
-      - "[CLOSE]"
-      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions"
-      - "[SERVER] factions"
-    slots: []
     item_flags: []
     custom_model_data: []
 
     # enchantment:level
     enchantments: []
+    actions:
+      - "[CLOSE]"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <yellow><b>Factions"
+      - "[SERVER] factions"
   survival:
     material: "GRASS_BLOCK"
     amount: 1
@@ -129,17 +132,17 @@ items:
     # to fill specific slots in the list.
     # If both 'slot' number and 'slots' list exist then the list takes precedence.
     slot: 15
+    slots: []
     display_name: "<green><b>Survival"
     lore:
       - "<dark_gray>» <gray>Never gonna give you up!"
     glow: false
-    actions:
-      - "[CLOSE]"
-      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival"
-      - "[SERVER] survival"
-    slots: []
     item_flags: []
     custom_model_data: []
 
     # enchantment:level
     enchantments: []
+    actions:
+      - "[CLOSE]"
+      - "[MESSAGE] <dark_gray>| <gray>Sending you to<dark_gray>: <green><b>Survival"
+      - "[SERVER] survival"

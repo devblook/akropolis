@@ -21,13 +21,13 @@ package me.zetastormy.akropolis.inventory;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.ConfigurationContainer;
+import me.zetastormy.akropolis.config.transformation.CustomInventoryTransformations;
 import me.zetastormy.akropolis.config.type.CustomInventory;
 import me.zetastormy.akropolis.inventory.inventories.CustomGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.util.NamingSchemes;
 
 import java.io.*;
@@ -114,7 +114,7 @@ public class InventoryManager {
                     NamingSchemes.SNAKE_CASE,
                     null,
                     defaultObjectSupplier,
-                    null
+                    new CustomInventoryTransformations()
             );
             this.configurations.put(name, configContainer);
 
