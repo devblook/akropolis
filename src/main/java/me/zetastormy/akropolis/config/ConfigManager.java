@@ -22,6 +22,7 @@ package me.zetastormy.akropolis.config;
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.serializer.LocationSerializer;
 import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
+import me.zetastormy.akropolis.config.transformation.DataTransformations;
 import me.zetastormy.akropolis.config.transformation.MessagesTransformations;
 import me.zetastormy.akropolis.config.type.*;
 import org.bukkit.Location;
@@ -80,7 +81,7 @@ public class ConfigManager {
                     Data.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    null
+                    new DataTransformations()
             ));
 
             registerFile(Commands.class, ConfigurationContainer.load(

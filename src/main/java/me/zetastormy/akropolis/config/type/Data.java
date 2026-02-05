@@ -22,6 +22,11 @@ package me.zetastormy.akropolis.config.type;
 import org.bukkit.Location;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
+
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
+import me.zetastormy.akropolis.config.transformation.DataTransformations;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +45,10 @@ public class Data {
             --------
             | Akropolis data file, DO NOT EDIT if you don't know what you are doing.\
             """;
+
+    @Comment(AbstractTransformation.VERSION_COMMENT)
+    @Setting(value = AbstractTransformation.VERSION_KEY)
+    private Integer configVersion = DataTransformations.LATEST_VERSION;
 
     private boolean chatLocked = false;
     private Map<String, Hologram> holograms = Map.of();
