@@ -24,6 +24,7 @@ import me.zetastormy.akropolis.config.serializer.LocationSerializer;
 import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
 import me.zetastormy.akropolis.config.transformation.DataTransformations;
 import me.zetastormy.akropolis.config.transformation.MessagesTransformations;
+import me.zetastormy.akropolis.config.transformation.SettingsTransformations;
 import me.zetastormy.akropolis.config.type.*;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +62,7 @@ public class ConfigManager {
                     Settings.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    null
+                    new SettingsTransformations(plugin.getSLF4JLogger())
             ));
 
             registerFile(Messages.class, ConfigurationContainer.load(

@@ -19,12 +19,15 @@
 
 package me.zetastormy.akropolis.config.type;
 
+import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
+import me.zetastormy.akropolis.config.transformation.SettingsTransformations;
 import me.zetastormy.akropolis.util.MapUtils;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.NodeKey;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
 import java.util.Map;
@@ -90,11 +93,15 @@ public class Settings {
             |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
             """;
 
+    @Comment(AbstractTransformation.VERSION_COMMENT)
+    @Setting(value = AbstractTransformation.VERSION_KEY)
+    private Integer configVersion = SettingsTransformations.LATEST_VERSION;
+
     @Comment("""
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | GENERAL SETTINGS                         |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             List your worlds you don't want Akropolis to manage.\
             """)
     private DisabledWorlds disabledWorlds = new DisabledWorlds();
@@ -103,7 +110,7 @@ public class Settings {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | ANTI-WORLD DOWNLOADER                    |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             Prevent users downloading your world via the world downloader mod.
             There is no need to kick the player if he is running WDL as our system hooks into the mod to prevent a world download.
             Note: this only blocks the official World Downloader mod which allows blocking by the server, there is no way of
@@ -116,7 +123,7 @@ public class Settings {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | SONG PLAYER                             |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             Plays music through noteblocks using NoteBlock API. Music files are stored in nbs format inside "Akropolis/songs"
             directory.\
             """)
@@ -174,7 +181,7 @@ public class Settings {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | PLAYER MOUNT                             |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             Players with the akropolis.player.mount will be able to mount other players.\
             """)
     private PlayerMount playerMount = new PlayerMount();
