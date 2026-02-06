@@ -20,11 +20,9 @@
 package me.zetastormy.akropolis.config.transformation;
 
 import static org.spongepowered.configurate.NodePath.path;
-import static org.spongepowered.configurate.transformation.ConfigurationTransformation.WILDCARD_OBJECT;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +52,7 @@ public class SettingsTransformations extends AbstractTransformation {
 
     private @Nullable Object[] migrateStringToList(final NodePath path, final ConfigurationNode value) throws ConfigurateException {
         if (value.virtual() || value.isNull()) {
-            this.logger.info("Skipping migration of key {} because the node is virtual or null", path.array());
+            this.logger.info("Skipping migration of key {} because the node is virtual or null", Arrays.toString(path.array()));
         }
         if (!value.isList()) {
             final @Nullable String originalValue = value.getString();
