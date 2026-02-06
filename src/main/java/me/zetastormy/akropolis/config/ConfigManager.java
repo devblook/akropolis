@@ -72,7 +72,7 @@ public class ConfigManager {
                     Messages.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new MessagesTransformations()
+                    new MessagesTransformations(plugin.getSLF4JLogger())
             ));
 
             registerFile(Data.class, ConfigurationContainer.load(

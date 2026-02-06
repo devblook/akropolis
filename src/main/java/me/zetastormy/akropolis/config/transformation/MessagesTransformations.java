@@ -21,6 +21,10 @@ package me.zetastormy.akropolis.config.transformation;
 
 import static org.spongepowered.configurate.NodePath.path;
 
+import java.util.Arrays;
+
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.transformation.TransformAction;
 import org.spongepowered.configurate.util.NamingSchemes;
@@ -28,13 +32,21 @@ import org.spongepowered.configurate.util.NamingSchemes;
 public class MessagesTransformations extends AbstractTransformation {
     public static final int LATEST_VERSION = 0;
 
+    private final @NotNull Logger logger;
+
+    public MessagesTransformations(
+        final @NotNull Logger logger
+    ) {
+        this.logger = logger;
+    }
+
     protected ConfigurationTransformation.Versioned create() {
         return this.defaultBuilder()
                 .addVersion(LATEST_VERSION, initialTransform())
                 .build();
     }
 
-    private static ConfigurationTransformation initialTransform() {
+    private ConfigurationTransformation initialTransform() {
         final TransformAction coerce = (path, value) -> {
             final Object[] arr = path.array();
             arr[arr.length-1] = NamingSchemes.SNAKE_CASE.coerce((String) arr[arr.length-1]);
@@ -44,6 +56,17 @@ public class MessagesTransformations extends AbstractTransformation {
         final TransformAction moveOutAndCoerce = (path, value) -> {
             final Object[] arr = path.array();
             final String name = (String) arr[arr.length-1];
+
+            MessagesTransformations.this.logger.info("Migrating messages section {}", Arrays.toString(arr));
+
+            if (name.equals("CHAT")) {
+                value.node("CLEAR_CHAT").from(value.node("CLEARCHAT"));
+                value.node("CLEARCHAT").raw(null);
+
+                value.node("CLEAR_CHAT_PLAYER").from(value.node("CLEARCHAT_PLAYER"));
+                value.node("CLEARCHAT_PLAYER").raw(null);
+            }
+
             return new Object[]{NamingSchemes.SNAKE_CASE.coerce(name)};
         };
 
