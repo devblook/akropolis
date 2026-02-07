@@ -132,7 +132,8 @@ public class ConfigurationContainer<C> {
             final @NotNull NamingSchemes namingScheme,
             final @Nullable TypeSerializerCollection typeSerializerCollection,
             final @Nullable Supplier<C> defaultObjectSupplier,
-            final @Nullable AbstractTransformation transformation
+            final @Nullable AbstractTransformation transformation,
+            final @NotNull BackupManager backupManager
             ) throws ConfigurateException, ReflectiveOperationException {
         final ObjectMapper.Factory customFactory = ObjectMapper.factoryBuilder()
                 .defaultNamingScheme(namingScheme).build();
@@ -212,6 +213,10 @@ public class ConfigurationContainer<C> {
                     int newVersion = transformation.version(rootNode);
 
                     if (oldVersion != newVersion) {
+                        if (!backupManager.backupFile(filePath)) {
+                            throw new ConfigurateException("Could not backup file before upgrading");
+                        }
+
                         // We don't need implicit initialization fallback because
                         // the node was not empty and the transformations should
                         // not make it empty.
@@ -294,7 +299,8 @@ public class ConfigurationContainer<C> {
             final @NotNull String header,
             final @NotNull NamingSchemes namingScheme,
             final @Nullable TypeSerializerCollection typeSerializerCollection,
-            final @Nullable AbstractTransformation transformation
+            final @Nullable AbstractTransformation transformation,
+            final @NotNull BackupManager backupManager
     ) throws ConfigurateException, ReflectiveOperationException {
         return load(
                 clazz,
@@ -304,7 +310,8 @@ public class ConfigurationContainer<C> {
                 namingScheme,
                 typeSerializerCollection,
                 null,
-                transformation
+                transformation,
+                backupManager
         );
     }
 

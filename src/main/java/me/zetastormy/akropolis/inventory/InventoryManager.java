@@ -20,6 +20,7 @@
 package me.zetastormy.akropolis.inventory;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.config.BackupManager;
 import me.zetastormy.akropolis.config.ConfigurationContainer;
 import me.zetastormy.akropolis.config.transformation.CustomInventoryTransformations;
 import me.zetastormy.akropolis.config.type.CustomInventory;
@@ -41,13 +42,18 @@ public class InventoryManager {
     private AkropolisPlugin plugin;
     private final Map<String, AbstractInventory> inventories;
     private final Map<String, ConfigurationContainer<CustomInventory>> configurations;
+    private final @NotNull BackupManager backupManager;
+
     private static final String DIRECTORY_NAME = "menus";
     private static final String CONFIGURATION_FORMAT_EXTENSION = ".yml";
     private static final String DEFAULT_INVENTORY_NAME = "serverselector";
 
-    public InventoryManager() {
+    public InventoryManager(
+        final @NotNull BackupManager backupManager
+    ) {
         this.inventories = new HashMap<>();
         this.configurations = new HashMap<>();
+        this.backupManager = backupManager;
     }
 
     public void onEnable(final AkropolisPlugin plugin) {
@@ -114,7 +120,8 @@ public class InventoryManager {
                     NamingSchemes.SNAKE_CASE,
                     null,
                     defaultObjectSupplier,
-                    new CustomInventoryTransformations()
+                    new CustomInventoryTransformations(),
+                    this.backupManager
             );
             this.configurations.put(name, configContainer);
 

@@ -28,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.zetastormy.akropolis.action.ActionManager;
 import me.zetastormy.akropolis.command.CommandManager;
+import me.zetastormy.akropolis.config.BackupManager;
 import me.zetastormy.akropolis.config.ConfigManager;
 import me.zetastormy.akropolis.cooldown.CooldownManager;
 import me.zetastormy.akropolis.hook.HooksManager;
@@ -51,6 +52,7 @@ public class AkropolisPlugin extends JavaPlugin {
     private ModuleManager moduleManager;
     private InventoryManager inventoryManager;
     private ScoreboardLibrary scoreboardLibrary;
+    private BackupManager backupManager;
 
     @Override
     public void onEnable() {
@@ -72,9 +74,27 @@ public class AkropolisPlugin extends JavaPlugin {
         // Check plugin hooks
         hooksManager = new HooksManager(this);
 
+        try {
+            this.backupManager = new BackupManager(this.getDataPath(), this.getSLF4JLogger());
+            this.backupManager.startBackup();
+        } catch (final Exception exception) {
+            this.getSLF4JLogger().error("Could not create BackupManager, the plugin will now disable", exception);
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         // Load config files
-        configManager = new ConfigManager(this.getSLF4JLogger());
-        configManager.loadFiles(this);
+        this.configManager = new ConfigManager(
+            this.getSLF4JLogger(),
+            this.backupManager,
+            this.getDataPath()
+        );
+
+        try {
+            this.configManager.loadFiles();
+        } catch (final Exception exception) {
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
 
         // If there were any configuration errors we should not continue
         if (!getServer().getPluginManager().isPluginEnabled(this)) return;
@@ -98,8 +118,15 @@ public class AkropolisPlugin extends JavaPlugin {
         moduleManager.loadModules(this);
 
         // Inventory (GUI) manager
-        inventoryManager = new InventoryManager();
+        inventoryManager = new InventoryManager(this.backupManager);
         if (!hooksManager.isHookEnabled("HEAD_DATABASE")) inventoryManager.onEnable(this);
+
+        try {
+            this.backupManager.finishBackup();
+        } catch (final Exception exception) {
+            getSLF4JLogger().error("Could not finish backup, disabling plugin");
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
 
         // Action system
         actionManager = new ActionManager(this);
@@ -127,10 +154,18 @@ public class AkropolisPlugin extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
         HandlerList.unregisterAll(this);
 
-        configManager.reloadFiles();
+        try {
+            this.backupManager.startBackup();
 
-        inventoryManager.onDisable();
-        inventoryManager.onEnable(this);
+            configManager.reloadFiles();
+
+            inventoryManager.onDisable();
+            inventoryManager.onEnable(this);
+
+            this.backupManager.finishBackup();
+        } catch (final Exception exception) {
+            this.getSLF4JLogger().error("Could not reload configuration", exception);
+        }
 
         scoreboardLibrary.close();
 

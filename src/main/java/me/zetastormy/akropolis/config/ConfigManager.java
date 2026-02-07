@@ -19,7 +19,6 @@
 
 package me.zetastormy.akropolis.config;
 
-import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.config.serializer.LocationSerializer;
 import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
 import me.zetastormy.akropolis.config.transformation.DataTransformations;
@@ -33,6 +32,7 @@ import org.slf4j.Logger;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -44,71 +44,92 @@ public class ConfigManager {
     private final Map<Class<?>, ConfigurationContainer<?>> configurations;
     private final Logger logger;
     private final ExecutorService configExecutor = Executors.newSingleThreadExecutor();
+    private final @NotNull BackupManager backupManager;
+    private final @NotNull Path dataPath;
 
-    public ConfigManager(final Logger logger) {
+    public ConfigManager(
+        final Logger logger,
+        final BackupManager backupManager,
+        final Path dataPath
+    ) {
         this.configurations = new HashMap<>();
         this.logger = logger;
+        this.backupManager = backupManager;
+        this.dataPath = dataPath;
     }
 
-    public void loadFiles(AkropolisPlugin plugin) {
-        TypeSerializerCollection typeSerializerCollection = TypeSerializerCollection.builder()
-                .register(Location.class, LocationSerializer.INSTANCE).build();
+    private void logConfigurationErrorMessage() {
+        this.logger.error("There was an error loading the configuration.");
+        this.logger.error("The plugin will now disable.");
+        this.logger.error("");
+        this.logger.error("Please check for any common configuration mistakes such as:");
+        this.logger.error("- Not using quotes at all on strings with special characters");
+        this.logger.error("- Forgetting to end quotes");
+        this.logger.error("- Using different open and close quotes in a string");
+        this.logger.error("- Using tabs instead of spaces");
+        this.logger.error("");
+        this.logger.error("You can paste each configuration file in https://yamllint.com");
+        this.logger.error("and click 'Go' to automatically check for YAML format mistakes.");
+        this.logger.error("If you need further help you can join our Discord server:");
+        this.logger.error("https://discord.gg/w438z8TKej");
+    }
+
+    /**
+     * Tries to load the configuration, in case of failure logs a user-friendly message
+     * and throws the exception again so the plugin can disable itself.
+     */
+    public void loadFiles() throws Exception {
 
         try {
+            TypeSerializerCollection typeSerializerCollection = TypeSerializerCollection.builder()
+                            .register(Location.class, LocationSerializer.INSTANCE).build();
+
             registerFile(Settings.class, ConfigurationContainer.load(
                     Settings.class,
-                    plugin.getSLF4JLogger(),
-                    plugin.getDataPath().resolve("config.yml"),
+                    this.logger,
+                    this.dataPath.resolve("config.yml"),
                     Settings.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new SettingsTransformations(plugin.getSLF4JLogger())
+                    new SettingsTransformations(this.logger),
+                    this.backupManager
             ));
 
             registerFile(Messages.class, ConfigurationContainer.load(
                     Messages.class,
-                    plugin.getSLF4JLogger(),
-                    plugin.getDataPath().resolve("messages.yml"),
+                    this.logger,
+                    this.dataPath.resolve("messages.yml"),
                     Messages.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new MessagesTransformations(plugin.getSLF4JLogger())
+                    new MessagesTransformations(this.logger),
+                    this.backupManager
             ));
 
             registerFile(Data.class, ConfigurationContainer.load(
                     Data.class,
-                    plugin.getSLF4JLogger(),
-                    plugin.getDataPath().resolve("data.yml"),
+                    this.logger,
+                    this.dataPath.resolve("data.yml"),
                     Data.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new DataTransformations()
+                    new DataTransformations(),
+                    this.backupManager
             ));
 
             registerFile(Commands.class, ConfigurationContainer.load(
                     Commands.class,
-                    plugin.getSLF4JLogger(),
-                    plugin.getDataPath().resolve("commands.yml"),
+                    this.logger,
+                    this.dataPath.resolve("commands.yml"),
                     Commands.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new CommandsTransformations()
+                    new CommandsTransformations(),
+                    this.backupManager
             ));
         } catch (final Exception exception) {
-            this.logger.error("There was an error loading the configuration.");
-            this.logger.error("The plugin will now disable.");
-            this.logger.error("");
-            this.logger.error("Please check for any common configuration mistakes such as:");
-            this.logger.error("- Not using quotes at all on strings with special characters");
-            this.logger.error("- Forgetting to end quotes");
-            this.logger.error("- Using different open and close quotes in a string");
-            this.logger.error("- Using tabs instead of spaces");
-            this.logger.error("");
-            this.logger.error("You can paste each configuration file in https://yamllint.com");
-            this.logger.error("and click 'Go' to automatically check for YAML format mistakes.");
-            this.logger.error("If you need further help you can join our Discord server:");
-            this.logger.error("https://discord.gg/w438z8TKej");
-            plugin.getServer().getPluginManager().disablePlugin(plugin);
+            this.logConfigurationErrorMessage();
+            throw exception;
         }
     }
 
