@@ -10,27 +10,24 @@ group = "me.zetastormy"
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
 
 version = buildString {
-    val latestTag: String = providers.exec {
-        commandLine("git", "describe", "--tags", "--abbrev=0")
-    }.standardOutput.asText.get().trim().replace("v", "")
+    fun git(vararg args: String): String {
+        return providers.exec {
+            commandLine("git", *args)
+        }.standardOutput.asText.get().trim()
+    }
+
+    val latestTag = git("describe", "--tags", "--abbrev=0").replace("v", "")
 
     append(latestTag)
 
-    val branchName: String = providers.exec {
-        commandLine("git", "rev-parse", "--abbrev-ref", "HEAD")
-    }.standardOutput.asText.get().trim()
+    val branchName = git("rev-parse", "--abbrev-ref", "HEAD")
 
     if (branchName != "stable" && !branchName.startsWith("release")) {
-        val commitHash: String = providers.exec {
-            commandLine("git", "rev-parse", "--short", "HEAD")
-        }.standardOutput.asText.get().trim()
+        val commitHash = git("rev-parse", "--short", "HEAD")
 
-        append("+")
-        append(commitHash)
+        append("+").append(commitHash)
 
-        val gitStatus: String = providers.exec {
-            commandLine("git", "status", "--porcelain")
-        }.standardOutput.asText.get().trim()
+        val gitStatus = git("status", "--porcelain")
 
         if (!gitStatus.isEmpty()) {
             append(".dirty")
