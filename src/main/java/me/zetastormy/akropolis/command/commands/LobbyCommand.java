@@ -24,25 +24,37 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
+import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
 
 public class LobbyCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
+    private final ConfigurationSection playersSection;
+    private final boolean forceJoinFly;
 
     public LobbyCommand(AkropolisPlugin plugin, List<String> aliases) {
         super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
         this.plugin = plugin;
+
+        FileConfiguration config = plugin.getConfigManager().getFile(ConfigType.SETTINGS).get();
+        FileConfiguration dataFile = plugin.getConfigManager().getFile(ConfigType.DATA).get();
+
+        this.playersSection = dataFile.getConfigurationSection("players");
+        this.forceJoinFly = config.getBoolean("fly.force_on_join", false);
     }
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Console cannot teleport to spawn");
             return;
         }
@@ -53,7 +65,18 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleportAsync(location), 3L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            player.teleportAsync(location);
 
+            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+                boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+
+                player.setAllowFlight(hasFly);
+                player.setFlying(hasFly);
+            } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+            }
+        }, 3L);
     }
 }
