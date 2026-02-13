@@ -1,3 +1,5 @@
+import java.io.ByteArrayOutputStream
+
 plugins {
     java
     id("com.gradleup.shadow") version ("9.3.0")
@@ -5,8 +7,36 @@ plugins {
 }
 
 group = "me.zetastormy"
-version = property("projectVersion") as String
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
+
+version = buildString {
+    val latestTag: String = providers.exec {
+        commandLine("git", "describe", "--tags", "--abbrev=0")
+    }.standardOutput.asText.get().trim().replace("v", "")
+
+    append(latestTag)
+
+    val branchName: String = providers.exec {
+        commandLine("git", "rev-parse", "--abbrev-ref", "HEAD")
+    }.standardOutput.asText.get().trim()
+
+    if (branchName != "stable" && !branchName.startsWith("release")) {
+        val commitHash: String = providers.exec {
+            commandLine("git", "rev-parse", "--short", "HEAD")
+        }.standardOutput.asText.get().trim()
+
+        append("+")
+        append(commitHash)
+
+        val gitStatus: String = providers.exec {
+            commandLine("git", "status", "--porcelain")
+        }.standardOutput.asText.get().trim()
+
+        if (!gitStatus.isEmpty()) {
+            append(".dirty")
+        }
+    }
+}
 
 val scoreboardLibraryVersion = "2.4.4"
 
@@ -54,15 +84,17 @@ configurations.implementation {
 }
 
 tasks {
+    val projectVersion = project.version.toString()
+
     processResources {
         filesMatching("paper-plugin.yml") {
-            expand("version" to project.version)
+            expand("version" to projectVersion)
         }
     }
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("Akropolis-${project.version}.jar")
+        archiveFileName.set("Akropolis-${projectVersion}.jar")
 
         minimize {
             exclude(dependency("net.megavex:.*:.*"))
