@@ -39,6 +39,15 @@
 #       - HIDE_POTION_EFFECTS
 #       - HIDE_UNBREAKABLE
 #--------
+# FIREWORK STAR:
+#
+#   You can create custom firework stars using the "firework_star" section, which accepts a list of colors and mix colors.
+#   Example:
+#     firework_star:
+#       colors:
+#         - RED
+#         - GREEN
+#--------
 # ACTIONS:
 #
 #   [MESSAGE] <message> - Send a message to the player

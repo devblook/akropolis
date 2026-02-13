@@ -19,30 +19,7 @@
 
 package me.zetastormy.akropolis.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
 import com.cryptomorin.xseries.XMaterial;
-
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.zetastormy.akropolis.AkropolisPlugin;
@@ -51,6 +28,20 @@ import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.*;
 
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
@@ -151,9 +142,9 @@ public class ItemStackBuilder {
             for (String enchantment : rawEnchantments) {
                 String[] parts = enchantment.split(":");
                 Enchantment enchant = RegistryAccess
-                                        .registryAccess()
-                                        .getRegistry(RegistryKey.ENCHANTMENT)
-                                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
+                        .registryAccess()
+                        .getRegistry(RegistryKey.ENCHANTMENT)
+                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
                 int level = Integer.parseInt(parts[1]);
 
                 enchantments.put(enchant, level);
@@ -165,6 +156,26 @@ public class ItemStackBuilder {
         if (section.contains("tooltip_style")) {
             String data = section.getString("tooltip_style");
             builder.withCustomTooltipStyle(data);
+        }
+
+        if (section.contains("firework_star")) {
+            ConfigurationSection fireworkSection = section.getConfigurationSection("firework_star");
+
+            if (fireworkSection == null) {
+                PLUGIN.getLogger().severe("Invalid firework star configuration section!");
+                PLUGIN.getLogger().severe("Please check your config.yml!");
+                return builder;
+            }
+
+            try {
+                final List<Color> colors = fireworkSection.getStringList("colors").stream()
+                        .map(TextUtil::getColor)
+                        .filter(Objects::nonNull)
+                        .toList();
+                builder.withFireworkStar(colors);
+            } catch (IllegalArgumentException e) {
+                // Ignored
+            }
         }
 
         return builder;
@@ -251,7 +262,7 @@ public class ItemStackBuilder {
         }
 
         name = PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player)
-        .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }
@@ -361,7 +372,8 @@ public class ItemStackBuilder {
                 float floatValue = Float.parseFloat(value);
                 floats.add(floatValue);
                 continue;
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
 
             // TODO: add colors
 
@@ -411,6 +423,19 @@ public class ItemStackBuilder {
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         container.set(NamespacedKey.minecraft(key), type, value);
         itemStack.setItemMeta(itemMeta);
+    }
+
+    public void withFireworkStar(List<Color> colors) {
+        FireworkEffectMeta fireworkMeta = (FireworkEffectMeta) itemStack.getItemMeta();
+
+        if (fireworkMeta == null) {
+            PLUGIN.getLogger().severe("Invalid item meta, could not apply firework star effect!");
+            PLUGIN.getLogger().severe("Please check your config.yml!");
+            return;
+        }
+
+        fireworkMeta.setEffect(FireworkEffect.builder().withColor(colors).build());
+        itemStack.setItemMeta(fireworkMeta);
     }
 
     public ItemStack build() {
