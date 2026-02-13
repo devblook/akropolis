@@ -21,7 +21,6 @@ package me.zetastormy.akropolis.command.commands;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -29,7 +28,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.Permissions;
 import me.zetastormy.akropolis.command.InjectableCommand;
 import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.ModuleType;
@@ -65,18 +63,6 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            player.teleportAsync(location);
-
-            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
-                boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
-
-                player.setAllowFlight(hasFly);
-                player.setFlying(hasFly);
-            } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
-                player.setAllowFlight(true);
-                player.setFlying(true);
-            }
-        }, 3L);
+        player.teleportAsync(location);
     }
 }

@@ -38,6 +38,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
@@ -196,8 +197,43 @@ public class PlayerListener extends Module implements LifeCycle {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
 
-        if (inDisabledWorld(player.getLocation()))
+        if (inDisabledWorld(player.getLocation())) {
             player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
+
+            if (player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+                player.setAllowFlight(false);
+                player.setFlying(false);
+            }
+
+            return;
+        }
+
+        if (player == null || !player.isOnline()) return;
+
+        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+            boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+            player.setAllowFlight(hasFly);
+            player.setFlying(hasFly);
+        } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+            player.setAllowFlight(true);
+            player.setFlying(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+
+        if (player == null || !player.isOnline() || inDisabledWorld(player.getLocation())) return;
+
+        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+            boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
+            player.setAllowFlight(hasFly);
+            player.setFlying(hasFly);
+        } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+            player.setAllowFlight(true);
+            player.setFlying(true);
+        }
     }
 
     public void spawnFirework(Player player) {
