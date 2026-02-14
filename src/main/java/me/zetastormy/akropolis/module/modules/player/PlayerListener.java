@@ -69,6 +69,7 @@ public class PlayerListener extends Module implements LifeCycle {
     private String fireworkType;
     private List<Color> fireworkColors;
     private boolean forceJoinFly;
+    private boolean saveFlyState;
 
     public PlayerListener(AkropolisPlugin plugin) {
         super(plugin, ModuleType.PLAYER_LISTENER);
@@ -91,6 +92,7 @@ public class PlayerListener extends Module implements LifeCycle {
         clearInventory = config.getBoolean("join_settings.clear_inventory", false);
 
         forceJoinFly = config.getBoolean("fly.force_on_join", false);
+        saveFlyState = config.getBoolean("fly.save_state", false);
 
         fireworkEnabled = config.getBoolean("join_settings.firework.enabled", true);
         if (fireworkEnabled) {
@@ -153,7 +155,7 @@ public class PlayerListener extends Module implements LifeCycle {
             // Join events
             executeActions(player, joinActions);
 
-            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+            if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
                 boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
 
                 player.setAllowFlight(hasFly);
@@ -210,7 +212,7 @@ public class PlayerListener extends Module implements LifeCycle {
 
         if (player == null || !player.isOnline()) return;
 
-        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+        if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
             boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
             player.setAllowFlight(hasFly);
             player.setFlying(hasFly);
@@ -226,7 +228,7 @@ public class PlayerListener extends Module implements LifeCycle {
 
         if (player == null || !player.isOnline() || inDisabledWorld(player.getLocation())) return;
 
-        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+        if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
             boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
             player.setAllowFlight(hasFly);
             player.setFlying(hasFly);
