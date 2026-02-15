@@ -25,6 +25,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
@@ -36,10 +37,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
@@ -219,6 +223,29 @@ public class PlayerListener extends Module implements LifeCycle {
         } else if (forceJoinFly && player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
             player.setAllowFlight(true);
             player.setFlying(true);
+        }
+    }
+
+    @EventHandler
+    public void onGameModeChange(final @NotNull PlayerGameModeChangeEvent event) {
+        final @NotNull Player player = event.getPlayer();
+
+        if (this.inDisabledWorld(player.getLocation())) {
+            return;
+        }
+
+        if (!player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+            return;
+        }
+
+        boolean currentAllowFlight = player.getAllowFlight();
+        boolean isFlying = player.isFlying();
+
+        if (event.getNewGameMode() == GameMode.ADVENTURE || event.getNewGameMode() == GameMode.SURVIVAL) {
+            Bukkit.getScheduler().runTaskLater(this.getPlugin(), () -> {
+                player.setAllowFlight(currentAllowFlight);
+                player.setFlying(isFlying);
+            }, 1L);
         }
     }
 
