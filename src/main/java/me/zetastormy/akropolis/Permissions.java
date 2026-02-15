@@ -19,6 +19,8 @@
 
 package me.zetastormy.akropolis;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum Permissions {
     // Command permissions
     COMMAND_AKROPOLIS_HELP("command.help"), COMMAND_AKROPOLIS_RELOAD("command.reload"),
@@ -49,7 +51,7 @@ public enum Permissions {
         this.permission = permission;
     }
 
-    public final String getPermission() {
+    public final @NotNull String getPermission() {
         return "akropolis." + this.permission;
     }
 }
