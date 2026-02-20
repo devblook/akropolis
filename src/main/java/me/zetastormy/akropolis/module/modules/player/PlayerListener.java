@@ -25,6 +25,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
@@ -36,10 +37,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.Permissions;
@@ -69,6 +73,7 @@ public class PlayerListener extends Module implements LifeCycle {
     private String fireworkType;
     private List<Color> fireworkColors;
     private boolean forceJoinFly;
+    private boolean saveFlyState;
 
     public PlayerListener(AkropolisPlugin plugin) {
         super(plugin, ModuleType.PLAYER_LISTENER);
@@ -91,6 +96,7 @@ public class PlayerListener extends Module implements LifeCycle {
         clearInventory = config.getBoolean("join_settings.clear_inventory", false);
 
         forceJoinFly = config.getBoolean("fly.force_on_join", false);
+        saveFlyState = config.getBoolean("fly.save_state", false);
 
         fireworkEnabled = config.getBoolean("join_settings.firework.enabled", true);
         if (fireworkEnabled) {
@@ -153,7 +159,7 @@ public class PlayerListener extends Module implements LifeCycle {
             // Join events
             executeActions(player, joinActions);
 
-            if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+            if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
                 boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
 
                 player.setAllowFlight(hasFly);
@@ -210,7 +216,7 @@ public class PlayerListener extends Module implements LifeCycle {
 
         if (player == null || !player.isOnline()) return;
 
-        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+        if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
             boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
             player.setAllowFlight(hasFly);
             player.setFlying(hasFly);
@@ -220,13 +226,36 @@ public class PlayerListener extends Module implements LifeCycle {
         }
     }
 
+    @EventHandler
+    public void onGameModeChange(final @NotNull PlayerGameModeChangeEvent event) {
+        final @NotNull Player player = event.getPlayer();
+
+        if (this.inDisabledWorld(player.getLocation())) {
+            return;
+        }
+
+        if (!player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())) {
+            return;
+        }
+
+        boolean currentAllowFlight = player.getAllowFlight();
+        boolean isFlying = player.isFlying();
+
+        if (event.getNewGameMode() == GameMode.ADVENTURE || event.getNewGameMode() == GameMode.SURVIVAL) {
+            Bukkit.getScheduler().runTaskLater(this.getPlugin(), () -> {
+                player.setAllowFlight(currentAllowFlight);
+                player.setFlying(isFlying);
+            }, 1L);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
 
         if (player == null || !player.isOnline() || inDisabledWorld(player.getLocation())) return;
 
-        if (playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
+        if (saveFlyState && playersSection != null && playersSection.contains(player.getUniqueId().toString())) {
             boolean hasFly = playersSection.getBoolean(player.getUniqueId() + ".fly");
             player.setAllowFlight(hasFly);
             player.setFlying(hasFly);
