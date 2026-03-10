@@ -44,6 +44,7 @@ import me.zetastormy.akropolis.module.modules.hotbar.HotbarManager;
 import me.zetastormy.akropolis.module.modules.visual.scoreboard.ScoreboardManager;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.module.modules.world.SongPlayerManager;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
@@ -306,18 +307,19 @@ public class AkropolisCommand extends InjectableCommand {
                     return;
                 }
 
-                Hologram holo = plugin.getHologramManager().getHologram(args[2]);
-                int line = Integer.parseInt(args[3]);
-                String text = TextUtil.joinString(4, args);
+                final Hologram holo = plugin.getHologramManager().getHologram(args[2]);
+                final int lineNumber = Integer.parseInt(args[3]);
+                final String lineText = TextUtil.joinString(4, args);
 
-                if (holo.hasInvalidLine(line)) {
+                if (holo.hasInvalidLine(lineNumber)) {
                     sender.sendMessage(
-                            TextUtil.replace(Message.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(line))));
+                            TextUtil.replace(Message.HOLOGRAMS_INVALID_LINE.toComponent(), "line", TextUtil.parse(String.valueOf(lineNumber))));
                     return;
                 }
 
-                holo.setLine(line, TextUtil.parse(text));
-                Message.HOLOGRAMS_LINE_SET.sendWithReplacement(sender, "line", TextUtil.parse(String.valueOf(line)));
+                final Component lineComponent = PlaceholderUtil.setPlaceholders(lineText);
+                holo.setLine(lineNumber, lineComponent);
+                Message.HOLOGRAMS_LINE_SET.sendWithReplacement(sender, "line", TextUtil.parse(String.valueOf(lineNumber)));
                 return;
             }
 
@@ -333,10 +335,11 @@ public class AkropolisCommand extends InjectableCommand {
                     return;
                 }
 
-                Hologram holo = plugin.getHologramManager().getHologram(args[2]);
-                Component text = TextUtil.parse(TextUtil.joinString(3, args));
+                final Hologram holo = plugin.getHologramManager().getHologram(args[2]);
+                final String lineText = TextUtil.joinString(3, args);
+                final Component lineComponent = PlaceholderUtil.setPlaceholders(lineText);
 
-                holo.addLine(text);
+                holo.addLine(lineComponent);
                 Message.HOLOGRAMS_ADDED_LINE.sendWithReplacement(sender, "name", TextUtil.parse(args[2]));
             }
 

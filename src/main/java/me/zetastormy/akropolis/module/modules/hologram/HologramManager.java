@@ -37,6 +37,7 @@ import me.zetastormy.akropolis.config.ConfigType;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
@@ -74,7 +75,7 @@ public class HologramManager extends Module implements LifeCycle {
                 List<String> rawLines = hologramsSection.getStringList(key + ".lines");
                 List<Component> lines = new ArrayList<>();
 
-                rawLines.forEach(l -> lines.add(TextUtil.parse(l)));
+                rawLines.forEach(l -> lines.add(PlaceholderUtil.setPlaceholders(l)));
 
                 Location location = (Location) hologramsSection.get(key + ".location");
 

@@ -73,13 +73,20 @@ public class PlaceholderUtil {
         pushTagResolver(tagResolvers, "online_max", Component.text(Bukkit.getMaxPlayers()));
         pushTagResolver(tagResolvers, "current_song", Component.text(getCurrentSong()));
 
+        if (papi) {
+            tagResolvers.push(papiTag(null));
+        }
+
+        if (miniplaceholders) {
+            tagResolvers.push(MiniPlaceholders.globalPlaceholders());
+        }
+
         return tagResolvers;
     }
 
     public static Component setPlaceholders(String rawText) {
         return TextUtil.parseWithPlaceholders(rawText, TagResolver.resolver(globalTagResolver()));
     }
-
 
     public static Component setPlaceholders(String rawText, Audience audience) {
         if (!(audience instanceof Player player)) {

@@ -47,7 +47,7 @@ public class Hologram {
         lines.forEach(this::addLine);
     }
 
-    public void addLine(Component text) {
+    public void addLine(Component rawText) {
         World world = location.getWorld();
 
         if (world == null) return;
@@ -58,7 +58,7 @@ public class Hologram {
         stand.setVisible(false);
         stand.setGravity(false);
         stand.setCustomNameVisible(true);
-        stand.customName(text);
+        stand.customName(rawText);
         stand.setCanPickupItems(false);
         stands.add(stand);
     }
