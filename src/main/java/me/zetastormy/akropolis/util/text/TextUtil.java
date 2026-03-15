@@ -44,7 +44,6 @@ public class TextUtil {
             StandardTags.rainbow(),
             StandardTags.reset(),
             StandardTags.shadowColor(),
-            StandardTags.sprite(),
             StandardTags.transition(),
             StandardTags.translatable(),
             StandardTags.translatableFallback()

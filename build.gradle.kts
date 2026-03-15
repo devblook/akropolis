@@ -60,7 +60,7 @@ dependencies {
     runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
     runtimeOnly("net.megavex:scoreboard-library-modern:$scoreboardLibraryVersion:mojmap")
 
-    compileOnly(platform("net.kyori:adventure-bom:4.25.0"))
+    compileOnly(platform("net.kyori:adventure-bom:4.23.0"))
     compileOnly("net.kyori:adventure-text-minimessage")
     compileOnly("net.kyori:adventure-api")
 
