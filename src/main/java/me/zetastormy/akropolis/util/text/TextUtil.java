@@ -19,6 +19,9 @@
 
 package me.zetastormy.akropolis.util.text;
 
+import java.lang.reflect.Method;
+import java.util.Objects;
+
 import org.bukkit.Color;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,6 +34,15 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 
 public class TextUtil {
+    static {
+        try {
+            final Method spriteMethod = StandardTags.class.getDeclaredMethod("sprite");
+            SPRITE_TAG_RESOLVER = (TagResolver) Objects.requireNonNull(spriteMethod.invoke(null));
+        } catch (final Exception ignored) {
+            SPRITE_TAG_RESOLVER = TagResolver.empty();
+        }
+    }
+    private static @NotNull TagResolver SPRITE_TAG_RESOLVER;
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
      private static final MiniMessage MINI_MESSAGE_USER_INPUT = MiniMessage.builder().tags(
         TagResolver.builder().resolvers(
@@ -45,6 +57,7 @@ public class TextUtil {
             StandardTags.reset(),
             StandardTags.shadowColor(),
             StandardTags.transition(),
+            SPRITE_TAG_RESOLVER,
             StandardTags.translatable(),
             StandardTags.translatableFallback()
         ).build()).build();
