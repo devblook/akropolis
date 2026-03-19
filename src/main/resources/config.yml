@@ -522,8 +522,20 @@ custom_join_items:
   # Should we prevent them from moving/dropping the custom items?
   disable_inventory_movement: true
 
+  # Should we refresh the custom join items' placeholders?
+  # APPLIES TO ALL CUSTOM JOIN ITEMS, BUT CAN BE OVERRIDEN PER ITEM BASIS!
+  refresh:
+    enabled: false
+    rate: 200 # In ticks (20 ticks = 1 second).
+
   items:
     infobook:
+      # Should we refresh THIS item's placeholders?
+      # THIS OVERRIDES THE OPTION SET BEFORE AND ONLY APPLIES TO THIS ITEM!
+      refresh:
+        enabled: true
+        rate: 200 # In ticks (20 ticks = 1 second).
+
       material: BOOK
       amount: 1
       slot: 0
@@ -534,7 +546,8 @@ custom_join_items:
         - "<dark_gray>» <gray>Right click to see information about the server!"
       actions:
         - "[MESSAGE] <reset>"
-        - "[MESSAGE] <dark_gray>| <gold><b>Server Information"
+        # The <online> and <online_max> placeholders are updated according to the refresh option.
+        - "[MESSAGE] <dark_gray>| <gold><b>Server Information <gray>(<online>/<online_max>)"
         - "[MESSAGE] <reset>"
         - "[MESSAGE] <dark_gray>» <gray>Website<dark_gray>: <yellow>www.example.com"
         - "[MESSAGE] <dark_gray>» <gray>Store<dark_gray>: <yellow>buy.example.com"
