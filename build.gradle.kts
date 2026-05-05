@@ -74,7 +74,7 @@ dependencies {
     compileOnly("io.github.almighty-satan:XSeries:13.6.0+26.1")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
 }
 
 configurations.implementation {
