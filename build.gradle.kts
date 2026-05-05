@@ -70,7 +70,9 @@ dependencies {
     // Dependency downloaded at runtime, also change
     // the version in AkropolisPluginLoader.java
     // when upgrading
-    compileOnly("com.github.cryptomorin:XSeries:13.6.0")
+    // TODO: Temporarily replaced with unofficial fork supporting 26.1
+    // compileOnly("com.github.cryptomorin:XSeries:13.6.0")
+    compileOnly("io.github.almighty-satan:XSeries:13.6.0+26.1")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")

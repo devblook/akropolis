@@ -34,8 +34,18 @@ public class AkropolisPluginLoader implements PluginLoader {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
         // Dependency must be as compileOnly in build.gradle.kts
         // Also change version there when upgrading
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.cryptomorin:XSeries:13.6.0"), null));
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
+        // TODO: Temporarily replaced with unofficial fork supporting 26.1
+        // resolver.addDependency(new Dependency(new DefaultArtifact("com.github.cryptomorin:XSeries:13.6.0"), null));
+        resolver.addDependency(
+            new Dependency(new DefaultArtifact("io.github.almighty-satan:XSeries:13.6.0+26.1"), null)
+        );
+        resolver.addRepository(
+            new RemoteRepository.Builder(
+                "central",
+                "default",
+                MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR
+            ).build()
+        );
 
         classpathBuilder.addLibrary(resolver);
     }
