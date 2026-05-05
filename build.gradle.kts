@@ -35,7 +35,7 @@ version = buildString {
     }
 }
 
-val scoreboardLibraryVersion = "2.4.4"
+val scoreboardLibraryVersion = "2.7.4"
 
 val libsPackage = property("libsPackage") as String
 
@@ -58,7 +58,6 @@ dependencies {
 
     implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
     runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
-    runtimeOnly("net.megavex:scoreboard-library-modern:$scoreboardLibraryVersion:mojmap")
 
     compileOnly(platform("net.kyori:adventure-bom:4.23.0"))
     compileOnly("net.kyori:adventure-text-minimessage")
@@ -94,10 +93,6 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
         archiveFileName.set("Akropolis-${projectVersion}.jar")
-
-        minimize {
-            exclude(dependency("net.megavex:.*:.*"))
-        }
 
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
     }
