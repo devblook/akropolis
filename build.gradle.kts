@@ -63,7 +63,7 @@ dependencies {
     compileOnly("net.kyori:adventure-text-minimessage")
     compileOnly("net.kyori:adventure-api")
 
-    compileOnly("me.clip:placeholderapi:2.11.7")
+    compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
 
     // Dependency downloaded at runtime, also change
