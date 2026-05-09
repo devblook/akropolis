@@ -105,19 +105,21 @@ public class ChatGroups extends Module implements LifeCycle {
             return;
         }
 
-        String rawMessage = TextUtil.raw(event.originalMessage());
+        String rawMessage = TextUtil.rawUserInput(event.originalMessage());
         String parsedMessageEmojis = rawMessage;
 
         for (ChatGroup group : playerGroups) {
             parsedMessageEmojis = group.parseEmojis(parsedMessageEmojis);
         }
 
-        String parsedMessage = TextUtil.raw(LegacyComponentSerializer
+        String parsedMessage = TextUtil.rawUserInput(LegacyComponentSerializer
                 .legacySection()
                 .deserialize(ChatColor.translateAlternateColorCodes('&', parsedMessageEmojis)));
 
+        Component parsedMessageComponent = TextUtil.parseUserInput(parsedMessage);
+
         getPlugin().getServer().sendMessage(TextUtil.replace(topGroup.getFormat(player),
                 "message",
-                TextUtil.parse(parsedMessage)));
+                parsedMessageComponent));
     }
 }

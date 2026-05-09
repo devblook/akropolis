@@ -20,28 +20,41 @@
 package me.zetastormy.akropolis.command.commands;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.command.InjectableCommand;
+import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Settings;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class LobbyCommand extends InjectableCommand {
+    private final AkropolisPlugin plugin;
+    private final Map<UUID, Data.PlayerData> playersSection;
+    private final boolean forceJoinFly;
 
     public LobbyCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
+        this.plugin = plugin;
+
+        final Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
+        final Data dataFile = plugin.getConfigManager().getFile(Data.class).getConfig();
+
+        this.playersSection = dataFile.getPlayers();
+        this.forceJoinFly = config.fly().forceOnJoin();
     }
 
     @Override
     public void onCommand(CommandSender sender, String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Console cannot teleport to spawn");
             return;
         }
@@ -53,7 +66,6 @@ public class LobbyCommand extends InjectableCommand {
             return;
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> ((Player) sender).teleportAsync(location), 3L);
-
+        player.teleportAsync(location);
     }
 }

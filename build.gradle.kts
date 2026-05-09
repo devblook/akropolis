@@ -1,3 +1,5 @@
+import java.io.ByteArrayOutputStream
+
 plugins {
     id("java")
     alias(libs.plugins.shadow)
@@ -5,8 +7,33 @@ plugins {
 }
 
 group = "me.zetastormy"
-version = property("projectVersion") as String
 description = "A modern Minecraft server hub core solution. Based on DeluxeHub by ItsLewizzz."
+
+version = buildString {
+    fun git(vararg args: String): String {
+        return providers.exec {
+            commandLine("git", *args)
+        }.standardOutput.asText.get().trim()
+    }
+
+    val latestTag = git("describe", "--tags", "--abbrev=0").replace("v", "")
+
+    append(latestTag)
+
+    val branchName = git("rev-parse", "--abbrev-ref", "HEAD")
+
+    if (branchName != "stable" && !branchName.startsWith("release")) {
+        val commitHash = git("rev-parse", "--short", "HEAD")
+
+        append("+").append(commitHash)
+
+        val gitStatus = git("status", "--porcelain")
+
+        if (!gitStatus.isEmpty()) {
+            append(".dirty")
+        }
+    }
+}
 
 val libsPackage = property("libsPackage") as String
 
@@ -52,7 +79,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.6-R0.1-SNAPSHOT")
 
     implementation(libs.configurate.yaml)
     // Interfaces support
@@ -87,15 +114,17 @@ configurations.all {
 }
 
 tasks {
+    val projectVersion = project.version.toString()
+
     processResources {
         filesMatching("paper-plugin.yml") {
-            expand("version" to project.version)
+            expand("version" to projectVersion)
         }
     }
 
     shadowJar {
         archiveClassifier.set("")
-        archiveFileName.set("Akropolis-${project.version}.jar")
+        archiveFileName.set("Akropolis-${projectVersion}.jar")
 
         minimize {
             exclude(dependency("net.megavex:.*:.*"))
