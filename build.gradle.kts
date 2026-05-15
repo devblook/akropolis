@@ -66,12 +66,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
 
-    // Dependency downloaded at runtime, also change
-    // the version in AkropolisPluginLoader.java
-    // when upgrading
-    // TODO: Temporarily replaced with unofficial fork supporting 26.1
-    // compileOnly("com.github.cryptomorin:XSeries:13.6.0")
-    compileOnly("io.github.almighty-satan:XSeries:13.6.0+26.1")
+    implementation("com.github.cryptomorin:XSeries:13.7.0")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
@@ -95,6 +90,7 @@ tasks {
         archiveFileName.set("Akropolis-${projectVersion}.jar")
 
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
+        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
     }
 
     withType<JavaCompile> {
