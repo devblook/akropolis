@@ -21,6 +21,8 @@ package me.zetastormy.akropolis.module.modules.hotbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,8 +58,11 @@ public abstract class HotbarItem implements Listener {
     private final ItemStack item;
     private ConfigurationSection configurationSection;
     private final String keyValue;
-    private String permission = null;
     private final int slot;
+    private boolean refresh;
+    private long refreshRate;
+    private int itemTask;
+    private String permission = null;
     private boolean disableMovement;
 
     protected HotbarItem(HotbarManager hotbarManager, ItemStack item, int slot, String keyValue) {
@@ -96,6 +101,26 @@ public abstract class HotbarItem implements Listener {
         return slot;
     }
 
+    public boolean getRefresh() {
+        return refresh;
+    }
+
+    public long getRefreshRate() {
+        return refreshRate;
+    }
+
+    public int getItemtask() {
+        return itemTask;
+    }
+
+    public void setRefresh(boolean refresh) {
+        this.refresh = refresh;
+    }
+
+    public void setRefreshRate(long refreshRate) {
+        this.refreshRate = refreshRate;
+    }
+
     public void setPermission(String permission) {
         this.permission = permission;
     }
@@ -118,16 +143,38 @@ public abstract class HotbarItem implements Listener {
 
         ItemStack newItem = item.clone();
 
-        if (getConfigurationSection() != null && getConfigurationSection().contains("username")) {
-            String skullName = TextUtil.raw(PlaceholderUtil
-                    .setPlaceholders(getConfigurationSection().getString("username", player.getName()), player));
-            OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(skullName);
+        if (getConfigurationSection() != null) {
+            if (getConfigurationSection().contains("username")) {
+                String skullName = TextUtil.raw(PlaceholderUtil
+                        .setPlaceholders(getConfigurationSection().getString("username", player.getName()), player));
+                OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(skullName);
 
-            newItem = new ItemStackBuilder(newItem).setSkullOwner(skullPlayer).build();
+                newItem = new ItemStackBuilder(newItem).setSkullOwner(skullPlayer).build();
+            }
+
+            if (getConfigurationSection().contains("refresh")) {
+                boolean refresh = getConfigurationSection().getBoolean("refresh");
+
+                if (refresh) {
+                    itemTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), new HotbarUpdateTask(newItem), 0L, refreshRate);
+                }
+            }
         }
 
         player.getInventory().setItem(slot, newItem);
-        hotbarManager.getPlayers().add(player.getUniqueId());
+
+        Map<UUID, List<HotbarItem>> players = hotbarManager.getPlayers();
+
+        if (players.containsKey(player.getUniqueId())) {
+            players.get(player.getUniqueId()).add(this);
+
+            return;
+        }
+
+        List<HotbarItem> items = new ArrayList<>();
+
+        items.add(this);
+        players.put(player.getUniqueId(), items);
     }
 
     public void removeItem(Player player) {

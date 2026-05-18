@@ -20,9 +20,9 @@
 package me.zetastormy.akropolis.module.modules.hotbar;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -43,7 +43,7 @@ import me.zetastormy.akropolis.util.ItemStackBuilder;
 
 public class HotbarManager extends Module implements LifeCycle {
     private List<HotbarItem> hotbarItems;
-    private Set<UUID> players;
+    private Map<UUID, List<HotbarItem>> players;
 
     public HotbarManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.HOTBAR_ITEMS);
@@ -52,7 +52,7 @@ public class HotbarManager extends Module implements LifeCycle {
     @Override
     public void onEnable() {
         hotbarItems = new ArrayList<>();
-        players = new HashSet<>();
+        players = new HashMap<>();
 
         FileConfiguration config = getConfig(ConfigType.SETTINGS);
         ConfigurationSection customItemsSections = config.getConfigurationSection("custom_join_items");
@@ -108,6 +108,9 @@ public class HotbarManager extends Module implements LifeCycle {
 
     private void registerCustomItems(ConfigurationSection customItemsSection) {
         ConfigurationSection itemsSection = customItemsSection.getConfigurationSection("items");
+        boolean refreshCustomJoinItems = customItemsSection.getBoolean("refresh.enabled", true);
+        long refreshRateCustomJoinItems = customItemsSection.getLong("refresh.rate", 20);
+        boolean disableInventoryMovement = customItemsSection.getBoolean("disable_inventory_movement");
 
         if (itemsSection == null) {
             getPlugin().getLogger().severe("Items of custom join items configuration section is missing!");
@@ -122,8 +125,10 @@ public class HotbarManager extends Module implements LifeCycle {
                 customItem.setPermission(itemsSection.getString(itemEntry + ".permission"));
             }
 
+            customItem.setRefresh(refreshCustomJoinItems);
+            customItem.setRefreshRate(refreshRateCustomJoinItems);
+            customItem.setDisableMovement(disableInventoryMovement);
             customItem.setConfigurationSection(itemsSection.getConfigurationSection(itemEntry));
-            customItem.setDisableMovement(customItemsSection.getBoolean("disable_inventory_movement"));
             registerHotbarItem(customItem);
         }
     }
@@ -154,14 +159,14 @@ public class HotbarManager extends Module implements LifeCycle {
     }
 
     public boolean hasHotbar(UUID playerUuid) {
-        return players.contains(playerUuid);
+        return players.containsKey(playerUuid);
     }
 
     public List<HotbarItem> getHotbarItems() {
         return hotbarItems;
     }
 
-    public Set<UUID> getPlayers() {
+    public Map<UUID, List<HotbarItem>> getPlayers() {
         return players;
     }
 }
