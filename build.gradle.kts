@@ -35,7 +35,7 @@ version = buildString {
     }
 }
 
-val scoreboardLibraryVersion = "2.4.4"
+val scoreboardLibraryVersion = "2.7.4"
 
 val libsPackage = property("libsPackage") as String
 
@@ -58,22 +58,18 @@ dependencies {
 
     implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
     runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
-    runtimeOnly("net.megavex:scoreboard-library-modern:$scoreboardLibraryVersion:mojmap")
 
     compileOnly(platform("net.kyori:adventure-bom:4.23.0"))
     compileOnly("net.kyori:adventure-text-minimessage")
     compileOnly("net.kyori:adventure-api")
 
-    compileOnly("me.clip:placeholderapi:2.11.7")
+    compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
 
-    // Dependency downloaded at runtime, also change
-    // the version in AkropolisPluginLoader.java
-    // when upgrading
-    compileOnly("com.github.cryptomorin:XSeries:13.6.0")
+    implementation("com.github.cryptomorin:XSeries:13.7.0")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
-    compileOnly("com.github.koca2000:NoteBlockAPI:1.6.3")
+    compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
 }
 
 configurations.implementation {
@@ -93,11 +89,8 @@ tasks {
         archiveClassifier.set("")
         archiveFileName.set("Akropolis-${projectVersion}.jar")
 
-        minimize {
-            exclude(dependency("net.megavex:.*:.*"))
-        }
-
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.scoreboardlibrary")
+        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
     }
 
     withType<JavaCompile> {
