@@ -243,7 +243,7 @@ boss_bar_announcements:
   # Set the boss bar color.
   # Available colors listed here:
   # https://jd.advntr.dev/api/4.23.0/net/kyori/adventure/bossbar/BossBar.Color.html
-  color: 'BLUE'
+  color: "BLUE"
 
   # Choose how the progress looks.
   overlay:
