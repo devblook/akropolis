@@ -103,6 +103,15 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
                     "the default type 'PROGRESS' will be used!");
         }
 
+        BossBar.Color bossBarColor = BossBar.Color.BLUE;
+
+        try {
+            bossBarColor = BossBar.Color.valueOf(bossBarSettings.getString("color", "BLUE"));
+        } catch (IllegalArgumentException e) {
+            this.getPlugin().getSLF4JLogger().warn("An invalid color name '{}' has been found in the boss bar module, " +
+                "the default color '{}' will be used!", bossBarSettings.getString("color"), bossBarColor.toString());
+        }
+
         double overlayProgress = bossBarSettings.getDouble("overlay.progress", BossBar.MAX_PROGRESS);
 
         if (overlayProgress > 1 || overlayProgress < 0) {
@@ -115,7 +124,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
         if (size > 0) {
             Component firstBroadcast = PlaceholderUtil.setPlaceholders(broadcasts.get(0));
             this.broadcastBar = BossBar.bossBar(firstBroadcast, (float) overlayProgress,
-                    BossBar.Color.BLUE, overlayType);
+                    bossBarColor, overlayType);
             count++;
 
             Bukkit.getOnlinePlayers().forEach(p -> {

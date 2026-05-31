@@ -240,7 +240,12 @@ boss_bar_announcements:
   # Delay sending boss bar announcements (in seconds).
   delay: 60
 
-  # Choose how the boss bar looks.
+  # Set the boss bar color.
+  # Available colors listed here:
+  # https://jd.advntr.dev/api/4.23.0/net/kyori/adventure/bossbar/BossBar.Color.html
+  color: 'BLUE'
+
+  # Choose how the progress looks.
   overlay:
     # Decide if the boss bar is continuous or split into segments.
     # Valid options: PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
