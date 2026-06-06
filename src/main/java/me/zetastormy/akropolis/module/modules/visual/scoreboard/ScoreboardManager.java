@@ -69,7 +69,7 @@ public class ScoreboardManager extends Module implements LifeCycle {
                     config.getLong("scoreboard.refresh.rate"));
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
+        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> Bukkit.getOnlinePlayers().stream()
                 .filter(player -> !inDisabledWorld(player.getLocation())).forEach(this::createScoreboard), 20L);
     }
 
@@ -80,13 +80,25 @@ public class ScoreboardManager extends Module implements LifeCycle {
     }
 
     public void createScoreboard(Player player) {
-        players.put(player.getUniqueId(), updateScoreboard(player.getUniqueId()));
+        if (player.isOnline()) {
+            final ScoreboardHelper helper = updateScoreboard(player.getUniqueId());
+            if (helper == null) {
+                this.getPlugin().getSLF4JLogger().error(
+                    "Could not create scoreboard for player {} ({}) because helper is null",
+                    player.getName(),
+                    player.getUniqueId()
+                );
+            } else {
+                this.players.put(player.getUniqueId(), helper);
+            }
+        }
     }
 
     public ScoreboardHelper updateScoreboard(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
-        if (player == null)
+        if (player == null) {
             return null;
+        }
 
         ScoreboardHelper helper = players.get(player.getUniqueId());
 
@@ -123,7 +135,7 @@ public class ScoreboardManager extends Module implements LifeCycle {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!inDisabledWorld(player.getLocation()) && !hasScore(player.getUniqueId())) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), joinDelay);
+            Bukkit.getScheduler().runTaskLater(getPlugin(), () -> createScoreboard(player), joinDelay);
         }
     }
 
@@ -145,7 +157,7 @@ public class ScoreboardManager extends Module implements LifeCycle {
         if (inDisabledWorld(toWorld) && players.containsKey(player.getUniqueId())) {
             removeScoreboard(player);
         } else if (!players.containsKey(player.getUniqueId())) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> createScoreboard(player), worldDelay);
+            Bukkit.getScheduler().runTaskLater(getPlugin(), () -> createScoreboard(player), worldDelay);
         }
     }
 }
