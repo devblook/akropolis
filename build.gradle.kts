@@ -54,8 +54,6 @@ repositories {
 dependencies {
     paperweight.paperDevBundle("1.21.6-R0.1-SNAPSHOT")
 
-    implementation("javax.inject:javax.inject:1")
-
     implementation("net.megavex:scoreboard-library-api:$scoreboardLibraryVersion")
     runtimeOnly("net.megavex:scoreboard-library-implementation:$scoreboardLibraryVersion")
 
