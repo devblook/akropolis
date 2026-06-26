@@ -35,7 +35,7 @@ version = buildString {
     }
 }
 
-val scoreboardLibraryVersion = "2.7.4"
+val scoreboardLibraryVersion = "2.8.0"
 
 val libsPackage = property("libsPackage") as String
 
@@ -66,7 +66,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.12.2")
     compileOnly("com.arcaniax:HeadDatabase-API:1.3.2")
 
-    implementation("com.github.cryptomorin:XSeries:13.7.0")
+    implementation("com.github.cryptomorin:XSeries:13.7.1")
 
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("com.github.koca2000:NoteBlockAPI:1.7.0")
