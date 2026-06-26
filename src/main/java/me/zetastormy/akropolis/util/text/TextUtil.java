@@ -19,7 +19,11 @@
 
 package me.zetastormy.akropolis.util.text;
 
+import java.lang.reflect.Method;
+import java.util.Objects;
+
 import org.bukkit.Color;
+import org.jetbrains.annotations.NotNull;
 
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import net.kyori.adventure.pointer.Pointered;
@@ -27,9 +31,37 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 
 public class TextUtil {
+    static {
+        try {
+            final Method spriteMethod = StandardTags.class.getDeclaredMethod("sprite");
+            SPRITE_TAG_RESOLVER = (TagResolver) Objects.requireNonNull(spriteMethod.invoke(null));
+        } catch (final Exception ignored) {
+            SPRITE_TAG_RESOLVER = TagResolver.empty();
+        }
+    }
+    private static @NotNull TagResolver SPRITE_TAG_RESOLVER;
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
+     private static final MiniMessage MINI_MESSAGE_USER_INPUT = MiniMessage.builder().tags(
+        TagResolver.builder().resolvers(
+            StandardTags.color(),
+            StandardTags.decorations(),
+            StandardTags.gradient(),
+            StandardTags.hoverEvent(),
+            StandardTags.keybind(),
+            StandardTags.newline(),
+            StandardTags.pride(),
+            StandardTags.rainbow(),
+            StandardTags.reset(),
+            StandardTags.shadowColor(),
+            StandardTags.transition(),
+            SPRITE_TAG_RESOLVER,
+            StandardTags.font(),
+            StandardTags.translatable(),
+            StandardTags.translatableFallback()
+        ).build()).build();
 
     private static boolean miniplaceholders = false;
 
@@ -56,8 +88,31 @@ public class TextUtil {
       return MINI_MESSAGE.deserialize(message, target, resolver);
     }
 
+    public static @NotNull Component parseUserInput(final @NotNull String message) {
+        return MINI_MESSAGE_USER_INPUT.deserialize(message);
+    }
+
+    public static @NotNull Component parseUserInput(
+        final @NotNull String message,
+        final @NotNull TagResolver resolver
+    ) {
+        return MINI_MESSAGE_USER_INPUT.deserialize(message, resolver);
+    }
+
+    public static @NotNull Component parseUserInput(
+        final @NotNull String message,
+        final @NotNull Pointered target,
+        final @NotNull TagResolver... resolver
+    ) {
+        return MINI_MESSAGE_USER_INPUT.deserialize(message, target, resolver);
+    }
+
     public static String raw(Component message) {
         return MINI_MESSAGE.serialize(message).replaceAll("\\\\<", "<");
+    }
+
+    public static String rawUserInput(final @NotNull Component message) {
+        return MINI_MESSAGE_USER_INPUT.serialize(message).replaceAll("\\\\<", "<");
     }
 
     public static Component replace(Component message, String pattern, Component replacement) {

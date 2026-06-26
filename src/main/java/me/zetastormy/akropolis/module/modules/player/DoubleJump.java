@@ -108,6 +108,11 @@ public class DoubleJump extends Module implements LifeCycle {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
 
+        if (player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())
+            || player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission())) {
+            return;
+        }
+
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
             player.setAllowFlight(!inDisabledWorld(player.getLocation()));
         }
@@ -117,6 +122,11 @@ public class DoubleJump extends Module implements LifeCycle {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        if (player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())
+            || player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission())) {
+            return;
+        }
+
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR)
             player.setAllowFlight(!inDisabledWorld(player.getLocation()));
     }
@@ -124,6 +134,11 @@ public class DoubleJump extends Module implements LifeCycle {
     @EventHandler
     public void onGameModeChange(PlayerGameModeChangeEvent event) {
         Player player = event.getPlayer();
+
+        if (player.hasPermission(Permissions.COMMAND_FLIGHT.getPermission())
+            || player.hasPermission(Permissions.DOUBLE_JUMP_BYPASS.getPermission())) {
+            return;
+        }
 
         if (inDisabledWorld(player.getLocation())) return;
 

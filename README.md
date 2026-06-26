@@ -1,4 +1,4 @@
-![Akropolis banner](https://zetastormy.me/assets/akropolis_banner.png)
+![Akropolis banner](https://i.postimg.cc/tCstD5Zy/Akropolis-banner-V2.png)
 
 ---
 
