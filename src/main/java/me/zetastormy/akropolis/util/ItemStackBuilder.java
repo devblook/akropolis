@@ -157,9 +157,9 @@ public class ItemStackBuilder {
             for (String enchantment : rawEnchantments) {
                 String[] parts = enchantment.split(":");
                 Enchantment enchant = RegistryAccess
-                        .registryAccess()
-                        .getRegistry(RegistryKey.ENCHANTMENT)
-                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
+                                        .registryAccess()
+                                        .getRegistry(RegistryKey.ENCHANTMENT)
+                                        .get(NamespacedKey.fromString(parts[0].toLowerCase()));
                 int level = Integer.parseInt(parts[1]);
 
                 enchantments.put(enchant, level);
@@ -275,7 +275,7 @@ public class ItemStackBuilder {
         }
 
         name = PlaceholderUtil.setPlaceholders(TextUtil.raw(name), player)
-                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+        .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         itemMeta.displayName(name);
         itemStack.setItemMeta(itemMeta);
     }
@@ -385,8 +385,7 @@ public class ItemStackBuilder {
                 float floatValue = Float.parseFloat(value);
                 floats.add(floatValue);
                 continue;
-            } catch (Exception ignored) {
-            }
+            } catch (Exception ignored) {}
 
             // TODO: add colors
 
