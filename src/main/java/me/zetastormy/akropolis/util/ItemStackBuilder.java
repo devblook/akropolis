@@ -19,16 +19,21 @@
 
 package me.zetastormy.akropolis.util;
 
-import com.cryptomorin.xseries.XMaterial;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
-import me.zetastormy.akropolis.AkropolisPlugin;
-import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
-import me.zetastormy.akropolis.util.text.PlaceholderUtil;
-import me.zetastormy.akropolis.util.text.TextUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.DyeColor;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -40,8 +45,18 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import com.cryptomorin.xseries.XMaterial;
+
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import me.zetastormy.akropolis.AkropolisPlugin;
+import me.zetastormy.akropolis.hook.hooks.head.HeadHook;
+import me.zetastormy.akropolis.util.text.PlaceholderUtil;
+import me.zetastormy.akropolis.util.text.TextUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class ItemStackBuilder {
     private static final ItemStack MALFORMED_ITEM;
@@ -159,7 +174,7 @@ public class ItemStackBuilder {
         }
 
         if (section.contains("firework_star")) {
-            ConfigurationSection fireworkSection = section.getConfigurationSection("firework_star");
+            final ConfigurationSection fireworkSection = section.getConfigurationSection("firework_star");
 
             if (fireworkSection == null) {
                 PLUGIN.getLogger().severe("Invalid firework star configuration section!");
@@ -167,15 +182,13 @@ public class ItemStackBuilder {
                 return builder;
             }
 
-            try {
-                final List<Color> colors = fireworkSection.getStringList("colors").stream()
-                        .map(TextUtil::getColor)
-                        .filter(Objects::nonNull)
-                        .toList();
-                builder.withFireworkStar(colors);
-            } catch (IllegalArgumentException e) {
-                // Ignored
-            }
+            final List<@NotNull Color> colors = fireworkSection.getStringList("colors").stream()
+                    .map(TextUtil::getDyeColor)
+                    .filter(Objects::nonNull)
+                    .map(DyeColor::getFireworkColor)
+                    .toList();
+
+            builder.withFireworkStar(colors);
         }
 
         return builder;

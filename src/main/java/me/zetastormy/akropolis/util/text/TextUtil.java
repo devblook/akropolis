@@ -23,7 +23,11 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.google.common.base.Enums;
 
 import io.github.miniplaceholders.api.MiniPlaceholders;
 import net.kyori.adventure.pointer.Pointered;
@@ -150,6 +154,10 @@ public class TextUtil {
             case "YELLOW" -> Color.YELLOW;
             default -> null;
         };
+    }
+
+    public static @Nullable DyeColor getDyeColor(final String dyeColorName) {
+        return Enums.getIfPresent(DyeColor.class, dyeColorName).orNull();
     }
 
     public static void setMPState(boolean miniplaceholders) {
