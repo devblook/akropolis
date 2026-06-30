@@ -42,6 +42,9 @@
 # FIREWORK STAR:
 #
 #   You can create custom firework stars using the "firework_star" section, which accepts a list of colors and mix colors.
+#   You must use dye color names, you can find them here:
+#   https://jd.papermc.io/paper/26.2/org/bukkit/DyeColor.html#enum-constant-summary
+#
 #   Example:
 #     firework_star:
 #       colors:
