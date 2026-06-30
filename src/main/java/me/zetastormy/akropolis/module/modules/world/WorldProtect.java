@@ -217,7 +217,22 @@ public class WorldProtect extends Module implements LifeCycle {
                 XMaterial.WEATHERED_COPPER_CHAIN.get(), XMaterial.OXIDIZED_COPPER_CHAIN.get(),
                 XMaterial.WAXED_COPPER_CHAIN.get(), XMaterial.WAXED_EXPOSED_COPPER_CHAIN.get(),
                 XMaterial.WAXED_WEATHERED_COPPER_CHAIN.get(),
-                XMaterial.WAXED_OXIDIZED_COPPER_CHAIN.get()
+                XMaterial.WAXED_OXIDIZED_COPPER_CHAIN.get(),
+                XMaterial.CINNABAR.get(), XMaterial.CINNABAR_SLAB.get(),
+                XMaterial.CINNABAR_STAIRS.get(), XMaterial.CINNABAR_WALL.get(),
+                XMaterial.POLISHED_CINNABAR.get(), XMaterial.POLISHED_CINNABAR_SLAB.get(),
+                XMaterial.POLISHED_CINNABAR_STAIRS.get(), XMaterial.POLISHED_CINNABAR_WALL.get(),
+                XMaterial.CINNABAR_BRICKS.get(), XMaterial.CINNABAR_BRICK_SLAB.get(),
+                XMaterial.CINNABAR_BRICK_STAIRS.get(), XMaterial.CINNABAR_BRICK_WALL.get(),
+                XMaterial.CHISELED_CINNABAR.get(),
+                XMaterial.POTENT_SULFUR.get(),
+                XMaterial.SULFUR.get(), XMaterial.SULFUR_SLAB.get(), XMaterial.SULFUR_STAIRS.get(),
+                XMaterial.SULFUR_WALL.get(),
+                XMaterial.POLISHED_SULFUR.get(), XMaterial.POLISHED_SULFUR_SLAB.get(),
+                XMaterial.POLISHED_SULFUR_STAIRS.get(), XMaterial.POLISHED_SULFUR_WALL.get(),
+                XMaterial.SULFUR_BRICKS.get(), XMaterial.SULFUR_BRICK_SLAB.get(),
+                XMaterial.SULFUR_BRICK_STAIRS.get(), XMaterial.SULFUR_BRICK_WALL.get(),
+                XMaterial.CHISELED_SULFUR.get(), XMaterial.SULFUR_SPIKE.get()
             );
 
         INTERACTABLE = rawInteractable.stream().filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
