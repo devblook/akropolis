@@ -88,7 +88,6 @@ dependencies {
 
     implementation(libs.scoreboard.library.api)
     runtimeOnly(libs.scoreboard.library.implementation)
-    runtimeOnly(variantOf(libs.scoreboard.library.modern) { classifier("mojmap") })
 
     compileOnly(platform(libs.adventure.bom))
     compileOnly(libs.adventure.text.minimessage)
@@ -97,7 +96,7 @@ dependencies {
     compileOnly(libs.placeholderapi)
     compileOnly(libs.head.database.api)
 
-    compileOnly(libs.xseries)
+    implementation(libs.xseries)
 
     compileOnly(libs.miniplaceholders.api)
     compileOnly(libs.noteblockapi)
@@ -126,14 +125,11 @@ tasks {
         archiveClassifier.set("")
         archiveFileName.set("Akropolis-${projectVersion}.jar")
 
-        minimize {
-            exclude(dependency("net.megavex:.*:.*"))
-        }
-
         relocate("net.megavex.scoreboardlibrary", "${libsPackage}.net.megavex.scoreboardlibrary")
 
         relocate("org.spongepowered.configurate", "${libsPackage}.org.spongepowered.configurate")
         relocate("io.leangen.geantyref", "${libsPackage}.io.leangen.geantyref")
+        relocate("com.cryptomorin.xseries", "${libsPackage}.xseries")
     }
 
     withType<JavaCompile> {

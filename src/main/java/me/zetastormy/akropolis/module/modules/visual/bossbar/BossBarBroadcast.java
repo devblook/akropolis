@@ -97,6 +97,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
                     "the default type 'PROGRESS' will be used!");
         }
 
+        final BossBar.Color bossBarColor = bossBarSettings.color();
         double overlayProgress = bossBarSettings.overlay().progress();
 
         if (overlayProgress > 1 || overlayProgress < 0) {
@@ -109,7 +110,7 @@ public class BossBarBroadcast extends Module implements Runnable, LifeCycle {
         if (size > 0) {
             Component firstBroadcast = PlaceholderUtil.setPlaceholders(broadcasts.get(0));
             this.broadcastBar = BossBar.bossBar(firstBroadcast, (float) overlayProgress,
-                    BossBar.Color.BLUE, overlayType);
+                    bossBarColor, overlayType);
             count++;
 
             Bukkit.getOnlinePlayers().forEach(p -> {

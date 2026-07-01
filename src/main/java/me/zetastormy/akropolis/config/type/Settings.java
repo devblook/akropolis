@@ -655,6 +655,13 @@ public class Settings {
         @Comment("Delay sending boss bar announcements (in seconds).")
         private int delay = 60;
 
+        @Comment("""
+                Set the boss bar color.
+                Available colors listed here:
+                https://jd.advntr.dev/api/4.23.0/net/kyori/adventure/bossbar/BossBar.Color.html\
+                """)
+        private BossBar.Color color = BossBar.Color.BLUE;
+
         @Comment("Choose how the boss bar looks.")
         private Overlay overlay = new Overlay();
 
@@ -683,6 +690,7 @@ public class Settings {
 
         public boolean enabled() { return this.enabled; }
         public int delay() { return this.delay; }
+        public BossBar.Color color() { return this.color; }
         public Overlay overlay() { return this.overlay; }
         public Sound sound() { return this.sound; }
         public List<String> announcements() { return this.announcements; }

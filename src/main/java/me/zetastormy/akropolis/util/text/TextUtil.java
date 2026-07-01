@@ -58,6 +58,7 @@ public class TextUtil {
             StandardTags.shadowColor(),
             StandardTags.transition(),
             SPRITE_TAG_RESOLVER,
+            StandardTags.font(),
             StandardTags.translatable(),
             StandardTags.translatableFallback()
         ).build()).build();
