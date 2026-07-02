@@ -128,6 +128,7 @@ public class ConfigManager {
                     this.backupManager
             ));
         } catch (final Exception exception) {
+            logger.error("An exception occurred while loading configuration files", exception);
             this.logConfigurationErrorMessage();
             throw exception;
         }
