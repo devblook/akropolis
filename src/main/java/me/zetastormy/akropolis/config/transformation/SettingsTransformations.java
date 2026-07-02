@@ -84,6 +84,7 @@ public class SettingsTransformations extends AbstractTransformation {
 
                     if (!value.isMap()) {
                         logger.warn("Skipping groups section migration because it's not a map");
+                        return null;
                     }
 
                     final ConfigurationNode old = value.copy();
