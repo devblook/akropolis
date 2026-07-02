@@ -21,6 +21,8 @@ package me.zetastormy.akropolis.config.serializer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -48,18 +50,30 @@ public class LocationSerializer implements TypeSerializer<Location> {
             final @NotNull Type type,
             final @NotNull ConfigurationNode source
     ) throws SerializationException {
-        String world = this.nonVirtualNode(source, "world").getString();
-        double x = this.nonVirtualNode(source, "x").getDouble();
-        double y = this.nonVirtualNode(source, "y").getDouble();
-        double z = this.nonVirtualNode(source, "z").getDouble();
-        float yaw = this.nonVirtualNode(source, "yaw").getFloat();
-        float pitch = this.nonVirtualNode(source, "pitch").getFloat();
+        final @Nullable String worldKey = source.node("world_key").getString();
+        final @Nullable String worldName = source.node("world").getString();
 
-        if (world == null) {
-            throw new SerializationException("Required field 'world' is null");
+        final double x = this.nonVirtualNode(source, "x").getDouble();
+        final double y = this.nonVirtualNode(source, "y").getDouble();
+        final double z = this.nonVirtualNode(source, "z").getDouble();
+        final float yaw = this.nonVirtualNode(source, "yaw").getFloat();
+        final float pitch = this.nonVirtualNode(source, "pitch").getFloat();
+
+        World world = null;
+        if (worldKey != null) {
+            final @Nullable NamespacedKey key = NamespacedKey.fromString(worldKey);
+            if (key == null) {
+                throw new SerializationException("World key " + worldKey + " is invalid");
+            } else {
+                world = Bukkit.getWorld(key);
+            }
+        } else if (worldName != null) {
+            world = Bukkit.getWorld(worldName);
+        } else {
+            throw new SerializationException("Location missing both 'world' and 'world_key' fields");
         }
 
-        return new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch);
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     @Override
@@ -73,7 +87,7 @@ public class LocationSerializer implements TypeSerializer<Location> {
             return;
         }
 
-        target.node("world").set(loc.getWorld().getName());
+        target.node("world_key").set(loc.getWorld().key().asString());
         target.node("x").set(loc.getX());
         target.node("y").set(loc.getY());
         target.node("z").set(loc.getZ());
