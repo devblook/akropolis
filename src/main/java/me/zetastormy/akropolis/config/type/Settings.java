@@ -662,7 +662,7 @@ public class Settings {
                 """)
         private BossBar.Color color = BossBar.Color.BLUE;
 
-        @Comment("Choose how the boss bar looks.")
+        @Comment("Choose how the progress looks.")
         private Overlay overlay = new Overlay();
 
         private Sound sound = new Sound(false, "BLOCK_NOTE_BLOCK_PLING", 1.0, 1.0);
