@@ -76,6 +76,21 @@ repositories {
             includeGroup("com.github.koca2000")
         }
     }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = uri("https://maven.pkg.github.com/DevBlook/Configurate")
+                credentials {
+                    username = providers.gradleProperty("gpr.user").get()
+                    password = providers.gradleProperty("gpr.token").get()
+                }
+            }
+        }
+        filter {
+            includeVersionByRegex("org\\.spongepowered", "configurate.*", libs.versions.configurate.get())
+        }
+    }
 }
 
 dependencies {
@@ -108,7 +123,7 @@ configurations.implementation {
 
 configurations.all {
     resolutionStrategy {
-        force("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
+        force("org.spongepowered:configurate-yaml:${libs.versions.configurate.get()}")
     }
 }
 

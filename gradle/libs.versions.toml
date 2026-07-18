@@ -2,7 +2,7 @@
 
 # Also change in build.gradle.kts
 # resolutionStrategy when upgrading
-configurate = "4.2.0-GeyserMC-SNAPSHOT"
+configurate = "4.2.0-DevBlook-SNAPSHOT"
 
 scoreboard-library = "2.8.0"
 adventure = "4.23.0"
