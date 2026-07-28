@@ -29,22 +29,32 @@ import org.bukkit.entity.Player;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.command.InjectableCommand;
+import me.zetastormy.akropolis.config.ConfigurationContainer;
 import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Messages;
 import me.zetastormy.akropolis.config.type.Settings;
 import me.zetastormy.akropolis.module.ModuleType;
 import me.zetastormy.akropolis.module.modules.world.LobbySpawn;
-import me.zetastormy.akropolis.util.text.TextUtil;
+import me.zetastormy.akropolis.util.AkroLocation;
+import me.zetastormy.akropolis.util.MessagingUtil;
+import net.kyori.adventure.text.Component;
+
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 public class LobbyCommand extends InjectableCommand {
     private final AkropolisPlugin plugin;
+    private final Logger logger;
     private final Map<UUID, Data.PlayerData> playersSection;
     private final boolean forceJoinFly;
+    private final ConfigurationContainer<Messages> messagesFile;
 
     public LobbyCommand(final @NotNull AkropolisPlugin plugin, final @NotNull List<String> aliases) {
         super(plugin, "lobby", "Teleport to the lobby (if set)", aliases);
         this.plugin = plugin;
+        this.logger = plugin.getSLF4JLogger();
 
+        this.messagesFile = plugin.getConfigManager().getFile(Messages.class);
         final Settings config = plugin.getConfigManager().getFile(Settings.class).getConfig();
         final Data dataFile = plugin.getConfigManager().getFile(Data.class).getConfig();
 
@@ -60,12 +70,35 @@ public class LobbyCommand extends InjectableCommand {
         }
 
         final var plugin = this.getPlugin();
-        Location location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
+        AkroLocation location = ((LobbySpawn) plugin.getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
         if (location == null) {
-            sender.sendMessage(TextUtil.parse("<red>The spawn location has not been set <gray>(/setlobby)<red>."));
+            this.logger.error(
+                "Couldn't teleport player '{}' ({}) to the lobby because it's unset",
+                player.getName(),
+                player.getUniqueId()
+            );
+            MessagingUtil.send(this.messagesFile.getConfig().lobby().teleportLobbyUnset(), player);
             return;
         }
 
-        player.teleportAsync(location);
+        final Location bukkitLoc = location.toBukkitLocation();
+
+        if (bukkitLoc == null) {
+            this.logger.error(
+                "Couldn't teleport player '{}' ({}) to the lobby because world '{}' is not loaded",
+                player.getName(),
+                player.getUniqueId(),
+                location.worldKey().asString()
+            );
+            MessagingUtil.sendWithReplacement(
+                this.messagesFile.getConfig().lobby().teleportWorldUnloaded(),
+                sender,
+                "world",
+                Component.text(location.worldKey().asString())
+            );
+            return;
+        }
+
+        player.teleportAsync(bukkitLoc);
     }
 }

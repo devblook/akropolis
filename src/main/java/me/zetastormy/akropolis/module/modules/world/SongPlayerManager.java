@@ -54,6 +54,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.AkroLocation;
 
 public class SongPlayerManager extends Module implements LifeCycle {
     private SongPlayer songPlayer;
@@ -157,7 +158,7 @@ public class SongPlayerManager extends Module implements LifeCycle {
             return createRadioSongPlayer(playlist);
         }
 
-        Location songLocation = dataConfig.getConfig().getSongPlayer().getLocation();
+        final AkroLocation songLocation = dataConfig.getConfig().getSongPlayer().getLocation();
 
         if (songLocation == null) {
             getPlugin().getLogger().warning("Couldn't get song player location! Using radio song player instead.");
@@ -165,9 +166,16 @@ public class SongPlayerManager extends Module implements LifeCycle {
             return createRadioSongPlayer(playlist);
         }
 
+        final Location bukkitLocation = songLocation.toBukkitLocation();
+
+        if (bukkitLocation == null) {
+            this.getPlugin().getSLF4JLogger().error("Couldn't get song player location because world '{}' is not loaded! Using radio song player instead.");
+            return createRadioSongPlayer(playlist);
+        }
+
         PositionSongPlayer songPlayer = new PositionSongPlayer(playlist);
 
-        songPlayer.setTargetLocation(songLocation);
+        songPlayer.setTargetLocation(bukkitLocation);
         songPlayer.setDistance(distance);
 
         return songPlayer;
@@ -210,8 +218,8 @@ public class SongPlayerManager extends Module implements LifeCycle {
         songPlayer.getPlayerUUIDs().forEach(uuid -> executeActions(getPlugin().getServer().getPlayer(uuid), actions));
     }
 
-    public void setLocation(Location location) {
-        dataConfig.getConfig().getSongPlayer().setLocation(location);
+    public void setLocation(final Location location) {
+        dataConfig.getConfig().getSongPlayer().setLocation(AkroLocation.fromBukkitLocation(location));
         dataConfig.save(this.getConfigurationExecutorService());
     }
 

@@ -207,8 +207,18 @@ public class Messages {
     @ConfigSerializable
     public static class Lobby {
         private String setLobby = "<prefix> <green>You have successfully set the lobby spawn point.";
+        private String teleportWorldUnloaded = """
+                <prefix> <red>Couldn't teleport you to the lobby because world <gray><world></gray> is not loaded, \
+                please contact server administrators.\
+                """;
+        private String teleportLobbyUnset = """
+                <prefix> <red>Couldn't teleport you to the lobby because it's unset, \
+                please contact server administrators.\
+                """;
 
         public String setLobby() { return this.setLobby; }
+        public String teleportWorldUnloaded() { return this.teleportWorldUnloaded; }
+        public String teleportLobbyUnset() { return this.teleportLobbyUnset; }
     }
 
     @ConfigSerializable

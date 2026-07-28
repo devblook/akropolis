@@ -32,6 +32,7 @@ import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.AkroLocation;
 import me.zetastormy.akropolis.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 
@@ -68,19 +69,36 @@ public class HologramManager extends Module implements LifeCycle {
 
             rawLines.forEach(l -> lines.add(TextUtil.parse(l)));
 
-            Location location = hologram.getLocation();
+            AkroLocation akroLocation = hologram.getLocation();
 
-            if (location == null) return;
+            if (akroLocation == null) {
+                this.getPlugin().getSLF4JLogger().error(
+                    "Couldn't load hologram '{}' because there is no location data",
+                    hologramName
+                );
+                return;
+            }
 
-            deleteNearbyHolograms(location);
+            Location bukkitLocation = akroLocation.toBukkitLocation();
 
-            createHologram(hologramName, location).setLines(lines);
+            if (bukkitLocation == null) {
+                this.getPlugin().getSLF4JLogger().error(
+                    "Couldn't load hologram '{}' because world '{}' is not loaded",
+                    hologramName,
+                    akroLocation.worldKey()
+                );
+                return;
+            }
+
+            deleteNearbyHolograms(bukkitLocation);
+
+            createHologram(hologramName, bukkitLocation).setLines(lines);
         }), 40L);
     }
 
     public void saveHolograms() {
         holograms.forEach(hologram -> {
-            Data.Hologram storedHologram = new Data.Hologram(this.getLines(hologram), hologram.getLocation());
+            Data.Hologram storedHologram = new Data.Hologram(this.getLines(hologram), AkroLocation.fromBukkitLocation(hologram.getLocation()));
             hologramsSection.put(hologram.getName(), storedHologram);
         });
         removeAllHolograms();

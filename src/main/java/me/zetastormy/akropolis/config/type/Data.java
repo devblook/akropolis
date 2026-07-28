@@ -19,7 +19,6 @@
 
 package me.zetastormy.akropolis.config.type;
 
-import org.bukkit.Location;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -27,6 +26,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import me.zetastormy.akropolis.config.transformation.AbstractTransformation;
 import me.zetastormy.akropolis.config.transformation.DataTransformations;
+import me.zetastormy.akropolis.util.AkroLocation;
 
 import java.util.List;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class Data {
 
     private boolean chatLocked = false;
     private Map<String, Hologram> holograms = Map.of();
-    private @Nullable Location spawn = null;
+    private @Nullable AkroLocation spawn = null;
     private Map<UUID, PlayerData> players = Map.of();
     private SongPlayer songPlayer = new SongPlayer();
 
@@ -62,8 +62,8 @@ public class Data {
 
     public Map<String, Hologram> getHolograms() { return this.holograms; }
 
-    public @Nullable Location getSpawn() { return this.spawn; }
-    public void setSpawn(@Nullable Location location) { this.spawn = location; }
+    public @Nullable AkroLocation getSpawn() { return this.spawn; }
+    public void setSpawn(@Nullable AkroLocation location) { this.spawn = location; }
 
     public Map<UUID, PlayerData> getPlayers() { return this.players; }
 
@@ -71,10 +71,10 @@ public class Data {
 
     @ConfigSerializable
     public static class SongPlayer {
-        private @Nullable Location location = null;
+        private @Nullable AkroLocation location = null;
 
-        public @Nullable Location getLocation() { return this.location; }
-        public void setLocation(@Nullable Location location) { this.location = location; }
+        public @Nullable AkroLocation getLocation() { return this.location; }
+        public void setLocation(@Nullable AkroLocation location) { this.location = location; }
     }
 
     @ConfigSerializable
@@ -95,19 +95,19 @@ public class Data {
     @ConfigSerializable
     public static class Hologram {
         private List<String> lines;
-        private Location location;
+        private @Nullable AkroLocation location;
 
         // Required by Configurate to load data
         public Hologram() {}
 
-        public Hologram(List<String> lines, Location location) {
+        public Hologram(List<String> lines, @Nullable AkroLocation location) {
             this.lines = lines;
             this.location = location;
         }
 
         public List<String> getLines() { return this.lines; }
         public void setLines(List<String> lines) { this.lines = lines; }
-        public Location getLocation() { return this.location; }
-        public void setLocation(Location location) { this.location = location; }
+        public @Nullable AkroLocation getLocation() { return this.location; }
+        public void setLocation(AkroLocation location) { this.location = location; }
     }
 }

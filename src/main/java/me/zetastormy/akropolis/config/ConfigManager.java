@@ -19,16 +19,21 @@
 
 package me.zetastormy.akropolis.config;
 
+import me.zetastormy.akropolis.config.serializer.AkroLocationSerializer;
 import me.zetastormy.akropolis.config.serializer.LocationSerializer;
 import me.zetastormy.akropolis.config.transformation.CommandsTransformations;
 import me.zetastormy.akropolis.config.transformation.DataTransformations;
 import me.zetastormy.akropolis.config.transformation.MessagesTransformations;
 import me.zetastormy.akropolis.config.transformation.SettingsTransformations;
 import me.zetastormy.akropolis.config.type.*;
+import me.zetastormy.akropolis.util.AkroLocation;
+
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.loader.ParsingException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.util.NamingSchemes;
 
@@ -58,20 +63,49 @@ public class ConfigManager {
         this.dataPath = dataPath;
     }
 
-    private void logConfigurationErrorMessage() {
+    private void logConfigurationErrorMessage(final Exception exception) {
         this.logger.error("There was an error loading the configuration.");
         this.logger.error("The plugin will now disable.");
+        this.logger.error("Please read below, it may tell you the cause");
+        this.logger.error("of the error and what to do to fix it.");
         this.logger.error("");
-        this.logger.error("Please check for any common configuration mistakes such as:");
-        this.logger.error("- Not using quotes at all on strings with special characters");
+        this.logger.error("Exception type: {}", exception.getClass().getSimpleName());
+        this.logger.error("Exception message: {}", exception.getMessage());
+        this.logger.error("");
+        switch (exception) {
+            case ParsingException e -> {
+                this.logger.error("That exception type means the syntax of some");
+                this.logger.error("of your configuration files is wrong, likely because");
+                this.logger.error("you made a mistake while editing the configuration.");
+                this.logger.error("");
+            }
+            case ConfigurateException e -> {
+                this.logger.error("It seems the error is about the configuration files");
+                this.logger.error("If the exception message above did not give a solution keep reading");
+                this.logger.error("");
+            }
+            default -> {
+                this.logger.error("This exception type does not seem to be about the configuration");
+                this.logger.error("You'll probably need to contact us, but first you can check your");
+                this.logger.error("configuration just in case");
+                this.logger.error("");
+            }
+        }
+        this.logger.error("Please check for any common configuration syntax mistakes such as:");
         this.logger.error("- Forgetting to end quotes");
         this.logger.error("- Using different open and close quotes in a string");
+        this.logger.error("- Not using quotes at all on strings with special characters");
         this.logger.error("- Using tabs instead of spaces");
+        this.logger.error("- Forgetting to use colon between key and value");
         this.logger.error("");
         this.logger.error("You can paste each configuration file in https://yamllint.com");
         this.logger.error("and click 'Go' to automatically check for YAML format mistakes.");
-        this.logger.error("If you need further help you can join our Discord server:");
-        this.logger.error("https://discord.gg/w438z8TKej");
+        this.logger.error("");
+        this.logger.error("If you need further help you can report this problem through:");
+        this.logger.error("- Discord (easy): https://discord.gg/w438z8TKej");
+        this.logger.error("- GitHub (advanced):");
+        this.logger.error("    Browse https://github.com/devblook/akropolis/issues/new/choose");
+        this.logger.error("    Choose 'Bug report' and fill all the required information.");
     }
 
     /**
@@ -82,7 +116,9 @@ public class ConfigManager {
 
         try {
             TypeSerializerCollection typeSerializerCollection = TypeSerializerCollection.builder()
-                            .register(Location.class, LocationSerializer.INSTANCE).build();
+                            .register(Location.class, LocationSerializer.INSTANCE)
+                            .register(AkroLocation.class, AkroLocationSerializer.INSTANCE)
+                            .build();
 
             registerFile(Settings.class, ConfigurationContainer.load(
                     Settings.class,
@@ -113,7 +149,7 @@ public class ConfigManager {
                     Data.HEADER,
                     NamingSchemes.SNAKE_CASE,
                     typeSerializerCollection,
-                    new DataTransformations(),
+                    new DataTransformations(this.logger),
                     this.backupManager
             ));
 
@@ -129,7 +165,7 @@ public class ConfigManager {
             ));
         } catch (final Exception exception) {
             logger.error("An exception occurred while loading configuration files", exception);
-            this.logConfigurationErrorMessage();
+            this.logConfigurationErrorMessage(exception);
             throw exception;
         }
     }

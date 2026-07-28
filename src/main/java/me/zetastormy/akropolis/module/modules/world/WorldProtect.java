@@ -28,7 +28,10 @@ import java.util.stream.Collectors;
 import me.zetastormy.akropolis.config.ConfigurationContainer;
 import me.zetastormy.akropolis.config.type.Messages;
 import me.zetastormy.akropolis.config.type.Settings;
+import me.zetastormy.akropolis.util.AkroLocation;
 import me.zetastormy.akropolis.util.MessagingUtil;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -62,6 +65,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.slf4j.Logger;
 
 import com.cryptomorin.xseries.XMaterial;
 
@@ -97,6 +101,7 @@ public class WorldProtect extends Module implements LifeCycle {
     private boolean disableInventoryMovement;
 
     private final ConfigurationContainer<Messages> messagesConfig;
+    private final Logger logger;
 
     private static final Set<Material> INTERACTABLE;
 
@@ -243,6 +248,7 @@ public class WorldProtect extends Module implements LifeCycle {
     public WorldProtect(AkropolisPlugin plugin) {
         super(plugin, ModuleType.WORLD_PROTECT);
         this.messagesConfig = this.getPlugin().getConfigManager().getFile(Messages.class);
+        this.logger = plugin.getSLF4JLogger();
     }
 
     @Override
@@ -463,12 +469,40 @@ public class WorldProtect extends Module implements LifeCycle {
         } else if (disableVoidDeath && event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             player.setFallDistance(0.0F);
 
-            Location location = ((LobbySpawn) getPlugin().getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
+            final AkroLocation location = ((LobbySpawn) this.getPlugin().getModuleManager().getModule(ModuleType.LOBBY)).getLocation();
 
-            if (location == null)
+            if (location == null) {
+                this.logger.error(
+                    "Couldn't teleport player '{}' ({}) to the lobby on void death because it's unset",
+                    player.getName(),
+                    player.getUniqueId()
+                );
+                MessagingUtil.send(
+                    this.getConfig(Messages.class).lobby().teleportLobbyUnset(),
+                    player
+                );
                 return;
+            }
 
-            Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> player.teleportAsync(location), 3L);
+            final Location bukkitLoc = location.toBukkitLocation();
+
+            if (bukkitLoc == null) {
+                this.logger.error(
+                    "Couldn't teleport player '{}' ({}) to the lobby on void death because world '{}' is not loaded",
+                    player.getName(),
+                    player.getUniqueId(),
+                    location.worldKey().asString()
+                );
+                MessagingUtil.sendWithReplacement(
+                    this.getConfig(Messages.class).lobby().teleportWorldUnloaded(),
+                    player,
+                    "world",
+                    Component.text(location.worldKey().asString())
+                );
+                return;
+            }
+
+            Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> player.teleportAsync(bukkitLoc), 3L);
             event.setCancelled(true);
         }
     }

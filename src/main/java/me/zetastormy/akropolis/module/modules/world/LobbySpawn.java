@@ -20,23 +20,28 @@
 package me.zetastormy.akropolis.module.modules.world;
 
 import me.zetastormy.akropolis.config.type.Data;
+import me.zetastormy.akropolis.config.type.Messages;
 import me.zetastormy.akropolis.config.type.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.slf4j.Logger;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.module.LifeCycle;
 import me.zetastormy.akropolis.module.Module;
 import me.zetastormy.akropolis.module.ModuleType;
+import me.zetastormy.akropolis.util.AkroLocation;
+import me.zetastormy.akropolis.util.MessagingUtil;
+import net.kyori.adventure.text.Component;
 
 public class LobbySpawn extends Module implements LifeCycle {
     private boolean spawnJoin;
-    private Location location = null;
+    private AkroLocation location = null;
+    private final Logger logger = this.getPlugin().getSLF4JLogger();
 
     public LobbySpawn(AkropolisPlugin plugin) {
         super(plugin, ModuleType.LOBBY);
@@ -58,11 +63,15 @@ public class LobbySpawn extends Module implements LifeCycle {
         getConfig(Data.class).setSpawn(this.location);
     }
 
-    public Location getLocation() {
+    public AkroLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(final org.bukkit.Location bukkitLocation) {
+        this.setLocation(AkroLocation.fromBukkitLocation(bukkitLocation));
+    }
+
+    public void setLocation(AkroLocation location) {
         this.location = location;
         this.getConfigFile(Data.class).save(this.getConfigurationExecutorService());
     }
@@ -70,14 +79,74 @@ public class LobbySpawn extends Module implements LifeCycle {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (spawnJoin && location != null)
-            player.teleport(location);
+        if (spawnJoin) {
+            if (location == null) {
+                this.logger.error(
+                    "Couldn't teleport player '{}' ({}) to the lobby on join because it's unset",
+                    player.getName(),
+                    player.getUniqueId()
+                );
+                MessagingUtil.send(
+                    this.getConfig(Messages.class).lobby().teleportLobbyUnset(),
+                    player
+                );
+                return;
+            }
+
+            org.bukkit.Location bukkitLoc = location.toBukkitLocation();
+            if (bukkitLoc == null) {
+                this.logger.error(
+                    "Couldn't teleport player '{}' ({}) to the lobby on join because world '{}' is not loaded",
+                    player.getName(),
+                    player.getUniqueId(),
+                    location.worldKey().asString()
+                );
+                MessagingUtil.sendWithReplacement(
+                    this.getConfig(Messages.class).lobby().teleportWorldUnloaded(),
+                    player,
+                    "world",
+                    Component.text(location.worldKey().asString())
+                );
+                return;
+            }
+            player.teleport(bukkitLoc);
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        if (location != null && !inDisabledWorld(player.getLocation()))
-            event.setRespawnLocation(location);
+        if (!inDisabledWorld(player.getLocation())) {
+            if (location == null) {
+                this.logger.error(
+                    "Couldn't respawn player '{}' ({}) in the lobby because it's unset",
+                    player.getName(),
+                    player.getUniqueId()
+                );
+                MessagingUtil.send(
+                    this.getConfig(Messages.class).lobby().teleportLobbyUnset(),
+                    player
+                );
+                return;
+            }
+
+            org.bukkit.Location bukkitLoc = location.toBukkitLocation();
+            if (bukkitLoc == null) {
+                this.logger.error(
+                    "Couldn't respawn player '{}' ({}) in the lobby because world '{}' is not loaded",
+                    player.getName(),
+                    player.getUniqueId(),
+                    location.worldKey().asString()
+                );
+                MessagingUtil.sendWithReplacement(
+                    this.getConfig(Messages.class).lobby().teleportWorldUnloaded(),
+                    player,
+                    "world",
+                    Component.text(location.worldKey().asString())
+                );
+                return;
+            }
+            event.setRespawnLocation(bukkitLoc);
+        }
     }
 }
