@@ -66,7 +66,7 @@ public class Settings {
             |
             |  If you prefer a more modern alternative to PlaceholderAPI, Akropolis is also compatible with MiniPlaceholders
             |  by 4drian3d, which uses a more easy to read format. Example: <luckperms_prefix>
-            |  For more information see: https://github.com/MiniPlaceholders/MiniPlaceholders/wiki/User-Getting-Started
+            |  For more information see: https://miniplaceholders.github.io/docs/user-guide/User-Getting-Started
             --------
             ACTIONS:
             |
