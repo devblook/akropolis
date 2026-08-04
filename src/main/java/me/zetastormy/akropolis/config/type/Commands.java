@@ -69,8 +69,8 @@ public class Commands {
             |  so you can use tags to color messages, like this: <red> Red colored message!
             |  You can also use HEX colors in an easy way, just like this: <#00ff00>R G B!
             |
-            |  More information about MiniMessage can be found here: https://docs.adventure.kyori.net/minimessage/format.html
-            |  There's also an online MiniMessage Viewer available: https://webui.adventure.kyori.net/\
+            |  More information about MiniMessage can be found here: https://docs.papermc.io/adventure/minimessage/format/
+            |  There's also an online MiniMessage Viewer available: https://webui.advntr.dev/\
             """;
 
     @Comment(AbstractTransformation.VERSION_COMMENT)
@@ -81,7 +81,7 @@ public class Commands {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | CUSTOM COMMANDS                          |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             The name of each section is the command name.
             You can create your own commands here and delete the ones you don't want.
             If you don't want any custom command set to 'custom_commands: {}'\
@@ -106,7 +106,7 @@ public class Commands {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
             | AKROPOLIS BUILT-IN COMMANDS              |
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-            
+
             The name of each section is the command name.
             Do NOT delete any command section from here.
             You can delete the aliases list or set to 'aliases: []'\
