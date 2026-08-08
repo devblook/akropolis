@@ -27,6 +27,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.slf4j.Logger;
 
 import me.zetastormy.akropolis.AkropolisPlugin;
 import me.zetastormy.akropolis.module.LifeCycle;
@@ -39,9 +40,11 @@ import net.kyori.adventure.text.Component;
 public class HologramManager extends Module implements LifeCycle {
     private Set<Hologram> holograms;
     private Map<String, Data.Hologram> hologramsSection;
+    private final Logger logger;
 
     public HologramManager(AkropolisPlugin plugin) {
         super(plugin, ModuleType.HOLOGRAMS);
+        this.logger = plugin.getSLF4JLogger();
     }
 
     @Override
@@ -92,7 +95,10 @@ public class HologramManager extends Module implements LifeCycle {
 
             deleteNearbyHolograms(bukkitLocation);
 
-            createHologram(hologramName, bukkitLocation).setLines(lines);
+            Hologram holo = this.loadHologram(hologramName, bukkitLocation);
+            if (holo != null) {
+                holo.setLines(lines);
+            }
         }), 40L);
     }
 
@@ -131,11 +137,32 @@ public class HologramManager extends Module implements LifeCycle {
                 .orElse(null);
     }
 
-    public Hologram createHologram(String name, Location location) {
-        Hologram holo = new Hologram(name, location);
+    private Hologram loadHologram(final String name, final Location location) {
+        final Hologram holo = new Hologram(name, location);
 
-        holograms.add(holo);
+        if (this.hasHologram(name)) {
+            this.logger.error("Couldn't load hologram '{}' because it already exists", name);
+            return null;
+        }
 
+        this.holograms.add(holo);
+        return holo;
+    }
+
+    /**
+    * Creates a new hologram
+    *
+    * @param name name of the hologram
+    * @param location location of the hologram
+    * @return the new hologram instance or null if it already exists
+    */
+    public Hologram createHologram(final String name, final Location location) {
+        if (this.hologramsSection.containsKey(name) || this.hasHologram(name)) {
+            return null;
+        }
+
+        final Hologram holo = new Hologram(name, location);
+        this.holograms.add(holo);
         return holo;
     }
 
