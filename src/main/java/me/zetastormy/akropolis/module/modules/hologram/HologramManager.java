@@ -166,16 +166,32 @@ public class HologramManager extends Module implements LifeCycle {
         return holo;
     }
 
-    public void deleteHologram(String name) {
-        Hologram holo = getHologram(name);
+    /**
+    * Deletes an existing hologram
+    *
+    * @param name name of the hologram
+    * @return whether the hologram was deleted
+ */
+    public boolean deleteHologram(final String name) {
+        final Hologram holo = getHologram(name);
+
+        if (holo == null) {
+            if (this.hologramsSection.containsKey(name)) {
+                this.hologramsSection.remove(name);
+                return true;
+            }
+            return false;
+        }
 
         holo.remove();
         holograms.remove(holo);
 
         if (hologramsSection != null && hologramsSection.get(name) != null) {
-            hologramsSection.put(name, null);
+            this.hologramsSection.remove(name);
             getPlugin().getConfigManager().getFile(Data.class).save(this.getConfigurationExecutorService());
         }
+
+        return true;
     }
 
     public void removeAllHolograms() {

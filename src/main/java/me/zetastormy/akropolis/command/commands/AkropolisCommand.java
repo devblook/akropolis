@@ -319,23 +319,22 @@ public class AkropolisCommand extends InjectableCommand {
                     return;
                 }
 
-                if (!plugin.getHologramManager().hasHologram(args[2])) {
+                if (plugin.getHologramManager().deleteHologram(args[2])) {
+                    MessagingUtil.sendWithReplacement(
+                            messages.holograms().despawned(),
+                            sender,
+                            "name",
+                            TextUtil.parse(args[2])
+                    );
+                } else {
                     MessagingUtil.sendWithReplacement(
                             messages.holograms().invalidHologram(),
                             sender,
                             "name",
                             TextUtil.parse(args[2])
                     );
-                    return;
                 }
 
-                plugin.getHologramManager().deleteHologram(args[2]);
-                MessagingUtil.sendWithReplacement(
-                        messages.holograms().despawned(),
-                        sender,
-                        "name",
-                        TextUtil.parse(args[2])
-                );
                 return;
             }
 
