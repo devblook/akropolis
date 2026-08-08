@@ -1248,7 +1248,11 @@ public class Settings {
         @Comment("Delay in seconds before the fight mode gets toggled.")
         private HoldDelay holdDelay = new HoldDelay();
 
-        @Comment("The item that will toggle the fight mode and also the sword used to fight.")
+        @Comment("""
+            The item that will toggle the fight mode and also the sword used to fight.
+            This item DOES NOT support custom actions, see the fight mode
+            actions list below.\
+            """)
         private ItemRecord item = new ItemRecord(
                 "NETHERITE_SWORD",
                 1,
@@ -1278,7 +1282,11 @@ public class Settings {
                 null
         );
 
-        @Comment("The armor that will be given to the player when they enter fight mode.")
+        @Comment("""
+            The armor that will be given to the player when they enter fight mode.
+            These items DO NOT support custom actions, see the fight mode
+            actions list below.\
+            """)
         private Armor armor = new Armor();
 
         @Comment("Actions to execute when the fight mode gets activated or deactivated.")
@@ -1435,6 +1443,7 @@ public class Settings {
                 """)
         private int cooldown = 3;
 
+        @Comment("This item DOES NOT support custom actions")
         private ItemRecord notHidden = new ItemRecord(
                 "LIME_DYE",
                 1,
@@ -1458,6 +1467,7 @@ public class Settings {
                 null
         );
 
+        @Comment("This item DOES NOT support custom actions")
         private ItemRecord hidden = new ItemRecord(
                 "GRAY_DYE",
                 1,
