@@ -453,10 +453,17 @@ public class AkropolisCommand extends InjectableCommand {
                 if (holo.removeLine(line) == null) {
                     plugin.getHologramManager().deleteHologram(args[2]);
                     MessagingUtil.sendWithReplacement(
+                        messages.holograms().despawned(),
+                        sender,
+                        "name",
+                        TextUtil.parse(args[2])
+                    );
+                } else {
+                    MessagingUtil.sendWithReplacement(
                             messages.holograms().removedLine(),
                             sender,
-                            "name",
-                            TextUtil.parse(args[2])
+                            "line",
+                            TextUtil.parse(args[3])
                     );
                 }
 
